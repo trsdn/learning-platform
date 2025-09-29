@@ -2,9 +2,22 @@
 
 This directory contains complete learning path examples in JSON format for **6. Klasse Gymnasium Niedersachsen** (Grade 6 Gymnasium, Lower Saxony curriculum).
 
+## 📁 Directory Structure
+
+```
+data/learning-paths/
+├── mathematik/
+│   ├── algebra-basics.json
+│   └── geometry-basics.json
+├── biologie/
+│   ├── zellbiologie.json
+│   └── genetik-basics.json
+└── README.md
+```
+
 ## 📚 Available Learning Paths
 
-### Mathematik
+### Mathematik (`mathematik/`)
 
 #### 1. `algebra-basics.json`
 - **Topic**: Mathematik
@@ -30,7 +43,7 @@ This directory contains complete learning path examples in JSON format for **6. 
   - Polygon identification (hexagon)
   - Triangle area formula
 
-### Biologie
+### Biologie (`biologie/`)
 
 #### 3. `zellbiologie.json`
 - **Topic**: Biologie
