@@ -1,7 +1,10 @@
 import type { Topic, LearningPath, Task } from '@core/types/services';
+import { loadLearningPathsFromJSON } from './json-loader';
 
 /**
  * Sample data for German Learning Platform
+ * NOTE: This hard-coded data is now a FALLBACK.
+ * Primary data source is JSON files in data/learning-paths/
  */
 
 export const sampleTopics: Topic[] = [
@@ -410,6 +413,7 @@ export const sampleTasks: Task[] = [
 
 /**
  * Seeds the database with sample data
+ * Tries to load from JSON files first, falls back to hard-coded data
  */
 export async function seedDatabase(db: any): Promise<void> {
   // Clear existing data
@@ -417,10 +421,19 @@ export async function seedDatabase(db: any): Promise<void> {
   await db.learningPaths.clear();
   await db.tasks.clear();
 
-  // Add sample data
-  await db.topics.bulkAdd(sampleTopics);
-  await db.learningPaths.bulkAdd(sampleLearningPaths);
-  await db.tasks.bulkAdd(sampleTasks);
+  // Load from JSON files
+  console.log('📂 Loading learning paths from JSON files...');
+  const data = await loadLearningPathsFromJSON();
 
-  console.log('✅ Database seeded with sample data');
+  if (data.topics.length === 0) {
+    throw new Error('No learning paths found in JSON files!');
+  }
+
+  await db.topics.bulkAdd(data.topics);
+  await db.learningPaths.bulkAdd(data.learningPaths);
+  await db.tasks.bulkAdd(data.tasks);
+
+  console.log(
+    `✅ Loaded from JSON: ${data.topics.length} topics, ${data.learningPaths.length} learning paths, ${data.tasks.length} tasks`
+  );
 }

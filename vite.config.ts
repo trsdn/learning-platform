@@ -105,7 +105,9 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 1000,
+    assetsInlineLimit: 0, // Don't inline JSON files
   },
+  assetsInclude: ['**/*.json'], // Include JSON files as assets
   server: {
     port: 5173,
     strictPort: false,
