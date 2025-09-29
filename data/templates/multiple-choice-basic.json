@@ -1,0 +1,50 @@
+{
+  "id": "multiple-choice-basic",
+  "name": "Multiple Choice (Basic)",
+  "description": "Standard multiple choice question with 4 options",
+  "type": "multiple-choice",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text"
+    },
+    "options": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "maxItems": 6,
+      "description": "Answer options (2-6 choices)"
+    },
+    "correctAnswer": {
+      "type": "number",
+      "required": true,
+      "description": "Index of the correct answer (0-based)"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Was ist 2 + 2?",
+      "options": ["3", "4", "5", "6"],
+      "correctAnswer": 1,
+      "explanation": "2 + 2 = 4",
+      "hint": "Zähle auf deinen Fingern"
+    }
+  ]
+}
