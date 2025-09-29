@@ -5,6 +5,7 @@ import { seedDatabase } from './modules/storage/seed-data';
 import type { Topic, LearningPath, PracticeSession as IPracticeSession } from './modules/core/types/services';
 import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
+import { Dashboard } from './modules/ui/components/dashboard';
 import './index.css';
 
 /**
@@ -20,6 +21,7 @@ function App() {
   const [inSession, setInSession] = useState(false);
   const [completedSession, setCompletedSession] = useState<IPracticeSession | null>(null);
   const [isInitialized, setIsInitialized] = useState(false);
+  const [showDashboard, setShowDashboard] = useState(false);
 
   useEffect(() => {
     if (!isInitialized) {
@@ -104,6 +106,15 @@ function App() {
       <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
         <h1>🎓 Lernplattform</h1>
         <p>Wird geladen...</p>
+      </div>
+    );
+  }
+
+  // Show dashboard
+  if (showDashboard) {
+    return (
+      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <Dashboard onClose={() => setShowDashboard(false)} />
       </div>
     );
   }
@@ -244,10 +255,32 @@ function App() {
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>🎓 Deutsche Lernplattform</h1>
-      <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
-        Lernen mit Spaced Repetition Algorithmus
-      </p>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div>
+          <h1>🎓 Deutsche Lernplattform</h1>
+          <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
+            Lernen mit Spaced Repetition Algorithmus
+          </p>
+        </div>
+        <button
+          onClick={() => setShowDashboard(true)}
+          style={{
+            padding: '0.75rem 1.5rem',
+            background: '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            fontWeight: '500',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
+        >
+          📊 Dashboard
+        </button>
+      </div>
 
       <div
         style={{
