@@ -1,0 +1,129 @@
+{
+  "learningPath": {
+    "id": "genetik-basics",
+    "topicId": "biologie",
+    "title": "Genetik Grundlagen",
+    "description": "DNA, Vererbung und genetische Grundbegriffe - 6. Klasse Gymnasium Niedersachsen",
+    "difficulty": "medium",
+    "estimatedTime": 65,
+    "isActive": true,
+    "requirements": {
+      "minimumAccuracy": 75,
+      "requiredTasks": 5
+    }
+  },
+  "tasks": [
+    {
+      "id": "bio-task-6",
+      "learningPathId": "genetik-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wo befindet sich die DNA in einer menschlichen Zelle?",
+        "options": [
+          "Im Cytoplasma",
+          "Im Zellkern",
+          "In den Mitochondrien",
+          "In der Zellmembran"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Die DNA befindet sich hauptsächlich im Zellkern, wo sie als Chromosomen organisiert ist",
+        "hint": "Die DNA ist im \"Kontrollzentrum\" der Zelle"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["genetik", "DNA", "zellkern"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-7",
+      "learningPathId": "genetik-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie viele Chromosomen hat eine normale menschliche Körperzelle?",
+        "options": ["23", "46", "92", "24"],
+        "correctAnswer": 1,
+        "explanation": "Menschen haben 46 Chromosomen in jeder Körperzelle, aufgeteilt in 23 Chromosomenpaare"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["genetik", "chromosomen", "mensch"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bio-task-8",
+      "learningPathId": "genetik-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet die Abkürzung DNA auf Deutsch?",
+        "options": [
+          "Desoxyribonukleinsäure",
+          "Doppelte Nukleinsäure",
+          "Dynamische Nukleinsäure",
+          "Doppelhelix-Nukleinsäure"
+        ],
+        "correctAnswer": 0,
+        "explanation": "DNA steht für Desoxyribonukleinsäure (englisch: Deoxyribonucleic Acid)",
+        "hint": "Der Name enthält 'Ribose' und 'Säure'"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["genetik", "DNA", "begriffe"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bio-task-9",
+      "learningPathId": "genetik-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welches Gesetz beschreibt die Vererbung von Merkmalen?",
+        "options": [
+          "Newtons Gesetz",
+          "Mendels Vererbungsregeln",
+          "Darwins Evolutionstheorie",
+          "Einsteins Relativitätstheorie"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Gregor Mendel formulierte die Mendelschen Regeln, die die Grundlagen der Vererbung beschreiben"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["genetik", "vererbung", "mendel"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-10",
+      "learningPathId": "genetik-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist eine Mutation?",
+        "options": [
+          "Eine normale Zellteilung",
+          "Eine Veränderung im Erbgut",
+          "Die Aufnahme von Nährstoffen",
+          "Der Transport von Stoffen in der Zelle"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Eine Mutation ist eine Veränderung im Erbgut (DNA), die spontan oder durch äußere Einflüsse entstehen kann"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["genetik", "mutation", "erbgut"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    }
+  ]
+}

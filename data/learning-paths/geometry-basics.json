@@ -1,0 +1,108 @@
+{
+  "learningPath": {
+    "id": "geometry-basics",
+    "topicId": "mathematik",
+    "title": "Geometrie Grundlagen",
+    "description": "Flächen, Winkel und geometrische Formen - 6. Klasse Gymnasium Niedersachsen",
+    "difficulty": "medium",
+    "estimatedTime": 75,
+    "isActive": true,
+    "requirements": {
+      "minimumAccuracy": 75,
+      "requiredTasks": 5
+    }
+  },
+  "tasks": [
+    {
+      "id": "math-task-6",
+      "learningPathId": "geometry-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie viele Grad hat ein Dreieck insgesamt?",
+        "options": ["90°", "180°", "270°", "360°"],
+        "correctAnswer": 1,
+        "explanation": "Die Innenwinkelsumme eines Dreiecks beträgt immer 180°",
+        "hint": "Es ist weniger als ein Kreis (360°)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["geometrie", "winkel", "dreieck"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-7",
+      "learningPathId": "geometry-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie berechnet man die Fläche eines Rechtecks?",
+        "options": ["Länge + Breite", "Länge × Breite", "2 × (Länge + Breite)", "Länge²"],
+        "correctAnswer": 1,
+        "explanation": "Die Fläche eines Rechtecks ist Länge × Breite"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["geometrie", "fläche", "rechteck"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-8",
+      "learningPathId": "geometry-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist der Umfang eines Kreises mit Radius 5cm? (π ≈ 3,14)",
+        "options": ["15,7 cm", "31,4 cm", "78,5 cm", "157 cm"],
+        "correctAnswer": 1,
+        "explanation": "Umfang = 2πr = 2 × 3,14 × 5 = 31,4 cm"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["geometrie", "kreis", "umfang"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "math-task-9",
+      "learningPathId": "geometry-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie viele Seiten hat ein Hexagon?",
+        "options": ["4", "5", "6", "7"],
+        "correctAnswer": 2,
+        "explanation": "Ein Hexagon (Sechseck) hat 6 Seiten"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["geometrie", "formen", "polygon"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-10",
+      "learningPathId": "geometry-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist die Fläche eines Dreiecks mit Basis 6cm und Höhe 4cm?",
+        "options": ["10 cm²", "12 cm²", "24 cm²", "48 cm²"],
+        "correctAnswer": 1,
+        "explanation": "Fläche = (Basis × Höhe) / 2 = (6 × 4) / 2 = 12 cm²"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["geometrie", "fläche", "dreieck"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    }
+  ]
+}

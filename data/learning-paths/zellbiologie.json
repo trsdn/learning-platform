@@ -1,0 +1,119 @@
+{
+  "learningPath": {
+    "id": "zellbiologie",
+    "topicId": "biologie",
+    "title": "Zellbiologie",
+    "description": "Aufbau und Funktion von Zellen - 6. Klasse Gymnasium Niedersachsen",
+    "difficulty": "easy",
+    "estimatedTime": 50,
+    "isActive": true,
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 5
+    }
+  },
+  "tasks": [
+    {
+      "id": "bio-task-1",
+      "learningPathId": "zellbiologie",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist die Hauptfunktion der Mitochondrien in einer Zelle?",
+        "options": [
+          "Proteinherstellung",
+          "Energieproduktion",
+          "DNA-Speicherung",
+          "Zellteilung"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Mitochondrien sind die \"Kraftwerke\" der Zelle und produzieren Energie in Form von ATP",
+        "hint": "Denke an die \"Kraftwerke\" der Zelle"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["zellbiologie", "mitochondrien", "zellorganellen"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-2",
+      "learningPathId": "zellbiologie",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welche Struktur umgibt die Pflanzenzelle, aber nicht die Tierzelle?",
+        "options": ["Zellmembran", "Zellwand", "Zellkern", "Cytoplasma"],
+        "correctAnswer": 1,
+        "explanation": "Die Zellwand aus Cellulose ist typisch für Pflanzenzellen und gibt ihnen Struktur und Stabilität"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["zellbiologie", "pflanzenzellen", "zellwand"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-3",
+      "learningPathId": "zellbiologie",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist die Funktion des Zellkerns?",
+        "options": [
+          "Energieproduktion",
+          "Proteinsynthese",
+          "DNA-Speicherung und Regulation",
+          "Abfallbeseitigung"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Der Zellkern enthält die DNA und steuert alle Zellfunktionen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["zellbiologie", "zellkern", "DNA"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-4",
+      "learningPathId": "zellbiologie",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welche Organelle ist für die Photosynthese verantwortlich?",
+        "options": ["Mitochondrien", "Chloroplasten", "Ribosomen", "Golgi-Apparat"],
+        "correctAnswer": 1,
+        "explanation": "Chloroplasten enthalten Chlorophyll und führen die Photosynthese durch",
+        "hint": "Diese Organelle macht Pflanzen grün"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["zellbiologie", "photosynthese", "chloroplasten"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "bio-task-5",
+      "learningPathId": "zellbiologie",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was produzieren Ribosomen in der Zelle?",
+        "options": ["Energie (ATP)", "Proteine", "Lipide", "DNA"],
+        "correctAnswer": 1,
+        "explanation": "Ribosomen sind die \"Proteinfabriken\" der Zelle"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["zellbiologie", "ribosomen", "proteine"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    }
+  ]
+}

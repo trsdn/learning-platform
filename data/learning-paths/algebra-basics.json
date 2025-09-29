@@ -1,0 +1,108 @@
+{
+  "learningPath": {
+    "id": "algebra-basics",
+    "topicId": "mathematik",
+    "title": "Algebra Grundlagen",
+    "description": "Lineare und quadratische Gleichungen",
+    "difficulty": "easy",
+    "estimatedTime": 60,
+    "isActive": true,
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 5
+    }
+  },
+  "tasks": [
+    {
+      "id": "math-task-1",
+      "learningPathId": "algebra-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist die Lösung für x in der Gleichung: 2x + 4 = 10?",
+        "options": ["x = 2", "x = 3", "x = 4", "x = 5"],
+        "correctAnswer": 1,
+        "explanation": "Um die Gleichung zu lösen: 2x = 10 - 4, also 2x = 6, daher x = 3",
+        "hint": "Subtrahiere 4 von beiden Seiten und teile dann durch 2"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["algebra", "gleichungen", "grundrechenarten"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-2",
+      "learningPathId": "algebra-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welche Zahl ergibt sich aus: 5x - 15 = 0?",
+        "options": ["x = 2", "x = 3", "x = 4", "x = 5"],
+        "correctAnswer": 1,
+        "explanation": "5x = 15, daher x = 15 ÷ 5 = 3"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["algebra", "gleichungen"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-3",
+      "learningPathId": "algebra-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist das Ergebnis von: 3(x + 2) = 15?",
+        "options": ["x = 1", "x = 2", "x = 3", "x = 4"],
+        "correctAnswer": 2,
+        "explanation": "Erst ausmultiplizieren: 3x + 6 = 15, dann 3x = 9, also x = 3"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["algebra", "gleichungen", "klammerrechnung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "math-task-4",
+      "learningPathId": "algebra-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Löse die Gleichung: x/4 + 2 = 5",
+        "options": ["x = 8", "x = 10", "x = 12", "x = 14"],
+        "correctAnswer": 2,
+        "explanation": "x/4 = 3, also x = 12"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["algebra", "gleichungen", "division"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-task-5",
+      "learningPathId": "algebra-basics",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist x in: 2x - 3 = 7?",
+        "options": ["x = 3", "x = 4", "x = 5", "x = 6"],
+        "correctAnswer": 2,
+        "explanation": "2x = 10, also x = 5"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["algebra", "gleichungen"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    }
+  ]
+}
