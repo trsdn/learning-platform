@@ -135,6 +135,24 @@ function App() {
       <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
         <h1>🧠 MindForge Academy</h1>
         <p>Wird geladen...</p>
+        <button
+          onClick={async () => {
+            console.log('Manual seed requested...');
+            await seedDatabase(db);
+            window.location.reload();
+          }}
+          style={{
+            marginTop: '1rem',
+            padding: '0.5rem 1rem',
+            background: '#ef4444',
+            color: 'white',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+          }}
+        >
+          🔧 Force Re-seed Database
+        </button>
       </div>
     );
   }
