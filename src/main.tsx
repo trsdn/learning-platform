@@ -164,30 +164,6 @@ function App() {
         </button>
 
         <h1>📚 {selectedTopic.title}</h1>
-        <p style={{ color: '#6b7280', marginTop: '0.5rem' }}>{selectedTopic.description}</p>
-
-        <div
-          style={{
-            marginTop: '1rem',
-            padding: '1rem',
-            background: '#f9fafb',
-            borderRadius: '8px',
-          }}
-        >
-          <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>
-            <span style={{ marginRight: '1.5rem' }}>
-              ⏱️ {selectedTopic.metadata.estimatedHours} Stunden
-            </span>
-            <span>
-              📊 Niveau:{' '}
-              {selectedTopic.metadata.difficultyLevel === 'beginner'
-                ? 'Anfänger'
-                : selectedTopic.metadata.difficultyLevel === 'intermediate'
-                ? 'Fortgeschritten'
-                : 'Experte'}
-            </span>
-          </div>
-        </div>
 
         <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Lernpfade</h2>
         <div
