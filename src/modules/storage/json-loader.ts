@@ -38,7 +38,9 @@ export async function loadLearningPathsFromJSON(): Promise<{
     // Load each file for this topic
     for (const filename of files) {
       try {
-        const path = `/learning-paths/${topicId}/${filename}`;
+        // Use relative path to work with base URL (e.g., /learning-platform/)
+        const baseUrl = import.meta.env.BASE_URL || '/';
+        const path = `${baseUrl}learning-paths/${topicId}/${filename}`;
         const response = await fetch(path);
 
         if (!response.ok) {
