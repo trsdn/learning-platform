@@ -16,6 +16,7 @@ function App() {
   const [topics, setTopics] = useState<Topic[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [learningPaths, setLearningPaths] = useState<LearningPath[]>([]);
+  const [learningPathTaskCounts, setLearningPathTaskCounts] = useState<Record<string, number>>({});
   const [selectedLearningPath, setSelectedLearningPath] = useState<LearningPath | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [inSession, setInSession] = useState(false);
@@ -62,6 +63,17 @@ function App() {
     setSelectedTopic(topic);
     const paths = await db.learningPaths.where('topicId').equals(topic.id).toArray();
     console.log(`Loading learning paths for topic ${topic.id}:`, paths);
+
+    // Get actual task counts from database
+    const taskCounts: Record<string, number> = {};
+    for (const path of paths) {
+      const tasks = await db.tasks.where('learningPathId').equals(path.id).toArray();
+      taskCounts[path.id] = tasks.length;
+      console.log(`Learning path "${path.title}" (${path.id}): ${tasks.length} tasks in DB, taskIds array length: ${path.taskIds?.length || 0}`);
+      console.log('Task IDs:', tasks.map(t => t.id));
+    }
+
+    setLearningPathTaskCounts(taskCounts);
     setLearningPaths(paths);
   }
 
@@ -303,7 +315,7 @@ function App() {
                     ? '🟡 Mittel'
                     : '🔴 Schwer'}
                 </span>
-                <span>{path.taskIds.length} Aufgaben</span>
+                <span>{learningPathTaskCounts[path.id] || path.taskIds?.length || 0} Aufgaben</span>
               </div>
               <button
                 onClick={() => showConfigScreen(path)}
