@@ -323,38 +323,39 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
         {/* Compact statistics */}
         <div
           style={{
-            padding: '0.75rem',
+            padding: '0.75rem 1rem',
             background: '#f9fafb',
             borderRadius: '6px',
             display: 'flex',
             justifyContent: 'space-around',
+            gap: '1rem',
           }}
         >
           <div style={{ textAlign: 'center' }}>
-            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#3b82f6' }}>
+            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#3b82f6' }}>
               {session.execution.completedCount}
-            </span>
-            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
               beantwortet
-            </span>
+            </div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#10b981' }}>
+            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#10b981' }}>
               {session.execution.correctCount}
-            </span>
-            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
               richtig
-            </span>
+            </div>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f59e0b' }}>
+            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f59e0b' }}>
               {session.execution.completedCount > 0
                 ? Math.round((session.execution.correctCount / session.execution.completedCount) * 100)
                 : 0}%
-            </span>
-            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+            </div>
+            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
               genau
-            </span>
+            </div>
           </div>
         </div>
       </div>
