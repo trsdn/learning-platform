@@ -417,9 +417,18 @@ export const sampleTasks: Task[] = [
  */
 export async function seedDatabase(db: any): Promise<void> {
   // Clear existing data
+  console.log('🗑️ Clearing existing database...');
+  const beforeTopics = await db.topics.count();
+  const beforePaths = await db.learningPaths.count();
+  const beforeTasks = await db.tasks.count();
+  console.log(`Before clear: ${beforeTopics} topics, ${beforePaths} paths, ${beforeTasks} tasks`);
+
   await db.topics.clear();
   await db.learningPaths.clear();
   await db.tasks.clear();
+
+  const afterClear = await db.tasks.count();
+  console.log(`After clear: ${afterClear} tasks remaining`);
 
   // Load from JSON files
   console.log('📂 Loading learning paths from JSON files...');
@@ -434,9 +443,27 @@ export async function seedDatabase(db: any): Promise<void> {
   console.log('Learning paths:', data.learningPaths.map(lp => `${lp.id} (${lp.taskIds?.length || 0} taskIds)`));
   console.log('Tasks:', data.tasks.map(t => `${t.id} (learningPathId: ${t.learningPathId})`));
 
-  await db.topics.bulkAdd(data.topics);
-  await db.learningPaths.bulkAdd(data.learningPaths);
-  await db.tasks.bulkAdd(data.tasks);
+  try {
+    await db.topics.bulkAdd(data.topics);
+    console.log('✓ Topics saved');
+  } catch (err: any) {
+    console.error('❌ Error saving topics:', err.message, err);
+  }
+
+  try {
+    await db.learningPaths.bulkAdd(data.learningPaths);
+    console.log('✓ Learning paths saved');
+  } catch (err: any) {
+    console.error('❌ Error saving learning paths:', err.message, err);
+  }
+
+  try {
+    await db.tasks.bulkAdd(data.tasks);
+    console.log('✓ Tasks saved');
+  } catch (err: any) {
+    console.error('❌ Error saving tasks:', err.message, err);
+    console.error('Failed tasks:', err.failures);
+  }
 
   console.log(
     `✅ Loaded from JSON: ${data.topics.length} topics, ${data.learningPaths.length} learning paths, ${data.tasks.length} tasks`
