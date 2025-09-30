@@ -138,18 +138,30 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
   const progress = ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100;
 
   return (
-    <div style={{ padding: '2rem', maxWidth: '800px', margin: '0 auto' }}>
-      {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
+    <div style={{
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      padding: '1rem',
+      maxWidth: '900px',
+      margin: '0 auto'
+    }}>
+      {/* Header - compact */}
+      <div style={{ marginBottom: '1rem', flexShrink: 0 }}>
         <div
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '1rem',
+            marginBottom: '0.75rem',
           }}
         >
-          <h2 style={{ margin: 0 }}>Übungssitzung</h2>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Übungssitzung</h2>
+            <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+              {currentTaskIndex + 1}/{session.execution.taskIds.length}
+            </span>
+          </div>
           <button
             onClick={onCancel}
             style={{
@@ -158,6 +170,7 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
               border: 'none',
               borderRadius: '4px',
               cursor: 'pointer',
+              fontSize: '0.875rem',
             }}
           >
             Abbrechen
@@ -168,9 +181,9 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
         <div
           style={{
             width: '100%',
-            height: '8px',
+            height: '6px',
             background: '#e5e7eb',
-            borderRadius: '4px',
+            borderRadius: '3px',
             overflow: 'hidden',
           }}
         >
@@ -183,24 +196,27 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
             }}
           />
         </div>
-        <p style={{ fontSize: '0.9rem', color: '#6b7280', marginTop: '0.5rem' }}>
-          Aufgabe {currentTaskIndex + 1} von {session.execution.taskIds.length}
-        </p>
       </div>
 
-      {/* Question */}
+      {/* Question - main content area */}
       <div
         style={{
+          flex: 1,
+          display: 'flex',
+          flexDirection: 'column',
           background: '#f9fafb',
-          padding: '2rem',
+          padding: '1.5rem',
           borderRadius: '8px',
-          marginBottom: '2rem',
+          marginBottom: '1rem',
+          minHeight: 0,
         }}
       >
-        <h3 style={{ marginBottom: '1.5rem' }}>{currentTask.content.question}</h3>
+        <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', lineHeight: '1.4' }}>
+          {currentTask.content.question}
+        </h3>
 
         {/* Options */}
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, minHeight: 0 }}>
           {currentTask.content.options.map((option, index) => {
             let backgroundColor = '#ffffff';
             let borderColor = '#d1d5db';
@@ -224,13 +240,13 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
                 onClick={() => !showFeedback && setSelectedAnswer(index)}
                 disabled={showFeedback}
                 style={{
-                  padding: '1rem',
+                  padding: '0.875rem',
                   background: backgroundColor,
                   border: `2px solid ${borderColor}`,
-                  borderRadius: '8px',
+                  borderRadius: '6px',
                   cursor: showFeedback ? 'default' : 'pointer',
                   textAlign: 'left',
-                  fontSize: '1rem',
+                  fontSize: '0.95rem',
                   transition: 'all 0.2s',
                 }}
               >
@@ -241,97 +257,105 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
         </div>
       </div>
 
-      {/* Feedback */}
+      {/* Feedback - compact */}
       {showFeedback && (
         <div
           style={{
             background: isCorrect ? '#dcfce7' : '#fee2e2',
             border: `2px solid ${isCorrect ? '#86efac' : '#fca5a5'}`,
-            padding: '1.5rem',
-            borderRadius: '8px',
-            marginBottom: '2rem',
+            padding: '1rem',
+            borderRadius: '6px',
+            marginBottom: '1rem',
+            flexShrink: 0,
           }}
         >
-          <h4 style={{ marginBottom: '0.5rem' }}>
+          <h4 style={{ marginBottom: '0.5rem', fontSize: '1rem' }}>
             {isCorrect ? '✅ Richtig!' : '❌ Nicht ganz richtig'}
           </h4>
           {currentTask.content.explanation && (
-            <p style={{ margin: 0, fontSize: '0.95rem' }}>{currentTask.content.explanation}</p>
+            <p style={{ margin: 0, fontSize: '0.875rem' }}>{currentTask.content.explanation}</p>
           )}
         </div>
       )}
 
-      {/* Actions */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
-        {!showFeedback ? (
-          <button
-            onClick={handleAnswerSubmit}
-            disabled={selectedAnswer === null}
-            style={{
-              padding: '1rem 2rem',
-              background: selectedAnswer !== null ? '#3b82f6' : '#9ca3af',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: selectedAnswer !== null ? 'pointer' : 'not-allowed',
-              fontSize: '1rem',
-              fontWeight: '500',
-            }}
-          >
-            Antwort überprüfen
-          </button>
-        ) : (
-          <button
-            onClick={handleNextTask}
-            style={{
-              padding: '1rem 2rem',
-              background: '#3b82f6',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-            }}
-          >
-            {currentTaskIndex < session.execution.taskIds.length - 1
-              ? 'Nächste Aufgabe →'
-              : 'Sitzung beenden'}
-          </button>
-        )}
-      </div>
+      {/* Actions and Statistics - combined footer */}
+      <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+        {/* Action button */}
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          {!showFeedback ? (
+            <button
+              onClick={handleAnswerSubmit}
+              disabled={selectedAnswer === null}
+              style={{
+                padding: '0.875rem 2rem',
+                background: selectedAnswer !== null ? '#3b82f6' : '#9ca3af',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: selectedAnswer !== null ? 'pointer' : 'not-allowed',
+                fontSize: '1rem',
+                fontWeight: '500',
+              }}
+            >
+              Antwort überprüfen
+            </button>
+          ) : (
+            <button
+              onClick={handleNextTask}
+              style={{
+                padding: '0.875rem 2rem',
+                background: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '500',
+              }}
+            >
+              {currentTaskIndex < session.execution.taskIds.length - 1
+                ? 'Nächste Aufgabe →'
+                : 'Sitzung beenden'}
+            </button>
+          )}
+        </div>
 
-      {/* Statistics */}
-      <div
-        style={{
-          marginTop: '3rem',
-          padding: '1.5rem',
-          background: '#f9fafb',
-          borderRadius: '8px',
-          display: 'flex',
-          justifyContent: 'space-around',
-        }}
-      >
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#3b82f6' }}>
-            {session.execution.completedCount}
+        {/* Compact statistics */}
+        <div
+          style={{
+            padding: '0.75rem',
+            background: '#f9fafb',
+            borderRadius: '6px',
+            display: 'flex',
+            justifyContent: 'space-around',
+          }}
+        >
+          <div style={{ textAlign: 'center' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#3b82f6' }}>
+              {session.execution.completedCount}
+            </span>
+            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+              beantwortet
+            </span>
           </div>
-          <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>Beantwortet</div>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
-            {session.execution.correctCount}
+          <div style={{ textAlign: 'center' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#10b981' }}>
+              {session.execution.correctCount}
+            </span>
+            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+              richtig
+            </span>
           </div>
-          <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>Richtig</div>
-        </div>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#f59e0b' }}>
-            {session.execution.completedCount > 0
-              ? Math.round((session.execution.correctCount / session.execution.completedCount) * 100)
-              : 0}
-            %
+          <div style={{ textAlign: 'center' }}>
+            <span style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f59e0b' }}>
+              {session.execution.completedCount > 0
+                ? Math.round((session.execution.correctCount / session.execution.completedCount) * 100)
+                : 0}%
+            </span>
+            <span style={{ fontSize: '0.75rem', color: '#6b7280', marginLeft: '0.25rem' }}>
+              genau
+            </span>
           </div>
-          <div style={{ fontSize: '0.85rem', color: '#6b7280' }}>Genauigkeit</div>
         </div>
       </div>
     </div>
