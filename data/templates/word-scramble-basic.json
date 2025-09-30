@@ -1,0 +1,55 @@
+{
+  "id": "word-scramble-basic",
+  "name": "Word Scramble (Basic)",
+  "description": "Unscramble letters to form the correct word",
+  "type": "word-scramble",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text"
+    },
+    "scrambledWord": {
+      "type": "string",
+      "required": true,
+      "description": "The scrambled version of the word"
+    },
+    "correctWord": {
+      "type": "string",
+      "required": true,
+      "description": "The correct unscrambled word"
+    },
+    "showLength": {
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "Whether to show the word length as a hint"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Welches Wort ergibt sich aus diesen durcheinandergewürfelten Buchstaben?",
+      "scrambledWord": "TOHFOTYSENES",
+      "correctWord": "Photosynthese",
+      "showLength": true,
+      "explanation": "Photosynthese ist der Prozess, bei dem Pflanzen mithilfe von Sonnenlicht aus CO₂ und Wasser Glucose und Sauerstoff produzieren.",
+      "hint": "Der Prozess, mit dem Pflanzen Energie aus Licht gewinnen"
+    }
+  ]
+}

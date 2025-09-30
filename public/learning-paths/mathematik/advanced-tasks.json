@@ -1,0 +1,124 @@
+{
+  "learningPath": {
+    "id": "advanced-tasks",
+    "topicId": "mathematik",
+    "title": "Gemischte Aufgabentypen",
+    "description": "Verschiedene Aufgabentypen zur Vertiefung - 6. Klasse Gymnasium Niedersachsen",
+    "difficulty": "medium",
+    "estimatedTime": 60,
+    "isActive": true,
+    "createdAt": "2025-09-30T12:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 4
+    }
+  },
+  "tasks": [
+    {
+      "id": "math-cloze-1",
+      "learningPathId": "advanced-tasks",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Ein Dreieck hat eine Innenwinkelsumme von {{blank}} Grad. Wenn zwei Winkel 60° und 80° sind, muss der dritte Winkel {{blank}} Grad sein.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "180",
+            "alternatives": ["180°", "einhundertachtzig"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "40",
+            "alternatives": ["40°", "vierzig"]
+          }
+        ],
+        "explanation": "Die Innenwinkelsumme eines Dreiecks beträgt immer 180°. Daher: 180° - 60° - 80° = 40°",
+        "hint": "Die Summe aller drei Winkel muss 180° ergeben"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["geometrie", "winkel", "dreieck"],
+        "estimatedTime": 45,
+        "points": 15
+      }
+    },
+    {
+      "id": "math-tf-1",
+      "learningPathId": "advanced-tasks",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Ein Quadrat ist ein Rechteck mit vier gleich langen Seiten.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Ein Quadrat ist eine spezielle Form eines Rechtecks, bei der alle vier Seiten gleich lang sind. Jedes Quadrat ist ein Rechteck, aber nicht jedes Rechteck ist ein Quadrat.",
+        "hint": "Denke an die Definition eines Rechtecks"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["geometrie", "formen", "quadrat"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "math-ordering-1",
+      "learningPathId": "advanced-tasks",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zur Lösung der Gleichung 3x + 6 = 15 in die richtige Reihenfolge:",
+        "items": [
+          "Beide Seiten durch 3 teilen",
+          "Von beiden Seiten 6 subtrahieren",
+          "Original: 3x + 6 = 15",
+          "Ergebnis: x = 3"
+        ],
+        "correctOrder": [2, 1, 0, 3],
+        "explanation": "Die korrekte Reihenfolge ist: 1) Original hinschreiben, 2) 6 von beiden Seiten subtrahieren (3x = 9), 3) Durch 3 teilen (x = 3), 4) Ergebnis",
+        "hint": "Beginne mit der Originalgleichung und arbeite dich zum Ergebnis vor"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["algebra", "gleichungen", "lösungsschritte"],
+        "estimatedTime": 40,
+        "points": 15
+      }
+    },
+    {
+      "id": "math-matching-1",
+      "learningPathId": "advanced-tasks",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jede geometrische Form ihrer Flächenformel zu:",
+        "pairs": [
+          {
+            "left": "Rechteck",
+            "right": "Länge × Breite"
+          },
+          {
+            "left": "Dreieck",
+            "right": "(Basis × Höhe) ÷ 2"
+          },
+          {
+            "left": "Quadrat",
+            "right": "Seite × Seite"
+          },
+          {
+            "left": "Kreis",
+            "right": "π × Radius²"
+          }
+        ],
+        "explanation": "Jede Form hat ihre eigene Flächenformel: Rechteck (l×b), Dreieck (b×h÷2), Quadrat (s²), Kreis (πr²)",
+        "hint": "Denke daran, welche Messungen du für jede Form brauchst"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["geometrie", "flächen", "formeln"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    }
+  ]
+}

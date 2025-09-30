@@ -1,0 +1,428 @@
+{
+  "learningPath": {
+    "id": "all-task-types-demo",
+    "topicId": "test",
+    "title": "🎯 Alle Aufgabentypen - Demo",
+    "description": "Demonstriert alle 8 verschiedenen Aufgabentypen der Plattform",
+    "difficulty": "easy",
+    "estimatedTime": 30,
+    "isActive": true,
+    "createdAt": "2025-09-30T14:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 60,
+      "requiredTasks": 10
+    }
+  },
+  "tasks": [
+    {
+      "id": "test-mc-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "📝 Multiple Choice: Welche Farbe hat der Himmel an einem klaren Tag?",
+        "options": [
+          "Rot",
+          "Blau",
+          "Grün",
+          "Gelb"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Der Himmel erscheint blau aufgrund der Rayleigh-Streuung des Sonnenlichts in der Atmosphäre.",
+        "hint": "Denke an einen sonnigen Tag"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "multiple-choice", "farben"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-cloze-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "✏️ Lückentext: Die Erde dreht sich um die {{blank}}, und der Mond dreht sich um die {{blank}}. Eine vollständige Erdrotation dauert {{blank}} Stunden.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Sonne",
+            "alternatives": ["sonne"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Erde",
+            "alternatives": ["erde"]
+          },
+          {
+            "index": 2,
+            "correctAnswer": "24",
+            "alternatives": ["vierundzwanzig", "24h"]
+          }
+        ],
+        "explanation": "Die Erde umkreist die Sonne (1 Jahr), der Mond umkreist die Erde (1 Monat), und eine Erdrotation dauert 24 Stunden (1 Tag).",
+        "hint": "Denke an unser Sonnensystem"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "cloze-deletion", "astronomie"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-tf-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "✓/✗ Richtig oder Falsch: Wasser kocht bei 100 Grad Celsius auf Meereshöhe.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Bei normalem Luftdruck (auf Meereshöhe) kocht Wasser bei genau 100°C. In höheren Lagen ist der Siedepunkt niedriger.",
+        "hint": "Denke an den normalen Siedepunkt von Wasser"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "true-false", "physik"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-ordering-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "🔢 Sortierung: Ordne diese historischen Ereignisse chronologisch (von alt zu neu):",
+        "items": [
+          "Erfindung des Internets (1969)",
+          "Erfindung des Buchdrucks (1450)",
+          "Erste Mondlandung (1969)",
+          "Erfindung des Telefons (1876)"
+        ],
+        "correctOrder": [1, 3, 0, 2],
+        "explanation": "Chronologische Reihenfolge: Buchdruck (1450) → Telefon (1876) → Internet (1969) → Mondlandung (1969). Internet und Mondlandung waren beide 1969!",
+        "hint": "Denke an die Jahrhunderte: 15., 19., 20. Jahrhundert"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["demo", "ordering", "geschichte"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-matching-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "🔗 Zuordnung: Ordne jedes Land seiner Hauptstadt zu:",
+        "pairs": [
+          {
+            "left": "Deutschland",
+            "right": "Berlin"
+          },
+          {
+            "left": "Frankreich",
+            "right": "Paris"
+          },
+          {
+            "left": "Italien",
+            "right": "Rom"
+          },
+          {
+            "left": "Spanien",
+            "right": "Madrid"
+          }
+        ],
+        "explanation": "Die Hauptstädte sind: Deutschland-Berlin, Frankreich-Paris, Italien-Rom, Spanien-Madrid",
+        "hint": "Denke an europäische Länder und ihre größten Städte"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "matching", "geographie"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-mc-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "📝 Multiple Choice: Wie viele Kontinente gibt es auf der Erde?",
+        "options": [
+          "5 Kontinente",
+          "6 Kontinente",
+          "7 Kontinente",
+          "8 Kontinente"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Es gibt 7 Kontinente: Afrika, Antarktika, Asien, Australien, Europa, Nordamerika und Südamerika.",
+        "hint": "Zähle alle großen Landmassen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "multiple-choice", "geographie"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-cloze-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "✏️ Lückentext: Ein Jahr hat {{blank}} Monate, {{blank}} Wochen und {{blank}} Tage. Ein Schaltjahr hat einen Tag mehr.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "12",
+            "alternatives": ["zwölf", "12"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "52",
+            "alternatives": ["zweiundfünfzig", "52"]
+          },
+          {
+            "index": 2,
+            "correctAnswer": "365",
+            "alternatives": ["dreihundertfünfundsechzig"]
+          }
+        ],
+        "explanation": "Ein normales Jahr hat 12 Monate, etwa 52 Wochen und 365 Tage. Ein Schaltjahr hat 366 Tage.",
+        "hint": "Denke an einen Kalender"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "cloze-deletion", "zeit"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-tf-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "✓/✗ Richtig oder Falsch: Die Sonne ist ein Planet.",
+        "correctAnswer": false,
+        "explanation": "Falsch! Die Sonne ist ein Stern, nicht ein Planet. Planeten kreisen um Sterne.",
+        "hint": "Was ist der Unterschied zwischen Sternen und Planeten?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "true-false", "astronomie"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-ordering-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "🔢 Sortierung: Ordne diese Zahlen von klein nach groß:",
+        "items": [
+          "1000",
+          "10",
+          "100",
+          "1"
+        ],
+        "correctOrder": [3, 1, 2, 0],
+        "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
+        "hint": "Welche Zahl ist am kleinsten?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "ordering", "mathematik"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-matching-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "🔗 Zuordnung: Ordne jedes Tier seiner Kategorie zu:",
+        "pairs": [
+          {
+            "left": "Hund",
+            "right": "Säugetier"
+          },
+          {
+            "left": "Adler",
+            "right": "Vogel"
+          },
+          {
+            "left": "Hai",
+            "right": "Fisch"
+          },
+          {
+            "left": "Frosch",
+            "right": "Amphibie"
+          }
+        ],
+        "explanation": "Tierklassifikation: Hund=Säugetier, Adler=Vogel, Hai=Fisch, Frosch=Amphibie",
+        "hint": "Denke an die verschiedenen Tierklassen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "matching", "biologie"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-multi-select-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "☑️ Mehrfachauswahl: Welche der folgenden sind Primzahlen?",
+        "options": [
+          "2",
+          "4",
+          "7",
+          "9",
+          "11",
+          "15"
+        ],
+        "correctAnswers": [0, 2, 4],
+        "minRequired": 3,
+        "explanation": "Die Primzahlen sind: 2, 7 und 11. Eine Primzahl ist nur durch 1 und sich selbst teilbar. 4, 9 und 15 sind keine Primzahlen.",
+        "hint": "Welche Zahlen sind nur durch 1 und sich selbst teilbar?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["demo", "multiple-select", "mathematik"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-slider-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "🎚️ Schieberegler: Bei welcher Temperatur kocht Wasser auf Meereshöhe?",
+        "min": 0,
+        "max": 150,
+        "step": 5,
+        "correctValue": 100,
+        "tolerance": 5,
+        "unit": "°C",
+        "explanation": "Wasser kocht bei 100°C auf Meereshöhe (bei normalem Luftdruck von 1013 hPa). In höheren Lagen ist der Siedepunkt niedriger.",
+        "hint": "Denke an die runde Zahl für den Siedepunkt von Wasser"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "slider", "physik"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-word-scramble-1",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "🔤 Buchstabensalat: Welches Wort ergibt sich aus diesen durcheinandergewürfelten Buchstaben?",
+        "scrambledWord": "TOHFOTYSENES",
+        "correctWord": "Photosynthese",
+        "showLength": true,
+        "explanation": "Photosynthese ist der Prozess, bei dem Pflanzen mithilfe von Sonnenlicht aus CO₂ und Wasser Glucose und Sauerstoff produzieren.",
+        "hint": "Der Prozess, mit dem Pflanzen Energie aus Licht gewinnen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["demo", "word-scramble", "biologie"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-multi-select-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "☑️ Mehrfachauswahl: Welche der folgenden Länder grenzen an Deutschland?",
+        "options": [
+          "Frankreich",
+          "Italien",
+          "Polen",
+          "Spanien",
+          "Österreich",
+          "Niederlande"
+        ],
+        "correctAnswers": [0, 2, 4, 5],
+        "minRequired": 4,
+        "explanation": "Deutschland grenzt an 9 Länder: Dänemark, Polen, Tschechien, Österreich, Schweiz, Frankreich, Luxemburg, Belgien und die Niederlande. Italien und Spanien grenzen nicht an Deutschland.",
+        "hint": "Deutschland hat die meisten Nachbarländer in Europa"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["demo", "multiple-select", "geographie"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "test-slider-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "🎚️ Schieberegler: Wie viele Planeten hat unser Sonnensystem?",
+        "min": 0,
+        "max": 15,
+        "step": 1,
+        "correctValue": 8,
+        "tolerance": 0,
+        "unit": "",
+        "explanation": "Unser Sonnensystem hat 8 Planeten: Merkur, Venus, Erde, Mars, Jupiter, Saturn, Uranus und Neptun. Pluto wurde 2006 zu einem Zwergplaneten herabgestuft.",
+        "hint": "Seit 2006 ist Pluto kein Planet mehr"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["demo", "slider", "astronomie"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "test-word-scramble-2",
+      "learningPathId": "all-task-types-demo",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "🔤 Buchstabensalat: Welches mathematische Wort versteckt sich hier?",
+        "scrambledWord": "YHTSEPOUEN",
+        "correctWord": "Hypotenuse",
+        "showLength": true,
+        "explanation": "Die Hypotenuse ist die längste Seite in einem rechtwinkligen Dreieck - die Seite gegenüber dem rechten Winkel.",
+        "hint": "Die längste Seite eines rechtwinkligen Dreiecks"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["demo", "word-scramble", "mathematik"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    }
+  ]
+}

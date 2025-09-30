@@ -1,0 +1,57 @@
+{
+  "id": "multiple-select-basic",
+  "name": "Multiple Select (Basic)",
+  "description": "Multiple choice question with multiple correct answers",
+  "type": "multiple-select",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text"
+    },
+    "options": {
+      "type": "array",
+      "required": true,
+      "minItems": 3,
+      "maxItems": 8,
+      "description": "Answer options (3-8 choices)"
+    },
+    "correctAnswers": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "description": "Array of correct answer indices (0-based)"
+    },
+    "minRequired": {
+      "type": "number",
+      "required": false,
+      "description": "Minimum number of selections required"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Welche der folgenden sind Primzahlen?",
+      "options": ["2", "4", "7", "9", "11"],
+      "correctAnswers": [0, 2, 4],
+      "minRequired": 3,
+      "explanation": "Die Primzahlen sind: 2, 7 und 11. Eine Primzahl ist nur durch 1 und sich selbst teilbar.",
+      "hint": "Welche Zahlen sind nur durch 1 und sich selbst teilbar?"
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import type { Topic, LearningPath, Task } from '@core/types/services';
  * Interface for learning path JSON files
  */
 interface LearningPathData {
-  learningPath: Omit<LearningPath, 'createdAt' | 'updatedAt'>;
+  learningPath: Omit<LearningPath, 'createdAt' | 'updatedAt'> & { createdAt?: string };
   tasks: Omit<Task, 'createdAt' | 'updatedAt'>[];
 }
 
@@ -23,8 +23,9 @@ export async function loadLearningPathsFromJSON(): Promise<{
 
   // Learning path files to load (topic -> filenames)
   const learningPathFiles: Record<string, string[]> = {
-    mathematik: ['algebra-basics.json', 'geometry-basics.json'],
+    mathematik: ['algebra-basics.json', 'geometry-basics.json', 'advanced-tasks.json', 'brueche-grundlagen.json'],
     biologie: ['zellbiologie.json', 'genetik-basics.json'],
+    test: ['all-task-types.json'],
   };
 
   // Load each learning path
@@ -39,7 +40,7 @@ export async function loadLearningPathsFromJSON(): Promise<{
     for (const filename of files) {
       try {
         // Use relative path to work with base URL (e.g., /learning-platform/)
-        const baseUrl = import.meta.env.BASE_URL || '/';
+        const baseUrl = (import.meta as any).env?.BASE_URL || '/';
         const path = `${baseUrl}learning-paths/${topicId}/${filename}`;
         const response = await fetch(path);
 
@@ -57,8 +58,8 @@ export async function loadLearningPathsFromJSON(): Promise<{
         const learningPath: LearningPath = {
           ...data.learningPath,
           taskIds, // Add task IDs
-          createdAt: new Date('2024-01-01'),
-          updatedAt: new Date('2024-01-01'),
+          createdAt: data.learningPath.createdAt ? new Date(data.learningPath.createdAt) : new Date('2024-01-01'),
+          updatedAt: data.learningPath.createdAt ? new Date(data.learningPath.createdAt) : new Date('2024-01-01'),
         };
         learningPaths.push(learningPath);
 
@@ -95,6 +96,16 @@ export async function loadLearningPathsFromJSON(): Promise<{
  */
 function createTopicFromId(topicId: string): Topic {
   const topicConfig: Record<string, Partial<Topic>> = {
+    test: {
+      id: 'test',
+      title: 'Test & Demo',
+      description: 'Demonstriert alle Aufgabentypen der Plattform',
+      metadata: {
+        estimatedHours: 1,
+        difficultyLevel: 'beginner',
+        prerequisites: [],
+      },
+    },
     mathematik: {
       id: 'mathematik',
       title: 'Mathematik',

@@ -1,0 +1,69 @@
+{
+  "id": "matching-basic",
+  "name": "Matching (Basic)",
+  "description": "Match items from the left column to items in the right column",
+  "type": "matching",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text explaining what to match"
+    },
+    "pairs": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "Array of matching pairs",
+      "items": {
+        "left": {
+          "type": "string",
+          "required": true,
+          "description": "Item in the left column (fixed order)"
+        },
+        "right": {
+          "type": "string",
+          "required": true,
+          "description": "Matching item in the right column (shuffled)"
+        }
+      }
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Ordne jedes Land seiner Hauptstadt zu:",
+      "pairs": [
+        {
+          "left": "Deutschland",
+          "right": "Berlin"
+        },
+        {
+          "left": "Frankreich",
+          "right": "Paris"
+        },
+        {
+          "left": "Italien",
+          "right": "Rom"
+        }
+      ],
+      "explanation": "Die Hauptstädte sind: Deutschland-Berlin, Frankreich-Paris, Italien-Rom",
+      "hint": "Denke an europäische Länder und ihre größten Städte"
+    }
+  ]
+}

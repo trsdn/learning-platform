@@ -1,31 +1,28 @@
-# German Learning Platform with Spaced Repetition
+# MindForge Academy - Learning Platform
 
-A modern, offline-first learning platform built with TypeScript, React, and the SM-2 spaced repetition algorithm.
+A modern, offline-first learning platform built with TypeScript, React, and the SM-2 spaced repetition algorithm. Level up your brain, one question at a time! 🧠
 
 ## 🚀 Features
 
+- **8 Task Types**: Multiple choice, cloze deletion, true/false, ordering, matching, multiple select, slider, and word scramble
 - **Spaced Repetition**: SM-2 algorithm for optimal learning retention
 - **Offline-First PWA**: Works completely offline after initial load
 - **German Language**: Full German interface and content
 - **Progress Tracking**: Comprehensive analytics and progress dashboard
-- **Multiple Topics**: Mathematics, Biology, and extensible for more
+- **Multiple Topics**: Mathematics, Biology, Test/Demo, and extensible for more
 - **Type-Safe**: 100% TypeScript with strict mode
-- **Test-Driven**: Comprehensive test coverage with TDD approach
+- **Deployed**: Live on GitHub Pages
 
 ## 📋 Project Status
 
 ### Completed ✅
-- **Phase 3.1: Setup** - Project structure, build tools, testing infrastructure
-- **Phase 3.2: Tests (Partial)** - Contract tests, entity tests, integration tests, E2E tests
-
-### In Progress 🏗️
-- **Phase 3.3: Core Implementation** - Domain entities, services, storage layer
-
-### Pending ⏳
-- Phase 3.4: UI Implementation
-- Phase 3.5: PWA & Offline Features
-- Phase 3.6: Content & Templates
-- Phase 3.7: Polish & Optimization
+- ✅ **Phase 3.1: Setup** - Project structure, build tools, testing infrastructure
+- ✅ **Phase 3.2: Tests** - Contract tests, entity tests, integration tests, E2E tests
+- ✅ **Phase 3.3: Core Implementation** - Domain entities, services, storage layer
+- ✅ **Phase 3.4: UI Implementation** - All components, 8 task types, dashboard
+- ✅ **Phase 3.5: PWA & Offline Features** - Service workers, IndexedDB, full offline support
+- ✅ **Phase 3.6: Content & Templates** - JSON-based content system, 8 task type templates
+- ✅ **Phase 3.7: Polish & Deployment** - TypeScript strict mode, production build, GitHub Pages
 
 ## 🛠️ Tech Stack
 
@@ -107,6 +104,16 @@ public/                 # Static assets, PWA manifest
 
 ## 📚 Key Concepts
 
+### Task Types (8 Total)
+1. **Multiple Choice** (📝) - Single correct answer from 2-6 options
+2. **Cloze Deletion** (✏️) - Fill in the blanks with correct answers
+3. **True/False** (✓/✗) - Evaluate statement accuracy
+4. **Ordering** (🔢) - Sort items into correct sequence
+5. **Matching** (🔗) - Match pairs between two columns
+6. **Multiple Select** (☑️) - Select multiple correct answers
+7. **Slider** (🎚️) - Numeric answer with tolerance range
+8. **Word Scramble** (🔤) - Unscramble letters to form correct word
+
 ### Spaced Repetition (SM-2 Algorithm)
 - Initial interval: 1 day
 - Second interval: 6 days
@@ -119,6 +126,7 @@ public/                 # Static assets, PWA manifest
 - **Modular**: Independent modules with clear boundaries
 - **Offline-First**: IndexedDB + Service Workers
 - **Type-Safe**: Strict TypeScript throughout
+- **JSON-Based Content**: Easy to add new learning paths and tasks
 
 ## 🌐 Browser Support
 
@@ -139,7 +147,30 @@ Contributions welcome! Please follow TDD practices and maintain test coverage.
 
 This project is built following best practices:
 - TypeScript strict mode
-- 80%+ test coverage target
-- Accessibility (WCAG 2.1 AA)
-- Performance (<3s initial load, <100ms interactions)
-- Bundle size (<200KB gzipped)
+- Comprehensive test coverage
+- Accessibility considerations
+- Performance optimized (<300KB total bundle)
+- PWA with offline support
+
+## 🎓 Content Structure
+
+Content is organized in JSON files under `public/learning-paths/`:
+```
+public/learning-paths/
+├── test/
+│   └── all-task-types.json     # Demo of all 8 task types
+├── mathematik/
+│   ├── algebra-basics.json
+│   ├── geometry-basics.json
+│   └── advanced-tasks.json
+└── biologie/
+    ├── zellbiologie.json
+    └── genetik-basics.json
+```
+
+Each JSON file contains:
+- Learning path metadata (title, difficulty, estimated time)
+- Array of tasks with questions, answers, and explanations
+- Template references for validation
+
+See `data/templates/` for task type schemas.

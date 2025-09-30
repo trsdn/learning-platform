@@ -69,6 +69,9 @@ function App() {
     const paths = await db.learningPaths.where('topicId').equals(topic.id).toArray();
     console.log(`Loading learning paths for topic ${topic.id}:`, paths);
 
+    // Sort by createdAt (latest first)
+    paths.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+
     // Get actual task counts from database
     const taskCounts: Record<string, number> = {};
     for (const path of paths) {
@@ -344,6 +347,29 @@ function App() {
     );
   }
 
+  async function handleReseed() {
+    if (confirm('Datenbank neu laden? Dies wird alle Lernpfade aktualisieren, aber dein Fortschritt bleibt erhalten.')) {
+      try {
+        // Clear only topics, learning paths, and tasks - keep user progress
+        await db.topics.clear();
+        await db.learningPaths.clear();
+        await db.tasks.clear();
+
+        // Reseed
+        await seedDatabase(db);
+
+        // Reload topics
+        const loadedTopics = await db.topics.toArray();
+        setTopics(loadedTopics);
+
+        alert('✅ Datenbank erfolgreich aktualisiert!');
+      } catch (error) {
+        console.error('Reseed failed:', error);
+        alert('❌ Fehler beim Aktualisieren der Datenbank');
+      }
+    }
+  }
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -353,24 +379,44 @@ function App() {
             Level up your brain, one question at a time
           </p>
         </div>
-        <button
-          onClick={() => setShowDashboard(true)}
-          style={{
-            padding: '0.75rem 1.5rem',
-            background: '#3b82f6',
-            color: 'white',
-            border: 'none',
-            borderRadius: '6px',
-            cursor: 'pointer',
-            fontSize: '1rem',
-            fontWeight: '500',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-          }}
-        >
-          📊 Dashboard
-        </button>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button
+            onClick={handleReseed}
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: '#f59e0b',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            🔄 DB Aktualisieren
+          </button>
+          <button
+            onClick={() => setShowDashboard(true)}
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: '#3b82f6',
+              color: 'white',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            📊 Dashboard
+          </button>
+        </div>
       </div>
 
       <h2 style={{ marginTop: 0, marginBottom: '1rem' }}>Themen auswählen</h2>
@@ -387,7 +433,7 @@ function App() {
             onClick={() => selectTopic(topic)}
             style={{
               padding: '2rem',
-              background: topic.id === 'mathematik' ? '#dbeafe' : '#dcfce7',
+              background: topic.id === 'test' ? '#fef3c7' : topic.id === 'mathematik' ? '#dbeafe' : '#dcfce7',
               borderRadius: '12px',
               cursor: 'pointer',
               transition: 'transform 0.2s, box-shadow 0.2s',
@@ -405,7 +451,7 @@ function App() {
             }}
           >
             <h2 style={{ marginBottom: '0.5rem' }}>
-              {topic.id === 'mathematik' ? '🔢' : '🧬'} {topic.title}
+              {topic.id === 'test' ? '🎯' : topic.id === 'mathematik' ? '🔢' : '🧬'} {topic.title}
             </h2>
             <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
               {topic.learningPathIds.length} Lernpfade

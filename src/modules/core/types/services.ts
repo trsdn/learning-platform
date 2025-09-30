@@ -36,12 +36,14 @@ export interface LearningPath {
   updatedAt: Date;
 }
 
+export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble';
+
 export interface Task {
   id: string;
   learningPathId: string;
   templateId: string;
-  type: 'multiple-choice';
-  content: MultipleChoiceContent;
+  type: TaskType;
+  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent;
   metadata: {
     difficulty: 'easy' | 'medium' | 'hard';
     tags: string[];
@@ -56,6 +58,73 @@ export interface MultipleChoiceContent {
   question: string;
   options: string[];
   correctAnswer: number;
+  explanation?: string;
+  hint?: string;
+}
+
+export interface ClozeDeletionContent {
+  text: string; // Text with {{blanks}} marked
+  blanks: Array<{
+    index: number;
+    correctAnswer: string;
+    alternatives?: string[]; // Alternative correct answers
+  }>;
+  explanation?: string;
+  hint?: string;
+}
+
+export interface TrueFalseContent {
+  statement: string;
+  correctAnswer: boolean;
+  requireJustification?: boolean; // If true, user must explain why
+  explanation?: string;
+  hint?: string;
+}
+
+export interface OrderingContent {
+  question: string;
+  items: string[]; // Items to be ordered
+  correctOrder: number[]; // Indices in correct order
+  explanation?: string;
+  hint?: string;
+}
+
+export interface MatchingContent {
+  question: string;
+  pairs: Array<{
+    left: string;
+    right: string;
+  }>;
+  explanation?: string;
+  hint?: string;
+}
+
+export interface MultipleSelectContent {
+  question: string;
+  options: string[];
+  correctAnswers: number[]; // Array of correct indices
+  minRequired?: number; // Minimum selections required
+  explanation?: string;
+  hint?: string;
+}
+
+export interface SliderContent {
+  question: string;
+  min: number;
+  max: number;
+  step?: number; // Default: 1
+  correctValue: number;
+  tolerance?: number; // ±tolerance for correct (default: 0)
+  unit?: string; // e.g., "°C", "%", "cm"
+  explanation?: string;
+  hint?: string;
+}
+
+export interface WordScrambleContent {
+  question: string;
+  scrambledWord: string;
+  correctWord: string;
+  showLength?: boolean; // Show word length as hint
   explanation?: string;
   hint?: string;
 }

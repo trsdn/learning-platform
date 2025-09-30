@@ -1,0 +1,1460 @@
+{
+  "learningPath": {
+    "id": "brueche-grundlagen",
+    "topicId": "mathematik",
+    "title": "Brüche - Grundlagen (Klasse 6)",
+    "description": "Bruchbegriffe, Anteile, Erweitern, Kürzen, Addieren und Subtrahieren von Brüchen",
+    "difficulty": "medium",
+    "estimatedTime": 90,
+    "isActive": true,
+    "createdAt": "2025-09-30T15:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 25
+    }
+  },
+  "tasks": [
+    {
+      "id": "bruch-mc-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher Bruch zeigt die gefärbte Fläche: 3 von 8 Kästchen sind gefärbt?",
+        "options": [
+          "3/8",
+          "8/3",
+          "5/8",
+          "3/5"
+        ],
+        "correctAnswer": 0,
+        "explanation": "3 gefärbte von 8 Kästchen insgesamt = 3/8. Der Zähler (3) zeigt die gefärbten Teile, der Nenner (8) die Gesamtzahl.",
+        "hint": "Gefärbte Teile über dem Bruchstrich, alle Teile darunter"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "anteile"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-mc-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher ist ein echter Bruch?",
+        "options": [
+          "5/3",
+          "7/4",
+          "3/5",
+          "9/8"
+        ],
+        "correctAnswer": 2,
+        "explanation": "Ein echter Bruch ist kleiner als 1, der Zähler ist kleiner als der Nenner. 3/5 ist ein echter Bruch (3 < 5).",
+        "hint": "Bei echten Brüchen ist der Zähler kleiner als der Nenner"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "echter-bruch"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-mc-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Mit welcher Zahl muss man 2/3 erweitern, um 8/12 zu erhalten?",
+        "options": [
+          "mit 2",
+          "mit 3",
+          "mit 4",
+          "mit 6"
+        ],
+        "correctAnswer": 2,
+        "explanation": "2/3 = (2·4)/(3·4) = 8/12. Man erweitert mit 4.",
+        "hint": "3 mal welche Zahl ergibt 12?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-mc-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist das Ergebnis von 2/5 + 1/5?",
+        "options": [
+          "3/5",
+          "3/10",
+          "2/5",
+          "1/5"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Bei gleichem Nenner addiert man die Zähler: 2/5 + 1/5 = (2+1)/5 = 3/5.",
+        "hint": "Gleiche Nenner: Zähler addieren, Nenner bleibt"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "addition"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-cloze-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Der Bruch 12/16 kann durch {{blank}} gekürzt werden zu 3/4. Beim Kürzen teilt man Zähler und Nenner durch die {{blank}} Zahl.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "4",
+            "alternatives": ["vier"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "gleiche",
+            "alternatives": ["selbe", "dieselbe"]
+          }
+        ],
+        "explanation": "12/16 = (12:4)/(16:4) = 3/4. Beim Kürzen teilt man Zähler und Nenner durch dieselbe Zahl.",
+        "hint": "12 und 16 sind beide durch 4 teilbar"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-cloze-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Bei einem Bruch nennt man die Zahl über dem Bruchstrich {{blank}} und die Zahl unter dem Bruchstrich {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Zähler",
+            "alternatives": ["zähler", "Zaehler"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Nenner",
+            "alternatives": ["nenner"]
+          }
+        ],
+        "explanation": "Der Zähler steht oben, der Nenner unten. Merkhilfe: Der Nenner nennt, in wie viele Teile geteilt wird.",
+        "hint": "Oben = Z..., Unten = N..."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-cloze-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um 1/4 und 1/6 zu addieren, braucht man einen gemeinsamen {{blank}}. Der kleinste gemeinsame Nenner ist {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Nenner",
+            "alternatives": ["nenner"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "12",
+            "alternatives": ["zwölf"]
+          }
+        ],
+        "explanation": "1/4 = 3/12 und 1/6 = 2/12, dann kann man addieren: 3/12 + 2/12 = 5/12.",
+        "hint": "Vielfache von 4: 4, 8, 12... Vielfache von 6: 6, 12..."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "addition", "gemeinsamer-nenner"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-cloze-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "2/3 + 1/6 = {{blank}}/6 + 1/6 = {{blank}}/6.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "4",
+            "alternatives": ["vier"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "5",
+            "alternatives": ["fünf"]
+          }
+        ],
+        "explanation": "2/3 erweitern mit 2: 2/3 = 4/6. Dann 4/6 + 1/6 = 5/6.",
+        "hint": "Erweitere 2/3 auf Sechstel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "addition"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-tf-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Beim Erweitern eines Bruchs multipliziert man Zähler und Nenner mit der gleichen Zahl.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Erweitern bedeutet, Zähler und Nenner mit der gleichen Zahl zu multiplizieren. Beispiel: 1/2 = (1·3)/(2·3) = 3/6.",
+        "hint": "Was macht man mit Zähler und Nenner beim Erweitern?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-tf-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Der Bruch 7/4 ist ein echter Bruch.",
+        "correctAnswer": false,
+        "explanation": "Falsch! 7/4 ist ein unechter Bruch, weil der Zähler (7) größer als der Nenner (4) ist. Echte Brüche sind kleiner als 1.",
+        "hint": "Ist 7 größer oder kleiner als 4?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "echter-bruch"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-tf-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Man kann nur Brüche mit gleichem Nenner addieren.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Um Brüche zu addieren, müssen sie den gleichen Nenner haben. Haben sie verschiedene Nenner, muss man sie erst erweitern.",
+        "hint": "Was muss man bei verschiedenen Nennern zuerst tun?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "addition"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-tf-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Beim Kürzen wird der Bruch kleiner.",
+        "correctAnswer": false,
+        "explanation": "Falsch! Beim Kürzen ändert sich der Wert des Bruchs nicht. Nur die Darstellung wird einfacher: 4/8 = 2/4 = 1/2 haben alle den gleichen Wert.",
+        "hint": "Ändert sich der Wert beim Kürzen?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-ordering-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Addieren von 1/3 + 1/4:",
+        "items": [
+          "Zähler addieren: 4/12 + 3/12 = 7/12",
+          "Gemeinsamen Nenner finden (12)",
+          "Prüfen, ob man kürzen kann",
+          "Beide Brüche erweitern: 1/3 = 4/12 und 1/4 = 3/12"
+        ],
+        "correctOrder": [1, 3, 0, 2],
+        "explanation": "Richtige Reihenfolge: 1. Gemeinsamen Nenner finden → 2. Erweitern → 3. Zähler addieren → 4. Prüfen ob kürzbar.",
+        "hint": "Man muss zuerst den gemeinsamen Nenner finden"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "addition", "verfahren"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-ordering-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne diese Brüche von klein nach groß:",
+        "items": [
+          "3/4",
+          "1/2",
+          "1/4",
+          "2/4"
+        ],
+        "correctOrder": [2, 1, 3, 0],
+        "explanation": "1/4 < 1/2 < 2/4 < 3/4. Auf Viertel: 1/4 < 2/4 < 2/4 < 3/4. (1/2 = 2/4)",
+        "hint": "Erweitere alle auf Viertel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-ordering-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Kürzen von 18/24:",
+        "items": [
+          "Ergebnis aufschreiben: 3/4",
+          "Durch 6 teilen: 18:6 und 24:6",
+          "Gemeinsamen Teiler finden (6)",
+          "Prüfen ob weiter kürzbar"
+        ],
+        "correctOrder": [2, 1, 0, 3],
+        "explanation": "1. Gemeinsamen Teiler finden → 2. Teilen → 3. Ergebnis → 4. Prüfen (3 und 4 teilerfremd).",
+        "hint": "Man sucht zuerst einen gemeinsamen Teiler"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-ordering-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne diese Anteile von klein nach groß:",
+        "items": [
+          "die Hälfte",
+          "ein Viertel",
+          "drei Viertel",
+          "ein Drittel"
+        ],
+        "correctOrder": [1, 3, 0, 2],
+        "explanation": "Ein Viertel (1/4) < ein Drittel (1/3) < die Hälfte (1/2) < drei Viertel (3/4).",
+        "hint": "Welcher Anteil ist am kleinsten?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "anteile"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-matching-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Bruch seiner gekürzten Form zu:",
+        "pairs": [
+          {
+            "left": "6/8",
+            "right": "3/4"
+          },
+          {
+            "left": "4/6",
+            "right": "2/3"
+          },
+          {
+            "left": "10/15",
+            "right": "2/3"
+          },
+          {
+            "left": "9/12",
+            "right": "3/4"
+          }
+        ],
+        "explanation": "6/8 = 3/4 (kürzen durch 2), 4/6 = 2/3 (durch 2), 10/15 = 2/3 (durch 5), 9/12 = 3/4 (durch 3).",
+        "hint": "Suche den größten gemeinsamen Teiler"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-matching-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jede Rechnung ihrem Ergebnis zu:",
+        "pairs": [
+          {
+            "left": "2/5 + 1/5",
+            "right": "3/5"
+          },
+          {
+            "left": "5/8 - 2/8",
+            "right": "3/8"
+          },
+          {
+            "left": "1/6 + 2/6",
+            "right": "3/6"
+          },
+          {
+            "left": "7/9 - 4/9",
+            "right": "3/9"
+          }
+        ],
+        "explanation": "Bei gleichem Nenner: Zähler addieren/subtrahieren. 2+1=3, 5-2=3, 1+2=3, 7-4=3.",
+        "hint": "Gleicher Nenner: nur die Zähler rechnen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "addition", "subtraktion"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-matching-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Anteil seinem Bruch zu:",
+        "pairs": [
+          {
+            "left": "die Hälfte",
+            "right": "1/2"
+          },
+          {
+            "left": "ein Drittel",
+            "right": "1/3"
+          },
+          {
+            "left": "drei Viertel",
+            "right": "3/4"
+          },
+          {
+            "left": "ein Achtel",
+            "right": "1/8"
+          }
+        ],
+        "explanation": "Hälfte = 1/2, Drittel = 1/3, drei Viertel = 3/4, Achtel = 1/8.",
+        "hint": "Die Hälfte bedeutet: 1 von 2 Teilen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "anteile"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-matching-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Bruch dem erweiterten Bruch zu:",
+        "pairs": [
+          {
+            "left": "1/2",
+            "right": "4/8"
+          },
+          {
+            "left": "1/3",
+            "right": "3/9"
+          },
+          {
+            "left": "2/5",
+            "right": "6/15"
+          },
+          {
+            "left": "3/4",
+            "right": "9/12"
+          }
+        ],
+        "explanation": "1/2 = 4/8 (mit 4), 1/3 = 3/9 (mit 3), 2/5 = 6/15 (mit 3), 3/4 = 9/12 (mit 3).",
+        "hint": "Mit welcher Zahl wurde erweitert?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-multiselect-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Brüche sind gleich groß wie 2/3? (Wähle alle)",
+        "options": [
+          "4/6",
+          "6/9",
+          "3/5",
+          "8/12",
+          "5/7",
+          "10/15"
+        ],
+        "correctAnswers": [0, 1, 3, 5],
+        "minRequired": 4,
+        "explanation": "2/3 = 4/6 = 6/9 = 8/12 = 10/15. Alle erweitert aus 2/3. Die anderen (3/5, 5/7) haben einen anderen Wert.",
+        "hint": "Kürze alle Brüche oder erweitere 2/3"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "erweitern", "äquivalenz"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-multiselect-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Aussagen sind richtig? (Wähle alle)",
+        "options": [
+          "Beim Erweitern multipliziert man mit der gleichen Zahl",
+          "Beim Kürzen addiert man die gleiche Zahl",
+          "Ein echter Bruch ist kleiner als 1",
+          "Der Nenner darf 0 sein",
+          "Bei gleichem Nenner addiert man nur die Zähler",
+          "1/2 ist größer als 1/3"
+        ],
+        "correctAnswers": [0, 2, 4, 5],
+        "minRequired": 4,
+        "explanation": "Richtig: Erweitern=multiplizieren, echter Bruch<1, gleicher Nenner=Zähler addieren, 1/2>1/3. Falsch: Kürzen=teilen, Nenner≠0.",
+        "hint": "Denke an die Grundregeln"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "grundlagen"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-multiselect-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Brüche sind bereits vollständig gekürzt? (Wähle alle)",
+        "options": [
+          "2/5",
+          "4/8",
+          "3/7",
+          "6/9",
+          "5/11",
+          "8/10"
+        ],
+        "correctAnswers": [0, 2, 4],
+        "minRequired": 3,
+        "explanation": "Vollständig gekürzt: 2/5, 3/7, 5/11 (teilerfremd). Kürzbar: 4/8=1/2, 6/9=2/3, 8/10=4/5.",
+        "hint": "Haben Zähler und Nenner einen gemeinsamen Teiler?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-multiselect-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Brüche sind unechte Brüche? (Wähle alle)",
+        "options": [
+          "5/4",
+          "3/5",
+          "7/7",
+          "2/3",
+          "9/8",
+          "4/9"
+        ],
+        "correctAnswers": [0, 2, 4],
+        "minRequired": 3,
+        "explanation": "Unechte Brüche: Zähler ≥ Nenner. 5/4, 7/7, 9/8 sind unechte Brüche (≥1). Echte: 3/5, 2/3, 4/9 (<1).",
+        "hint": "Ist der Zähler größer oder gleich dem Nenner?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "unechter-bruch"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-slider-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Mit welcher Zahl muss man 2/5 erweitern, um auf Nenner 15 zu kommen?",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "correctValue": 3,
+        "tolerance": 0,
+        "unit": "",
+        "explanation": "2/5 = (2·3)/(5·3) = 6/15. Man muss mit 3 erweitern, weil 5·3 = 15.",
+        "hint": "5 mal welche Zahl ergibt 15?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-slider-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Durch welche Zahl kann man 12/18 kürzen?",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "correctValue": 6,
+        "tolerance": 0,
+        "unit": "",
+        "explanation": "Der größte gemeinsame Teiler von 12 und 18 ist 6. 12/18 = (12:6)/(18:6) = 2/3.",
+        "hint": "Welche Zahl teilt sowohl 12 als auch 18?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-slider-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Wie viele Achtel sind drei Viertel? (3/4 = ?/8)",
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "correctValue": 6,
+        "tolerance": 0,
+        "unit": "Achtel",
+        "explanation": "3/4 = (3·2)/(4·2) = 6/8. Drei Viertel sind sechs Achtel.",
+        "hint": "Erweitere 3/4 auf Achtel"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-slider-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Wie groß ist der kleinste gemeinsame Nenner von 1/4 und 1/6?",
+        "min": 4,
+        "max": 24,
+        "step": 1,
+        "correctValue": 12,
+        "tolerance": 0,
+        "unit": "",
+        "explanation": "Vielfache von 4: 4,8,12,16... Vielfache von 6: 6,12,18... Der kleinste gemeinsame Nenner ist 12.",
+        "hint": "Suche das kleinste gemeinsame Vielfache"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemeinsamer-nenner"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-scramble-1",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie heißt die Zahl über dem Bruchstrich?",
+        "scrambledWord": "HÄERLZ",
+        "correctWord": "Zähler",
+        "showLength": true,
+        "explanation": "Der Zähler steht über dem Bruchstrich und zählt die Teile.",
+        "hint": "Beginnt mit Z"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-scramble-2",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie heißt der Vorgang, wenn man Zähler und Nenner mit der gleichen Zahl multipliziert?",
+        "scrambledWord": "ERTEWERNI",
+        "correctWord": "Erweitern",
+        "showLength": true,
+        "explanation": "Erweitern: Zähler und Nenner mit gleicher Zahl multiplizieren. Der Wert bleibt gleich.",
+        "hint": "Der Bruch wird umfangreicher"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-scramble-3",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie nennt man den Vorgang, bei dem man durch den gemeinsamen Teiler teilt?",
+        "scrambledWord": "NRKÜEZ",
+        "correctWord": "Kürzen",
+        "showLength": true,
+        "explanation": "Kürzen: Zähler und Nenner durch die gleiche Zahl teilen. Der Bruch wird einfacher.",
+        "hint": "Das Gegenteil von Erweitern"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "kürzen"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-scramble-4",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie nennt man die Zahl unter dem Bruchstrich?",
+        "scrambledWord": "NRNEEN",
+        "correctWord": "Nenner",
+        "showLength": true,
+        "explanation": "Der Nenner steht unter dem Bruchstrich und nennt, in wie viele Teile geteilt wird.",
+        "hint": "Beginnt mit N"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-mc-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher Bruch ist größer: 2/3 oder 3/5?",
+        "options": [
+          "2/3",
+          "3/5",
+          "beide gleich groß",
+          "kann man nicht vergleichen"
+        ],
+        "correctAnswer": 0,
+        "explanation": "2/3 = 10/15 und 3/5 = 9/15. Da 10/15 > 9/15, ist 2/3 > 3/5.",
+        "hint": "Erweitere beide auf gemeinsamen Nenner 15"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen", "größer-kleiner"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-mc-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher Bruch ist kleiner: 5/6 oder 7/8?",
+        "options": [
+          "7/8",
+          "5/6",
+          "beide gleich groß",
+          "kann man nicht sagen"
+        ],
+        "correctAnswer": 1,
+        "explanation": "5/6 = 20/24 und 7/8 = 21/24. Da 20/24 < 21/24, ist 5/6 < 7/8.",
+        "hint": "Gemeinsamer Nenner ist 24"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen", "größer-kleiner"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-cloze-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um Brüche zu vergleichen, bringt man sie auf einen gemeinsamen {{blank}}. Dann vergleicht man nur die {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Nenner",
+            "alternatives": ["nenner"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Zähler",
+            "alternatives": ["zähler", "Zaehler"]
+          }
+        ],
+        "explanation": "Bei gleichem Nenner ist der Bruch mit dem größeren Zähler auch größer.",
+        "hint": "Erst den Nenner angleichen, dann Zähler vergleichen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-tf-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Von zwei Brüchen mit gleichem Zähler ist der mit dem kleineren Nenner größer.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Beispiel: 1/2 > 1/3 > 1/4. Je kleiner der Nenner, desto größer die Teile, also größer der Bruch.",
+        "hint": "Vergleiche 1/2 und 1/4"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-ordering-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne diese Brüche von klein nach groß: 3/4, 2/3, 5/6, 1/2",
+        "items": [
+          "1/2",
+          "2/3",
+          "3/4",
+          "5/6"
+        ],
+        "correctOrder": [0, 1, 2, 3],
+        "explanation": "Auf Zwölftel: 1/2 = 6/12, 2/3 = 8/12, 3/4 = 9/12, 5/6 = 10/12. Also: 6/12 < 8/12 < 9/12 < 10/12.",
+        "hint": "Erweitere alle auf Nenner 12"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen", "größer-kleiner"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-matching-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Fachbegriff seiner Bedeutung zu:",
+        "pairs": [
+          {
+            "left": "Zähler",
+            "right": "Zahl über dem Bruchstrich"
+          },
+          {
+            "left": "Nenner",
+            "right": "Zahl unter dem Bruchstrich"
+          },
+          {
+            "left": "echter Bruch",
+            "right": "Zähler kleiner als Nenner"
+          },
+          {
+            "left": "unechter Bruch",
+            "right": "Zähler größer oder gleich Nenner"
+          }
+        ],
+        "explanation": "Zähler oben, Nenner unten. Echter Bruch < 1, unechter Bruch ≥ 1.",
+        "hint": "Denke an die Grundbegriffe"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe", "fachbegriffe"],
+        "estimatedTime": 30,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-multiselect-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Brüche sind größer als 1/2? (Wähle alle)",
+        "options": [
+          "2/3",
+          "1/3",
+          "3/4",
+          "1/4",
+          "5/8",
+          "3/8"
+        ],
+        "correctAnswers": [0, 2, 4],
+        "minRequired": 3,
+        "explanation": "Größer als 1/2: 2/3, 3/4, 5/8. Kleiner: 1/3, 1/4, 3/8. (Auf Achtel: 1/2 = 4/8)",
+        "hint": "Erweitere 1/2 auf verschiedene Nenner"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen", "größer-kleiner"],
+        "estimatedTime": 35,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-slider-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Wie viele Zwölftel sind zwei Drittel? (2/3 = ?/12)",
+        "min": 1,
+        "max": 12,
+        "step": 1,
+        "correctValue": 8,
+        "tolerance": 0,
+        "unit": "Zwölftel",
+        "explanation": "2/3 = (2·4)/(3·4) = 8/12. Zwei Drittel sind acht Zwölftel.",
+        "hint": "3 mal 4 ergibt 12"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "erweitern"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-scramble-5",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie nennt man einen Bruch, dessen Zähler kleiner als der Nenner ist?",
+        "scrambledWord": "CREEHT RCHUB",
+        "correctWord": "echter Bruch",
+        "showLength": true,
+        "explanation": "Ein echter Bruch hat einen Zähler, der kleiner als der Nenner ist, und ist daher kleiner als 1.",
+        "hint": "Zwei Wörter, beginnt mit 'e'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe", "fachbegriffe"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-tf-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Der Bruch 3/4 ist größer als 2/3.",
+        "correctAnswer": true,
+        "explanation": "Richtig! 3/4 = 9/12 und 2/3 = 8/12. Da 9/12 > 8/12, ist 3/4 > 2/3.",
+        "hint": "Erweitere beide auf Nenner 12"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "vergleichen", "größer-kleiner"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-scramble-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie nennt man einen Bruch, bei dem der Zähler größer oder gleich dem Nenner ist?",
+        "scrambledWord": "TCRHNEUE HCRUB",
+        "correctWord": "unechter Bruch",
+        "showLength": true,
+        "explanation": "Ein unechter Bruch ist größer oder gleich 1, weil der Zähler mindestens so groß ist wie der Nenner.",
+        "hint": "Zwei Wörter, das Gegenteil von 'echter Bruch'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe", "fachbegriffe"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-mc-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie schreibt man 7/4 als gemischte Zahl?",
+        "options": [
+          "1 3/4",
+          "1 1/4",
+          "2 1/4",
+          "1 2/4"
+        ],
+        "correctAnswer": 0,
+        "explanation": "7/4 = 1 3/4, weil 7 : 4 = 1 Rest 3. Also 1 Ganzes und 3 Viertel.",
+        "hint": "Wie oft passt 4 in 7? Was bleibt übrig?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-mc-8",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher unechte Bruch entspricht der gemischten Zahl 2 1/3?",
+        "options": [
+          "5/3",
+          "7/3",
+          "6/3",
+          "8/3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "2 1/3 = (2·3 + 1)/3 = 7/3. Man rechnet: Ganze mal Nenner plus Zähler.",
+        "hint": "2 Ganze sind 6 Drittel, plus 1 Drittel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-cloze-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Eine gemischte Zahl besteht aus einer {{blank}} Zahl und einem {{blank}} Bruch.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "ganzen",
+            "alternatives": ["natürlichen"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "echten",
+            "alternatives": []
+          }
+        ],
+        "explanation": "Eine gemischte Zahl wie 2 1/3 besteht aus ganzen Zahlen (2) und einem echten Bruch (1/3).",
+        "hint": "Beispiel: 2 1/3 = 2 Ganze + ein echter Bruch"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-cloze-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um 11/4 in eine gemischte Zahl umzuwandeln, teilt man 11 : 4 = {{blank}} Rest {{blank}}. Also 11/4 = 2 3/4.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "2",
+            "alternatives": ["zwei"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "3",
+            "alternatives": ["drei"]
+          }
+        ],
+        "explanation": "11 : 4 = 2 Rest 3. Die 2 sind die ganzen Zahlen, der Rest 3 wird zum Zähler: 2 3/4.",
+        "hint": "Wie oft passt 4 in 11?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-tf-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Die gemischte Zahl 3 2/5 ist größer als der unechte Bruch 16/5.",
+        "correctAnswer": false,
+        "explanation": "Falsch! 3 2/5 = 17/5 und 16/5 < 17/5. Also ist 16/5 kleiner als 3 2/5.",
+        "hint": "Wandle 3 2/5 in einen unechten Bruch um"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-tf-8",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Jeder unechte Bruch kann als gemischte Zahl geschrieben werden.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Unechte Brüche (Zähler ≥ Nenner) kann man immer als gemischte Zahl schreiben. Beispiel: 5/4 = 1 1/4.",
+        "hint": "Was ist mit Brüchen wie 9/4 oder 7/3?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-ordering-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Umwandeln von 13/5 in eine gemischte Zahl:",
+        "items": [
+          "Ergebnis: 2 3/5",
+          "Rest wird zum Zähler: 3/5",
+          "Division: 13 : 5 = 2 Rest 3",
+          "Ergebnis wird zur ganzen Zahl: 2"
+        ],
+        "correctOrder": [2, 3, 1, 0],
+        "explanation": "1. Division durchführen → 2. Ergebnis = ganze Zahl → 3. Rest = neuer Zähler → 4. Gemischte Zahl aufschreiben.",
+        "hint": "Zuerst teilen, dann Rest bestimmen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl", "umwandlung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-ordering-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Umwandeln von 3 2/5 in einen unechten Bruch:",
+        "items": [
+          "Ergebnis: 17/5",
+          "Nenner bleibt gleich: 5",
+          "Plus Zähler: 15 + 2 = 17",
+          "Ganze mal Nenner: 3 · 5 = 15"
+        ],
+        "correctOrder": [3, 2, 1, 0],
+        "explanation": "1. Ganze × Nenner → 2. Plus Zähler → 3. Nenner bleibt → 4. Unechter Bruch (17/5).",
+        "hint": "Erst die ganzen Zahlen in Bruchteile umrechnen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl", "umwandlung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-matching-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden unechten Bruch seiner gemischten Zahl zu:",
+        "pairs": [
+          {
+            "left": "9/4",
+            "right": "2 1/4"
+          },
+          {
+            "left": "11/3",
+            "right": "3 2/3"
+          },
+          {
+            "left": "13/5",
+            "right": "2 3/5"
+          },
+          {
+            "left": "17/6",
+            "right": "2 5/6"
+          }
+        ],
+        "explanation": "9/4 = 2 1/4 (9:4=2 R1), 11/3 = 3 2/3 (11:3=3 R2), 13/5 = 2 3/5 (13:5=2 R3), 17/6 = 2 5/6 (17:6=2 R5).",
+        "hint": "Teile Zähler durch Nenner und bestimme den Rest"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-matching-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jede gemischte Zahl ihrem unechten Bruch zu:",
+        "pairs": [
+          {
+            "left": "1 2/3",
+            "right": "5/3"
+          },
+          {
+            "left": "2 1/4",
+            "right": "9/4"
+          },
+          {
+            "left": "1 3/5",
+            "right": "8/5"
+          },
+          {
+            "left": "3 1/2",
+            "right": "7/2"
+          }
+        ],
+        "explanation": "1 2/3 = 5/3, 2 1/4 = 9/4, 1 3/5 = 8/5, 3 1/2 = 7/2. Formel: (Ganze × Nenner + Zähler)/Nenner.",
+        "hint": "Ganze mal Nenner plus Zähler"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-multiselect-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Brüche entsprechen der gemischten Zahl 2 1/2? (Wähle alle)",
+        "options": [
+          "5/2",
+          "4/2",
+          "10/4",
+          "3/2",
+          "15/6",
+          "6/3"
+        ],
+        "correctAnswers": [0, 2, 4],
+        "minRequired": 3,
+        "explanation": "2 1/2 = 5/2 = 10/4 = 15/6. Alle sind erweiterte Formen. 4/2=2, 3/2=1 1/2, 6/3=2 sind falsch.",
+        "hint": "Wandle 2 1/2 in einen Bruch um, dann erweitere"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl", "äquivalenz"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-multiselect-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Aussagen über gemischte Zahlen sind richtig? (Wähle alle)",
+        "options": [
+          "Gemischte Zahlen sind immer größer als 1",
+          "Man kann jeden echten Bruch als gemischte Zahl schreiben",
+          "Gemischte Zahlen bestehen aus ganzen Zahlen und einem Bruch",
+          "Der Bruch in einer gemischten Zahl ist immer ein echter Bruch",
+          "Gemischte Zahlen sind kleiner als unechte Brüche",
+          "1 1/2 ist eine gemischte Zahl"
+        ],
+        "correctAnswers": [0, 2, 3, 5],
+        "minRequired": 4,
+        "explanation": "Richtig: >1, bestehen aus Ganze+Bruch, Bruch ist echt, 1 1/2 ist gemischt. Falsch: echte Brüche nicht umwandelbar, nicht immer kleiner.",
+        "hint": "Denke an die Definition von gemischten Zahlen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "bruch-slider-6",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Wie viele Viertel sind in der gemischten Zahl 3 1/4 enthalten? (3 1/4 = ?/4)",
+        "min": 10,
+        "max": 20,
+        "step": 1,
+        "correctValue": 13,
+        "tolerance": 0,
+        "unit": "Viertel",
+        "explanation": "3 1/4 = (3·4 + 1)/4 = 13/4. Es sind 13 Viertel.",
+        "hint": "3 Ganze = 12 Viertel, plus 1 Viertel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "bruch-slider-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "slider-basic",
+      "type": "slider",
+      "content": {
+        "question": "Welche ganze Zahl erhält man bei der Umwandlung von 23/5 in eine gemischte Zahl?",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "correctValue": 4,
+        "tolerance": 0,
+        "unit": "",
+        "explanation": "23 : 5 = 4 Rest 3. Die ganze Zahl ist 4, also 23/5 = 4 3/5.",
+        "hint": "Teile 23 durch 5"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "gemischte-zahl"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "bruch-scramble-7",
+      "learningPathId": "brueche-grundlagen",
+      "templateId": "word-scramble-basic",
+      "type": "word-scramble",
+      "content": {
+        "question": "Wie nennt man eine Zahl, die aus ganzen Zahlen und einem Bruch besteht?",
+        "scrambledWord": "CTEHMIGES HZLA",
+        "correctWord": "gemischte Zahl",
+        "showLength": true,
+        "explanation": "Eine gemischte Zahl besteht aus ganzen Zahlen und einem echten Bruch, z.B. 2 1/3.",
+        "hint": "Zwei Wörter, beginnt mit 'g'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["brüche", "begriffe", "gemischte-zahl"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    }
+  ]
+}

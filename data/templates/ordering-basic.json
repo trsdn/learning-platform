@@ -1,0 +1,50 @@
+{
+  "id": "ordering-basic",
+  "name": "Ordering (Basic)",
+  "description": "Sort items into the correct order",
+  "type": "ordering",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text explaining what order to use"
+    },
+    "items": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "Items to be ordered (shown in random order)"
+    },
+    "correctOrder": {
+      "type": "array",
+      "required": true,
+      "description": "Array of indices representing the correct order (0-based)"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Ordne diese Zahlen von klein nach groß:",
+      "items": ["1000", "10", "100", "1"],
+      "correctOrder": [3, 1, 2, 0],
+      "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
+      "hint": "Welche Zahl ist am kleinsten?"
+    }
+  ]
+}

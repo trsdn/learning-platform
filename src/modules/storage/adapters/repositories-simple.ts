@@ -208,7 +208,10 @@ export class TaskRepository implements Partial<ITaskRepository> {
     }
 
     for (let i = 0; i < count; i++) {
-      result.push(shuffled[i % shuffled.length]);
+      const task = shuffled[i % shuffled.length];
+      if (task) {
+        result.push(task);
+      }
     }
 
     console.log(`[TaskRepository] Returning ${result.length} tasks (${shuffled.length} unique, repeated to reach ${count})`);
