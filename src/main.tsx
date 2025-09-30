@@ -135,24 +135,6 @@ function App() {
       <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
         <h1>🧠 MindForge Academy</h1>
         <p>Wird geladen...</p>
-        <button
-          onClick={async () => {
-            console.log('Manual seed requested...');
-            await seedDatabase(db);
-            window.location.reload();
-          }}
-          style={{
-            marginTop: '1rem',
-            padding: '0.5rem 1rem',
-            background: '#ef4444',
-            color: 'white',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
-        >
-          🔧 Force Re-seed Database
-        </button>
       </div>
     );
   }
@@ -371,51 +353,24 @@ function App() {
             Level up your brain, one question at a time
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
-          <button
-            onClick={async () => {
-              console.log('🔧 Manual re-seed triggered...');
-              try {
-                await seedDatabase(db);
-                alert('Database re-seeded! Check console for details. Reloading...');
-                window.location.reload();
-              } catch (err: any) {
-                console.error('Re-seed error:', err);
-                alert('Error: ' + err.message);
-              }
-            }}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: '#ef4444',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-              fontWeight: '500',
-            }}
-          >
-            🔧 Re-seed
-          </button>
-          <button
-            onClick={() => setShowDashboard(true)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: '#3b82f6',
-              color: 'white',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            📊 Dashboard
-          </button>
-        </div>
+        <button
+          onClick={() => setShowDashboard(true)}
+          style={{
+            padding: '0.75rem 1.5rem',
+            background: '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '6px',
+            cursor: 'pointer',
+            fontSize: '1rem',
+            fontWeight: '500',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+          }}
+        >
+          📊 Dashboard
+        </button>
       </div>
 
       <h2 style={{ marginTop: 0, marginBottom: '1rem' }}>Themen auswählen</h2>
