@@ -179,6 +179,8 @@ export class PracticeSessionService implements IPracticeSessionService {
     const selectedTaskIds: string[] = [];
     let remainingCount = config.targetCount;
 
+    console.log(`Selecting tasks: targetCount=${config.targetCount}, learningPaths=${config.learningPathIds.join(',')}`);
+
     // Get review tasks if requested
     if (config.includeReview && remainingCount > 0) {
       const dueItems = await this.spacedRepRepository.getDue(new Date());
@@ -186,6 +188,7 @@ export class PracticeSessionService implements IPracticeSessionService {
         .slice(0, Math.min(dueItems.length, Math.ceil(config.targetCount * 0.3))) // 30% review
         .map((item) => item.taskId);
 
+      console.log(`Review tasks found: ${reviewTaskIds.length}`);
       selectedTaskIds.push(...reviewTaskIds);
       remainingCount -= reviewTaskIds.length;
     }
@@ -200,11 +203,14 @@ export class PracticeSessionService implements IPracticeSessionService {
         filters.difficulty = config.difficultyFilter;
       }
 
+      console.log(`Requesting ${remainingCount} new tasks with filters:`, filters);
       const newTasks = await this.taskRepository.getRandomTasks(remainingCount, filters);
+      console.log(`Got ${newTasks.length} tasks:`, newTasks.map(t => t.id));
 
       selectedTaskIds.push(...newTasks.map((task) => task.id));
     }
 
+    console.log(`Total selected tasks: ${selectedTaskIds.length}`);
     return selectedTaskIds;
   }
 }

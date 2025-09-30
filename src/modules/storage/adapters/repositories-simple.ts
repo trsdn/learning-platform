@@ -190,7 +190,20 @@ export class TaskRepository implements Partial<ITaskRepository> {
       tasks = tasks.filter((t) => !filters.excludeIds!.includes(t.id));
     }
 
-    return tasks.sort(() => Math.random() - 0.5).slice(0, count);
+    // Shuffle tasks
+    const shuffled = tasks.sort(() => Math.random() - 0.5);
+
+    // If we have fewer tasks than requested, repeat tasks to reach count
+    const result: Task[] = [];
+    if (shuffled.length === 0) {
+      return result;
+    }
+
+    for (let i = 0; i < count; i++) {
+      result.push(shuffled[i % shuffled.length]);
+    }
+
+    return result;
   }
 
   // Stub methods
