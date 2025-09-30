@@ -48,9 +48,13 @@ export async function loadLearningPathsFromJSON(): Promise<{
 
         const data: LearningPathData = await response.json();
 
-        // Add learning path
+        // Build task IDs array from tasks
+        const taskIds = data.tasks.map((task) => task.id);
+
+        // Add learning path with task IDs
         const learningPath: LearningPath = {
           ...data.learningPath,
+          taskIds, // Add task IDs
           createdAt: new Date('2024-01-01'),
           updatedAt: new Date('2024-01-01'),
         };

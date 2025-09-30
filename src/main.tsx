@@ -60,6 +60,7 @@ function App() {
   async function selectTopic(topic: Topic) {
     setSelectedTopic(topic);
     const paths = await db.learningPaths.where('topicId').equals(topic.id).toArray();
+    console.log(`Loading learning paths for topic ${topic.id}:`, paths);
     setLearningPaths(paths);
   }
 
@@ -259,7 +260,7 @@ function App() {
         <div>
           <h1>🧠 MindForge Academy</h1>
           <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
-            Wissenschaftlich optimiertes Lernen mit Spaced Repetition
+            Level up your brain, one question at a time
           </p>
         </div>
         <button
