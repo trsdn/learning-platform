@@ -684,17 +684,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
           {content.options.map((option, index) => {
             const isSelected = selectedOptions.has(index);
-            const isCorrect = content.correctAnswers.includes(index);
+            const isCorrectAnswer = content.correctAnswers.includes(index);
             let backgroundColor = '#ffffff';
             let borderColor = '#d1d5db';
+            let statusIcon = '';
 
             if (showFeedback) {
-              if (isCorrect) {
+              // Show green for all correct answers (whether selected or not)
+              if (isCorrectAnswer) {
                 backgroundColor = '#dcfce7';
                 borderColor = '#86efac';
-              } else if (isSelected && !isCorrect) {
+                statusIcon = isSelected ? '✓' : '○'; // Check if selected, circle if missed
+              }
+              // Show red for wrong selections
+              else if (isSelected && !isCorrectAnswer) {
                 backgroundColor = '#fee2e2';
                 borderColor = '#fca5a5';
+                statusIcon = '✗';
               }
             } else if (isSelected) {
               backgroundColor = '#dbeafe';
@@ -713,6 +719,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                   borderRadius: '6px',
                   cursor: showFeedback ? 'default' : 'pointer',
                   transition: 'all 0.2s',
+                  position: 'relative',
                 }}
               >
                 <input
@@ -727,7 +734,17 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                     cursor: showFeedback ? 'default' : 'pointer',
                   }}
                 />
-                <span style={{ fontSize: '0.95rem' }}>{option}</span>
+                <span style={{ fontSize: '0.95rem', flex: 1 }}>{option}</span>
+                {showFeedback && statusIcon && (
+                  <span style={{
+                    fontSize: '1.25rem',
+                    fontWeight: 'bold',
+                    marginLeft: '0.5rem',
+                    color: isCorrectAnswer ? '#10b981' : '#ef4444'
+                  }}>
+                    {statusIcon}
+                  </span>
+                )}
               </label>
             );
           })}
