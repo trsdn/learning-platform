@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
 import { db } from './modules/storage/database';
 import { seedDatabase } from './modules/storage/seed-data';
@@ -20,14 +20,15 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
   const [inSession, setInSession] = useState(false);
   const [completedSession, setCompletedSession] = useState<IPracticeSession | null>(null);
-  const [isInitialized, setIsInitialized] = useState(false);
   const [showDashboard, setShowDashboard] = useState(false);
+  const initStarted = useRef(false);
 
   useEffect(() => {
-    if (!isInitialized) {
+    if (!initStarted.current) {
+      initStarted.current = true;
       initializeApp();
     }
-  }, [isInitialized]);
+  }, []);
 
   async function initializeApp() {
     try {
@@ -43,7 +44,6 @@ function App() {
       const loadedTopics = await db.topics.toArray();
       setTopics(loadedTopics);
       setIsLoading(false);
-      setIsInitialized(true);
     } catch (error: any) {
       console.error('Failed to initialize app:', error);
       console.error('Error details:', {
@@ -53,7 +53,6 @@ function App() {
         stack: error?.stack,
       });
       setIsLoading(false);
-      setIsInitialized(true);
     }
   }
 
