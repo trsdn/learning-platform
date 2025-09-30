@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { db } from '@storage/database';
-import type { PracticeSession, Topic, SpacedRepetitionItem } from '@core/types/services';
+import type { PracticeSession } from '@core/types/services';
 
 interface DashboardStats {
   totalSessions: number;
@@ -54,11 +54,11 @@ export function Dashboard({ onClose }: DashboardProps) {
 
       // Calculate overall stats
       const totalQuestions = completedSessions.reduce(
-        (sum, s) => sum + (s.results?.completed || 0),
+        (sum, s) => sum + (s.execution?.completedCount || 0),
         0
       );
       const correctAnswers = completedSessions.reduce(
-        (sum, s) => sum + (s.results?.correct || 0),
+        (sum, s) => sum + (s.execution?.correctCount || 0),
         0
       );
       const accuracyRate = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
@@ -85,14 +85,14 @@ export function Dashboard({ onClose }: DashboardProps) {
       >();
 
       for (const session of completedSessions) {
-        const topicId = session.topicId;
+        const topicId = session.configuration.topicId;
         if (!topicStatsMap.has(topicId)) {
           topicStatsMap.set(topicId, { sessions: 0, correct: 0, total: 0 });
         }
         const topicStats = topicStatsMap.get(topicId)!;
         topicStats.sessions++;
-        topicStats.correct += session.results?.correct || 0;
-        topicStats.total += session.results?.completed || 0;
+        topicStats.correct += session.execution?.correctCount || 0;
+        topicStats.total += session.execution?.completedCount || 0;
       }
 
       const topicProgress = Array.from(topicStatsMap.entries()).map(
@@ -109,9 +109,9 @@ export function Dashboard({ onClose }: DashboardProps) {
       const now = new Date();
       const mastered = srItems.filter((item) => item.algorithm.efactor >= 2.5).length;
       const learning = srItems.filter(
-        (item) => item.algorithm.efactor < 2.5 && item.algorithm.repetitions > 0
+        (item) => item.algorithm.efactor < 2.5 && item.algorithm.repetition > 0
       ).length;
-      const newItems = srItems.filter((item) => item.algorithm.repetitions === 0).length;
+      const newItems = srItems.filter((item) => item.algorithm.repetition === 0).length;
 
       // Upcoming reviews
       const upcomingReviews = srItems.filter(

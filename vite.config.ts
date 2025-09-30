@@ -11,9 +11,9 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'robots.txt', 'apple-touch-icon.png'],
       manifest: {
-        name: 'German Learning Platform',
-        short_name: 'Lernplattform',
-        description: 'Deutsche Lernplattform mit Spaced Repetition',
+        name: 'MindForge Academy',
+        short_name: 'MindForge',
+        description: 'Wissenschaftlich optimiertes Lernen mit Spaced Repetition',
         theme_color: '#2563eb',
         background_color: '#ffffff',
         display: 'standalone',

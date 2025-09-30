@@ -21,9 +21,6 @@ export async function loadLearningPathsFromJSON(): Promise<{
   const learningPaths: LearningPath[] = [];
   const tasks: Task[] = [];
 
-  // Known topic folders
-  const topicFolders = ['mathematik', 'biologie', 'chemie', 'physik'];
-
   // Learning path files to load (topic -> filenames)
   const learningPathFiles: Record<string, string[]> = {
     mathematik: ['algebra-basics.json', 'geometry-basics.json'],

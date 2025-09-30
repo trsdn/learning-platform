@@ -104,7 +104,7 @@ function App() {
   if (isLoading) {
     return (
       <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
-        <h1>🎓 Lernplattform</h1>
+        <h1>🧠 MindForge Academy</h1>
         <p>Wird geladen...</p>
       </div>
     );
@@ -255,11 +255,11 @@ function App() {
 
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
-          <h1>🎓 Deutsche Lernplattform</h1>
+          <h1>🧠 MindForge Academy</h1>
           <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
-            Lernen mit Spaced Repetition Algorithmus
+            Wissenschaftlich optimiertes Lernen mit Spaced Repetition
           </p>
         </div>
         <button
@@ -282,25 +282,7 @@ function App() {
         </button>
       </div>
 
-      <div
-        style={{
-          marginTop: '2rem',
-          padding: '1rem',
-          background: '#dcfce7',
-          borderRadius: '8px',
-          border: '2px solid #86efac',
-        }}
-      >
-        <h3 style={{ marginBottom: '0.5rem' }}>✅ System Bereit</h3>
-        <ul style={{ fontSize: '0.9rem', lineHeight: '1.8', marginLeft: '1.5rem' }}>
-          <li>SM-2 Spaced Repetition Algorithmus implementiert</li>
-          <li>IndexedDB mit Dexie.js konfiguriert</li>
-          <li>{topics.length} Themen geladen</li>
-          <li>PWA Service Worker aktiv</li>
-        </ul>
-      </div>
-
-      <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Themen auswählen</h2>
+      <h2 style={{ marginTop: 0, marginBottom: '1rem' }}>Themen auswählen</h2>
       <div
         style={{
           display: 'grid',
