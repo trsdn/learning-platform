@@ -12,11 +12,13 @@ import {
 interface Props {
   topicId: string;
   learningPathIds: string[];
+  targetCount?: number;
+  includeReview?: boolean;
   onComplete: () => void;
   onCancel: () => void;
 }
 
-export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel }: Props) {
+export function PracticeSession({ topicId, learningPathIds, targetCount = 10, includeReview = true, onComplete, onCancel }: Props) {
   const [session, setSession] = useState<PracticeSession | null>(null);
   const [currentTask, setCurrentTask] = useState<Task | null>(null);
   const [currentTaskIndex, setCurrentTaskIndex] = useState(0);
@@ -47,8 +49,8 @@ export function PracticeSession({ topicId, learningPathIds, onComplete, onCancel
     const newSession = await sessionService.createSession({
       topicId,
       learningPathIds,
-      targetCount: 10,
-      includeReview: true,
+      targetCount,
+      includeReview,
     });
 
     setSession(newSession);

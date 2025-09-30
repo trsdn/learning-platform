@@ -21,6 +21,8 @@ function App() {
   const [inSession, setInSession] = useState(false);
   const [completedSession, setCompletedSession] = useState<IPracticeSession | null>(null);
   const [showDashboard, setShowDashboard] = useState(false);
+  const [showSessionConfig, setShowSessionConfig] = useState(false);
+  const [sessionConfig, setSessionConfig] = useState({ targetCount: 10, includeReview: true });
   const initStarted = useRef(false);
 
   useEffect(() => {
@@ -63,9 +65,19 @@ function App() {
     setLearningPaths(paths);
   }
 
-  function startPracticeSession(learningPath: LearningPath) {
+  function showConfigScreen(learningPath: LearningPath) {
     setSelectedLearningPath(learningPath);
+    setShowSessionConfig(true);
+  }
+
+  function startPracticeSession() {
+    setShowSessionConfig(false);
     setInSession(true);
+  }
+
+  function cancelSessionConfig() {
+    setShowSessionConfig(false);
+    setSelectedLearningPath(null);
   }
 
   async function handleSessionComplete() {
@@ -132,6 +144,90 @@ function App() {
     );
   }
 
+  // Show session configuration
+  if (showSessionConfig && selectedLearningPath && selectedTopic) {
+    return (
+      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+        <button
+          onClick={cancelSessionConfig}
+          style={{
+            padding: '0.5rem 1rem',
+            background: '#e5e7eb',
+            border: 'none',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            marginBottom: '1rem',
+          }}
+        >
+          ← Zurück
+        </button>
+
+        <h1 style={{ marginBottom: '0.5rem' }}>Sitzung konfigurieren</h1>
+        <p style={{ color: '#6b7280', marginBottom: '2rem' }}>
+          {selectedLearningPath.title}
+        </p>
+
+        <div style={{ marginBottom: '2rem' }}>
+          <label style={{ display: 'block', fontWeight: '500', marginBottom: '0.5rem' }}>
+            Anzahl der Fragen
+          </label>
+          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+            {[5, 10, 15, 20].map((count) => (
+              <button
+                key={count}
+                onClick={() => setSessionConfig({ ...sessionConfig, targetCount: count })}
+                style={{
+                  padding: '0.75rem 1.5rem',
+                  background: sessionConfig.targetCount === count ? '#3b82f6' : '#f3f4f6',
+                  color: sessionConfig.targetCount === count ? 'white' : '#374151',
+                  border: 'none',
+                  borderRadius: '6px',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                }}
+              >
+                {count}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div style={{ marginBottom: '2rem' }}>
+          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+            <input
+              type="checkbox"
+              checked={sessionConfig.includeReview}
+              onChange={(e) => setSessionConfig({ ...sessionConfig, includeReview: e.target.checked })}
+              style={{ marginRight: '0.5rem', width: '1.25rem', height: '1.25rem', cursor: 'pointer' }}
+            />
+            <span>Wiederholungsfragen einbeziehen</span>
+          </label>
+          <p style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem', marginLeft: '1.75rem' }}>
+            Fragen, die du bereits beantwortet hast und die zur Wiederholung fällig sind
+          </p>
+        </div>
+
+        <button
+          onClick={startPracticeSession}
+          style={{
+            padding: '1rem 2rem',
+            background: '#3b82f6',
+            color: 'white',
+            border: 'none',
+            borderRadius: '8px',
+            cursor: 'pointer',
+            fontSize: '1.1rem',
+            fontWeight: '500',
+            width: '100%',
+          }}
+        >
+          Sitzung starten →
+        </button>
+      </div>
+    );
+  }
+
   // Show practice session
   if (inSession && selectedLearningPath && selectedTopic) {
     return (
@@ -139,6 +235,8 @@ function App() {
         <PracticeSession
           topicId={selectedTopic.id}
           learningPathIds={[selectedLearningPath.id]}
+          targetCount={sessionConfig.targetCount}
+          includeReview={sessionConfig.includeReview}
           onComplete={handleSessionComplete}
           onCancel={handleSessionCancel}
         />
@@ -208,7 +306,7 @@ function App() {
                 <span>{path.taskIds.length} Aufgaben</span>
               </div>
               <button
-                onClick={() => startPracticeSession(path)}
+                onClick={() => showConfigScreen(path)}
                 style={{
                   marginTop: '1rem',
                   padding: '0.5rem 1rem',
