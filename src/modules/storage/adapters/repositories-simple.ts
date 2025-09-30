@@ -176,18 +176,25 @@ export class TaskRepository implements Partial<ITaskRepository> {
       excludeIds?: string[];
     }
   ): Promise<Task[]> {
+    console.log(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
+
     let tasks: Task[];
     if (filters?.learningPathIds) {
       tasks = await this.table
         .where('learningPathId')
         .anyOf(filters.learningPathIds)
         .toArray();
+      console.log(`[TaskRepository] Found ${tasks.length} tasks for learning paths:`, filters.learningPathIds);
+      console.log(`[TaskRepository] Task IDs:`, tasks.map(t => t.id));
     } else {
       tasks = await this.table.toArray();
+      console.log(`[TaskRepository] Found ${tasks.length} tasks (no filter)`);
     }
 
     if (filters?.excludeIds) {
+      const beforeExclude = tasks.length;
       tasks = tasks.filter((t) => !filters.excludeIds!.includes(t.id));
+      console.log(`[TaskRepository] After excluding IDs: ${beforeExclude} -> ${tasks.length} tasks`);
     }
 
     // Shuffle tasks
@@ -196,6 +203,7 @@ export class TaskRepository implements Partial<ITaskRepository> {
     // If we have fewer tasks than requested, repeat tasks to reach count
     const result: Task[] = [];
     if (shuffled.length === 0) {
+      console.log(`[TaskRepository] No tasks available!`);
       return result;
     }
 
@@ -203,6 +211,7 @@ export class TaskRepository implements Partial<ITaskRepository> {
       result.push(shuffled[i % shuffled.length]);
     }
 
+    console.log(`[TaskRepository] Returning ${result.length} tasks (${shuffled.length} unique, repeated to reach ${count})`);
     return result;
   }
 
