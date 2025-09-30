@@ -429,6 +429,11 @@ export async function seedDatabase(db: any): Promise<void> {
     throw new Error('No learning paths found in JSON files!');
   }
 
+  console.log(`Saving to database: ${data.topics.length} topics, ${data.learningPaths.length} learning paths, ${data.tasks.length} tasks`);
+  console.log('Topics:', data.topics.map(t => t.id));
+  console.log('Learning paths:', data.learningPaths.map(lp => `${lp.id} (${lp.taskIds?.length || 0} taskIds)`));
+  console.log('Tasks:', data.tasks.map(t => `${t.id} (learningPathId: ${t.learningPathId})`));
+
   await db.topics.bulkAdd(data.topics);
   await db.learningPaths.bulkAdd(data.learningPaths);
   await db.tasks.bulkAdd(data.tasks);
@@ -436,4 +441,10 @@ export async function seedDatabase(db: any): Promise<void> {
   console.log(
     `✅ Loaded from JSON: ${data.topics.length} topics, ${data.learningPaths.length} learning paths, ${data.tasks.length} tasks`
   );
+
+  // Verify what was actually saved
+  const savedTopics = await db.topics.count();
+  const savedPaths = await db.learningPaths.count();
+  const savedTasks = await db.tasks.count();
+  console.log(`✅ Verified in DB: ${savedTopics} topics, ${savedPaths} learning paths, ${savedTasks} tasks`);
 }
