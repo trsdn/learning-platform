@@ -314,15 +314,9 @@ function App() {
               e.currentTarget.style.borderColor = 'transparent';
             }}
           >
-            <h2 style={{ marginBottom: '0.5rem' }}>
+            <h2 style={{ margin: 0 }}>
               {topic.id === 'mathematik' ? '🔢' : '🧬'} {topic.title}
             </h2>
-            <p style={{ fontSize: '0.9rem', marginBottom: '1rem', opacity: 0.8 }}>
-              {topic.description}
-            </p>
-            <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
-              {topic.learningPathIds.length} Lernpfade
-            </div>
           </div>
         ))}
       </div>
