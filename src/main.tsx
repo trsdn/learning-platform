@@ -37,10 +37,15 @@ function App() {
     try {
       // Check if database has data
       const topicCount = await db.topics.count();
+      const taskCount = await db.tasks.count();
 
-      if (topicCount === 0) {
-        console.log('Seeding database with sample data...');
+      console.log(`Database status: ${topicCount} topics, ${taskCount} tasks`);
+
+      if (topicCount === 0 || taskCount === 0) {
+        console.log('Database empty or incomplete, seeding...');
         await seedDatabase(db);
+      } else {
+        console.log('Database already seeded, skipping seed');
       }
 
       // Load topics

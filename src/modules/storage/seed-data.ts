@@ -447,22 +447,32 @@ export async function seedDatabase(db: any): Promise<void> {
     await db.topics.bulkAdd(data.topics);
     console.log('✓ Topics saved');
   } catch (err: any) {
-    console.error('❌ Error saving topics:', err.message, err);
+    console.log('⚠️ Topics exist, using bulkPut to update...');
+    await db.topics.bulkPut(data.topics);
+    console.log('✓ Topics updated');
   }
 
   try {
     await db.learningPaths.bulkAdd(data.learningPaths);
     console.log('✓ Learning paths saved');
   } catch (err: any) {
-    console.error('❌ Error saving learning paths:', err.message, err);
+    console.log('⚠️ Learning paths exist, using bulkPut to update...');
+    await db.learningPaths.bulkPut(data.learningPaths);
+    console.log('✓ Learning paths updated');
   }
 
   try {
     await db.tasks.bulkAdd(data.tasks);
     console.log('✓ Tasks saved');
   } catch (err: any) {
-    console.error('❌ Error saving tasks:', err.message, err);
-    console.error('Failed tasks:', err.failures);
+    console.error('❌ Error saving tasks with bulkAdd:', err.message);
+    console.log('⚠️ Some tasks already exist, using bulkPut to update...');
+    try {
+      await db.tasks.bulkPut(data.tasks);
+      console.log('✓ Tasks updated with bulkPut');
+    } catch (putErr: any) {
+      console.error('❌ Error with bulkPut:', putErr.message);
+    }
   }
 
   console.log(
