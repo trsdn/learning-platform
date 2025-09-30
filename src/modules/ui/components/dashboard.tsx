@@ -331,7 +331,7 @@ export function Dashboard({ onClose }: DashboardProps) {
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: '500' }}>{session.topicId}</div>
+                  <div style={{ fontWeight: '500' }}>{session.configuration.topicId}</div>
                   <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
                     {session.execution.completedAt && formatDate(session.execution.completedAt)}
                   </div>
@@ -341,7 +341,7 @@ export function Dashboard({ onClose }: DashboardProps) {
                     {Math.round(session.results.accuracy)}%
                   </div>
                   <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
-                    {session.results.correct}/{session.results.completed}
+                    {session.execution.correctCount}/{session.execution.completedCount}
                   </div>
                 </div>
               </div>
