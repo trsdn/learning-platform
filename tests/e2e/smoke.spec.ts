@@ -10,7 +10,7 @@ test('app loads and displays topics', async ({ page }) => {
   await page.waitForLoadState('networkidle');
 
   // Verify title
-  await expect(page.locator('h1')).toContainText('Deutsche Lernplattform');
+  await expect(page.locator('h1')).toContainText('MindForge Academy');
 
   // Verify topics are visible
   await expect(page.getByText('Mathematik')).toBeVisible();
