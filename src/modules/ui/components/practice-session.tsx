@@ -251,6 +251,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     );
 
     await sessionService.completeSession(session.id);
+
+    // Wait a bit to ensure the session is saved to the database
+    await new Promise(resolve => setTimeout(resolve, 100));
+
     onComplete();
   }
 
