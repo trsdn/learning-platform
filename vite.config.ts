@@ -4,7 +4,7 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
-  base: process.env.BASE_URL || '/',
+  base: process.env.NODE_ENV === 'production' ? '/learning-platform/' : '/',
   plugins: [
     react(),
     VitePWA({
