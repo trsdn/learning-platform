@@ -22,19 +22,18 @@ Execution steps:
 2. **GitHub Actions deployment** (default):
    a. Verify GitHub CLI is available: `gh --version`
    b. Check if workflow exists: `gh workflow list | grep "Deploy to Test Environment"`
-   c. Trigger workflow:
-      ```bash
-      gh workflow run deploy-test.yml
-      ```
+   c. **Auto-deployment**: Workflow triggers automatically on push to main
+      - To manually trigger: `gh workflow run "Deploy to Test Environment"`
    d. Show workflow status:
       ```bash
-      gh run list --workflow=deploy-test.yml --limit=1
+      gh run list --workflow="Deploy to Test Environment" --limit=1
       ```
    e. Provide instructions:
-      - "Deployment triggered via GitHub Actions"
+      - "Test environment deploys automatically on every push to main"
       - "View progress: gh run watch"
       - "Or visit: https://github.com/trsdn/learning-platform/actions"
       - "Test URL (in ~2-3 min): https://trsdn.github.io/learning-platform/test/"
+      - "Note: CDN cache may take 10-15 minutes to clear"
 
 3. **Local deployment** (if requested):
    a. Verify dependencies: `npm list gh-pages`
@@ -54,10 +53,11 @@ Execution steps:
    - [ ] Check production site still works: `/learning-platform/`
 
 5. **If deployment fails**:
-   - Check GitHub Actions logs
-   - Verify environment variables are set correctly
+   - Check GitHub Actions logs: `gh run view --log-failed`
+   - Verify environment variables are set correctly in workflow
    - Ensure gh-pages branch exists
-   - Check repository permissions
+   - Check repository permissions (workflow needs `contents: write`)
+   - Verify .nojekyll file exists in gh-pages branch root
 
 Behavior rules:
 - DEFAULT to GitHub Actions unless user explicitly requests `local`

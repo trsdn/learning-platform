@@ -75,20 +75,26 @@ Execution steps:
       git push --tags
       ```
 
-   b. Run deployment:
+   b. **Deployment via GitHub Actions** (recommended):
+      - Create a GitHub Release to trigger automatic deployment
+      - Or manually trigger: `gh workflow run "Deploy to GitHub Pages"`
+      - Monitor: `gh run watch`
+
+   c. **Local deployment** (alternative):
       ```bash
       npm run deploy
       ```
 
-   c. Monitor deployment output for errors
+   d. Monitor deployment output for errors
 
-   d. Verify deployment command completed successfully
+   e. Verify deployment command completed successfully
 
 5. **Post-deployment verification**:
    a. Provide production URL: https://trsdn.github.io/learning-platform/
 
    b. Remind user to:
       - Wait 2-3 minutes for GitHub Pages to update
+      - CDN cache may take 10-15 minutes to fully clear
       - Clear browser cache (Ctrl+Shift+Delete)
       - Test in incognito/private window
 
@@ -131,6 +137,7 @@ Behavior rules:
 - ALWAYS verify git status and branch
 - ALWAYS provide rollback instructions
 - RECOMMEND testing in test environment first
+- RECOMMEND using GitHub Actions (triggered by release) over local deployment
 - ASK user if they want to create a git tag for this deployment
 
 Safety guardrails:
