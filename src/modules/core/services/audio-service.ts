@@ -10,8 +10,17 @@ interface AudioManifest {
 class AudioService {
   private manifest: AudioManifest | null = null;
   private audioCache: Map<string, HTMLAudioElement> = new Map();
-  private manifestPath = '/audio/spanish/manifest.json';
-  private audioBasePath = '/audio/spanish/';
+  private getBasePath = () => {
+    // Use Vite's BASE_URL from the HTML base tag or default to '/'
+    const base = document.querySelector('base')?.getAttribute('href') || '/';
+    return base.endsWith('/') ? base : base + '/';
+  };
+  private get manifestPath() {
+    return `${this.getBasePath()}audio/spanish/manifest.json`;
+  }
+  private get audioBasePath() {
+    return `${this.getBasePath()}audio/spanish/`;
+  }
   private isInitialized = false;
   private currentlyPlaying: HTMLAudioElement | null = null;
 
