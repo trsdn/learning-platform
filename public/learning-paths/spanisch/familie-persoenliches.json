@@ -204,7 +204,10 @@
         "correctAnswer": "Tengo ... años",
         "alternatives": [
           "tengo años",
-          "Tengo años"
+          "Tengo años",
+          "Tengo... años",
+          "Tengo ...años",
+          "Tengo...años"
         ],
         "explanation": "'Tengo ... años' bedeutet wörtlich 'Ich habe ... Jahre'."
       },
