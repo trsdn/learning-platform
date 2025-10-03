@@ -73,9 +73,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     });
   }, []);
 
-  // Load current task
+  // Load current task when session is first loaded
   useEffect(() => {
-    if (session && session.execution.taskIds.length > 0) {
+    if (session && session.execution.taskIds.length > 0 && currentTaskIndex === 0) {
+      loadCurrentTask();
+    }
+  }, [session]);
+
+  // Load current task when index changes
+  useEffect(() => {
+    if (session && session.execution.taskIds.length > 0 && currentTaskIndex > 0) {
       loadCurrentTask();
     }
   }, [currentTaskIndex]);
