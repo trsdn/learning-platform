@@ -78,7 +78,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (session && session.execution.taskIds.length > 0) {
       loadCurrentTask();
     }
-  }, [session, currentTaskIndex]);
+  }, [currentTaskIndex]);
 
   async function initializeSession() {
     const sessionService = new PracticeSessionService(
