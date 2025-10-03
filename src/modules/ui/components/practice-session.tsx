@@ -377,7 +377,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           }
 
           const hasAudio = isSpanishText(option);
-          const showAudio = showFeedback && hasAudio;
+          const isCorrectOption = index === correctAnswerIndex;
+          const showAudio = showFeedback && isCorrectOption && hasAudio;
 
           return (
             <button
