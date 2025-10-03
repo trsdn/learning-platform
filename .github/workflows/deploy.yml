@@ -1,25 +1,28 @@
-name: Deploy to GitHub Pages
+name: Deploy to Production
 
 on:
-  push:
-    branches: [main]
+  release:
+    types: [published]
   workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: 'pages'
-  cancel-in-progress: true
+    inputs:
+      confirm:
+        description: 'Type "deploy-production" to confirm'
+        required: true
+        default: ''
 
 jobs:
-  build:
+  deploy-production:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Validate confirmation (manual trigger only)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm != 'deploy-production'
+        run: |
+          echo "❌ Deployment cancelled. Please type 'deploy-production' to confirm."
+          exit 1
+
+      - name: Checkout code
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -30,26 +33,32 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build
-        run: npm run build
+      - name: Build for production
         env:
-          BASE_URL: /learning-platform/
+          VITE_ENV: production
+          VITE_BASE_PATH: /learning-platform/
+          VITE_DB_NAME: mindforge-academy
+        run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy to GitHub Pages (root)
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          path: './dist'
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: .  # Deploy to root
+          keep_files: true    # Keep test directory
+          exclude_assets: 'test/**'  # Don't touch test directory
+          commit_message: 'Deploy production: ${{ github.event.release.tag_name || github.sha }}'
 
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deployment summary
+        run: |
+          echo "✅ Production deployment successful!"
+          echo ""
+          echo "🔗 Production URL: https://trsdn.github.io/learning-platform/"
+          echo "🔗 Test URL: https://trsdn.github.io/learning-platform/test/ (unchanged)"
+          echo ""
+          echo "📦 Database: mindforge-academy"
+          echo "🏷️  Release: ${{ github.event.release.tag_name || 'Manual deployment' }}"
+          echo "🌿 Commit: ${{ github.sha }}"
+          echo ""
+          echo "⚠️  Note: Clear browser cache (Ctrl+Shift+Delete) before testing!"

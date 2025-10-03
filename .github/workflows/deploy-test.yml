@@ -1,20 +1,22 @@
 name: Deploy to Test Environment
 
 on:
-  workflow_dispatch:  # Manual trigger only
+  push:
+    branches: [main]
+  workflow_dispatch:  # Manual trigger also available
     inputs:
       confirm:
         description: 'Type "deploy-test" to confirm deployment'
-        required: true
-        default: ''
+        required: false
+        default: 'deploy-test'
 
 jobs:
   deploy-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Validate confirmation
-        if: github.event.inputs.confirm != 'deploy-test'
+      - name: Validate confirmation (manual trigger only)
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.confirm != 'deploy-test'
         run: |
           echo "❌ Deployment cancelled. Please type 'deploy-test' to confirm."
           exit 1
@@ -44,7 +46,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           destination_dir: test
-          keep_files: false  # Replace test directory completely
+          keep_files: true  # Keep production files
           commit_message: 'Deploy to test environment: ${{ github.sha }}'
 
       - name: Deployment summary
