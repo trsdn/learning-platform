@@ -445,8 +445,8 @@
     {
       "id": "spanisch-begruessung-17",
       "learningPathId": "begruessung-vorstellung",
-      "templateId": "drag-and-drop-basic",
-      "type": "drag-and-drop",
+      "templateId": "ordering-basic",
+      "type": "ordering",
       "content": {
         "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Wie heißt du?'",
         "items": [
@@ -475,8 +475,8 @@
     {
       "id": "spanisch-begruessung-18",
       "learningPathId": "begruessung-vorstellung",
-      "templateId": "drag-and-drop-basic",
-      "type": "drag-and-drop",
+      "templateId": "ordering-basic",
+      "type": "ordering",
       "content": {
         "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Ich heiße Maria'",
         "items": [
