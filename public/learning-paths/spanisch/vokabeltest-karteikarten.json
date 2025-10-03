@@ -1,0 +1,892 @@
+{
+  "id": "vokabeltest-karteikarten",
+  "title": "Vokabeltest - Karteikarten",
+  "description": "Teste dein Wissen mit allen spanischen Vokabeln in beide Richtungen (Deutsch→Spanisch und Spanisch→Deutsch)",
+  "difficulty": "beginner",
+  "estimatedTime": "30-60 Minuten",
+  "topics": ["Sprachen", "Spanisch", "Vokabeln"],
+  "tasks": [
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Hund",
+        "back": "el perro",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el perro",
+        "back": "der Hund",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Katze",
+        "back": "el gato",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el gato",
+        "back": "die Katze",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Vater",
+        "back": "el padre",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el padre",
+        "back": "der Vater",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Mutter",
+        "back": "la madre",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la madre",
+        "back": "die Mutter",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Bruder",
+        "back": "el hermano",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el hermano",
+        "back": "der Bruder",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Schwester",
+        "back": "la hermana",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la hermana",
+        "back": "die Schwester",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Freund",
+        "back": "el amigo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el amigo",
+        "back": "der Freund",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Freundin",
+        "back": "la amiga",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la amiga",
+        "back": "die Freundin",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "rot",
+        "back": "rojo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "rojo",
+        "back": "rot",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "blau",
+        "back": "azul",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "azul",
+        "back": "blau",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "grün",
+        "back": "verde",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "verde",
+        "back": "grün",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "gelb",
+        "back": "amarillo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "amarillo",
+        "back": "gelb",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "schwarz",
+        "back": "negro",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "negro",
+        "back": "schwarz",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "weiß",
+        "back": "blanco",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "blanco",
+        "back": "weiß",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "eins",
+        "back": "uno",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "uno",
+        "back": "eins",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "zwei",
+        "back": "dos",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "dos",
+        "back": "zwei",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "drei",
+        "back": "tres",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "tres",
+        "back": "drei",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "zehn",
+        "back": "diez",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "diez",
+        "back": "zehn",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "zwanzig",
+        "back": "veinte",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "veinte",
+        "back": "zwanzig",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Hallo",
+        "back": "Hola",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Hola",
+        "back": "Hallo",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Danke",
+        "back": "Gracias",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Gracias",
+        "back": "Danke",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Bitte",
+        "back": "Por favor",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Por favor",
+        "back": "Bitte",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Auf Wiedersehen",
+        "back": "Adiós",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "Adiós",
+        "back": "Auf Wiedersehen",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Elefant",
+        "back": "el elefante",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el elefante",
+        "back": "der Elefant",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Giraffe",
+        "back": "la jirafa",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la jirafa",
+        "back": "die Giraffe",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Löwe",
+        "back": "el león",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el león",
+        "back": "der Löwe",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Schildkröte",
+        "back": "la tortuga",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la tortuga",
+        "back": "die Schildkröte",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Pferd",
+        "back": "el caballo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el caballo",
+        "back": "das Pferd",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Kuh",
+        "back": "la vaca",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la vaca",
+        "back": "die Kuh",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Schwein",
+        "back": "el cerdo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el cerdo",
+        "back": "das Schwein",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Vogel",
+        "back": "el pájaro",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el pájaro",
+        "back": "der Vogel",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Fisch",
+        "back": "el pez",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el pez",
+        "back": "der Fisch",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Sonne",
+        "back": "el sol",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el sol",
+        "back": "die Sonne",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Mond",
+        "back": "la luna",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la luna",
+        "back": "der Mond",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Strand",
+        "back": "la playa",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la playa",
+        "back": "der Strand",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Stadt",
+        "back": "la ciudad",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la ciudad",
+        "back": "die Stadt",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Haus",
+        "back": "la casa",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la casa",
+        "back": "das Haus",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Rucksack",
+        "back": "la mochila",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la mochila",
+        "back": "der Rucksack",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Foto",
+        "back": "la foto",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la foto",
+        "back": "das Foto",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Ei",
+        "back": "el huevo",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el huevo",
+        "back": "das Ei",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Käse",
+        "back": "el queso",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el queso",
+        "back": "der Käse",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "die Tomate",
+        "back": "el tomate",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el tomate",
+        "back": "die Tomate",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Gymnasium",
+        "back": "el instituto",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el instituto",
+        "back": "das Gymnasium",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Park",
+        "back": "el parque",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el parque",
+        "back": "der Park",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Zebra",
+        "back": "la cebra",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la cebra",
+        "back": "das Zebra",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "der Koala",
+        "back": "el koala",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "el koala",
+        "back": "der Koala",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "das Haustier",
+        "back": "la mascota",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "la mascota",
+        "back": "das Haustier",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "ja",
+        "back": "sí",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "sí",
+        "back": "ja",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "nein",
+        "back": "no",
+        "frontLanguage": "de",
+        "backLanguage": "es"
+      }
+    },
+    {
+      "type": "flashcard",
+      "content": {
+        "front": "no",
+        "back": "nein",
+        "frontLanguage": "es",
+        "backLanguage": "de"
+      }
+    }
+  ]
+}

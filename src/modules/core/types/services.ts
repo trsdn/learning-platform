@@ -36,14 +36,14 @@ export interface LearningPath {
   updatedAt: Date;
 }
 
-export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble';
+export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard';
 
 export interface Task {
   id: string;
   learningPathId: string;
   templateId: string;
   type: TaskType;
-  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent;
+  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent | FlashcardContent;
   metadata: {
     difficulty: 'easy' | 'medium' | 'hard';
     tags: string[];
@@ -127,6 +127,15 @@ export interface WordScrambleContent {
   showLength?: boolean; // Show word length as hint
   explanation?: string;
   hint?: string;
+}
+
+export interface FlashcardContent {
+  front: string; // The word/phrase shown initially
+  back: string; // The translation/answer (hidden until revealed)
+  frontLanguage: 'de' | 'es' | 'en'; // Language of front side
+  backLanguage: 'de' | 'es' | 'en'; // Language of back side
+  explanation?: string; // Optional additional context
+  hint?: string; // Optional hint
 }
 
 export interface AnswerHistory {

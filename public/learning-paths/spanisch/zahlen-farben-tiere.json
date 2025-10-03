@@ -1,0 +1,696 @@
+{
+  "id": "zahlen-farben-tiere",
+  "title": "Zahlen, Farben und Tiere",
+  "description": "Lerne Zahlen von 0-20, Farben und viele Tiernamen auf Spanisch",
+  "difficulty": "beginner",
+  "estimatedTime": "3 Wochen",
+  "topics": ["Sprachen", "Spanisch", "Wortschatz"],
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'cero' auf Deutsch?",
+      "options": [
+        "null",
+        "eins",
+        "zwei",
+        "zehn"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Cero' bedeutet 'null' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'uno' auf Deutsch?",
+      "options": [
+        "null",
+        "eins",
+        "zwei",
+        "elf"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Uno' bedeutet 'eins' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'dos' auf Deutsch?",
+      "options": [
+        "eins",
+        "zwei",
+        "drei",
+        "zwölf"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Dos' bedeutet 'zwei' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'tres' auf Deutsch?",
+      "options": [
+        "zwei",
+        "drei",
+        "vier",
+        "dreizehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Tres' bedeutet 'drei' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'cuatro' auf Deutsch?",
+      "options": [
+        "drei",
+        "vier",
+        "fünf",
+        "vierzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Cuatro' bedeutet 'vier' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'cinco' auf Deutsch?",
+      "options": [
+        "vier",
+        "fünf",
+        "sechs",
+        "fünfzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Cinco' bedeutet 'fünf' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'seis' auf Deutsch?",
+      "options": [
+        "fünf",
+        "sechs",
+        "sieben",
+        "sechzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Seis' bedeutet 'sechs' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'siete' auf Deutsch?",
+      "options": [
+        "sechs",
+        "sieben",
+        "acht",
+        "siebzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Siete' bedeutet 'sieben' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'ocho' auf Deutsch?",
+      "options": [
+        "sieben",
+        "acht",
+        "neun",
+        "achtzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Ocho' bedeutet 'acht' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'nueve' auf Deutsch?",
+      "options": [
+        "acht",
+        "neun",
+        "zehn",
+        "neunzehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Nueve' bedeutet 'neun' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'diez' auf Deutsch?",
+      "options": [
+        "neun",
+        "zehn",
+        "elf",
+        "zwanzig"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Diez' bedeutet 'zehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'once' auf Deutsch?",
+      "options": [
+        "zehn",
+        "elf",
+        "zwölf",
+        "eins"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Once' bedeutet 'elf' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'doce' auf Deutsch?",
+      "options": [
+        "elf",
+        "zwölf",
+        "dreizehn",
+        "zwei"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Doce' bedeutet 'zwölf' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'trece' auf Deutsch?",
+      "options": [
+        "zwölf",
+        "dreizehn",
+        "vierzehn",
+        "drei"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Trece' bedeutet 'dreizehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'catorce' auf Deutsch?",
+      "options": [
+        "dreizehn",
+        "vierzehn",
+        "fünfzehn",
+        "vier"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Catorce' bedeutet 'vierzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'quince' auf Deutsch?",
+      "options": [
+        "vierzehn",
+        "fünfzehn",
+        "sechzehn",
+        "fünf"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Quince' bedeutet 'fünfzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'dieciséis' auf Deutsch?",
+      "options": [
+        "fünfzehn",
+        "sechzehn",
+        "siebzehn",
+        "sechs"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Dieciséis' bedeutet 'sechzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'diecisiete' auf Deutsch?",
+      "options": [
+        "sechzehn",
+        "siebzehn",
+        "achtzehn",
+        "sieben"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Diecisiete' bedeutet 'siebzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'dieciocho' auf Deutsch?",
+      "options": [
+        "siebzehn",
+        "achtzehn",
+        "neunzehn",
+        "acht"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Dieciocho' bedeutet 'achtzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'diecinueve' auf Deutsch?",
+      "options": [
+        "achtzehn",
+        "neunzehn",
+        "zwanzig",
+        "neun"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Diecinueve' bedeutet 'neunzehn' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Welche Zahl ist 'veinte' auf Deutsch?",
+      "options": [
+        "neunzehn",
+        "zwanzig",
+        "einundzwanzig",
+        "zehn"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Veinte' bedeutet 'zwanzig' auf Deutsch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'rot' auf Spanisch?",
+      "options": [
+        "azul",
+        "verde",
+        "rojo",
+        "amarillo"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Rojo' bedeutet 'rot' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'blau' auf Spanisch?",
+      "options": [
+        "azul",
+        "verde",
+        "rojo",
+        "negro"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Azul' bedeutet 'blau' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'grün' auf Spanisch?",
+      "options": [
+        "rojo",
+        "amarillo",
+        "verde",
+        "azul"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Verde' bedeutet 'grün' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'gelb' auf Spanisch?",
+      "options": [
+        "rojo",
+        "amarillo",
+        "naranja",
+        "verde"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Amarillo' bedeutet 'gelb' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'orange' auf Spanisch?",
+      "options": [
+        "amarillo",
+        "rojo",
+        "naranja",
+        "rosa"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Naranja' bedeutet 'orange' auf Spanisch (auch 'die Orange')."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'schwarz' auf Spanisch?",
+      "options": [
+        "blanco",
+        "gris",
+        "negro",
+        "marrón"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Negro' bedeutet 'schwarz' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'weiß' auf Spanisch?",
+      "options": [
+        "negro",
+        "blanco",
+        "gris",
+        "azul"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Blanco' bedeutet 'weiß' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'grau' auf Spanisch?",
+      "correctAnswer": "gris",
+      "alternatives": ["Gris"],
+      "explanation": "'Gris' bedeutet 'grau' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'rosa' oder 'pink' auf Spanisch?",
+      "options": [
+        "rojo",
+        "rosa",
+        "morado",
+        "blanco"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Rosa' bedeutet 'rosa' oder 'pink' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'lila' oder 'violett' auf Spanisch?",
+      "correctAnswer": "morado",
+      "alternatives": ["Morado", "violeta", "Violeta"],
+      "explanation": "'Morado' oder 'violeta' bedeutet 'lila' oder 'violett'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'braun' auf Spanisch?",
+      "options": [
+        "negro",
+        "gris",
+        "marrón",
+        "beige"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Marrón' bedeutet 'braun' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'die Farbe' auf Spanisch?",
+      "options": [
+        "el número",
+        "el color",
+        "la forma",
+        "el tamaño"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El color' bedeutet 'die Farbe' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Was ist deine Lieblingsfarbe?' auf Spanisch?",
+      "options": [
+        "¿Cuál es tu número?",
+        "¿Cuál es tu color favorito?",
+        "¿Cuál es tu animal favorito?",
+        "¿Cómo te llamas?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿Cuál es tu color favorito?' bedeutet 'Was ist deine Lieblingsfarbe?'"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Hund' auf Spanisch?",
+      "options": [
+        "el gato",
+        "el perro",
+        "el pájaro",
+        "el pez"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El perro' bedeutet 'der Hund' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'die Katze' auf Spanisch?",
+      "options": [
+        "el perro",
+        "el ratón",
+        "el gato",
+        "el pájaro"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'El gato' bedeutet 'die Katze' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'der Vogel' auf Spanisch?",
+      "correctAnswer": "el pájaro",
+      "alternatives": ["El pájaro"],
+      "explanation": "'El pájaro' bedeutet 'der Vogel' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Fisch' auf Spanisch?",
+      "options": [
+        "el pez",
+        "el perro",
+        "el gato",
+        "el ratón"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'El pez' bedeutet 'der Fisch' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'die Schildkröte' auf Spanisch?",
+      "correctAnswer": "la tortuga",
+      "alternatives": ["La tortuga"],
+      "explanation": "'La tortuga' bedeutet 'die Schildkröte' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Hamster' auf Spanisch?",
+      "options": [
+        "el gato",
+        "el ratón",
+        "el hámster",
+        "el conejo"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'El hámster' bedeutet 'der Hamster' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'der Elefant' auf Spanisch?",
+      "correctAnswer": "el elefante",
+      "alternatives": ["El elefante"],
+      "explanation": "'El elefante' bedeutet 'der Elefant' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'die Giraffe' auf Spanisch?",
+      "options": [
+        "el elefante",
+        "la jirafa",
+        "el león",
+        "el oso"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'La jirafa' bedeutet 'die Giraffe' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'der Löwe' auf Spanisch?",
+      "correctAnswer": "el león",
+      "alternatives": ["El león"],
+      "explanation": "'El león' bedeutet 'der Löwe' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Bär' auf Spanisch?",
+      "options": [
+        "el lobo",
+        "el león",
+        "el oso",
+        "el tigre"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'El oso' bedeutet 'der Bär' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'der Pinguin' auf Spanisch?",
+      "correctAnswer": "el pingüino",
+      "alternatives": ["El pingüino"],
+      "explanation": "'El pingüino' bedeutet 'der Pinguin' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'die Kuh' auf Spanisch?",
+      "options": [
+        "el cerdo",
+        "la vaca",
+        "la oveja",
+        "el caballo"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'La vaca' bedeutet 'die Kuh' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'das Schaf' auf Spanisch?",
+      "correctAnswer": "la oveja",
+      "alternatives": ["La oveja"],
+      "explanation": "'La oveja' bedeutet 'das Schaf' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'das Schwein' auf Spanisch?",
+      "options": [
+        "el cerdo",
+        "la vaca",
+        "el caballo",
+        "el perro"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'El cerdo' bedeutet 'das Schwein' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'das Pferd' auf Spanisch?",
+      "correctAnswer": "el caballo",
+      "alternatives": ["El caballo"],
+      "explanation": "'El caballo' bedeutet 'das Pferd' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'das Krokodil' auf Spanisch?",
+      "correctAnswer": "el cocodrilo",
+      "alternatives": ["El cocodrilo"],
+      "explanation": "'El cocodrilo' bedeutet 'das Krokodil' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Delfin' auf Spanisch?",
+      "options": [
+        "el pez",
+        "el tiburón",
+        "el delfín",
+        "la ballena"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'El delfín' bedeutet 'der Delfin' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Frosch' auf Spanisch?",
+      "options": [
+        "el sapo",
+        "la rana",
+        "el pez",
+        "la tortuga"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'La rana' bedeutet 'der Frosch' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'das Haustier' auf Spanisch?",
+      "options": [
+        "el animal",
+        "la mascota",
+        "el perro",
+        "el gato"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'La mascota' bedeutet 'das Haustier' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Hast du Haustiere?' auf Spanisch?",
+      "options": [
+        "¿Tienes hermanos?",
+        "¿Tienes mascotas?",
+        "¿Cuántos años tienes?",
+        "¿Tienes amigos?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿Tienes mascotas?' bedeutet 'Hast du Haustiere?'"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Was ist dein Lieblingstier?' auf Spanisch?",
+      "options": [
+        "¿Cuál es tu animal favorito?",
+        "¿Cuál es tu color favorito?",
+        "¿Tienes mascotas?",
+        "¿Cómo se llama?"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'¿Cuál es tu animal favorito?' bedeutet 'Was ist dein Lieblingstier?'"
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'Mein Lieblingstier ist...' auf Spanisch?",
+      "correctAnswer": "Mi animal favorito es...",
+      "alternatives": ["mi animal favorito es"],
+      "explanation": "'Mi animal favorito es...' bedeutet 'Mein Lieblingstier ist...'"
+    },
+    {
+      "type": "matching",
+      "question": "Ordne die Zahlen zu:",
+      "pairs": [
+        {
+          "left": "cinco",
+          "right": "fünf"
+        },
+        {
+          "left": "diez",
+          "right": "zehn"
+        },
+        {
+          "left": "quince",
+          "right": "fünfzehn"
+        },
+        {
+          "left": "veinte",
+          "right": "zwanzig"
+        }
+      ],
+      "explanation": "Diese Zahlen sind wichtige Meilensteine von 0-20."
+    },
+    {
+      "type": "matching",
+      "question": "Ordne die Farben zu:",
+      "pairs": [
+        {
+          "left": "rojo",
+          "right": "rot"
+        },
+        {
+          "left": "azul",
+          "right": "blau"
+        },
+        {
+          "left": "verde",
+          "right": "grün"
+        },
+        {
+          "left": "amarillo",
+          "right": "gelb"
+        }
+      ],
+      "explanation": "Dies sind die Grundfarben auf Spanisch."
+    },
+    {
+      "type": "matching",
+      "question": "Ordne die Tiere zu:",
+      "pairs": [
+        {
+          "left": "el perro",
+          "right": "der Hund"
+        },
+        {
+          "left": "el gato",
+          "right": "die Katze"
+        },
+        {
+          "left": "el pájaro",
+          "right": "der Vogel"
+        },
+        {
+          "left": "el pez",
+          "right": "der Fisch"
+        }
+      ],
+      "explanation": "Dies sind häufige Haustiere auf Spanisch."
+    }
+  ]
+}

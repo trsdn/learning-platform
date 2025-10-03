@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent } from '@core/types/services';
+import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent, FlashcardContent } from '@core/types/services';
 import { db } from '@storage/database';
 import { PracticeSessionService } from '@core/services/practice-session-service';
 import { SpacedRepetitionService } from '@core/services/spaced-repetition-service';
@@ -53,6 +53,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Word Scramble state
   const [scrambleAnswer, setScrambleAnswer] = useState<string>('');
 
+  // Flashcard state
+  const [flashcardRevealed, setFlashcardRevealed] = useState<boolean>(false);
+  const [flashcardKnown, setFlashcardKnown] = useState<boolean | null>(null);
+
   // Initialize session
   useEffect(() => {
     initializeSession();
@@ -104,6 +108,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setSelectedOptions(new Set());
     setSliderValue(0);
     setScrambleAnswer('');
+    setFlashcardRevealed(false);
+    setFlashcardKnown(null);
 
     // Type-specific initialization
     if (task.type === 'multiple-choice') {
@@ -196,6 +202,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       if (!scrambleAnswer.trim()) return;
       const content = currentTask.content as WordScrambleContent;
       correct = scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase();
+    } else if (currentTask.type === 'flashcard') {
+      if (flashcardKnown === null) return;
+      correct = flashcardKnown;
     }
 
     setIsCorrect(correct);
@@ -273,6 +282,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (currentTask?.type === 'multiple-select') return selectedOptions.size > 0;
     if (currentTask?.type === 'slider') return true; // Slider always has a value
     if (currentTask?.type === 'word-scramble') return scrambleAnswer.trim().length > 0;
+    if (currentTask?.type === 'flashcard') return flashcardKnown !== null;
     return false;
   }
 
@@ -296,6 +306,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       return renderSlider();
     } else if (currentTask.type === 'word-scramble') {
       return renderWordScramble();
+    } else if (currentTask.type === 'flashcard') {
+      return renderFlashcard();
     }
     return null;
   }
@@ -911,6 +923,215 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
               {content.correctWord}
             </div>
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  function renderFlashcard() {
+    if (!currentTask || currentTask.type !== 'flashcard') return null;
+    const content = currentTask.content as FlashcardContent;
+
+    return (
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2rem' }}>
+        {/* Flashcard */}
+        <div style={{
+          width: '100%',
+          maxWidth: '500px',
+          minHeight: '300px',
+          background: 'white',
+          border: '3px solid #e5e7eb',
+          borderRadius: '16px',
+          padding: '3rem',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '1.5rem',
+          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+          transition: 'all 0.3s ease',
+        }}>
+          {/* Language indicator */}
+          <div style={{
+            fontSize: '0.75rem',
+            fontWeight: '600',
+            color: '#6b7280',
+            textTransform: 'uppercase',
+            letterSpacing: '0.05em'
+          }}>
+            {content.frontLanguage === 'de' ? 'Deutsch' : content.frontLanguage === 'es' ? 'Español' : 'English'}
+          </div>
+
+          {/* Front side */}
+          <div style={{
+            fontSize: '2.5rem',
+            fontWeight: 'bold',
+            color: '#1f2937',
+            textAlign: 'center',
+            minHeight: '80px',
+            display: 'flex',
+            alignItems: 'center',
+          }}>
+            {content.front}
+          </div>
+
+          {/* Back side or reveal button */}
+          {!flashcardRevealed ? (
+            <button
+              onClick={() => setFlashcardRevealed(true)}
+              disabled={showFeedback}
+              style={{
+                padding: '1rem 2.5rem',
+                background: '#3b82f6',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                cursor: 'pointer',
+                fontSize: '1.125rem',
+                fontWeight: '500',
+                transition: 'all 0.2s',
+                boxShadow: '0 2px 4px rgba(59, 130, 246, 0.3)',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#2563eb';
+                e.currentTarget.style.transform = 'translateY(-1px)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#3b82f6';
+                e.currentTarget.style.transform = 'translateY(0)';
+              }}
+            >
+              Ergebnis anzeigen
+            </button>
+          ) : (
+            <>
+              <div style={{
+                width: '100%',
+                height: '2px',
+                background: '#e5e7eb',
+                margin: '0.5rem 0'
+              }} />
+
+              {/* Language indicator for back */}
+              <div style={{
+                fontSize: '0.75rem',
+                fontWeight: '600',
+                color: '#6b7280',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
+              }}>
+                {content.backLanguage === 'de' ? 'Deutsch' : content.backLanguage === 'es' ? 'Español' : 'English'}
+              </div>
+
+              {/* Answer */}
+              <div style={{
+                fontSize: '2rem',
+                fontWeight: 'bold',
+                color: '#10b981',
+                textAlign: 'center',
+                minHeight: '60px',
+                display: 'flex',
+                alignItems: 'center',
+              }}>
+                {content.back}
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Self-assessment buttons - only shown after reveal */}
+        {flashcardRevealed && !showFeedback && (
+          <div style={{
+            display: 'flex',
+            gap: '1.5rem',
+            justifyContent: 'center',
+            width: '100%',
+            maxWidth: '500px',
+          }}>
+            <button
+              onClick={() => {
+                setFlashcardKnown(false);
+                handleAnswerSubmit();
+              }}
+              style={{
+                flex: 1,
+                padding: '1.25rem',
+                background: '#fee2e2',
+                color: '#dc2626',
+                border: '2px solid #fca5a5',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontSize: '1.125rem',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.75rem',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#fecaca';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#fee2e2';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <span style={{ fontSize: '1.75rem' }}>✗</span>
+              <span>Nicht gewusst</span>
+            </button>
+
+            <button
+              onClick={() => {
+                setFlashcardKnown(true);
+                handleAnswerSubmit();
+              }}
+              style={{
+                flex: 1,
+                padding: '1.25rem',
+                background: '#dcfce7',
+                color: '#16a34a',
+                border: '2px solid #86efac',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontSize: '1.125rem',
+                fontWeight: '600',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '0.75rem',
+                transition: 'all 0.2s',
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.background = '#bbf7d0';
+                e.currentTarget.style.transform = 'scale(1.02)';
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.background = '#dcfce7';
+                e.currentTarget.style.transform = 'scale(1)';
+              }}
+            >
+              <span style={{ fontSize: '1.75rem' }}>✓</span>
+              <span>Gewusst</span>
+            </button>
+          </div>
+        )}
+
+        {/* Explanation after answer */}
+        {showFeedback && content.explanation && (
+          <div style={{
+            width: '100%',
+            maxWidth: '500px',
+            padding: '1rem',
+            background: '#f3f4f6',
+            borderRadius: '8px',
+            fontSize: '0.95rem',
+            color: '#4b5563',
+            lineHeight: '1.6',
+          }}>
+            <strong>Hinweis:</strong> {content.explanation}
           </div>
         )}
       </div>
