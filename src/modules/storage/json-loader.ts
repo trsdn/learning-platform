@@ -25,6 +25,7 @@ export async function loadLearningPathsFromJSON(): Promise<{
   const learningPathFiles: Record<string, string[]> = {
     mathematik: ['algebra-basics.json', 'geometry-basics.json', 'advanced-tasks.json', 'brueche-grundlagen.json'],
     biologie: ['zellbiologie.json', 'genetik-basics.json'],
+    spanisch: ['spanisch-grundlagen.json', 'begruessung-vorstellung.json', 'familie-persoenliches.json', 'zahlen-farben-tiere.json', 'vokabeltest-karteikarten.json'],
     test: ['all-task-types.json'],
   };
 
@@ -122,6 +123,16 @@ function createTopicFromId(topicId: string): Topic {
       description: 'Einführung in die Biologie: Zellen, Genetik und Ökosysteme',
       metadata: {
         estimatedHours: 35,
+        difficultyLevel: 'beginner',
+        prerequisites: [],
+      },
+    },
+    spanisch: {
+      id: 'spanisch',
+      title: 'Spanisch',
+      description: 'Lerne Spanisch: Vokabeln, Grammatik und Konversation',
+      metadata: {
+        estimatedHours: 50,
         difficultyLevel: 'beginner',
         prerequisites: [],
       },

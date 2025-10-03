@@ -1,202 +1,506 @@
 {
-  "id": "begruessung-vorstellung",
-  "title": "Begrüßung und Vorstellung",
-  "description": "Lerne wie man sich auf Spanisch begrüßt, vorstellt und verabschiedet",
-  "difficulty": "beginner",
-  "estimatedTime": "2 Wochen",
-  "topics": ["Sprachen", "Spanisch", "Kommunikation"],
+  "learningPath": {
+    "id": "begruessung-vorstellung",
+    "topicId": "spanisch",
+    "title": "Begrüßung und Vorstellung",
+    "description": "Lerne wie man sich auf Spanisch begrüßt, vorstellt und verabschiedet",
+    "difficulty": "beginner",
+    "estimatedTime": 120,
+    "isActive": true,
+    "createdAt": "2025-10-03T10:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 18
+    }
+  },
   "tasks": [
     {
+      "id": "spanisch-begruessung-1",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Hallo' auf Spanisch?",
-      "options": [
-        "Adiós",
-        "Hola",
-        "Gracias",
-        "Buenos días"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'Hola' ist die universelle spanische Begrüßung und bedeutet 'Hallo'."
+      "content": {
+        "question": "Wie sagt man 'Hallo' auf Spanisch?",
+        "options": [
+          "Adiós",
+          "Hola",
+          "Gracias",
+          "Buenos días"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Hola' ist die universelle spanische Begrüßung und bedeutet 'Hallo'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-2",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Guten Tag/Guten Morgen' auf Spanisch?",
-      "options": [
-        "Buenas noches",
-        "Buenos días",
-        "Buenas tardes",
-        "Hola"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'Buenos días' bedeutet 'Guten Tag' oder 'Guten Morgen' auf Spanisch."
+      "content": {
+        "question": "Wie sagt man 'Guten Tag/Guten Morgen' auf Spanisch?",
+        "options": [
+          "Buenas noches",
+          "Buenos días",
+          "Buenas tardes",
+          "Hola"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Buenos días' bedeutet 'Guten Tag' oder 'Guten Morgen' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-3",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Guten Nachmittag/Guten Abend' auf Spanisch?",
-      "options": [
-        "Buenos días",
-        "Buenas tardes",
-        "Buenas noches",
-        "Hasta luego"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'Buenas tardes' wird nachmittags und am frühen Abend verwendet."
+      "content": {
+        "question": "Wie sagt man 'Guten Nachmittag/Guten Abend' auf Spanisch?",
+        "options": [
+          "Buenos días",
+          "Buenas tardes",
+          "Buenas noches",
+          "Hasta luego"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Buenas tardes' wird nachmittags und am frühen Abend verwendet."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-4",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Gute Nacht' auf Spanisch?",
-      "options": [
-        "Buenos días",
-        "Buenas tardes",
-        "Buenas noches",
-        "Adiós"
-      ],
-      "correctAnswer": 2,
-      "explanation": "'Buenas noches' bedeutet 'Gute Nacht' und wird spät abends verwendet."
+      "content": {
+        "question": "Wie sagt man 'Gute Nacht' auf Spanisch?",
+        "options": [
+          "Buenos días",
+          "Buenas tardes",
+          "Buenas noches",
+          "Adiós"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Buenas noches' bedeutet 'Gute Nacht' und wird spät abends verwendet."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-5",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "text-input-basic",
       "type": "text-input",
-      "question": "Wie fragt man 'Wie heißt du?' auf Spanisch?",
-      "correctAnswer": "¿Cómo te llamas?",
-      "alternatives": ["Como te llamas"],
-      "explanation": "'¿Cómo te llamas?' ist die informelle Art zu fragen, wie jemand heißt. Wörtlich: 'Wie nennst du dich?'"
+      "content": {
+        "question": "Wie fragt man 'Wie heißt du?' auf Spanisch?",
+        "correctAnswer": "¿Cómo te llamas?",
+        "alternatives": [
+          "Como te llamas"
+        ],
+        "explanation": "'¿Cómo te llamas?' ist die informelle Art zu fragen, wie jemand heißt. Wörtlich: 'Wie nennst du dich?'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-6",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "text-input-basic",
       "type": "text-input",
-      "question": "Wie sagt man 'Ich heiße...' auf Spanisch?",
-      "correctAnswer": "Me llamo...",
-      "alternatives": ["me llamo"],
-      "explanation": "'Me llamo...' bedeutet 'Ich heiße...' auf Spanisch. Wörtlich: 'Ich nenne mich...'"
+      "content": {
+        "question": "Wie sagt man 'Ich heiße...' auf Spanisch?",
+        "correctAnswer": "Me llamo...",
+        "alternatives": [
+          "me llamo"
+        ],
+        "explanation": "'Me llamo...' bedeutet 'Ich heiße...' auf Spanisch. Wörtlich: 'Ich nenne mich...'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-7",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie fragt man 'Wie geht es dir?' auf Spanisch?",
-      "options": [
-        "¿Cómo te llamas?",
-        "¿Cómo estás?",
-        "¿De dónde eres?",
-        "¿Cuántos años tienes?"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'¿Cómo estás?' ist die informelle Art zu fragen 'Wie geht es dir?'"
+      "content": {
+        "question": "Wie fragt man 'Wie geht es dir?' auf Spanisch?",
+        "options": [
+          "¿Cómo te llamas?",
+          "¿Cómo estás?",
+          "¿De dónde eres?",
+          "¿Cuántos años tienes?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Cómo estás?' ist die informelle Art zu fragen 'Wie geht es dir?'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-8",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie antwortet man 'Sehr gut' auf '¿Cómo estás?'?",
-      "options": [
-        "Mal",
-        "Muy bien",
-        "Regular",
-        "Así así"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'Muy bien' bedeutet 'sehr gut'. Man kann auch einfach 'Bien' (gut) sagen."
+      "content": {
+        "question": "Wie antwortet man 'Sehr gut' auf '¿Cómo estás?'?",
+        "options": [
+          "Mal",
+          "Muy bien",
+          "Regular",
+          "Así así"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Muy bien' bedeutet 'sehr gut'. Man kann auch einfach 'Bien' (gut) sagen."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-9",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Auf Wiedersehen' auf Spanisch?",
-      "options": [
-        "Hola",
-        "Hasta luego",
-        "Adiós",
-        "Buenos días"
-      ],
-      "correctAnswer": 2,
-      "explanation": "'Adiós' bedeutet 'Auf Wiedersehen' und ist eine formelle Verabschiedung."
+      "content": {
+        "question": "Wie sagt man 'Auf Wiedersehen' auf Spanisch?",
+        "options": [
+          "Hola",
+          "Hasta luego",
+          "Adiós",
+          "Buenos días"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Adiós' bedeutet 'Auf Wiedersehen' und ist eine formelle Verabschiedung."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-10",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "text-input-basic",
       "type": "text-input",
-      "question": "Wie sagt man 'Bis später' auf Spanisch?",
-      "correctAnswer": "Hasta luego",
-      "alternatives": ["hasta luego"],
-      "explanation": "'Hasta luego' bedeutet 'Bis später' und ist eine informellere Verabschiedung."
+      "content": {
+        "question": "Wie sagt man 'Bis später' auf Spanisch?",
+        "correctAnswer": "Hasta luego",
+        "alternatives": [
+          "hasta luego"
+        ],
+        "explanation": "'Hasta luego' bedeutet 'Bis später' und ist eine informellere Verabschiedung."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-11",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Danke' auf Spanisch?",
-      "options": [
-        "Por favor",
-        "Perdón",
-        "Gracias",
-        "De nada"
-      ],
-      "correctAnswer": 2,
-      "explanation": "'Gracias' bedeutet 'Danke' auf Spanisch."
+      "content": {
+        "question": "Wie sagt man 'Danke' auf Spanisch?",
+        "options": [
+          "Por favor",
+          "Perdón",
+          "Gracias",
+          "De nada"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Gracias' bedeutet 'Danke' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-12",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie antwortet man auf 'Gracias'?",
-      "options": [
-        "Hola",
-        "Adiós",
-        "De nada",
-        "Perdón"
-      ],
-      "correctAnswer": 2,
-      "explanation": "'De nada' bedeutet 'Gern geschehen' oder 'Bitte schön'."
+      "content": {
+        "question": "Wie antwortet man auf 'Gracias'?",
+        "options": [
+          "Hola",
+          "Adiós",
+          "De nada",
+          "Perdón"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'De nada' bedeutet 'Gern geschehen' oder 'Bitte schön'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-13",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "text-input-basic",
       "type": "text-input",
-      "question": "Wie sagt man 'Bitte' auf Spanisch?",
-      "correctAnswer": "Por favor",
-      "alternatives": ["por favor"],
-      "explanation": "'Por favor' bedeutet 'Bitte' auf Spanisch."
+      "content": {
+        "question": "Wie sagt man 'Bitte' auf Spanisch?",
+        "correctAnswer": "Por favor",
+        "alternatives": [
+          "por favor"
+        ],
+        "explanation": "'Por favor' bedeutet 'Bitte' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-14",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
-      "question": "Wie sagt man 'Entschuldigung' auf Spanisch?",
-      "options": [
-        "Gracias",
-        "Perdón",
-        "Por favor",
-        "De nada"
-      ],
-      "correctAnswer": 1,
-      "explanation": "'Perdón' bedeutet 'Entschuldigung' auf Spanisch."
+      "content": {
+        "question": "Wie sagt man 'Entschuldigung' auf Spanisch?",
+        "options": [
+          "Gracias",
+          "Perdón",
+          "Por favor",
+          "De nada"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Perdón' bedeutet 'Entschuldigung' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-15",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "text-input-basic",
       "type": "text-input",
-      "question": "Wie sagt man 'Es tut mir leid' auf Spanisch?",
-      "correctAnswer": "Lo siento",
-      "alternatives": ["lo siento"],
-      "explanation": "'Lo siento' bedeutet 'Es tut mir leid' und drückt Bedauern aus."
+      "content": {
+        "question": "Wie sagt man 'Es tut mir leid' auf Spanisch?",
+        "correctAnswer": "Lo siento",
+        "alternatives": [
+          "lo siento"
+        ],
+        "explanation": "'Lo siento' bedeutet 'Es tut mir leid' und drückt Bedauern aus."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-16",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "matching-basic",
       "type": "matching",
-      "question": "Ordne die spanischen Grüße den deutschen Übersetzungen zu:",
-      "pairs": [
-        {
-          "left": "Buenos días",
-          "right": "Guten Morgen"
-        },
-        {
-          "left": "Buenas tardes",
-          "right": "Guten Nachmittag"
-        },
-        {
-          "left": "Buenas noches",
-          "right": "Gute Nacht"
-        },
-        {
-          "left": "Hasta luego",
-          "right": "Bis später"
-        }
-      ],
-      "explanation": "Diese Grüße werden zu verschiedenen Tageszeiten verwendet."
+      "content": {
+        "question": "Ordne die spanischen Grüße den deutschen Übersetzungen zu:",
+        "pairs": [
+          {
+            "left": "Buenos días",
+            "right": "Guten Morgen"
+          },
+          {
+            "left": "Buenas tardes",
+            "right": "Guten Nachmittag"
+          },
+          {
+            "left": "Buenas noches",
+            "right": "Gute Nacht"
+          },
+          {
+            "left": "Hasta luego",
+            "right": "Bis später"
+          }
+        ],
+        "explanation": "Diese Grüße werden zu verschiedenen Tageszeiten verwendet."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-17",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "drag-and-drop-basic",
       "type": "drag-and-drop",
-      "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Wie heißt du?'",
-      "items": ["¿Cómo", "te", "llamas?"],
-      "correctOrder": [0, 1, 2],
-      "explanation": "'¿Cómo te llamas?' ist die korrekte Reihenfolge für 'Wie heißt du?'"
+      "content": {
+        "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Wie heißt du?'",
+        "items": [
+          "¿Cómo",
+          "te",
+          "llamas?"
+        ],
+        "correctOrder": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "'¿Cómo te llamas?' ist die korrekte Reihenfolge für 'Wie heißt du?'"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
     },
     {
+      "id": "spanisch-begruessung-18",
+      "learningPathId": "begruessung-vorstellung",
+      "templateId": "drag-and-drop-basic",
       "type": "drag-and-drop",
-      "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Ich heiße Maria'",
-      "items": ["Me", "llamo", "Maria"],
-      "correctOrder": [0, 1, 2],
-      "explanation": "'Me llamo Maria' ist die korrekte Reihenfolge."
+      "content": {
+        "question": "Ordne die Wörter, um einen korrekten Satz zu bilden: 'Ich heiße Maria'",
+        "items": [
+          "Me",
+          "llamo",
+          "Maria"
+        ],
+        "correctOrder": [
+          0,
+          1,
+          2
+        ],
+        "explanation": "'Me llamo Maria' ist die korrekte Reihenfolge."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "kommunikation"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
     }
   ]
 }
