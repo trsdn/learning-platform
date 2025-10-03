@@ -1,69 +1,77 @@
 ---
-description: Deploy the learning platform to test environment with isolated database
-arguments:
-  - name: method
-    description: Deployment method (local|github)
-    required: false
-    default: local
+description: Deploy the learning platform to test environment with isolated database (default: GitHub Actions)
 ---
 
-# Deploy to Test Environment
+The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
 
-Deploy the learning platform to a test environment at `/test` with isolated database.
+User input:
 
-## Usage
+$ARGUMENTS
 
-```
-/deploy-test [method]
-```
+Goal: Deploy to test environment at `/learning-platform/test/` with separate database for safe testing without affecting production.
 
-**Arguments:**
-- `method` (optional): Deployment method
-  - `local` - Deploy from local machine (default)
-  - `github` - Trigger GitHub Action workflow
+**Default behavior**: Deploy via GitHub Actions (recommended for clean, consistent builds).
 
-**Examples:**
-```
-/deploy-test              # Deploy locally
-/deploy-test local        # Deploy locally (explicit)
-/deploy-test github       # Deploy via GitHub Actions
-```
+Execution steps:
 
-## What this does
+1. **Parse user input** from `$ARGUMENTS`:
+   - If empty or `github`: Use GitHub Actions deployment (default)
+   - If `local`: Use local npm script deployment
+   - If unrecognized: Ask user to clarify
 
-1. Creates a production build with test configuration
-2. Deploys to GitHub Pages at `/learning-platform/test/`
-3. Uses separate IndexedDB database name (`mindforge-academy-test`)
-4. Allows testing without affecting production
+2. **GitHub Actions deployment** (default):
+   a. Verify GitHub CLI is available: `gh --version`
+   b. Check if workflow exists: `gh workflow list | grep "Deploy to Test Environment"`
+   c. Trigger workflow:
+      ```bash
+      gh workflow run deploy-test.yml
+      ```
+   d. Show workflow status:
+      ```bash
+      gh run list --workflow=deploy-test.yml --limit=1
+      ```
+   e. Provide instructions:
+      - "Deployment triggered via GitHub Actions"
+      - "View progress: gh run watch"
+      - "Or visit: https://github.com/trsdn/learning-platform/actions"
+      - "Test URL (in ~2-3 min): https://trsdn.github.io/learning-platform/test/"
 
-## Implementation
+3. **Local deployment** (if requested):
+   a. Verify dependencies: `npm list gh-pages`
+   b. Run deployment script:
+      ```bash
+      npm run deploy:test
+      ```
+   c. Monitor output for errors
+   d. Upon success, provide test URL
 
-### Local Deployment
+4. **Post-deployment verification checklist**:
+   - [ ] Test site loads at `/learning-platform/test/`
+   - [ ] Open DevTools → Application → IndexedDB
+   - [ ] Verify database name: `mindforge-academy-test` (not `mindforge-academy`)
+   - [ ] Click "🔄 DB Aktualisieren" to reload data
+   - [ ] Test 2-3 features to verify functionality
+   - [ ] Check production site still works: `/learning-platform/`
 
-```bash
-# Deploy using npm script
-npm run deploy:test
-```
+5. **If deployment fails**:
+   - Check GitHub Actions logs
+   - Verify environment variables are set correctly
+   - Ensure gh-pages branch exists
+   - Check repository permissions
 
-This command:
-1. Sets environment variables (`VITE_ENV=test`, `VITE_DB_NAME=mindforge-academy-test`)
-2. Builds with base path `/learning-platform/test/`
-3. Deploys to `test/` subdirectory on gh-pages branch
+Behavior rules:
+- DEFAULT to GitHub Actions unless user explicitly requests `local`
+- ALWAYS provide the test URL after deployment
+- ALWAYS remind to clear browser cache (Ctrl+Shift+Delete)
+- NEVER deploy to production accidentally
+- VERIFY database name in DevTools before approving
 
-### GitHub Actions Deployment
+Environment configuration:
+- Base path: `/learning-platform/test/`
+- Database: `mindforge-academy-test`
+- Service worker scope: `/test/`
 
-To trigger GitHub Action:
-
-1. Go to repository Actions tab
-2. Select "Deploy to Test Environment" workflow
-3. Click "Run workflow"
-4. Type `deploy-test` to confirm
-5. Click "Run workflow" button
-
-Or via GitHub CLI:
-```bash
-gh workflow run deploy-test.yml
-```
+Context: $ARGUMENTS
 
 ## Verification
 
