@@ -104,8 +104,6 @@ function getPaddingValue(padding: CardPadding): string {
       return components.card.padding.md;
     case 'large':
       return components.card.padding.lg;
-    default:
-      return components.card.padding.md;
   }
 }
 

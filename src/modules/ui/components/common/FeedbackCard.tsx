@@ -79,15 +79,18 @@ export function FeedbackCard({
   style = {},
   ...props
 }: FeedbackCardProps) {
-  const colors = getVariantColors(variant);
-  const icon = getVariantIcon(variant);
+  const colors = React.useMemo(() => getVariantColors(variant), [variant]);
+  const icon = React.useMemo(() => getVariantIcon(variant), [variant]);
 
-  const containerStyles: React.CSSProperties = {
-    backgroundColor: colors.background,
-    borderColor: colors.border,
-    position: 'relative',
-    ...style,
-  };
+  const containerStyles = React.useMemo(
+    () => ({
+      backgroundColor: colors.background,
+      borderColor: colors.border,
+      position: 'relative' as const,
+      ...style,
+    }),
+    [colors.background, colors.border, style]
+  );
 
   return (
     <Card
@@ -99,8 +102,9 @@ export function FeedbackCard({
       backgroundColor={colors.background}
       style={containerStyles}
       className={className}
-      role={variant === 'error' ? 'alert' : 'status'}
-      aria-live={variant === 'error' ? 'assertive' : 'polite'}
+      role={variant === 'error' || variant === 'warning' ? 'alert' : 'status'}
+      aria-live={variant === 'error' || variant === 'warning' ? 'assertive' : 'polite'}
+      aria-atomic="true"
     >
       <div
         style={{
@@ -186,9 +190,9 @@ export function FeedbackCard({
             onMouseLeave={(e) => {
               e.currentTarget.style.opacity = '0.6';
             }}
-            aria-label="Dismiss"
+            aria-label={`Dismiss ${variant} message`}
           >
-            ✕
+            <span aria-hidden="true">✕</span>
           </button>
         )}
       </div>
