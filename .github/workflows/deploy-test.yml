@@ -13,6 +13,8 @@ on:
 jobs:
   deploy-test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Validate confirmation (manual trigger only)
@@ -46,7 +48,7 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
           destination_dir: test
-          keep_files: true  # Keep production files
+          keep_files: true
           commit_message: 'Deploy to test environment: ${{ github.sha }}'
 
       - name: Deployment summary

@@ -13,6 +13,8 @@ on:
 jobs:
   deploy-production:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Validate confirmation (manual trigger only)
