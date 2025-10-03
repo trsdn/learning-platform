@@ -398,6 +398,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                 alignItems: 'center',
                 justifyContent: 'space-between',
                 gap: '0.5rem',
+                opacity: 1,
               }}
             >
               <span>{option}</span>
