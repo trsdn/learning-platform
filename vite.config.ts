@@ -4,7 +4,11 @@ import { VitePWA } from 'vite-plugin-pwa';
 import path from 'path';
 
 export default defineConfig({
-  base: process.env.NODE_ENV === 'production' ? '/learning-platform/' : '/',
+  base: process.env.VITE_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/learning-platform/' : '/'),
+  define: {
+    'import.meta.env.VITE_DB_NAME': JSON.stringify(process.env.VITE_DB_NAME || 'mindforge-academy'),
+    'import.meta.env.VITE_ENV': JSON.stringify(process.env.VITE_ENV || 'production'),
+  },
   plugins: [
     react(),
     VitePWA({

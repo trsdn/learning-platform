@@ -23,7 +23,9 @@ export class LearningPlatformDB extends Dexie {
   spacedRepetition!: Table<SpacedRepetitionItem, string>;
 
   constructor() {
-    super('LearningPlatformDB');
+    // Use environment-specific database name
+    const dbName = import.meta.env.VITE_DB_NAME || 'mindforge-academy';
+    super(dbName);
 
     this.version(1).stores({
       topics: 'id, title, isActive, createdAt',

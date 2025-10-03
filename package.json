@@ -19,6 +19,7 @@
     "type-check": "tsc --noEmit",
     "prepare": "husky",
     "deploy": "npm run build && gh-pages -d dist",
+    "deploy:test": "VITE_ENV=test VITE_BASE_PATH=/learning-platform/test/ VITE_DB_NAME=mindforge-academy-test npm run build && gh-pages -d dist -e test",
     "generate-audio": "source .venv/bin/activate && python3 scripts/generate-spanish-audio.py"
   },
   "dependencies": {

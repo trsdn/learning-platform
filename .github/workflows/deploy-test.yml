@@ -1,0 +1,60 @@
+name: Deploy to Test Environment
+
+on:
+  workflow_dispatch:  # Manual trigger only
+    inputs:
+      confirm:
+        description: 'Type "deploy-test" to confirm deployment'
+        required: true
+        default: ''
+
+jobs:
+  deploy-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Validate confirmation
+        if: github.event.inputs.confirm != 'deploy-test'
+        run: |
+          echo "❌ Deployment cancelled. Please type 'deploy-test' to confirm."
+          exit 1
+
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build for test environment
+        env:
+          VITE_ENV: test
+          VITE_BASE_PATH: /learning-platform/test/
+          VITE_DB_NAME: mindforge-academy-test
+        run: npm run build
+
+      - name: Deploy to GitHub Pages (test subdirectory)
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          destination_dir: test
+          keep_files: false  # Replace test directory completely
+          commit_message: 'Deploy to test environment: ${{ github.sha }}'
+
+      - name: Deployment summary
+        run: |
+          echo "✅ Test deployment successful!"
+          echo ""
+          echo "🔗 Test URL: https://trsdn.github.io/learning-platform/test/"
+          echo "🔗 Production URL: https://trsdn.github.io/learning-platform/"
+          echo ""
+          echo "📦 Database: mindforge-academy-test"
+          echo "🌿 Commit: ${{ github.sha }}"
+          echo ""
+          echo "⚠️  Note: Clear browser cache (Ctrl+Shift+Delete) before testing!"
