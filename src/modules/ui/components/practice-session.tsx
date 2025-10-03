@@ -239,6 +239,17 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     }
   }
 
+  function handleSkipTask() {
+    if (!session) return;
+
+    setShowFeedback(false);
+    setSelectedAnswer(null);
+
+    if (currentTaskIndex < session.execution.taskIds.length - 1) {
+      setCurrentTaskIndex(currentTaskIndex + 1);
+    }
+  }
+
   function handleNextTask() {
     setShowFeedback(false);
     setSelectedAnswer(null);
@@ -1259,25 +1270,44 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
       {/* Actions and Statistics - combined footer */}
       <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        {/* Action button */}
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
+        {/* Action buttons */}
+        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
           {!showFeedback ? (
-            <button
-              onClick={handleAnswerSubmit}
-              disabled={!canSubmit()}
-              style={{
-                padding: '0.875rem 2rem',
-                background: canSubmit() ? '#3b82f6' : '#9ca3af',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: canSubmit() ? 'pointer' : 'not-allowed',
-                fontSize: '1rem',
-                fontWeight: '500',
-              }}
-            >
-              Antwort überprüfen
-            </button>
+            <>
+              <button
+                onClick={handleAnswerSubmit}
+                disabled={!canSubmit()}
+                style={{
+                  padding: '0.875rem 2rem',
+                  background: canSubmit() ? '#3b82f6' : '#9ca3af',
+                  color: 'white',
+                  border: 'none',
+                  borderRadius: '8px',
+                  cursor: canSubmit() ? 'pointer' : 'not-allowed',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                }}
+              >
+                Antwort überprüfen
+              </button>
+              {currentTaskIndex < session.execution.taskIds.length - 1 && (
+                <button
+                  onClick={handleSkipTask}
+                  style={{
+                    padding: '0.875rem 2rem',
+                    background: '#f3f4f6',
+                    color: '#6b7280',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    cursor: 'pointer',
+                    fontSize: '1rem',
+                    fontWeight: '500',
+                  }}
+                >
+                  Überspringen →
+                </button>
+              )}
+            </>
           ) : (
             <button
               onClick={handleNextTask}
