@@ -377,6 +377,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           }
 
           const hasAudio = isSpanishText(option);
+          const showAudio = showFeedback && hasAudio;
 
           return (
             <button
@@ -399,7 +400,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               }}
             >
               <span>{option}</span>
-              {hasAudio && <AudioButton text={option} size="small" />}
+              {showAudio && <AudioButton text={option} size="small" />}
             </button>
           );
         })}
