@@ -75,7 +75,7 @@ export function IconButton({
   ...props
 }: IconButtonProps) {
   // Get variant styles
-  const variantStyles = getVariantStyles(variant, disabled);
+  const variantStyles = getVariantStyles(variant);
 
   // Get size styles
   const sizeStyles = getSizeStyles(size);
@@ -158,7 +158,7 @@ export function IconButton({
 // VARIANT STYLES
 // ============================================================================
 
-function getVariantStyles(variant: IconButtonVariant, isDisabled: boolean): React.CSSProperties {
+function getVariantStyles(variant: IconButtonVariant): React.CSSProperties {
   const baseStyles: React.CSSProperties = {
     border: '2px solid transparent',
   };

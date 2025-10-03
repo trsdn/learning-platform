@@ -1,5 +1,5 @@
 import React from 'react';
-import { colors, spacing, borderRadius, typography, transitions, components } from '@ui/design-tokens';
+import { colors, spacing, typography, transitions, components } from '@ui/design-tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'small' | 'medium' | 'large';
@@ -75,7 +75,7 @@ export function Button({
   ...props
 }: ButtonProps) {
   // Get variant styles
-  const variantStyles = getVariantStyles(variant, disabled || loading);
+  const variantStyles = getVariantStyles(variant);
 
   // Get size styles
   const sizeStyles = getSizeStyles(size);
@@ -162,7 +162,7 @@ export function Button({
 // VARIANT STYLES
 // ============================================================================
 
-function getVariantStyles(variant: ButtonVariant, isDisabledOrLoading: boolean): React.CSSProperties {
+function getVariantStyles(variant: ButtonVariant): React.CSSProperties {
   const baseStyles: React.CSSProperties = {
     border: '2px solid transparent',
   };
