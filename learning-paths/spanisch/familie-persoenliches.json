@@ -1,0 +1,352 @@
+{
+  "id": "familie-persoenliches",
+  "title": "Familie und persönliche Informationen",
+  "description": "Lerne über Familie, Alter, Freunde und persönliche Informationen auf Spanisch zu sprechen",
+  "difficulty": "beginner",
+  "estimatedTime": "3 Wochen",
+  "topics": ["Sprachen", "Spanisch", "Familie"],
+  "tasks": [
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Vater' auf Spanisch?",
+      "options": [
+        "la madre",
+        "el padre",
+        "el hermano",
+        "los padres"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El padre' bedeutet 'der Vater' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'die Mutter' auf Spanisch?",
+      "options": [
+        "el padre",
+        "la hermana",
+        "la madre",
+        "los padres"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'La madre' bedeutet 'die Mutter' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'der Bruder' auf Spanisch?",
+      "correctAnswer": "el hermano",
+      "alternatives": ["El hermano"],
+      "explanation": "'El hermano' bedeutet 'der Bruder' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'die Schwester' auf Spanisch?",
+      "correctAnswer": "la hermana",
+      "alternatives": ["La hermana"],
+      "explanation": "'La hermana' bedeutet 'die Schwester' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'los padres' auf Deutsch?",
+      "options": [
+        "die Väter",
+        "die Mütter",
+        "die Eltern",
+        "die Brüder"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Los padres' bedeutet 'die Eltern' auf Spanisch (Plural)."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'die Geschwister' auf Spanisch?",
+      "correctAnswer": "los hermanos",
+      "alternatives": ["Los hermanos"],
+      "explanation": "'Los hermanos' bedeutet 'die Geschwister' oder 'die Brüder' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Wie alt bist du?' auf Spanisch?",
+      "options": [
+        "¿Cómo te llamas?",
+        "¿Cuántos años tienes?",
+        "¿De dónde eres?",
+        "¿Cómo estás?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿Cuántos años tienes?' bedeutet wörtlich 'Wie viele Jahre hast du?'"
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'Ich bin ... Jahre alt' auf Spanisch?",
+      "correctAnswer": "Tengo ... años",
+      "alternatives": ["tengo años", "Tengo años"],
+      "explanation": "'Tengo ... años' bedeutet wörtlich 'Ich habe ... Jahre'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'Mi hermano tiene diez años' auf Deutsch?",
+      "options": [
+        "Mein Bruder ist zehn Jahre alt",
+        "Meine Schwester ist zehn Jahre alt",
+        "Ich bin zehn Jahre alt",
+        "Mein Vater ist zehn Jahre alt"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Mi hermano tiene diez años' bedeutet 'Mein Bruder ist zehn Jahre alt'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Freund' auf Spanisch?",
+      "options": [
+        "la amiga",
+        "el amigo",
+        "los amigos",
+        "el hermano"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El amigo' bedeutet 'der Freund' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'die Freundin' auf Spanisch?",
+      "correctAnswer": "la amiga",
+      "alternatives": ["La amiga"],
+      "explanation": "'La amiga' bedeutet 'die Freundin' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der beste Freund' auf Spanisch?",
+      "options": [
+        "el amigo",
+        "la mejor amiga",
+        "el mejor amigo",
+        "los amigos"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'El mejor amigo' bedeutet 'der beste Freund' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'die beste Freundin' auf Spanisch?",
+      "correctAnswer": "la mejor amiga",
+      "alternatives": ["La mejor amiga"],
+      "explanation": "'La mejor amiga' bedeutet 'die beste Freundin' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'mi' auf Deutsch?",
+      "options": [
+        "dein/deine",
+        "mein/meine",
+        "sein/seine",
+        "ihr/ihre"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Mi' ist das Possessivpronomen für 'mein' oder 'meine'."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'meine Freunde' auf Spanisch?",
+      "correctAnswer": "mis amigos",
+      "alternatives": ["Mis amigos"],
+      "explanation": "'Mis amigos' bedeutet 'meine Freunde'. 'Mis' ist der Plural von 'mi'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Wo lebst du?' auf Spanisch?",
+      "options": [
+        "¿De dónde eres?",
+        "¿Dónde vives?",
+        "¿Cómo te llamas?",
+        "¿Qué haces?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿Dónde vives?' bedeutet 'Wo lebst/wohnst du?'"
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'Ich lebe in...' auf Spanisch?",
+      "correctAnswer": "Vivo en...",
+      "alternatives": ["vivo en"],
+      "explanation": "'Vivo en...' bedeutet 'Ich lebe/wohne in...'"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Woher kommst du?' auf Spanisch?",
+      "options": [
+        "¿Dónde vives?",
+        "¿De dónde eres?",
+        "¿Cómo estás?",
+        "¿Cuántos años tienes?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿De dónde eres?' bedeutet 'Woher kommst du?' oder 'Wo bist du her?'"
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'Ich komme aus...' auf Spanisch?",
+      "correctAnswer": "Soy de...",
+      "alternatives": ["soy de"],
+      "explanation": "'Soy de...' bedeutet wörtlich 'Ich bin aus...'"
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'Deutschland' auf Spanisch?",
+      "options": [
+        "Alemania",
+        "España",
+        "Francia",
+        "Italia"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'Alemania' ist das spanische Wort für 'Deutschland'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'Spanien' auf Spanisch?",
+      "options": [
+        "Alemania",
+        "España",
+        "Portugal",
+        "Italia"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'España' ist das spanische Wort für 'Spanien'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man nach der Telefonnummer auf Spanisch?",
+      "options": [
+        "¿Cuál es tu nombre?",
+        "¿Cuál es tu edad?",
+        "¿Cuál es tu número de teléfono?",
+        "¿Cuál es tu dirección?"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'¿Cuál es tu número de teléfono?' bedeutet 'Was ist deine Telefonnummer?'"
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'das Handy' oder 'das Mobiltelefon' auf Spanisch?",
+      "correctAnswer": "el móvil",
+      "alternatives": ["El móvil", "el celular", "El celular"],
+      "explanation": "'El móvil' (in Spanien) oder 'el celular' (in Lateinamerika) bedeutet 'das Handy'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'das Telefon' auf Spanisch?",
+      "options": [
+        "el móvil",
+        "el teléfono",
+        "el número",
+        "la llamada"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El teléfono' bedeutet 'das Telefon' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'Ich habe...' auf Spanisch?",
+      "correctAnswer": "Tengo",
+      "alternatives": ["tengo"],
+      "explanation": "'Tengo' bedeutet 'Ich habe' und kommt vom Verb 'tener'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'Tengo dos hermanos' auf Deutsch?",
+      "options": [
+        "Ich habe zwei Schwestern",
+        "Ich habe zwei Geschwister/Brüder",
+        "Du hast zwei Brüder",
+        "Er hat zwei Brüder"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Tengo dos hermanos' bedeutet 'Ich habe zwei Geschwister/Brüder'."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'er/sie hat' auf Spanisch?",
+      "options": [
+        "tengo",
+        "tienes",
+        "tiene",
+        "tenemos"
+      ],
+      "correctAnswer": 2,
+      "explanation": "'Tiene' ist die dritte Person Singular von 'tener' und bedeutet 'er/sie hat'."
+    },
+    {
+      "type": "text-input",
+      "question": "Was bedeutet 'el año' auf Deutsch?",
+      "correctAnswer": "das Jahr",
+      "alternatives": ["Das Jahr", "Jahr"],
+      "explanation": "'El año' bedeutet 'das Jahr' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie sagt man 'der Name' auf Spanisch?",
+      "options": [
+        "el apellido",
+        "el nombre",
+        "la edad",
+        "el título"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'El nombre' bedeutet 'der Name' oder 'der Vorname' auf Spanisch."
+    },
+    {
+      "type": "text-input",
+      "question": "Wie sagt man 'das Alter' auf Spanisch?",
+      "correctAnswer": "la edad",
+      "alternatives": ["La edad"],
+      "explanation": "'La edad' bedeutet 'das Alter' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Wie fragt man 'Wer ist das?' auf Spanisch?",
+      "options": [
+        "¿Qué es?",
+        "¿Quién es?",
+        "¿Dónde está?",
+        "¿Cómo es?"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'¿Quién es?' bedeutet 'Wer ist das?' auf Spanisch."
+    },
+    {
+      "type": "multiple-choice",
+      "question": "Was bedeutet 'Este es mi amigo Antonio' auf Deutsch?",
+      "options": [
+        "Das ist meine Freundin Antonia",
+        "Das ist mein Freund Antonio",
+        "Ich bin Antonio",
+        "Er ist mein Freund"
+      ],
+      "correctAnswer": 1,
+      "explanation": "'Este es mi amigo Antonio' bedeutet 'Das ist mein Freund Antonio'."
+    },
+    {
+      "type": "matching",
+      "question": "Ordne die Familienmitglieder zu:",
+      "pairs": [
+        {
+          "left": "el padre",
+          "right": "der Vater"
+        },
+        {
+          "left": "la madre",
+          "right": "die Mutter"
+        },
+        {
+          "left": "el hermano",
+          "right": "der Bruder"
+        },
+        {
+          "left": "la hermana",
+          "right": "die Schwester"
+        }
+      ],
+      "explanation": "Diese sind die wichtigsten Familienmitglieder auf Spanisch."
+    }
+  ]
+}
