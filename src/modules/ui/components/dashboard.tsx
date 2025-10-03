@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { db } from '@storage/database';
 import type { PracticeSession } from '@core/types/services';
+import { StatCard } from './common/StatCard';
+import { Card } from './common/Card';
 
 interface DashboardStats {
   totalSessions: number;
@@ -260,7 +262,7 @@ export function Dashboard({ onClose }: DashboardProps) {
       </div>
 
       {/* Mastery Levels */}
-      <div style={{ marginBottom: '2rem', background: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+      <Card padding="medium" style={{ marginBottom: '2rem' }}>
         <h2 style={{ marginTop: 0 }}>🎯 Beherrschungsniveau</h2>
         <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
           <MasteryBar
@@ -279,11 +281,11 @@ export function Dashboard({ onClose }: DashboardProps) {
             color="#6b7280"
           />
         </div>
-      </div>
+      </Card>
 
       {/* Topic Progress */}
       {stats.topicProgress.length > 0 && (
-        <div style={{ marginBottom: '2rem', background: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+        <Card padding="medium" style={{ marginBottom: '2rem' }}>
           <h2 style={{ marginTop: 0 }}>📚 Fortschritt nach Thema</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
             {stats.topicProgress.map((topic) => (
@@ -310,12 +312,12 @@ export function Dashboard({ onClose }: DashboardProps) {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       )}
 
       {/* Recent Sessions */}
       {stats.recentSessions.length > 0 && (
-        <div style={{ background: 'white', padding: '1.5rem', borderRadius: '8px', border: '1px solid #e5e7eb' }}>
+        <Card padding="medium">
           <h2 style={{ marginTop: 0 }}>🕐 Letzte Sitzungen</h2>
           <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
             {stats.recentSessions.map((session) => (
@@ -347,32 +349,8 @@ export function Dashboard({ onClose }: DashboardProps) {
               </div>
             ))}
           </div>
-        </div>
+        </Card>
       )}
-    </div>
-  );
-}
-
-interface StatCardProps {
-  title: string;
-  value: string;
-  subtitle: string;
-  color: string;
-}
-
-function StatCard({ title, value, subtitle, color }: StatCardProps) {
-  return (
-    <div
-      style={{
-        background: 'white',
-        padding: '1.5rem',
-        borderRadius: '8px',
-        border: '1px solid #e5e7eb',
-      }}
-    >
-      <div style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem' }}>{title}</div>
-      <div style={{ fontSize: '2rem', fontWeight: 'bold', color }}>{value}</div>
-      <div style={{ fontSize: '0.75rem', color: '#9ca3af', marginTop: '0.25rem' }}>{subtitle}</div>
     </div>
   );
 }

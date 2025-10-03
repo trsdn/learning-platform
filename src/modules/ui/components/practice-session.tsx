@@ -10,6 +10,7 @@ import {
 } from '@storage/factory';
 import { audioService } from '@core/services/audio-service';
 import { AudioButton } from './audio-button';
+import { FeedbackCard } from './common/FeedbackCard';
 
 interface Props {
   topicId: string;
@@ -1403,22 +1404,15 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
       {/* Feedback - compact */}
       {showFeedback && (
-        <div
-          style={{
-            background: isCorrect ? '#dcfce7' : '#fee2e2',
-            border: `2px solid ${isCorrect ? '#86efac' : '#fca5a5'}`,
-            padding: '1rem',
-            borderRadius: '6px',
-            marginBottom: '1rem',
-            flexShrink: 0,
-          }}
-        >
-          <h4 style={{ marginBottom: '0.5rem', fontSize: '1rem' }}>
-            {isCorrect ? '✅ Richtig!' : '❌ Nicht ganz richtig'}
-          </h4>
-          {currentTask.content.explanation && (
-            <p style={{ margin: 0, fontSize: '0.875rem' }}>{currentTask.content.explanation}</p>
-          )}
+        <div style={{ marginBottom: '1rem', flexShrink: 0 }}>
+          <FeedbackCard
+            variant={isCorrect ? 'success' : 'error'}
+            title={isCorrect ? 'Richtig!' : 'Nicht ganz richtig'}
+          >
+            {currentTask.content.explanation && (
+              <p style={{ margin: 0 }}>{currentTask.content.explanation}</p>
+            )}
+          </FeedbackCard>
         </div>
       )}
 
