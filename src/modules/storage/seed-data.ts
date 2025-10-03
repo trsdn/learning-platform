@@ -1,4 +1,3 @@
-import type { Topic, LearningPath, Task } from '@core/types/services';
 import { loadLearningPathsFromJSON } from './json-loader';
 
 /**
