@@ -5,4 +5,3 @@
  */
 
 export * from '../design-tokens';
-export { default as utilityStyles } from './utilities.css?inline';
