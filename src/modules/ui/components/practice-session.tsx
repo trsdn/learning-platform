@@ -62,10 +62,15 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Text Input state
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
+  // Audio service state
+  const [audioReady, setAudioReady] = useState(false);
+
   // Initialize session and audio service
   useEffect(() => {
     initializeSession();
-    audioService.initialize();
+    audioService.initialize().then(() => {
+      setAudioReady(true);
+    });
   }, []);
 
   // Load current task
@@ -296,7 +301,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   // Helper function to check if text has Spanish audio available
   function isSpanishText(text: string): boolean {
-    if (!text) return false;
+    if (!text || !audioReady) return false;
     // Only return true if we actually have audio for this text
     return audioService.hasAudio(text);
   }

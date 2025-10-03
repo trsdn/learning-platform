@@ -115,6 +115,12 @@ class AudioService {
    * @returns true if audio file exists
    */
   hasAudio(text: string): boolean {
+    // If not initialized yet, initialize synchronously by checking if we expect this text
+    // This is a workaround since hasAudio is called during render (can't be async)
+    if (!this.isInitialized) {
+      // Return false during initialization - buttons will appear after first render
+      return false;
+    }
     return Boolean(this.manifest && this.manifest[text]);
   }
 
