@@ -1,5 +1,5 @@
 ---
-description: Deploy the learning platform to production environment (requires confirmation)
+description: Deploy the learning platform to production environment (requires confirmation). Arguments: --force (skip checks), --skip-test (skip test env verification)
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
