@@ -1,0 +1,1063 @@
+{
+  "learningPath": {
+    "id": "spanisch-grundlagen",
+    "topicId": "spanisch",
+    "title": "Spanisch Grundlagen",
+    "description": "Lerne die Grundlagen der spanischen Sprache: Vorstellen, Familie, Zahlen, Farben und Tiere",
+    "difficulty": "beginner",
+    "estimatedTime": 480,
+    "isActive": true,
+    "createdAt": "2025-10-03T10:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 50
+    }
+  },
+  "tasks": [
+    {
+      "id": "spanisch-grundlagen-1",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Guten Tag' auf Spanisch?",
+        "options": [
+          "Buenos días",
+          "Buenas noches",
+          "Buenas tardes",
+          "Adiós"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Buenos días bedeutet 'Guten Tag' oder 'Guten Morgen' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-2",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Guten Abend' auf Spanisch?",
+        "options": [
+          "Buenos días",
+          "Buenas tardes",
+          "Buenas noches",
+          "Hasta luego"
+        ],
+        "correctAnswer": 1,
+        "explanation": "Buenas tardes bedeutet 'Guten Nachmittag/Guten Abend' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-3",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie fragt man auf Spanisch 'Wie heißt du?'?",
+        "correctAnswer": "¿Cómo te llamas?",
+        "alternatives": ["Como te llamas"],
+        "explanation": "'¿Cómo te llamas?' ist die informelle Art zu fragen, wie jemand heißt."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "vorstellung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-4",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Ich heiße...' auf Spanisch?",
+        "correctAnswer": "Me llamo...",
+        "alternatives": ["me llamo"],
+        "explanation": "'Me llamo...' bedeutet 'Ich heiße...' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "vorstellung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-5",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet 'Hola' auf Deutsch?",
+        "options": [
+          "Tschüss",
+          "Hallo",
+          "Danke",
+          "Bitte"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Hola' ist die spanische Begrüßung und bedeutet 'Hallo'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-6",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Auf Wiedersehen' auf Spanisch?",
+        "options": [
+          "Hola",
+          "Gracias",
+          "Adiós",
+          "Buenos días"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Adiós' bedeutet 'Auf Wiedersehen' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "verabschiedung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-7",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Bis später' auf Spanisch?",
+        "correctAnswer": "Hasta luego",
+        "alternatives": ["hasta luego"],
+        "explanation": "'Hasta luego' bedeutet 'Bis später' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "verabschiedung", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-8",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet '¿Cómo estás?' auf Deutsch?",
+        "options": [
+          "Wie heißt du?",
+          "Wie geht es dir?",
+          "Woher kommst du?",
+          "Wie alt bist du?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Cómo estás?' fragt nach dem Befinden einer Person und bedeutet 'Wie geht es dir?'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "kommunikation", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-9",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie antwortet man auf '¿Cómo estás?' wenn es einem gut geht?",
+        "correctAnswer": "Muy bien",
+        "alternatives": ["muy bien", "Bien"],
+        "explanation": "'Muy bien' bedeutet 'Sehr gut'. Man kann auch einfach 'Bien' (gut) antworten."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "kommunikation", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-10",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der Vater' auf Spanisch?",
+        "options": [
+          "la madre",
+          "el padre",
+          "el hermano",
+          "los padres"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'El padre' bedeutet 'der Vater' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-11",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'die Mutter' auf Spanisch?",
+        "options": [
+          "el padre",
+          "la hermana",
+          "la madre",
+          "los padres"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'La madre' bedeutet 'die Mutter' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-12",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Bruder' auf Spanisch?",
+        "correctAnswer": "el hermano",
+        "alternatives": ["El hermano"],
+        "explanation": "'El hermano' bedeutet 'der Bruder' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-13",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'die Schwester' auf Spanisch?",
+        "correctAnswer": "la hermana",
+        "alternatives": ["La hermana"],
+        "explanation": "'La hermana' bedeutet 'die Schwester' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-14",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet 'los padres' auf Deutsch?",
+        "options": [
+          "die Väter",
+          "die Mütter",
+          "die Eltern",
+          "die Brüder"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Los padres' bedeutet 'die Eltern' auf Spanisch (Plural)."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-15",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'die Geschwister' auf Spanisch?",
+        "correctAnswer": "los hermanos",
+        "alternatives": ["Los hermanos"],
+        "explanation": "'Los hermanos' bedeutet 'die Geschwister' oder 'die Brüder' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "familie", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-16",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man auf Spanisch 'Wie alt bist du?'?",
+        "options": [
+          "¿Cómo te llamas?",
+          "¿Cuántos años tienes?",
+          "¿De dónde eres?",
+          "¿Cómo estás?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Cuántos años tienes?' bedeutet 'Wie alt bist du?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-17",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Ich bin ... Jahre alt' auf Spanisch?",
+        "correctAnswer": "Tengo ... años",
+        "alternatives": ["tengo años", "Tengo años", "Tengo... años", "Tengo ...años", "Tengo...años"],
+        "explanation": "'Tengo ... años' bedeutet wörtlich 'Ich habe ... Jahre' und wird verwendet, um das Alter anzugeben."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-18",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der beste Freund' auf Spanisch?",
+        "options": [
+          "el amigo",
+          "la mejor amiga",
+          "el mejor amigo",
+          "los amigos"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'El mejor amigo' bedeutet 'der beste Freund' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "freundschaft", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-19",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'die beste Freundin' auf Spanisch?",
+        "correctAnswer": "la mejor amiga",
+        "alternatives": ["La mejor amiga"],
+        "explanation": "'La mejor amiga' bedeutet 'die beste Freundin' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "freundschaft", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-20",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet 'mi' auf Deutsch?",
+        "options": [
+          "dein/deine",
+          "mein/meine",
+          "sein/seine",
+          "ihr/ihre"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Mi' bedeutet 'mein' oder 'meine' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "grammatik", "pronomen"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-21",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'meine Freunde' auf Spanisch?",
+        "correctAnswer": "mis amigos",
+        "alternatives": ["Mis amigos"],
+        "explanation": "'Mis amigos' bedeutet 'meine Freunde' auf Spanisch. 'Mis' ist der Plural von 'mi'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "grammatik", "pronomen"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-22",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man 'Wo lebst du?' auf Spanisch?",
+        "options": [
+          "¿De dónde eres?",
+          "¿Dónde vives?",
+          "¿Cómo te llamas?",
+          "¿Qué haces?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Dónde vives?' bedeutet 'Wo lebst du?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-23",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Ich lebe in...' auf Spanisch?",
+        "correctAnswer": "Vivo en...",
+        "alternatives": ["vivo en"],
+        "explanation": "'Vivo en...' bedeutet 'Ich lebe in...' oder 'Ich wohne in...' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-24",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man 'Woher kommst du?' auf Spanisch?",
+        "options": [
+          "¿Dónde vives?",
+          "¿De dónde eres?",
+          "¿Cómo estás?",
+          "¿Cuántos años tienes?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿De dónde eres?' bedeutet 'Woher kommst du?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-25",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Ich komme aus...' auf Spanisch?",
+        "correctAnswer": "Soy de...",
+        "alternatives": ["soy de"],
+        "explanation": "'Soy de...' bedeutet wörtlich 'Ich bin aus...' und wird verwendet, um die Herkunft anzugeben."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-26",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Deutschland' auf Spanisch?",
+        "options": [
+          "Alemania",
+          "España",
+          "Francia",
+          "Italia"
+        ],
+        "correctAnswer": 0,
+        "explanation": "'Alemania' ist das spanische Wort für 'Deutschland'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "laender", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-27",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Spanien' auf Spanisch?",
+        "options": [
+          "Alemania",
+          "España",
+          "Portugal",
+          "Italia"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'España' ist das spanische Wort für 'Spanien'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "laender", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-28",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man 'Was ist dein Lieblingstier?' auf Spanisch?",
+        "options": [
+          "¿Cuál es tu animal favorito?",
+          "¿Cuál es tu color favorito?",
+          "¿Tienes mascotas?",
+          "¿Cómo se llama?"
+        ],
+        "correctAnswer": 0,
+        "explanation": "'¿Cuál es tu animal favorito?' bedeutet 'Was ist dein Lieblingstier?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-29",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Mein Lieblingstier ist...' auf Spanisch?",
+        "correctAnswer": "Mi animal favorito es...",
+        "alternatives": ["mi animal favorito es"],
+        "explanation": "'Mi animal favorito es...' bedeutet 'Mein Lieblingstier ist...' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-30",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'das Haustier' auf Spanisch?",
+        "options": [
+          "el animal",
+          "la mascota",
+          "el perro",
+          "el gato"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'La mascota' bedeutet 'das Haustier' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-31",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man 'Hast du Haustiere?' auf Spanisch?",
+        "options": [
+          "¿Tienes hermanos?",
+          "¿Tienes mascotas?",
+          "¿Cuántos años tienes?",
+          "¿Tienes amigos?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Tienes mascotas?' bedeutet 'Hast du Haustiere?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-32",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'Ich habe...' auf Spanisch?",
+        "correctAnswer": "Tengo",
+        "alternatives": ["tengo"],
+        "explanation": "'Tengo' bedeutet 'Ich habe' auf Spanisch und kommt vom Verb 'tener'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "grammatik", "verben"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-33",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man 'Was ist deine Lieblingsfarbe?' auf Spanisch?",
+        "options": [
+          "¿Cuál es tu número de teléfono?",
+          "¿Cuál es tu color favorito?",
+          "¿Cuál es tu animal favorito?",
+          "¿Cómo te llamas?"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'¿Cuál es tu color favorito?' bedeutet 'Was ist deine Lieblingsfarbe?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "farben", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-34",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie fragt man nach der Telefonnummer auf Spanisch?",
+        "options": [
+          "¿Cuál es tu nombre?",
+          "¿Cuál es tu edad?",
+          "¿Cuál es tu número de teléfono?",
+          "¿Cuál es tu dirección?"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'¿Cuál es tu número de teléfono?' bedeutet 'Was ist deine Telefonnummer?' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-35",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet 'el año' auf Deutsch?",
+        "options": [
+          "der Tag",
+          "das Jahr",
+          "der Monat",
+          "das Alter"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'El año' bedeutet 'das Jahr' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "zeit", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-36",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der Hund' auf Spanisch?",
+        "options": [
+          "el gato",
+          "el perro",
+          "el pájaro",
+          "el pez"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'El perro' bedeutet 'der Hund' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-37",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'die Katze' auf Spanisch?",
+        "options": [
+          "el perro",
+          "el ratón",
+          "el gato",
+          "el pájaro"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'El gato' bedeutet 'die Katze' auf Spanisch (maskulin im Spanischen)."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-38",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Vogel' auf Spanisch?",
+        "correctAnswer": "el pájaro",
+        "alternatives": ["El pájaro"],
+        "explanation": "'El pájaro' bedeutet 'der Vogel' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-39",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der Fisch' auf Spanisch?",
+        "options": [
+          "el pez",
+          "el perro",
+          "el gato",
+          "el ratón"
+        ],
+        "correctAnswer": 0,
+        "explanation": "'El pez' bedeutet 'der Fisch' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-40",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'die Schildkröte' auf Spanisch?",
+        "correctAnswer": "la tortuga",
+        "alternatives": ["La tortuga"],
+        "explanation": "'La tortuga' bedeutet 'die Schildkröte' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-41",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der Hamster' auf Spanisch?",
+        "options": [
+          "el gato",
+          "el ratón",
+          "el hámster",
+          "el conejo"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'El hámster' bedeutet 'der Hamster' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-42",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Elefant' auf Spanisch?",
+        "correctAnswer": "el elefante",
+        "alternatives": ["El elefante"],
+        "explanation": "'El elefante' bedeutet 'der Elefant' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-43",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'die Giraffe' auf Spanisch?",
+        "options": [
+          "el elefante",
+          "la jirafa",
+          "el león",
+          "el oso"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'La jirafa' bedeutet 'die Giraffe' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-44",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Löwe' auf Spanisch?",
+        "correctAnswer": "el león",
+        "alternatives": ["El león"],
+        "explanation": "'El león' bedeutet 'der Löwe' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-45",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'der Bär' auf Spanisch?",
+        "options": [
+          "el lobo",
+          "el león",
+          "el oso",
+          "el tigre"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'El oso' bedeutet 'der Bär' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-46",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Pinguin' auf Spanisch?",
+        "correctAnswer": "el pingüino",
+        "alternatives": ["El pingüino"],
+        "explanation": "'El pingüino' bedeutet 'der Pinguin' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-47",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'die Kuh' auf Spanisch?",
+        "options": [
+          "el cerdo",
+          "la vaca",
+          "la oveja",
+          "el caballo"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'La vaca' bedeutet 'die Kuh' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-48",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'das Schaf' auf Spanisch?",
+        "correctAnswer": "la oveja",
+        "alternatives": ["La oveja"],
+        "explanation": "'La oveja' bedeutet 'das Schaf' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-49",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'das Schwein' auf Spanisch?",
+        "options": [
+          "el cerdo",
+          "la vaca",
+          "el caballo",
+          "el perro"
+        ],
+        "correctAnswer": 0,
+        "explanation": "'El cerdo' bedeutet 'das Schwein' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-grundlagen-50",
+      "learningPathId": "spanisch-grundlagen",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'das Pferd' auf Spanisch?",
+        "correctAnswer": "el caballo",
+        "alternatives": ["El caballo"],
+        "explanation": "'El caballo' bedeutet 'das Pferd' auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["spanisch", "tiere", "vokabeln"],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    }
+  ]
+}
