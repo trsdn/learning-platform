@@ -36,14 +36,14 @@ export interface LearningPath {
   updatedAt: Date;
 }
 
-export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard';
+export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard' | 'text-input';
 
 export interface Task {
   id: string;
   learningPathId: string;
   templateId: string;
   type: TaskType;
-  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent | FlashcardContent;
+  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent | FlashcardContent | TextInputContent;
   metadata: {
     difficulty: 'easy' | 'medium' | 'hard';
     tags: string[];
@@ -136,6 +136,15 @@ export interface FlashcardContent {
   backLanguage: 'de' | 'es' | 'en'; // Language of back side
   explanation?: string; // Optional additional context
   hint?: string; // Optional hint
+}
+
+export interface TextInputContent {
+  question: string;
+  correctAnswer: string;
+  alternatives?: string[]; // Alternative correct answers
+  caseSensitive?: boolean; // Default: false
+  explanation?: string;
+  hint?: string;
 }
 
 export interface AnswerHistory {

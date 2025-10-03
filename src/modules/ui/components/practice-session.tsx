@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent, FlashcardContent } from '@core/types/services';
+import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent, FlashcardContent, TextInputContent } from '@core/types/services';
 import { db } from '@storage/database';
 import { PracticeSessionService } from '@core/services/practice-session-service';
 import { SpacedRepetitionService } from '@core/services/spaced-repetition-service';
@@ -57,6 +57,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   const [flashcardRevealed, setFlashcardRevealed] = useState<boolean>(false);
   const [flashcardKnown, setFlashcardKnown] = useState<boolean | null>(null);
 
+  // Text Input state
+  const [textInputAnswer, setTextInputAnswer] = useState<string>('');
+
   // Initialize session
   useEffect(() => {
     initializeSession();
@@ -110,6 +113,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setScrambleAnswer('');
     setFlashcardRevealed(false);
     setFlashcardKnown(null);
+    setTextInputAnswer('');
 
     // Type-specific initialization
     if (task.type === 'multiple-choice') {
@@ -205,6 +209,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     } else if (currentTask.type === 'flashcard') {
       if (flashcardKnown === null) return;
       correct = flashcardKnown;
+    } else if (currentTask.type === 'text-input') {
+      if (!textInputAnswer.trim()) return;
+      const content = currentTask.content as TextInputContent;
+      const caseSensitive = content.caseSensitive || false;
+      const userAnswer = caseSensitive ? textInputAnswer.trim() : textInputAnswer.trim().toLowerCase();
+      const correctAnswer = caseSensitive ? content.correctAnswer : content.correctAnswer.toLowerCase();
+      const alternatives = (content.alternatives || []).map(a => caseSensitive ? a : a.toLowerCase());
+      correct = userAnswer === correctAnswer || alternatives.includes(userAnswer);
     }
 
     setIsCorrect(correct);
@@ -294,6 +306,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (currentTask?.type === 'slider') return true; // Slider always has a value
     if (currentTask?.type === 'word-scramble') return scrambleAnswer.trim().length > 0;
     if (currentTask?.type === 'flashcard') return flashcardKnown !== null;
+    if (currentTask?.type === 'text-input') return textInputAnswer.trim().length > 0;
     return false;
   }
 
@@ -319,6 +332,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       return renderWordScramble();
     } else if (currentTask.type === 'flashcard') {
       return renderFlashcard();
+    } else if (currentTask.type === 'text-input') {
+      return renderTextInput();
     }
     return null;
   }
@@ -1149,6 +1164,84 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     );
   }
 
+  function renderTextInput() {
+    if (!currentTask || currentTask.type !== 'text-input') return null;
+    const content = currentTask.content as TextInputContent;
+
+    return (
+      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div style={{
+          padding: '2rem',
+          background: '#ffffff',
+          borderRadius: '12px',
+          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+        }}>
+          <input
+            type="text"
+            value={textInputAnswer}
+            onChange={(e) => setTextInputAnswer(e.target.value)}
+            disabled={showFeedback}
+            placeholder="Deine Antwort..."
+            style={{
+              width: '100%',
+              padding: '1rem',
+              fontSize: '1.125rem',
+              border: showFeedback
+                ? isCorrect
+                  ? '2px solid #86efac'
+                  : '2px solid #fca5a5'
+                : '2px solid #d1d5db',
+              borderRadius: '8px',
+              background: showFeedback
+                ? isCorrect
+                  ? '#dcfce7'
+                  : '#fee2e2'
+                : '#ffffff',
+              outline: 'none',
+              transition: 'all 0.2s',
+            }}
+            onFocus={(e) => {
+              if (!showFeedback) {
+                e.currentTarget.style.borderColor = '#3b82f6';
+              }
+            }}
+            onBlur={(e) => {
+              if (!showFeedback) {
+                e.currentTarget.style.borderColor = '#d1d5db';
+              }
+            }}
+          />
+
+          {showFeedback && !isCorrect && (
+            <div style={{
+              marginTop: '1rem',
+              padding: '0.75rem',
+              background: '#f3f4f6',
+              borderRadius: '6px',
+              fontSize: '0.95rem',
+              color: '#4b5563',
+            }}>
+              <strong>Richtige Antwort:</strong> {content.correctAnswer}
+            </div>
+          )}
+        </div>
+
+        {content.hint && !showFeedback && (
+          <div style={{
+            padding: '0.75rem 1rem',
+            background: '#fef3c7',
+            border: '1px solid #fbbf24',
+            borderRadius: '6px',
+            fontSize: '0.9rem',
+            color: '#92400e',
+          }}>
+            💡 <strong>Tipp:</strong> {content.hint}
+          </div>
+        )}
+      </div>
+    );
+  }
+
   if (!session || !currentTask) {
     return (
       <div style={{ padding: '2rem', textAlign: 'center' }}>
@@ -1241,7 +1334,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           currentTask.type === 'matching' ||
           currentTask.type === 'multiple-select' ||
           currentTask.type === 'slider' ||
-          currentTask.type === 'word-scramble') && (
+          currentTask.type === 'word-scramble' ||
+          currentTask.type === 'text-input') && (
           <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', lineHeight: '1.4' }}>
             {(currentTask.content as any).question}
           </h3>
