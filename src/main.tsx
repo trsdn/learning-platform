@@ -376,7 +376,7 @@ function App() {
         <div>
           <h1>🧠 MindForge Academy</h1>
           <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
-            Level up your brain, one question at a time
+            Erweitere dein Wissen, eine Frage nach der anderen
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
