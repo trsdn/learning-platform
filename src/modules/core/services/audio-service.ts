@@ -11,9 +11,13 @@ class AudioService {
   private manifest: AudioManifest | null = null;
   private audioCache: Map<string, HTMLAudioElement> = new Map();
   private getBasePath = () => {
-    // Use Vite's BASE_URL from the HTML base tag or default to '/'
-    const base = document.querySelector('base')?.getAttribute('href') || '/';
-    return base.endsWith('/') ? base : base + '/';
+    // For GitHub Pages, extract base from the current path
+    const path = window.location.pathname;
+    // If path starts with /learning-platform/, use that as base
+    if (path.startsWith('/learning-platform/')) {
+      return '/learning-platform/';
+    }
+    return '/';
   };
   private get manifestPath() {
     return `${this.getBasePath()}audio/spanish/manifest.json`;
