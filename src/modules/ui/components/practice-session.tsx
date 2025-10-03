@@ -1434,23 +1434,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               >
                 Antwort überprüfen
               </button>
-              {currentTaskIndex < session.execution.taskIds.length - 1 && (
-                <button
-                  onClick={handleSkipTask}
-                  style={{
-                    padding: '0.875rem 2rem',
-                    background: '#f3f4f6',
-                    color: '#6b7280',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px',
-                    cursor: 'pointer',
-                    fontSize: '1rem',
-                    fontWeight: '500',
-                  }}
-                >
-                  Überspringen →
-                </button>
-              )}
+              <button
+                onClick={currentTaskIndex < session.execution.taskIds.length - 1 ? handleSkipTask : handleComplete}
+                style={{
+                  padding: '0.875rem 2rem',
+                  background: '#f3f4f6',
+                  color: '#6b7280',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  cursor: 'pointer',
+                  fontSize: '1rem',
+                  fontWeight: '500',
+                }}
+              >
+                {currentTaskIndex < session.execution.taskIds.length - 1
+                  ? 'Überspringen →'
+                  : 'Sitzung beenden'}
+              </button>
             </>
           ) : (
             <button
