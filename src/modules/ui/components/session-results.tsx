@@ -1,4 +1,5 @@
 import type { PracticeSession } from '@core/types/services';
+import { StatCard } from './common/StatCard';
 
 interface Props {
   session: PracticeSession;
@@ -64,61 +65,29 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
           marginBottom: '2rem',
         }}
       >
-        <div
-          style={{
-            background: '#f9fafb',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '2px solid #e5e7eb',
-          }}
-        >
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#3b82f6' }}>
-            {session.execution.completedCount}
-          </div>
-          <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>Aufgaben bearbeitet</div>
-        </div>
+        <StatCard
+          title="Aufgaben bearbeitet"
+          value={session.execution.completedCount}
+          color="#3b82f6"
+        />
 
-        <div
-          style={{
-            background: '#f9fafb',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '2px solid #e5e7eb',
-          }}
-        >
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#10b981' }}>
-            {session.execution.correctCount}
-          </div>
-          <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>Richtige Antworten</div>
-        </div>
+        <StatCard
+          title="Richtige Antworten"
+          value={session.execution.correctCount}
+          color="#10b981"
+        />
 
-        <div
-          style={{
-            background: '#f9fafb',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '2px solid #e5e7eb',
-          }}
-        >
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: performanceColor }}>
-            {Math.round(accuracy)}%
-          </div>
-          <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>Genauigkeit</div>
-        </div>
+        <StatCard
+          title="Genauigkeit"
+          value={`${Math.round(accuracy)}%`}
+          color={performanceColor}
+        />
 
-        <div
-          style={{
-            background: '#f9fafb',
-            padding: '1.5rem',
-            borderRadius: '12px',
-            border: '2px solid #e5e7eb',
-          }}
-        >
-          <div style={{ fontSize: '2.5rem', fontWeight: 'bold', color: '#f59e0b' }}>
-            {formatTime(averageTime)}
-          </div>
-          <div style={{ fontSize: '0.9rem', color: '#6b7280' }}>Ø Zeit pro Aufgabe</div>
-        </div>
+        <StatCard
+          title="Ø Zeit pro Aufgabe"
+          value={formatTime(averageTime)}
+          color="#f59e0b"
+        />
       </div>
 
       {/* Total Time */}
