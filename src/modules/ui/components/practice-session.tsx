@@ -1183,6 +1183,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
               {currentTaskIndex + 1}/{session.execution.taskIds.length}
             </span>
+            <span style={{ fontSize: '0.75rem', color: '#9ca3af', fontFamily: 'monospace' }}>
+              ID: {currentTask.id}
+            </span>
           </div>
           <button
             onClick={onCancel}
