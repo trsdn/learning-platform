@@ -1,0 +1,2 @@
+# Python dependencies for audio generation
+gtts==2.5.0

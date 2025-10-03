@@ -8,6 +8,8 @@ import {
   getTaskRepository,
   getSpacedRepetitionRepository,
 } from '@storage/factory';
+import { audioService } from '@core/services/audio-service';
+import { AudioButton } from './audio-button';
 
 interface Props {
   topicId: string;
@@ -60,9 +62,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Text Input state
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
-  // Initialize session
+  // Initialize session and audio service
   useEffect(() => {
     initializeSession();
+    audioService.initialize();
   }, []);
 
   // Load current task
@@ -128,9 +131,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         [indices[i]!, indices[j]!] = [indices[j]!, indices[i]!];
       }
 
-      // Apply shuffle to options
+      // Apply shuffle to options and find new position of correct answer
       const shuffled = indices.map(i => originalOptions[i]!);
-      const newCorrectIndex = indices.indexOf(originalCorrectAnswer);
+      // Find the position where the original correct answer ended up after shuffling
+      const newCorrectIndex = indices.findIndex(originalIndex => originalIndex === originalCorrectAnswer);
 
       setShuffledOptions(shuffled);
       setCorrectAnswerIndex(newCorrectIndex);
@@ -290,6 +294,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     onComplete();
   }
 
+  // Helper function to check if text has Spanish audio available
+  function isSpanishText(text: string): boolean {
+    if (!text) return false;
+    // Only return true if we actually have audio for this text
+    return audioService.hasAudio(text);
+  }
+
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
     if (showFeedback) return false;
@@ -360,6 +371,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             borderColor = '#3b82f6';
           }
 
+          const hasAudio = isSpanishText(option);
+
           return (
             <button
               key={index}
@@ -374,9 +387,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                 textAlign: 'left',
                 fontSize: '0.95rem',
                 transition: 'all 0.2s',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                gap: '0.5rem',
               }}
             >
-              {option}
+              <span>{option}</span>
+              {hasAudio && <AudioButton text={option} size="small" />}
             </button>
           );
         })}
@@ -646,9 +664,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                     background: '#f9fafb',
                     border: '2px solid #d1d5db',
                     borderRadius: '6px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between',
+                    gap: '0.5rem',
                   }}
                 >
-                  {pair.left}
+                  <span>{pair.left}</span>
+                  {isSpanishText(pair.left) && <AudioButton text={pair.left} size="small" />}
                 </div>
                 <select
                   value={matchingAnswers[leftIndex] ?? ''}
@@ -997,9 +1020,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             textAlign: 'center',
             minHeight: '80px',
             display: 'flex',
+            flexDirection: 'column',
             alignItems: 'center',
+            justifyContent: 'center',
+            gap: '1rem',
           }}>
-            {content.front}
+            <div>{content.front}</div>
+            {isSpanishText(content.front) && <AudioButton text={content.front} size="large" />}
           </div>
 
           {/* Back side or reveal button */}
@@ -1058,9 +1085,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                 textAlign: 'center',
                 minHeight: '60px',
                 display: 'flex',
+                flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
+                gap: '1rem',
               }}>
-                {content.back}
+                <div>{content.back}</div>
+                {isSpanishText(content.back) && <AudioButton text={content.back} size="large" />}
               </div>
             </>
           )}
@@ -1220,8 +1251,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               borderRadius: '6px',
               fontSize: '0.95rem',
               color: '#4b5563',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
             }}>
-              <strong>Richtige Antwort:</strong> {content.correctAnswer}
+              <div>
+                <strong>Richtige Antwort:</strong> {content.correctAnswer}
+              </div>
+              {isSpanishText(content.correctAnswer) && <AudioButton text={content.correctAnswer} size="small" />}
             </div>
           )}
         </div>
@@ -1336,9 +1373,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           currentTask.type === 'slider' ||
           currentTask.type === 'word-scramble' ||
           currentTask.type === 'text-input') && (
-          <h3 style={{ marginBottom: '1rem', fontSize: '1.1rem', lineHeight: '1.4' }}>
-            {(currentTask.content as any).question}
-          </h3>
+          <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <h3 style={{ margin: 0, fontSize: '1.1rem', lineHeight: '1.4', flex: 1 }}>
+              {(currentTask.content as any).question}
+            </h3>
+            {isSpanishText((currentTask.content as any).question) && (
+              <AudioButton text={(currentTask.content as any).question} size="medium" />
+            )}
+          </div>
         )}
 
         {renderTaskContent()}
