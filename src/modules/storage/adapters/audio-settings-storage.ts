@@ -123,12 +123,13 @@ class AudioSettingsStorage implements IAudioSettingsStorage {
   }
 
   migrate(oldSettings: any): AudioSettings {
-    // Migration from v0 to v1 (if needed in the future)
-    // Currently only supports v1, so we apply defaults for missing fields
+    // Migration from v1 to v2: Enable auto-play by default
+    // This ensures all users get the new auto-play feature enabled
 
     const migrated: AudioSettings = {
-      version: 1,
-      autoPlayEnabled: oldSettings.autoPlayEnabled ?? DEFAULT_AUDIO_SETTINGS.autoPlayEnabled,
+      version: 2,
+      // Force enable auto-play for v1 -> v2 migration
+      autoPlayEnabled: oldSettings.version === 1 ? true : (oldSettings.autoPlayEnabled ?? DEFAULT_AUDIO_SETTINGS.autoPlayEnabled),
       languageFilter: oldSettings.languageFilter ?? DEFAULT_AUDIO_SETTINGS.languageFilter,
       perTopicOverrides: oldSettings.perTopicOverrides ?? {},
       accessibilityMode: oldSettings.accessibilityMode ?? DEFAULT_AUDIO_SETTINGS.accessibilityMode,

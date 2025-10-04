@@ -39,7 +39,7 @@ export interface AudioSettings {
  * Used when no settings exist in LocalStorage
  */
 export const DEFAULT_AUDIO_SETTINGS: AudioSettings = {
-  version: 1,
+  version: 2, // Bumped to trigger migration and enable auto-play by default
   autoPlayEnabled: true,
   languageFilter: 'non-German only',
   perTopicOverrides: {},
