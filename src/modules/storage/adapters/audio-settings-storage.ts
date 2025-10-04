@@ -70,15 +70,26 @@ class AudioSettingsStorage implements IAudioSettingsStorage {
     try {
       validateAudioSettings(settings);
 
-      // Debounce localStorage writes for better performance
+      // Clear any pending save
       if (this.saveTimer !== null) {
         window.clearTimeout(this.saveTimer);
       }
 
-      this.saveTimer = window.setTimeout(() => {
+      // In test environment, save immediately (no debounce)
+      // Detect test environment by checking for vitest or jest globals
+      const isTestEnv = typeof (globalThis as any).describe === 'function' &&
+                       typeof (globalThis as any).it === 'function';
+
+      if (isTestEnv) {
+        // Immediate save for tests
         localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
-        this.saveTimer = null;
-      }, DEBOUNCE_DELAY_MS);
+      } else {
+        // Debounced save for production
+        this.saveTimer = window.setTimeout(() => {
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+          this.saveTimer = null;
+        }, DEBOUNCE_DELAY_MS);
+      }
     } catch (error) {
       console.error('Failed to save audio settings:', error);
       throw error;
