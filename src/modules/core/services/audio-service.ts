@@ -304,12 +304,12 @@ class AudioService implements IAudioService {
       return false;
     }
 
-    // Only allow /audio/ paths (relative URLs) or data URIs (for testing)
-    if (url.startsWith('/audio/') || url.startsWith('data:audio/')) {
+    // Allow /audio/ paths, paths with base URL prefix, or data URIs
+    if (url.startsWith('/audio/') || url.includes('/audio/') || url.startsWith('data:audio/')) {
       return true;
     }
 
-    console.warn('Audio URL must start with /audio/ or data:audio/', url);
+    console.warn('Audio URL must contain /audio/ or start with data:audio/', url);
     return false;
   }
 }

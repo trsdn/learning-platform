@@ -114,7 +114,9 @@ function enrichTaskWithAudio(
 
   // Convert Spanish text to audio filename
   const audioFilename = spanishTextToAudioFilename(spanishText);
-  const audioUrl = `/audio/spanish/${audioFilename}.mp3`;
+  // Use BASE_URL to handle production base path (/learning-platform/)
+  const basePath = import.meta.env.BASE_URL || '/';
+  const audioUrl = `${basePath}audio/spanish/${audioFilename}.mp3`;
 
   return {
     hasAudio: true,
