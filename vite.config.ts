@@ -33,7 +33,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         // Selective caching patterns for better performance
-        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2}'],
+        globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,mp3}'],
         // Implement different caching strategies for different resource types
         runtimeCaching: [
           // Network-first for API calls with 3s timeout
