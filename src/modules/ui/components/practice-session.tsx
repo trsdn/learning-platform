@@ -11,6 +11,7 @@ import {
 import { audioService } from '@core/services/audio-service';
 import { AudioButton } from './audio-button';
 import { FeedbackCard } from './common/FeedbackCard';
+import { Input, Checkbox, Select, Slider } from './forms';
 
 interface Props {
   topicId: string;
@@ -431,40 +432,31 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {parts.map((part, i) => (
             <span key={i}>
               {part}
-              {i < content.blanks.length && (
-                <input
-                  type="text"
-                  value={blankAnswers[i] || ''}
-                  onChange={(e) => {
-                    const newAnswers = [...blankAnswers];
-                    newAnswers[i] = e.target.value;
-                    setBlankAnswers(newAnswers);
-                  }}
-                  disabled={showFeedback}
-                  style={{
-                    padding: '0.25rem 0.5rem',
-                    border: showFeedback
-                      ? blankAnswers[i]?.trim().toLowerCase() === content.blanks[i]!.correctAnswer.toLowerCase() ||
-                        content.blanks[i]!.alternatives?.map(a => a.toLowerCase()).includes(blankAnswers[i]?.trim().toLowerCase() || '')
-                        ? '2px solid #86efac'
-                        : blankAnswers[i]?.trim()
-                        ? '2px solid #fca5a5'
-                        : '2px solid #d1d5db'
-                      : '2px solid #d1d5db',
-                    borderRadius: '4px',
-                    fontSize: '0.95rem',
-                    minWidth: '100px',
-                    backgroundColor: showFeedback
-                      ? blankAnswers[i]?.trim().toLowerCase() === content.blanks[i]!.correctAnswer.toLowerCase() ||
-                        content.blanks[i]!.alternatives?.map(a => a.toLowerCase()).includes(blankAnswers[i]?.trim().toLowerCase() || '')
-                        ? '#dcfce7'
-                        : blankAnswers[i]?.trim()
-                        ? '#fee2e2'
-                        : '#ffffff'
-                      : '#ffffff',
-                  }}
-                />
-              )}
+              {i < content.blanks.length && (() => {
+                const userAnswer = blankAnswers[i]?.trim().toLowerCase() || '';
+                const isCorrect = userAnswer === content.blanks[i]!.correctAnswer.toLowerCase() ||
+                  content.blanks[i]!.alternatives?.map(a => a.toLowerCase()).includes(userAnswer);
+                const hasAnswer = blankAnswers[i]?.trim() !== '';
+
+                return (
+                  <Input
+                    value={blankAnswers[i] || ''}
+                    onChange={(e) => {
+                      const newAnswers = [...blankAnswers];
+                      newAnswers[i] = e.target.value;
+                      setBlankAnswers(newAnswers);
+                    }}
+                    disabled={showFeedback}
+                    error={showFeedback && hasAnswer && !isCorrect ? true : false}
+                    success={showFeedback && isCorrect ? true : false}
+                    style={{
+                      fontSize: '0.95rem',
+                      minWidth: '100px',
+                      display: 'inline-block',
+                    }}
+                  />
+                );
+              })()}
             </span>
           ))}
         </div>
@@ -689,39 +681,22 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                   <span>{pair.left}</span>
                   {isSpanishText(pair.left) && <AudioButton text={pair.left} size="small" />}
                 </div>
-                <select
-                  value={matchingAnswers[leftIndex] ?? ''}
-                  onChange={(e) => {
-                    const value = parseInt(e.target.value);
-                    setMatchingAnswers({ ...matchingAnswers, [leftIndex]: value });
+                <Select
+                  value={matchingAnswers[leftIndex]?.toString() ?? ''}
+                  onChange={(value) => {
+                    const numValue = parseInt(value);
+                    setMatchingAnswers({ ...matchingAnswers, [leftIndex]: numValue });
                   }}
+                  options={shuffledRightColumn.map((rightIndex) => ({
+                    value: rightIndex.toString(),
+                    label: content.pairs[rightIndex]!.right,
+                  }))}
                   disabled={showFeedback}
-                  style={{
-                    padding: '0.75rem',
-                    border: showFeedback
-                      ? isCorrect
-                        ? '2px solid #86efac'
-                        : hasAnswer
-                        ? '2px solid #fca5a5'
-                        : '2px solid #d1d5db'
-                      : '2px solid #d1d5db',
-                    borderRadius: '6px',
-                    backgroundColor: showFeedback
-                      ? isCorrect
-                        ? '#dcfce7'
-                        : hasAnswer
-                        ? '#fee2e2'
-                        : '#ffffff'
-                      : '#ffffff',
-                  }}
-                >
-                  <option value="">Wähle...</option>
-                  {shuffledRightColumn.map((rightIndex) => (
-                    <option key={rightIndex} value={rightIndex}>
-                      {content.pairs[rightIndex]!.right}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Wähle..."
+                  error={showFeedback && hasAnswer && !isCorrect}
+                  success={showFeedback && isCorrect}
+                  fullWidth
+                />
               </React.Fragment>
             );
           })}
@@ -789,7 +764,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             }
 
             return (
-              <label
+              <div
                 key={index}
                 style={{
                   display: 'flex',
@@ -798,24 +773,19 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                   background: backgroundColor,
                   border: `2px solid ${borderColor}`,
                   borderRadius: '6px',
-                  cursor: showFeedback ? 'default' : 'pointer',
                   transition: 'all 0.2s',
                   position: 'relative',
                 }}
               >
-                <input
-                  type="checkbox"
+                <Checkbox
                   checked={isSelected}
                   onChange={() => toggleOption(index)}
                   disabled={showFeedback}
-                  style={{
-                    marginRight: '0.75rem',
-                    width: '1.25rem',
-                    height: '1.25rem',
-                    cursor: showFeedback ? 'default' : 'pointer',
-                  }}
+                  label={<span style={{ fontSize: '0.95rem', flex: 1 }}>{option}</span>}
+                  error={showFeedback && isSelected && !isCorrectAnswer}
+                  success={showFeedback && isCorrectAnswer && isSelected}
+                  style={{ flex: 1 }}
                 />
-                <span style={{ fontSize: '0.95rem', flex: 1 }}>{option}</span>
                 {showFeedback && statusIcon && (
                   <span style={{
                     fontSize: '1.25rem',
@@ -826,7 +796,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                     {statusIcon}
                   </span>
                 )}
-              </label>
+              </div>
             );
           })}
         </div>
@@ -857,32 +827,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         </div>
 
         <div style={{ padding: '0 1rem' }}>
-          <input
-            type="range"
+          <Slider
+            value={sliderValue}
+            onChange={setSliderValue}
             min={content.min}
             max={content.max}
             step={step}
-            value={sliderValue}
-            onChange={(e) => setSliderValue(Number(e.target.value))}
             disabled={showFeedback}
-            style={{
-              width: '100%',
-              height: '8px',
-              borderRadius: '4px',
-              outline: 'none',
-              cursor: showFeedback ? 'default' : 'pointer',
-            }}
+            unit={content.unit || ''}
+            showValue={false}
           />
-          <div style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            marginTop: '0.5rem',
-            fontSize: '0.875rem',
-            color: '#6b7280'
-          }}>
-            <span>{content.min}{content.unit || ''}</span>
-            <span>{content.max}{content.unit || ''}</span>
-          </div>
         </div>
 
         {showFeedback && (
@@ -1223,39 +1177,17 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           borderRadius: '12px',
           boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
         }}>
-          <input
-            type="text"
+          <Input
             value={textInputAnswer}
             onChange={(e) => setTextInputAnswer(e.target.value)}
             disabled={showFeedback}
             placeholder="Deine Antwort..."
+            error={showFeedback && !isCorrect}
+            success={showFeedback && isCorrect}
+            fullWidth
             style={{
-              width: '100%',
-              padding: '1rem',
               fontSize: '1.125rem',
-              border: showFeedback
-                ? isCorrect
-                  ? '2px solid #86efac'
-                  : '2px solid #fca5a5'
-                : '2px solid #d1d5db',
-              borderRadius: '8px',
-              background: showFeedback
-                ? isCorrect
-                  ? '#dcfce7'
-                  : '#fee2e2'
-                : '#ffffff',
-              outline: 'none',
-              transition: 'all 0.2s',
-            }}
-            onFocus={(e) => {
-              if (!showFeedback) {
-                e.currentTarget.style.borderColor = '#3b82f6';
-              }
-            }}
-            onBlur={(e) => {
-              if (!showFeedback) {
-                e.currentTarget.style.borderColor = '#d1d5db';
-              }
+              padding: '1rem',
             }}
           />
 
