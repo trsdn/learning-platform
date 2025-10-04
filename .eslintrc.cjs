@@ -38,5 +38,13 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     'react/prop-types': 'off',
     'no-console': ['warn', { allow: ['warn', 'error'] }],
+    // Prevent inline styles - use CSS Modules instead
+    'no-restricted-syntax': [
+      'warn',
+      {
+        selector: 'JSXAttribute[name.name="style"] > JSXExpressionContainer > ObjectExpression',
+        message: 'Avoid inline styles. Use CSS Modules instead. Only use inline styles for truly dynamic values (colors based on state, percentage widths, etc.).',
+      },
+    ],
   },
 };

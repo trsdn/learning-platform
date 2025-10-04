@@ -1,10 +1,4 @@
-import {
-  spacing,
-  typography,
-  semanticColors,
-  borderRadius,
-  transitions,
-} from '@ui/design-tokens';
+import styles from './MasteryBar.module.css';
 
 export interface MasteryBarProps {
   /**
@@ -49,45 +43,21 @@ export function MasteryBar({ label, count, color, max }: MasteryBarProps) {
   const percentage = max && max > 0 ? (count / max) * 100 : count > 0 ? 100 : 0;
 
   return (
-    <div style={{ flex: 1 }}>
-      <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-between',
-          marginBottom: spacing[2],
-        }}
-      >
-        <span
-          style={{
-            fontSize: typography.fontSize.sm,
-            fontWeight: typography.fontWeight.medium,
-          }}
-        >
+    <div className={styles['mastery-bar']}>
+      <div className={styles['mastery-bar__header']}>
+        <span className={styles['mastery-bar__label']}>
           {label}
         </span>
-        <span
-          style={{
-            fontSize: typography.fontSize.sm,
-            color: semanticColors.text.secondary,
-          }}
-        >
+        <span className={styles['mastery-bar__count']}>
           {count}
         </span>
       </div>
-      <div
-        style={{
-          background: semanticColors.background.tertiary,
-          height: '8px',
-          borderRadius: borderRadius.md,
-          overflow: 'hidden',
-        }}
-      >
+      <div className={styles['mastery-bar__track']}>
         <div
+          className={styles['mastery-bar__fill']}
           style={{
             background: color,
-            height: '100%',
             width: `${percentage}%`,
-            transition: transitions.presets.base,
           }}
         />
       </div>

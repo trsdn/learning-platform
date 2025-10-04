@@ -5,14 +5,8 @@ import { StatCard } from './common/StatCard';
 import { Card } from './common/Card';
 import { Button } from './common/Button';
 import { MasteryBar } from './common/MasteryBar';
-import {
-  semanticColors,
-  spacing,
-  typography,
-  colors,
-  borderRadius,
-  transitions,
-} from '@ui/design-tokens';
+import { colors } from '@ui/design-tokens';
+import styles from './dashboard.module.css';
 
 interface DashboardStats {
   totalSessions: number;
@@ -184,13 +178,7 @@ export function Dashboard({ onClose }: DashboardProps) {
 
   if (isLoading) {
     return (
-      <div
-        style={{
-          padding: spacing[8],
-          fontFamily: typography.fontFamily.sans,
-          textAlign: 'center',
-        }}
-      >
+      <div className={styles['dashboard__empty']} style={{ textAlign: 'center' }}>
         <h1>📊 Dashboard</h1>
         <p>Lade Statistiken...</p>
       </div>
@@ -199,13 +187,8 @@ export function Dashboard({ onClose }: DashboardProps) {
 
   if (!stats) {
     return (
-      <div
-        style={{
-          padding: spacing[8],
-          fontFamily: typography.fontFamily.sans,
-        }}
-      >
-        <Button variant="secondary" onClick={onClose} style={{ marginBottom: spacing[4] }}>
+      <div className={styles['dashboard__empty']}>
+        <Button variant="secondary" onClick={onClose} className={styles['dashboard__back-button']}>
           ← Zurück
         </Button>
         <h1>📊 Dashboard</h1>
@@ -215,39 +198,20 @@ export function Dashboard({ onClose }: DashboardProps) {
   }
 
   return (
-    <div
-      style={{
-        padding: spacing[8],
-        fontFamily: typography.fontFamily.sans,
-        maxWidth: '1200px',
-        margin: '0 auto',
-      }}
-    >
+    <div className={styles['dashboard']}>
       {/* Header */}
-      <div style={{ marginBottom: spacing[8] }}>
-        <Button variant="secondary" onClick={onClose} style={{ marginBottom: spacing[4] }}>
+      <div className={styles['dashboard__header']}>
+        <Button variant="secondary" onClick={onClose} className={styles['dashboard__back-button']}>
           ← Zurück
         </Button>
-        <h1 style={{ margin: 0 }}>📊 Lern-Dashboard</h1>
-        <p
-          style={{
-            color: semanticColors.text.secondary,
-            marginTop: spacing[2],
-          }}
-        >
+        <h1 className={styles['dashboard__title']}>📊 Lern-Dashboard</h1>
+        <p className={styles['dashboard__subtitle']}>
           Deine Fortschritte und Statistiken im Überblick
         </p>
       </div>
 
       {/* Key Metrics */}
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: spacing[4],
-          marginBottom: spacing[8],
-        }}
-      >
+      <div className={styles['dashboard__metrics']}>
         <StatCard
           title="Gesamt Sitzungen"
           value={stats.completedSessions.toString()}
@@ -275,9 +239,9 @@ export function Dashboard({ onClose }: DashboardProps) {
       </div>
 
       {/* Mastery Levels */}
-      <Card padding="medium" style={{ marginBottom: spacing[8] }}>
-        <h2 style={{ marginTop: 0 }}>🎯 Beherrschungsniveau</h2>
-        <div style={{ display: 'flex', gap: spacing[4], marginTop: spacing[4] }}>
+      <Card padding="medium" className={styles['dashboard__mastery-card']}>
+        <h2 className={styles['dashboard__mastery-title']}>🎯 Beherrschungsniveau</h2>
+        <div className={styles['dashboard__mastery-bars']}>
           <MasteryBar
             label="Gemeistert"
             count={stats.masteryLevels.mastered}
@@ -294,46 +258,22 @@ export function Dashboard({ onClose }: DashboardProps) {
 
       {/* Topic Progress */}
       {stats.topicProgress.length > 0 && (
-        <Card padding="medium" style={{ marginBottom: spacing[8] }}>
-          <h2 style={{ marginTop: 0 }}>📚 Fortschritt nach Thema</h2>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: spacing[4],
-              marginTop: spacing[4],
-            }}
-          >
+        <Card padding="medium" className={styles['dashboard__topic-card']}>
+          <h2 className={styles['dashboard__topic-title']}>📚 Fortschritt nach Thema</h2>
+          <div className={styles['dashboard__topic-grid']}>
             {stats.topicProgress.map((topic) => (
-              <div key={topic.topicId}>
-                <div
-                  style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    marginBottom: spacing[2],
-                  }}
-                >
-                  <span style={{ fontWeight: typography.fontWeight.medium }}>
+              <div key={topic.topicId} className={styles['dashboard__topic-item']}>
+                <div className={styles['dashboard__topic-header']}>
+                  <span className={styles['dashboard__topic-name']}>
                     {topic.topicName}
                   </span>
-                  <span
-                    style={{
-                      color: semanticColors.text.secondary,
-                      fontSize: typography.fontSize.sm,
-                    }}
-                  >
+                  <span className={styles['dashboard__topic-meta']}>
                     {topic.sessionsCompleted} Sitzungen • {Math.round(topic.accuracy)}% genau
                   </span>
                 </div>
-                <div
-                  style={{
-                    background: semanticColors.background.tertiary,
-                    height: '8px',
-                    borderRadius: borderRadius.md,
-                    overflow: 'hidden',
-                  }}
-                >
+                <div className={styles['dashboard__topic-bar-container']}>
                   <div
+                    className={styles['dashboard__topic-bar-fill']}
                     style={{
                       background:
                         topic.accuracy >= 75
@@ -341,19 +281,11 @@ export function Dashboard({ onClose }: DashboardProps) {
                           : topic.accuracy >= 50
                           ? colors.warning[500]
                           : colors.error[500],
-                      height: '100%',
                       width: `${topic.accuracy}%`,
-                      transition: transitions.presets.base,
                     }}
                   />
                 </div>
-                <div
-                  style={{
-                    fontSize: typography.fontSize.xs,
-                    color: semanticColors.text.secondary,
-                    marginTop: spacing[1],
-                  }}
-                >
+                <div className={styles['dashboard__topic-stats']}>
                   {topic.tasksReviewed} Aufgaben bearbeitet
                 </div>
               </div>
@@ -365,44 +297,25 @@ export function Dashboard({ onClose }: DashboardProps) {
       {/* Recent Sessions */}
       {stats.recentSessions.length > 0 && (
         <Card padding="medium">
-          <h2 style={{ marginTop: 0 }}>🕐 Letzte Sitzungen</h2>
-          <div
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: spacing[3],
-              marginTop: spacing[4],
-            }}
-          >
+          <h2 className={styles['dashboard__sessions-title']}>🕐 Letzte Sitzungen</h2>
+          <div className={styles['dashboard__sessions-list']}>
             {stats.recentSessions.map((session) => (
               <div
                 key={session.id}
-                style={{
-                  padding: spacing[4],
-                  background: semanticColors.background.secondary,
-                  borderRadius: borderRadius.md,
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
+                className={styles['dashboard__session-item']}
               >
-                <div>
-                  <div style={{ fontWeight: typography.fontWeight.medium }}>
+                <div className={styles['dashboard__session-left']}>
+                  <div className={styles['dashboard__session-topic']}>
                     {session.configuration.topicId}
                   </div>
-                  <div
-                    style={{
-                      fontSize: typography.fontSize.sm,
-                      color: semanticColors.text.secondary,
-                    }}
-                  >
+                  <div className={styles['dashboard__session-date']}>
                     {session.execution.completedAt && formatDate(session.execution.completedAt)}
                   </div>
                 </div>
-                <div style={{ textAlign: 'right' }}>
+                <div className={styles['dashboard__session-right']}>
                   <div
+                    className={styles['dashboard__session-accuracy']}
                     style={{
-                      fontWeight: typography.fontWeight.medium,
                       color:
                         session.results.accuracy >= 75
                           ? colors.success[500]
@@ -411,12 +324,7 @@ export function Dashboard({ onClose }: DashboardProps) {
                   >
                     {Math.round(session.results.accuracy)}%
                   </div>
-                  <div
-                    style={{
-                      fontSize: typography.fontSize.sm,
-                      color: semanticColors.text.secondary,
-                    }}
-                  >
+                  <div className={styles['dashboard__session-stats']}>
                     {session.execution.correctCount}/{session.execution.completedCount}
                   </div>
                 </div>

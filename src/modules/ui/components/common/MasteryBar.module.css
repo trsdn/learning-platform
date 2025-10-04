@@ -1,0 +1,39 @@
+/* MasteryBar Component - CSS Modules */
+
+/* Container */
+.mastery-bar {
+  flex: 1;
+}
+
+/* Header (label + count) */
+.mastery-bar__header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+/* Label */
+.mastery-bar__label {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Count */
+.mastery-bar__count {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+/* Track (background bar) */
+.mastery-bar__track {
+  background: var(--color-bg-tertiary);
+  height: 8px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+/* Fill (progress indicator) */
+.mastery-bar__fill {
+  height: 100%;
+  transition: width var(--transition-normal) var(--transition-ease-in-out);
+}

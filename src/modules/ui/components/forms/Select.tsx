@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  semanticColors,
-  spacing,
-  typography,
-  borderRadius,
-  transitions,
-} from '@ui/design-tokens';
+import clsx from 'clsx';
+import styles from './Select.module.css';
 
 export interface SelectOption {
   value: string;
@@ -102,59 +97,25 @@ export function Select({
   error = false,
   success = false,
   fullWidth = false,
-  className = '',
-  style = {},
+  className,
+  style,
   id,
 }: SelectProps) {
-  const [isFocused, setIsFocused] = React.useState(false);
-
-  const getBorderColor = () => {
-    if (disabled) return semanticColors.border.light;
-    if (error) return semanticColors.feedback.errorBorder;
-    if (success) return semanticColors.feedback.successBorder;
-    if (isFocused) return semanticColors.interactive.primary;
-    return semanticColors.border.base;
-  };
-
-  const getBackgroundColor = () => {
-    if (disabled) return semanticColors.background.tertiary;
-    if (error) return semanticColors.feedback.errorLight;
-    if (success) return semanticColors.feedback.successLight;
-    return semanticColors.background.primary;
-  };
-
-  const selectStyles: React.CSSProperties = {
-    width: fullWidth ? '100%' : 'auto',
-    padding: `${spacing[2]} ${spacing[3]}`,
-    paddingRight: spacing[8], // Room for dropdown arrow
-    fontSize: typography.fontSize.base,
-    fontFamily: typography.fontFamily.sans,
-    color: disabled ? semanticColors.text.disabled : semanticColors.text.primary,
-    backgroundColor: getBackgroundColor(),
-    border: `2px solid ${getBorderColor()}`,
-    borderRadius: borderRadius.md,
-    outline: 'none',
-    transition: transitions.presets.fast,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    appearance: 'none',
-    backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 9L1 4h10z'/%3E%3C/svg%3E")`,
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: `right ${spacing[2]} center`,
-    boxShadow: isFocused && !disabled ? `0 0 0 3px ${semanticColors.interactive.primary}20` : 'none',
-    ...style,
-  };
-
   return (
     <select
       id={id}
       value={value}
       onChange={(e) => onChange(e.target.value)}
       disabled={disabled}
-      style={selectStyles}
-      className={className}
+      style={style}
+      className={clsx(
+        styles.select,
+        fullWidth && styles['select--full-width'],
+        error && styles['select--error'],
+        success && styles['select--success'],
+        className
+      )}
       aria-invalid={error ? "true" : "false"}
-      onFocus={() => setIsFocused(true)}
-      onBlur={() => setIsFocused(false)}
     >
       {placeholder && (
         <option value="" disabled>

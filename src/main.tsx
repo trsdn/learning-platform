@@ -7,6 +7,9 @@ import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
+import './modules/ui/styles/variables.css';
+import './modules/ui/styles/global.css';
+import './modules/ui/styles/utilities.css';
 import './index.css';
 
 /**

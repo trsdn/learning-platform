@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Component Visual Test Showcase</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 2rem;
+      background: #f9fafb;
+    }
+    .component-section {
+      background: white;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+    .component-section h2 {
+      margin-top: 0;
+      color: #374151;
+      border-bottom: 2px solid #e5e7eb;
+      padding-bottom: 0.5rem;
+    }
+    .component-grid {
+      display: grid;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .state-label {
+      font-size: 0.875rem;
+      color: #6b7280;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <h1>Component Visual Baseline - Pre-Migration</h1>
+  <p style="color: #6b7280;">Captured: <span id="timestamp"></span></p>
+
+  <!-- Note: This is a static HTML showcase for visual regression baseline -->
+  <!-- The actual components will be rendered via the app during Playwright tests -->
+  <!-- This file serves as documentation of what needs to be tested -->
+
+  <div class="component-section">
+    <h2>Components to Capture (Inline Styles → CSS Modules Migration)</h2>
+    <ul>
+      <li data-testid="checklist-audio-button">audio-button.tsx</li>
+      <li data-testid="checklist-dashboard">dashboard.tsx</li>
+      <li data-testid="checklist-practice-session">practice-session.tsx</li>
+      <li data-testid="checklist-session-results">session-results.tsx</li>
+      <li data-testid="checklist-button">common/Button.tsx</li>
+      <li data-testid="checklist-card">common/Card.tsx</li>
+      <li data-testid="checklist-feedback-card">common/FeedbackCard.tsx</li>
+      <li data-testid="checklist-icon-button">common/IconButton.tsx</li>
+      <li data-testid="checklist-mastery-bar">common/MasteryBar.tsx</li>
+      <li data-testid="checklist-stat-card">common/StatCard.tsx</li>
+      <li data-testid="checklist-checkbox">forms/Checkbox.tsx</li>
+      <li data-testid="checklist-input">forms/Input.tsx</li>
+      <li data-testid="checklist-select">forms/Select.tsx</li>
+      <li data-testid="checklist-slider">forms/Slider.tsx</li>
+    </ul>
+  </div>
+
+  <div class="component-section">
+    <h2>Baseline Capture Strategy</h2>
+    <p>Visual regression tests will navigate to the running application and capture screenshots of:</p>
+    <ol>
+      <li>Main topic selection page (TopicCard already uses CSS Modules - reference)</li>
+      <li>Dashboard view (dashboard component with all stats/cards)</li>
+      <li>Practice session view (practice-session with questions)</li>
+      <li>Session results view (session-results with feedback)</li>
+    </ol>
+    <p><strong>Post-migration</strong>: Re-run the same tests and compare pixel-by-pixel for regressions.</p>
+  </div>
+
+  <script>
+    document.getElementById('timestamp').textContent = new Date().toLocaleString('de-DE');
+  </script>
+</body>
+</html>

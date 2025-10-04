@@ -1,0 +1,158 @@
+/* Dashboard Component - CSS Modules */
+
+/* Main container */
+.dashboard {
+  padding: var(--spacing-2xl);
+  font-family: var(--font-family-base);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Loading/empty state container */
+.dashboard__empty {
+  padding: var(--spacing-2xl);
+  font-family: var(--font-family-base);
+}
+
+.dashboard__back-button {
+  margin-bottom: var(--spacing-lg);
+}
+
+/* Header */
+.dashboard__header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard__title {
+  margin: 0;
+}
+
+.dashboard__subtitle {
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-sm);
+}
+
+/* Key metrics grid */
+.dashboard__metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Mastery levels card */
+.dashboard__mastery-card {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard__mastery-title {
+  margin-top: 0;
+}
+
+.dashboard__mastery-bars {
+  display: flex;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+/* Topic progress */
+.dashboard__topic-card {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard__topic-title {
+  margin-top: 0;
+}
+
+.dashboard__topic-grid {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+/* Topic item */
+.dashboard__topic-item {
+  /* Container for individual topic */
+}
+
+.dashboard__topic-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-sm);
+}
+
+.dashboard__topic-name {
+  font-weight: var(--font-weight-medium);
+}
+
+.dashboard__topic-meta {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}
+
+.dashboard__topic-bar-container {
+  background: var(--color-bg-tertiary);
+  height: 8px;
+  border-radius: var(--border-radius-md);
+  overflow: hidden;
+}
+
+.dashboard__topic-bar-fill {
+  height: 100%;
+  transition: var(--transition-base);
+}
+
+.dashboard__topic-stats {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  margin-top: var(--spacing-xs);
+}
+
+/* Recent sessions */
+.dashboard__sessions-title {
+  margin-top: 0;
+}
+
+.dashboard__sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
+}
+
+/* Session item */
+.dashboard__session-item {
+  padding: var(--spacing-lg);
+  background: var(--color-bg-secondary);
+  border-radius: var(--border-radius-md);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dashboard__session-left {
+  /* Left side of session item */
+}
+
+.dashboard__session-topic {
+  font-weight: var(--font-weight-medium);
+}
+
+.dashboard__session-date {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.dashboard__session-right {
+  text-align: right;
+}
+
+.dashboard__session-accuracy {
+  font-weight: var(--font-weight-medium);
+}
+
+.dashboard__session-stats {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}

@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { IconButton } from '@ui/components/common/IconButton';
-import { colors } from '@ui/design-tokens';
+import styles from '@ui/components/common/IconButton.module.css';
 
 // Simple test icon component
 const TestIcon = () => <span data-testid="test-icon">→</span>;
@@ -30,25 +30,25 @@ describe('IconButton', () => {
     it('should render ghost variant by default', () => {
       render(<IconButton icon={<TestIcon />} label="Ghost" />);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.neutral[100]);
+      expect(button.className).toContain(styles['icon-button--ghost']);
     });
 
     it('should render primary variant', () => {
       render(<IconButton icon={<TestIcon />} label="Primary" variant="primary" />);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.primary[500]);
+      expect(button.className).toContain(styles['icon-button--primary']);
     });
 
     it('should render secondary variant', () => {
       render(<IconButton icon={<TestIcon />} label="Secondary" variant="secondary" />);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.neutral[200]);
+      expect(button.className).toContain(styles['icon-button--secondary']);
     });
 
     it('should render danger variant', () => {
       render(<IconButton icon={<TestIcon />} label="Danger" variant="danger" />);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.error[500]);
+      expect(button.className).toContain(styles['icon-button--danger']);
     });
   });
 
@@ -56,22 +56,19 @@ describe('IconButton', () => {
     it('should render medium size by default', () => {
       render(<IconButton icon={<TestIcon />} label="Medium" />);
       const button = screen.getByRole('button');
-      expect(button.style.minWidth).toBeTruthy();
-      expect(button.style.minHeight).toBeTruthy();
+      expect(button.className).toContain(styles['icon-button--medium']);
     });
 
     it('should render small size', () => {
       render(<IconButton icon={<TestIcon />} label="Small" size="small" />);
       const button = screen.getByRole('button');
-      expect(button.style.minWidth).toBeTruthy();
-      expect(button.style.minHeight).toBeTruthy();
+      expect(button.className).toContain(styles['icon-button--small']);
     });
 
     it('should render large size', () => {
       render(<IconButton icon={<TestIcon />} label="Large" size="large" />);
       const button = screen.getByRole('button');
-      expect(button.style.minWidth).toBeTruthy();
-      expect(button.style.minHeight).toBeTruthy();
+      expect(button.className).toContain(styles['icon-button--large']);
     });
   });
 
@@ -104,13 +101,13 @@ describe('IconButton', () => {
       render(<IconButton icon={<TestIcon />} label="Disabled" disabled />);
       const button = screen.getByRole('button');
       expect(button).toBeDisabled();
-      expect(button.style.opacity).toBe('0.6');
+      expect(button.className).toContain(styles['icon-button']);
     });
 
-    it('should have not-allowed cursor when disabled', () => {
+    it('should be disabled when disabled', () => {
       render(<IconButton icon={<TestIcon />} label="Disabled" disabled />);
       const button = screen.getByRole('button');
-      expect(button.style.cursor).toBe('not-allowed');
+      expect(button).toBeDisabled();
     });
   });
 
@@ -188,16 +185,16 @@ describe('IconButton', () => {
   });
 
   describe('Layout', () => {
-    it('should have gap when showLabel is true', () => {
+    it('should have label class when showLabel is true', () => {
       render(<IconButton icon={<TestIcon />} label="Settings" showLabel />);
       const button = screen.getByRole('button');
-      expect(button.style.gap).toBeTruthy();
+      expect(button.className).toContain(styles['icon-button--with-label']);
     });
 
-    it('should not have gap when showLabel is false', () => {
+    it('should not have label class when showLabel is false', () => {
       render(<IconButton icon={<TestIcon />} label="Settings" showLabel={false} />);
       const button = screen.getByRole('button');
-      expect(button.style.gap).toBe('0');
+      expect(button.className).not.toContain(styles['icon-button--with-label']);
     });
   });
 });

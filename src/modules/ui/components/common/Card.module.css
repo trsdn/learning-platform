@@ -1,0 +1,39 @@
+/* Card Component - CSS Modules */
+
+/* Base card styles */
+.card {
+  background-color: var(--color-bg-primary);
+  border-radius: var(--border-radius-md);
+  transition: all var(--transition-fast) var(--transition-ease-in-out);
+}
+
+/* Shadow variants */
+.card--shadow {
+  box-shadow: var(--shadow-md);
+}
+
+.card--no-shadow {
+  box-shadow: none;
+}
+
+/* Border variants */
+.card--border {
+  border: 1px solid var(--color-border-light);
+}
+
+.card--no-border {
+  border: none;
+}
+
+/* Padding variants */
+.card--padding-small {
+  padding: var(--spacing-md);
+}
+
+.card--padding-medium {
+  padding: var(--spacing-lg);
+}
+
+.card--padding-large {
+  padding: var(--spacing-xl);
+}

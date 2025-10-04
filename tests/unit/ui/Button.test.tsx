@@ -1,7 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { Button } from '@ui/components/common/Button';
-import { colors } from '@ui/design-tokens';
+import styles from '@ui/components/common/Button.module.css';
 
 describe('Button', () => {
   describe('Rendering', () => {
@@ -27,25 +27,25 @@ describe('Button', () => {
     it('should render primary variant by default', () => {
       render(<Button>Primary</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.primary[500]);
+      expect(button.className).toContain(styles['button--primary']);
     });
 
     it('should render secondary variant', () => {
       render(<Button variant="secondary">Secondary</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.neutral[200]);
+      expect(button.className).toContain(styles['button--secondary']);
     });
 
     it('should render ghost variant', () => {
       render(<Button variant="ghost">Ghost</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe('transparent');
+      expect(button.className).toContain(styles['button--ghost']);
     });
 
     it('should render danger variant', () => {
       render(<Button variant="danger">Danger</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.backgroundColor).toBe(colors.error[500]);
+      expect(button.className).toContain(styles['button--danger']);
     });
   });
 
@@ -53,19 +53,19 @@ describe('Button', () => {
     it('should render medium size by default', () => {
       render(<Button>Medium</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.height).toBeTruthy();
+      expect(button.className).toContain(styles['button--medium']);
     });
 
     it('should render small size', () => {
       render(<Button size="small">Small</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.height).toBeTruthy();
+      expect(button.className).toContain(styles['button--small']);
     });
 
     it('should render large size', () => {
       render(<Button size="large">Large</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.height).toBeTruthy();
+      expect(button.className).toContain(styles['button--large']);
     });
   });
 
@@ -74,26 +74,26 @@ describe('Button', () => {
       render(<Button disabled>Disabled</Button>);
       const button = screen.getByRole('button');
       expect(button).toBeDisabled();
-      expect(button.style.opacity).toBe('0.6');
+      expect(button.className).toContain(styles.button);
     });
 
     it('should show loading state', () => {
       render(<Button loading>Loading</Button>);
       const button = screen.getByRole('button');
       expect(button).toBeDisabled();
-      expect(button.style.opacity).toBe('0.6');
+      expect(button.className).toContain(styles['button--loading']);
     });
 
-    it('should have not-allowed cursor when disabled', () => {
+    it('should be disabled when disabled', () => {
       render(<Button disabled>Disabled</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.cursor).toBe('not-allowed');
+      expect(button).toBeDisabled();
     });
 
-    it('should have not-allowed cursor when loading', () => {
+    it('should be disabled when loading', () => {
       render(<Button loading>Loading</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.cursor).toBe('not-allowed');
+      expect(button).toBeDisabled();
     });
   });
 
@@ -101,13 +101,13 @@ describe('Button', () => {
     it('should take full width when fullWidth is true', () => {
       render(<Button fullWidth>Full Width</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.width).toBe('100%');
+      expect(button.className).toContain(styles['button--full-width']);
     });
 
-    it('should have auto width by default', () => {
+    it('should not have full width class by default', () => {
       render(<Button>Auto Width</Button>);
       const button = screen.getByRole('button');
-      expect(button.style.width).toBe('auto');
+      expect(button.className).not.toContain(styles['button--full-width']);
     });
   });
 

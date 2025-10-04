@@ -1,0 +1,78 @@
+/* Input Component - CSS Modules */
+
+/* Wrapper container */
+.input-wrapper {
+  display: inline-block;
+}
+
+.input-wrapper--full-width {
+  width: 100%;
+}
+
+/* Base input styles */
+.input {
+  width: auto;
+  padding: var(--spacing-sm) var(--spacing-md);
+  font-size: var(--font-size-md);
+  font-family: var(--font-family-base);
+  color: var(--color-text-primary);
+  background-color: var(--color-bg-primary);
+  border: 2px solid var(--color-border-base);
+  border-radius: var(--border-radius-md);
+  outline: none;
+  transition: all var(--transition-fast) var(--transition-ease-in-out);
+  cursor: text;
+}
+
+.input--full-width {
+  width: 100%;
+}
+
+/* State: Disabled */
+.input:disabled {
+  background-color: var(--color-bg-tertiary);
+  border-color: var(--color-border-light);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+}
+
+/* State: Error */
+.input--error {
+  background-color: var(--color-feedback-error-light);
+  border-color: var(--color-feedback-error-border);
+}
+
+/* State: Success */
+.input--success {
+  background-color: var(--color-feedback-success-light);
+  border-color: var(--color-feedback-success-border);
+}
+
+/* Focus state */
+.input:focus:not(:disabled) {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.125);
+}
+
+.input--error:focus:not(:disabled) {
+  border-color: var(--color-feedback-error-border);
+}
+
+.input--success:focus:not(:disabled) {
+  border-color: var(--color-feedback-success-border);
+}
+
+/* Helper text */
+.input__helper-text {
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.input__helper-text--error {
+  color: var(--color-error);
+}
+
+.input__helper-text--success {
+  color: var(--color-success);
+}

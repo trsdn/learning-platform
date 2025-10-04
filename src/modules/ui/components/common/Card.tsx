@@ -1,9 +1,6 @@
 import React from 'react';
-import {
-  semanticColors,
-  components,
-  transitions,
-} from '@ui/design-tokens';
+import clsx from 'clsx';
+import styles from './Card.module.css';
 
 export type CardPadding = 'small' | 'medium' | 'large';
 
@@ -45,7 +42,7 @@ export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
 /**
  * Card Component
  *
- * A versatile container component with consistent styling using design tokens.
+ * A versatile container component with consistent styling using CSS Modules.
  * Serves as the foundation for more specialized card components.
  *
  * @example
@@ -67,44 +64,32 @@ export function Card({
   borderColor,
   backgroundColor,
   children,
-  className = '',
-  style = {},
+  className,
+  style,
   ...props
 }: CardProps) {
-  const paddingValue = getPaddingValue(padding);
-
-  const cardStyles: React.CSSProperties = {
-    backgroundColor: backgroundColor || semanticColors.background.primary,
-    borderRadius: components.card.borderRadius,
-    border: border
-      ? `1px solid ${borderColor || semanticColors.border.light}`
-      : 'none',
-    boxShadow: shadow ? components.card.shadow : 'none',
-    padding: paddingValue,
-    transition: transitions.presets.fast,
+  // Build inline styles for custom overrides only
+  const customStyles: React.CSSProperties = {
+    ...(backgroundColor && { backgroundColor }),
+    ...(borderColor && { borderColor }),
     ...style,
   };
 
   return (
-    <div {...props} style={cardStyles} className={className}>
+    <div
+      {...props}
+      style={customStyles}
+      className={clsx(
+        styles.card,
+        styles[`card--padding-${padding}`],
+        shadow ? styles['card--shadow'] : styles['card--no-shadow'],
+        border ? styles['card--border'] : styles['card--no-border'],
+        className
+      )}
+    >
       {children}
     </div>
   );
-}
-
-// ============================================================================
-// HELPER FUNCTIONS
-// ============================================================================
-
-function getPaddingValue(padding: CardPadding): string {
-  switch (padding) {
-    case 'small':
-      return components.card.padding.sm;
-    case 'medium':
-      return components.card.padding.md;
-    case 'large':
-      return components.card.padding.lg;
-  }
 }
 
 // ============================================================================

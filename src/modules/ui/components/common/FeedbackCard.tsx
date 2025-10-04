@@ -1,11 +1,8 @@
 import React from 'react';
+import clsx from 'clsx';
 import { Card } from './Card';
-import {
-  semanticColors,
-  typography,
-  spacing,
-  borderRadius,
-} from '@ui/design-tokens';
+import { semanticColors } from '@ui/design-tokens';
+import styles from './FeedbackCard.module.css';
 
 export type FeedbackVariant = 'success' | 'error' | 'warning' | 'info';
 
@@ -75,22 +72,12 @@ export function FeedbackCard({
   dismissible = false,
   onDismiss,
   children,
-  className = '',
-  style = {},
+  className,
+  style,
   ...props
 }: FeedbackCardProps) {
   const colors = React.useMemo(() => getVariantColors(variant), [variant]);
   const icon = React.useMemo(() => getVariantIcon(variant), [variant]);
-
-  const containerStyles = React.useMemo(
-    () => ({
-      backgroundColor: colors.background,
-      borderColor: colors.border,
-      position: 'relative' as const,
-      ...style,
-    }),
-    [colors.background, colors.border, style]
-  );
 
   return (
     <Card
@@ -100,68 +87,33 @@ export function FeedbackCard({
       border
       borderColor={colors.border}
       backgroundColor={colors.background}
-      style={containerStyles}
-      className={className}
+      style={style}
+      className={clsx(styles[`feedback--${variant}`], className)}
       role={variant === 'error' || variant === 'warning' ? 'alert' : 'status'}
       aria-live={variant === 'error' || variant === 'warning' ? 'assertive' : 'polite'}
       aria-atomic="true"
     >
-      <div
-        style={{
-          display: 'flex',
-          gap: spacing[3],
-          alignItems: 'flex-start',
-        }}
-      >
+      <div className={styles['feedback-content']}>
         {/* Icon */}
-        <div
-          style={{
-            fontSize: typography.fontSize.xl,
-            lineHeight: typography.lineHeight.none,
-            flexShrink: 0,
-            marginTop: spacing[0.5],
-          }}
-          aria-hidden="true"
-        >
+        <div className={styles['feedback-icon']} aria-hidden="true">
           {icon}
         </div>
 
         {/* Content */}
-        <div style={{ flex: 1 }}>
+        <div className={styles['feedback-text']}>
           {title && (
-            <h4
-              style={{
-                margin: 0,
-                marginBottom: spacing[1],
-                fontSize: typography.fontSize.base,
-                fontWeight: typography.fontWeight.semibold,
-                color: colors.text,
-              }}
-            >
+            <h4 className={styles['feedback-title']}>
               {title}
             </h4>
           )}
 
           {children ? (
-            <div
-              style={{
-                fontSize: typography.fontSize.sm,
-                color: colors.text,
-                lineHeight: typography.lineHeight.relaxed,
-              }}
-            >
+            <div className={styles['feedback-children']}>
               {children}
             </div>
           ) : (
             message && (
-              <p
-                style={{
-                  margin: 0,
-                  fontSize: typography.fontSize.sm,
-                  color: colors.text,
-                  lineHeight: typography.lineHeight.relaxed,
-                }}
-              >
+              <p className={styles['feedback-message']}>
                 {message}
               </p>
             )
@@ -172,24 +124,7 @@ export function FeedbackCard({
         {dismissible && onDismiss && (
           <button
             onClick={onDismiss}
-            style={{
-              background: 'none',
-              border: 'none',
-              padding: spacing[1],
-              cursor: 'pointer',
-              fontSize: typography.fontSize.lg,
-              lineHeight: typography.lineHeight.none,
-              color: colors.text,
-              opacity: 0.6,
-              transition: 'opacity 150ms',
-              borderRadius: borderRadius.sm,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = '1';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = '0.6';
-            }}
+            className={styles['feedback-dismiss']}
             aria-label={`Dismiss ${variant} message`}
           >
             <span aria-hidden="true">✕</span>

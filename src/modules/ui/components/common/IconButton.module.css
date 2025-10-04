@@ -1,0 +1,123 @@
+/* IconButton Component - CSS Modules */
+
+/* Base button styles */
+.icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid transparent;
+  border-radius: var(--border-radius-md);
+  font-family: var(--font-family-base);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-normal) var(--transition-ease-in-out);
+  text-decoration: none;
+  user-select: none;
+  outline: none;
+  padding: var(--spacing-sm);
+}
+
+/* With label variant */
+.icon-button--with-label {
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm) var(--spacing-md);
+}
+
+/* Disabled state */
+.icon-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Variant: Primary */
+.icon-button--primary {
+  background-color: #6366f1;
+  color: var(--color-text-inverse);
+}
+
+.icon-button--primary:hover:not(:disabled) {
+  background-color: #4f46e5;
+}
+
+.icon-button--primary:focus-visible {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+/* Variant: Secondary */
+.icon-button--secondary {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.icon-button--secondary:hover:not(:disabled) {
+  background-color: var(--color-bg-tertiary);
+}
+
+.icon-button--secondary:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Variant: Ghost */
+.icon-button--ghost {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-primary);
+}
+
+.icon-button--ghost:hover:not(:disabled) {
+  background-color: var(--color-bg-tertiary);
+}
+
+.icon-button--ghost:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Variant: Danger */
+.icon-button--danger {
+  background-color: var(--color-error);
+  color: var(--color-text-inverse);
+}
+
+.icon-button--danger:hover:not(:disabled) {
+  background-color: #dc2626;
+}
+
+.icon-button--danger:focus-visible {
+  outline: 2px solid #fca5a5;
+  outline-offset: 2px;
+}
+
+/* Size: Small */
+.icon-button--small {
+  min-width: 28px;
+  min-height: 28px;
+  font-size: var(--font-size-sm);
+}
+
+/* Size: Medium */
+.icon-button--medium {
+  min-width: 36px;
+  min-height: 36px;
+  font-size: var(--font-size-md);
+}
+
+/* Size: Large */
+.icon-button--large {
+  min-width: 44px;
+  min-height: 44px;
+  font-size: var(--font-size-lg);
+}
+
+/* Icon container */
+.icon-button__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Label */
+.icon-button__label {
+  font-size: var(--font-size-sm);
+}

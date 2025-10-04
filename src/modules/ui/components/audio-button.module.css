@@ -1,0 +1,92 @@
+/* AudioButton Component - CSS Modules */
+
+/* Base button styles */
+.audio-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-lg);
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  border: none;
+}
+
+.audio-button:hover:not(:disabled) {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.audio-button:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Size variants */
+.audio-button--small {
+  width: 1.75rem;
+  height: 1.75rem;
+}
+
+.audio-button--medium {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.audio-button--large {
+  width: 2.75rem;
+  height: 2.75rem;
+}
+
+/* State: Disabled */
+.audio-button--disabled {
+  background-color: var(--color-bg-secondary);
+  color: var(--color-text-disabled);
+  cursor: not-allowed;
+  border: 1px solid var(--color-border-light);
+}
+
+.audio-button--disabled:hover {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+}
+
+/* State: Playing */
+.audio-button--playing {
+  background-color: #3b82f6;
+  color: white;
+  transform: scale(0.95);
+}
+
+/* State: Active (default with audio) */
+.audio-button--active {
+  background: linear-gradient(to bottom right, #3b82f6, #2563eb);
+  color: white;
+}
+
+.audio-button--active:hover:not(:disabled) {
+  background: linear-gradient(to bottom right, #2563eb, #1d4ed8);
+}
+
+/* Icon container */
+.audio-button__icon {
+  display: inline-flex;
+}
+
+.audio-button__icon--playing {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Pulse animation */
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Inline variant wrapper */
+.audio-button-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}

@@ -7,11 +7,11 @@ Added principles:
 Added sections:
 - Module Guidelines subsection in Architecture Patterns
 Templates requiring updates:
-- plan-template.md (⚠ pending)
+- plan-template.md (✅ in sync)
 - spec-template.md (✅ compatible)
 - tasks-template.md (✅ compatible)
 - agent-file-template.md (✅ compatible)
-- commands/constitution.md (⚠ pending)
+- .claude/commands/constitution.md (✅ updated 2025-10-04)
 Follow-up TODOs: None
 -->
 

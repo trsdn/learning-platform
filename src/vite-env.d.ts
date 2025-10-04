@@ -52,3 +52,16 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+/**
+ * Type definitions for CSS Modules
+ *
+ * Enables type-safe imports of .module.css files with autocomplete support
+ * for CSS class names in TypeScript components.
+ *
+ * @see https://vitejs.dev/guide/features.html#css-modules
+ */
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
