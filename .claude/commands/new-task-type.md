@@ -32,24 +32,43 @@ Execution steps:
       ```
       - If build fails: Ask user to fix errors first
 
-3. **Gather requirements** (interactive Q&A):
+3. **Consult learning-design-expert** (RECOMMENDED):
+
+   Ask user: "Would you like to consult the learning-design-expert about this task type? (yes/no)"
+
+   If yes:
+   - Launch learning-design-expert agent via Task tool
+   - Ask expert:
+     * When should this task type be used?
+     * What learning benefits does it provide?
+     * Optimal use cases?
+     * Pedagogical guidelines?
+     * Similar existing task types to reference?
+   - Use expert feedback to guide implementation
+
+4. **Gather requirements** (interactive Q&A):
    Ask user sequentially:
 
    a. **Description**: "What does this task type do? (1-2 sentences)"
 
-   b. **Content fields**: "What data fields does the task need?"
+   b. **Learning objective**: "What cognitive skill does this task type test?" (reference expert input)
+      - Example: Recognition, Recall, Application, Analysis
+
+   c. **Content fields**: "What data fields does the task need?"
       - Example: "For fill-in-table: headers, rows with cells (content, isBlank, correctAnswer)"
       - Generate TypeScript interface based on answer
 
-   c. **User interaction**: "How does the user answer this task?"
+   d. **User interaction**: "How does the user answer this task?"
       - Example: "Fill in blank cells", "Drag and drop", "Click to select"
 
-   d. **Validation logic**: "How is the answer checked for correctness?"
+   e. **Validation logic**: "How is the answer checked for correctness?"
       - Example: "Compare each blank cell with correctAnswer"
 
-   e. **Complexity**: "Is this task type: simple (like true-false), medium (like multiple-choice), or complex (like matching)?"
+   f. **Complexity**: "Is this task type: simple (like true-false), medium (like multiple-choice), or complex (like matching)?"
 
-4. **Step 1: Update type definitions** (`src/modules/core/types/services.ts`):
+   g. **Pedagogical guidelines** (from expert): Document best practices for using this task type
+
+5. **Step 1: Update type definitions** (`src/modules/core/types/services.ts`):
 
    a. Read current file
 
@@ -73,7 +92,7 @@ Execution steps:
 
    d. Ask: "Shall I add this to services.ts?" → If yes, apply edits
 
-5. **Step 2: Update practice session component** (`src/modules/ui/components/practice-session.tsx`):
+6. **Step 2: Update practice session component** (`src/modules/ui/components/practice-session.tsx`):
 
    This is the CRITICAL step. Create in this order:
 
@@ -119,7 +138,7 @@ Execution steps:
    h. Show user complete code for each section
    i. Ask: "Shall I update practice-session.tsx?" → If yes, apply all edits
 
-6. **Step 3: Create template file** (`data/templates/your-new-type-basic.json`):
+7. **Step 3: Create template file** (`data/templates/your-new-type-basic.json`):
 
    a. Generate template JSON with:
       - Schema definition
@@ -130,14 +149,14 @@ Execution steps:
    b. Show template to user
    c. Ask: "Shall I create this template?" → If yes, write file
 
-7. **Step 4: Add test content** (`public/learning-paths/test/all-task-types.json`):
+8. **Step 4: Add test content** (`public/learning-paths/test/all-task-types.json`):
 
    a. Read existing test file
    b. Generate 2-3 test tasks
    c. Show user the test tasks
    d. Ask: "Shall I add these test tasks?" → If yes, edit file
 
-8. **Step 5: Update documentation**:
+9. **Step 5: Update documentation**:
 
    a. Update `AGENTS.md`:
       - Add to "Task Types System" section
@@ -145,7 +164,7 @@ Execution steps:
 
    b. Ask: "Shall I update AGENTS.md?" → If yes, edit file
 
-9. **Step 6: Testing instructions**:
+10. **Step 6: Testing instructions**:
 
    Provide step-by-step testing guide:
    ```
@@ -165,7 +184,7 @@ Execution steps:
    - [ ] Solution shows after wrong answer
    ```
 
-10. **Checklist summary**:
+11. **Checklist summary**:
 
     Present final checklist:
     ```
@@ -177,7 +196,7 @@ Execution steps:
     ⏳ Testing (user must do)
     ```
 
-11. **Next steps**:
+12. **Next steps**:
 
     Remind user:
     - Run `npm run build` to check TypeScript

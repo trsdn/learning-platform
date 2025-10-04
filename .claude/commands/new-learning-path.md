@@ -225,17 +225,34 @@ Execution steps:
    - [ ] Progress tracking works
    ```
 
-10. **Post-creation options**:
+10. **Educational Review** (RECOMMENDED):
+
+    Ask user: "Would you like the learning-design-expert to review this learning path for pedagogical effectiveness? (yes/no)"
+
+    If yes:
+    - Launch learning-design-expert agent via Task tool
+    - Provide: learning path JSON, topic context
+    - learning-design-expert will analyze:
+      * Task type distribution
+      * Difficulty progression
+      * Cognitive load appropriateness
+      * Spaced repetition compatibility
+      * Alignment with learning science
+    - Review feedback and suggestions
+    - Ask if user wants to make recommended changes
+
+11. **Post-creation options**:
 
     Ask user: "What would you like to do next?"
     ```
-    1. Add more tasks to this learning path (edit JSON)
-    2. Create another learning path
-    3. Deploy to test environment (/deploy-test)
-    4. Nothing, I'm done
+    1. Request learning design review (if skipped above)
+    2. Add more tasks to this learning path (edit JSON)
+    3. Create another learning path
+    4. Deploy to test environment (/deploy-test)
+    5. Nothing, I'm done
     ```
 
-11. **Final summary**:
+12. **Final summary**:
 
     ```
     ✅ Learning path created: {title}
