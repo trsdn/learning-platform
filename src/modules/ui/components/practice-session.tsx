@@ -886,13 +886,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {/* Front side */}
           <div className={styles['practice-session__flashcard-front']}>
             <div>{content.front}</div>
-            {currentTask.audioUrl && <AudioButton text={content.front} audioUrl={currentTask.audioUrl} size="large" />}
+            {currentTask.hasAudio && currentTask.audioUrl && <AudioButton text={content.front} audioUrl={currentTask.audioUrl} size="large" />}
           </div>
 
           {/* Back side or reveal button */}
           {!flashcardRevealed ? (
             <button
-              onClick={() => setFlashcardRevealed(true)}
+              onClick={async () => {
+                setFlashcardRevealed(true);
+                // Auto-play audio when revealing Spanish flashcards
+                if (currentTask.hasAudio && currentTask.audioUrl && playbackState.autoPlayUnlocked) {
+                  try {
+                    await togglePlayPause();
+                  } catch (err) {
+                    console.warn('Failed to auto-play on reveal:', err);
+                  }
+                }
+              }}
               disabled={showFeedback}
               className={styles['practice-session__flashcard-reveal-btn']}
             >
@@ -910,7 +920,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               {/* Answer */}
               <div className={styles['practice-session__flashcard-back']}>
                 <div>{content.back}</div>
-                {currentTask.audioUrl && <AudioButton text={content.back} audioUrl={currentTask.audioUrl} size="large" />}
+                {currentTask.hasAudio && currentTask.audioUrl && <AudioButton text={content.back} audioUrl={currentTask.audioUrl} size="large" />}
               </div>
             </>
           )}
@@ -923,6 +933,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               onClick={() => {
                 setFlashcardKnown(false);
                 handleAnswerSubmit();
+                // Auto-advance to next task after brief delay
+                setTimeout(() => {
+                  handleNextTask();
+                }, 300);
               }}
               className={`${styles['practice-session__flashcard-btn']} ${styles['practice-session__flashcard-btn--unknown']}`}
             >
@@ -934,6 +948,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               onClick={() => {
                 setFlashcardKnown(true);
                 handleAnswerSubmit();
+                // Auto-advance to next task after brief delay
+                setTimeout(() => {
+                  handleNextTask();
+                }, 300);
               }}
               className={`${styles['practice-session__flashcard-btn']} ${styles['practice-session__flashcard-btn--known']}`}
             >
@@ -1083,15 +1101,18 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         <div className={styles['practice-session__actions']}>
           {!showFeedback ? (
             <>
-              <button
-                onClick={handleAnswerSubmit}
-                disabled={!canSubmit()}
-                className={canSubmit()
-                  ? `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--enabled']}`
-                  : `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--disabled']}`}
-              >
-                Antwort überprüfen
-              </button>
+              {/* Hide "Antwort überprüfen" for flashcards - they use self-assessment */}
+              {currentTask?.type !== 'flashcard' && (
+                <button
+                  onClick={handleAnswerSubmit}
+                  disabled={!canSubmit()}
+                  className={canSubmit()
+                    ? `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--enabled']}`
+                    : `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--disabled']}`}
+                >
+                  Antwort überprüfen
+                </button>
+              )}
               <button
                 onClick={currentTaskIndex < session.execution.taskIds.length - 1 ? handleSkipTask : handleComplete}
                 className={styles['practice-session__btn-skip']}
@@ -1102,14 +1123,17 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               </button>
             </>
           ) : (
-            <button
-              onClick={handleNextTask}
-              className={styles['practice-session__btn-next']}
-            >
+            /* Hide "Nächste Aufgabe" for flashcards - they auto-advance */
+            currentTask?.type !== 'flashcard' && (
+              <button
+                onClick={handleNextTask}
+                className={styles['practice-session__btn-next']}
+              >
               {currentTaskIndex < session.execution.taskIds.length - 1
                 ? 'Nächste Aufgabe →'
                 : 'Sitzung beenden'}
-            </button>
+              </button>
+            )
           )}
         </div>
 

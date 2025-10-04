@@ -42,7 +42,7 @@ const VolumeOffIcon = ({ size }: { size: string }) => (
  * Memoized to prevent unnecessary re-renders
  */
 const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, size = 'medium' }: AudioButtonProps) => {
-  const { playbackState, loadAudio, play } = useAudioPlayback();
+  const { playbackState, loadAudio, replay } = useAudioPlayback();
   const { settings } = useAudioSettings();
   const [error, setError] = useState<string | null>(null);
 
@@ -58,9 +58,9 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
     setError(null);
 
     try {
-      // If this audio is already loaded, just play it
+      // If this audio is already loaded, replay it from start
       if (playbackState.audioUrl === audioUrl) {
-        await play();
+        await replay();
       } else {
         // Load and play this audio (without auto-play delay)
         const task: Task = {
@@ -86,7 +86,7 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
           audioUrl: audioUrl,
         };
         await loadAudio(task, settings, false); // false = no auto-play delay
-        await play();
+        await replay();
       }
     } catch (err) {
       console.error('Failed to play audio:', err);
