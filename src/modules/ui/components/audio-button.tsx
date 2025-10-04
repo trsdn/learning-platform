@@ -104,9 +104,8 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
   const isDisabled = disabled || !hasAudio;
 
   return (
-    <button
-      onClick={handleClick}
-      disabled={isDisabled}
+    <span
+      onClick={isDisabled ? undefined : handleClick}
       className={clsx(
         styles['audio-button'],
         styles[`audio-button--${size}`],
@@ -123,7 +122,14 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
             : `Aussprache abspielen: ${text}`
       }
       aria-label={`Spanische Aussprache für ${text} abspielen`}
-      type="button"
+      role="button"
+      tabIndex={isDisabled ? -1 : 0}
+      onKeyDown={(e) => {
+        if (!isDisabled && (e.key === 'Enter' || e.key === ' ')) {
+          e.preventDefault();
+          handleClick();
+        }
+      }}
     >
       {isPlaying ? (
         <div className={clsx(styles['audio-button__icon'], styles['audio-button__icon--playing'])}>
@@ -138,7 +144,7 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
           <VolumeIcon size={iconSizes[size]} />
         </div>
       )}
-    </button>
+    </span>
   );
 };
 

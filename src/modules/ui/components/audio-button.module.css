@@ -12,11 +12,11 @@
   border: none;
 }
 
-.audio-button:hover:not(:disabled) {
+.audio-button:hover:not(.audio-button--disabled) {
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 
-.audio-button:active:not(:disabled) {
+.audio-button:active:not(.audio-button--disabled) {
   transform: scale(0.95);
 }
 
@@ -61,7 +61,7 @@
   color: white;
 }
 
-.audio-button--active:hover:not(:disabled) {
+.audio-button--active:hover:not(.audio-button--disabled) {
   background: linear-gradient(to bottom right, #2563eb, #1d4ed8);
 }
 
