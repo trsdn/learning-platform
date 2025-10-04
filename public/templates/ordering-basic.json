@@ -1,0 +1,85 @@
+{
+  "id": "ordering-basic",
+  "name": "Ordering (Basic)",
+  "description": "Sort items into the correct order",
+  "type": "ordering",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text explaining what order to use"
+    },
+    "questionLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the question"
+    },
+    "questionAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for question (e.g., 'spanish/pregunta.mp3')"
+    },
+    "items": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "Items to be ordered (shown in random order)"
+    },
+    "itemsLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the items"
+    },
+    "itemsAudio": {
+      "type": "array",
+      "required": false,
+      "description": "Audio file paths for each item (same length as items)"
+    },
+    "correctOrder": {
+      "type": "array",
+      "required": true,
+      "description": "Array of indices representing the correct order (0-based)"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["questionAudio"]
+    },
+    "buttons": {
+      "question": {
+        "show": true,
+        "field": "questionAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Ordne diese Zahlen von klein nach groß:",
+      "questionLanguage": "de",
+      "items": ["1000", "10", "100", "1"],
+      "itemsLanguage": "de",
+      "correctOrder": [3, 1, 2, 0],
+      "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
+      "hint": "Welche Zahl ist am kleinsten?"
+    }
+  ]
+}

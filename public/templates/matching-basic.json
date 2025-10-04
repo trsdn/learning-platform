@@ -1,0 +1,120 @@
+{
+  "id": "matching-basic",
+  "name": "Matching (Basic)",
+  "description": "Match items from the left column to items in the right column",
+  "type": "matching",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text explaining what to match"
+    },
+    "questionLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the question"
+    },
+    "questionAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for question (e.g., 'spanish/pregunta.mp3')"
+    },
+    "pairs": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "maxItems": 8,
+      "description": "Array of matching pairs",
+      "items": {
+        "left": {
+          "type": "string",
+          "required": true,
+          "description": "Item in the left column (fixed order)"
+        },
+        "leftLanguage": {
+          "type": "string",
+          "enum": ["de", "es", "en"],
+          "required": false,
+          "description": "Language of left item"
+        },
+        "leftAudio": {
+          "type": "string",
+          "required": false,
+          "description": "Audio file path for left item"
+        },
+        "right": {
+          "type": "string",
+          "required": true,
+          "description": "Matching item in the right column (shuffled)"
+        },
+        "rightLanguage": {
+          "type": "string",
+          "enum": ["de", "es", "en"],
+          "required": false,
+          "description": "Language of right item"
+        },
+        "rightAudio": {
+          "type": "string",
+          "required": false,
+          "description": "Audio file path for right item"
+        }
+      }
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["questionAudio"]
+    },
+    "buttons": {
+      "question": {
+        "show": true,
+        "field": "questionAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Ordne jedes Land seiner Hauptstadt zu:",
+      "questionLanguage": "de",
+      "pairs": [
+        {
+          "left": "Deutschland",
+          "leftLanguage": "de",
+          "right": "Berlin",
+          "rightLanguage": "de"
+        },
+        {
+          "left": "Frankreich",
+          "leftLanguage": "de",
+          "right": "Paris",
+          "rightLanguage": "de"
+        },
+        {
+          "left": "Italien",
+          "leftLanguage": "de",
+          "right": "Rom",
+          "rightLanguage": "de"
+        }
+      ],
+      "explanation": "Die Hauptstädte sind: Deutschland-Berlin, Frankreich-Paris, Italien-Rom",
+      "hint": "Denke an europäische Länder und ihre größten Städte"
+    }
+  ]
+}

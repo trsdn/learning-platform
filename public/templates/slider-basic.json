@@ -1,0 +1,74 @@
+{
+  "id": "slider-basic",
+  "name": "Slider (Basic)",
+  "description": "Numeric answer using a slider control",
+  "type": "slider",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text"
+    },
+    "min": {
+      "type": "number",
+      "required": true,
+      "description": "Minimum value on the slider"
+    },
+    "max": {
+      "type": "number",
+      "required": true,
+      "description": "Maximum value on the slider"
+    },
+    "step": {
+      "type": "number",
+      "required": false,
+      "default": 1,
+      "description": "Step increment for the slider"
+    },
+    "correctValue": {
+      "type": "number",
+      "required": true,
+      "description": "The correct numeric answer"
+    },
+    "tolerance": {
+      "type": "number",
+      "required": false,
+      "default": 0,
+      "description": "±tolerance for accepting the answer as correct"
+    },
+    "unit": {
+      "type": "string",
+      "required": false,
+      "description": "Unit label (e.g., '°C', '%', 'cm')"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Bei welcher Temperatur kocht Wasser auf Meereshöhe?",
+      "min": 0,
+      "max": 150,
+      "step": 5,
+      "correctValue": 100,
+      "tolerance": 5,
+      "unit": "°C",
+      "explanation": "Wasser kocht bei 100°C auf Meereshöhe (bei normalem Luftdruck).",
+      "hint": "Denke an die runde Zahl für den Siedepunkt von Wasser"
+    }
+  ]
+}

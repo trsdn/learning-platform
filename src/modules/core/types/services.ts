@@ -66,7 +66,11 @@ export interface Task {
 
 export interface MultipleChoiceContent {
   question: string;
+  questionLanguage?: 'de' | 'es' | 'en';
+  questionAudio?: string; // e.g., "spanish/pregunta.mp3"
   options: string[];
+  optionsLanguage?: 'de' | 'es' | 'en';
+  optionsAudio?: string[]; // Optional audio for each option (same length as options)
   correctAnswer: number;
   explanation?: string;
   hint?: string;
@@ -74,9 +78,13 @@ export interface MultipleChoiceContent {
 
 export interface ClozeDeletionContent {
   text: string; // Text with {{blanks}} marked
+  textLanguage?: 'de' | 'es' | 'en';
+  textAudio?: string; // Audio of full text (with blanks spoken)
   blanks: Array<{
     index: number;
     correctAnswer: string;
+    correctAnswerLanguage?: 'de' | 'es' | 'en';
+    correctAnswerAudio?: string; // Audio for the correct answer
     alternatives?: string[]; // Alternative correct answers
   }>;
   explanation?: string;
@@ -85,6 +93,8 @@ export interface ClozeDeletionContent {
 
 export interface TrueFalseContent {
   statement: string;
+  statementLanguage?: 'de' | 'es' | 'en';
+  statementAudio?: string; // e.g., "spanish/afirmacion.mp3"
   correctAnswer: boolean;
   requireJustification?: boolean; // If true, user must explain why
   explanation?: string;
@@ -93,7 +103,11 @@ export interface TrueFalseContent {
 
 export interface OrderingContent {
   question: string;
+  questionLanguage?: 'de' | 'es' | 'en';
+  questionAudio?: string;
   items: string[]; // Items to be ordered
+  itemsLanguage?: 'de' | 'es' | 'en';
+  itemsAudio?: string[]; // Optional audio for each item (same length as items)
   correctOrder: number[]; // Indices in correct order
   explanation?: string;
   hint?: string;
@@ -101,9 +115,15 @@ export interface OrderingContent {
 
 export interface MatchingContent {
   question: string;
+  questionLanguage?: 'de' | 'es' | 'en';
+  questionAudio?: string;
   pairs: Array<{
     left: string;
+    leftLanguage?: 'de' | 'es' | 'en';
+    leftAudio?: string; // Audio for left item
     right: string;
+    rightLanguage?: 'de' | 'es' | 'en';
+    rightAudio?: string; // Audio for right item
   }>;
   explanation?: string;
   hint?: string;
@@ -111,7 +131,11 @@ export interface MatchingContent {
 
 export interface MultipleSelectContent {
   question: string;
+  questionLanguage?: 'de' | 'es' | 'en';
+  questionAudio?: string;
   options: string[];
+  optionsLanguage?: 'de' | 'es' | 'en';
+  optionsAudio?: string[]; // Optional audio for each option (same length as options)
   correctAnswers: number[]; // Array of correct indices
   minRequired?: number; // Minimum selections required
   explanation?: string;
@@ -152,7 +176,11 @@ export interface FlashcardContent {
 
 export interface TextInputContent {
   question: string;
+  questionLanguage?: 'de' | 'es' | 'en';
+  questionAudio?: string; // e.g., "spanish/escucha.mp3" for listening comprehension
   correctAnswer: string;
+  correctAnswerLanguage?: 'de' | 'es' | 'en';
+  correctAnswerAudio?: string; // Audio for the correct answer
   alternatives?: string[]; // Alternative correct answers
   caseSensitive?: boolean; // Default: false
   explanation?: string;

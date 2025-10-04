@@ -11,6 +11,7 @@ import {
 import { useAudioPlayback } from '../hooks/use-audio-playback';
 import { useAudioSettings } from '../hooks/use-audio-settings';
 import { isEligibleForAutoPlay } from '@core/utils/audio-helpers';
+import { getAudioConfig, type AudioConfig } from '@storage/template-loader';
 import { AudioButton } from './audio-button';
 import { FeedbackCard } from './common/FeedbackCard';
 import { Input, Checkbox, Select, Slider } from './forms';
@@ -67,6 +68,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Text Input state
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
+  // Template audio configuration
+  const [audioConfig, setAudioConfig] = useState<AudioConfig | null>(null);
+
   // Audio hooks
   const { playbackState, loadAudio, togglePlayPause, replay, stop, preloadNext, unlockAutoPlay } = useAudioPlayback();
   const { settings: audioSettings } = useAudioSettings();
@@ -118,6 +122,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
     setCurrentTask(task);
     setStartTime(Date.now());
+
+    // Load audio configuration from template
+    const config = await getAudioConfig(task.templateId);
+    setAudioConfig(config);
 
     // NOTE: Auto-play is handled in feedback section after user answers
     // This prevents revealing the correct answer before the user responds
@@ -376,17 +384,22 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showFeedback, currentTask?.id, audioSettings.autoPlayEnabled, audioSettings.languageFilter]);
 
-  // Auto-play frontAudio when flashcard loads (for Spanish→German cards)
+  // Auto-play audio on load (based on template config)
   useEffect(() => {
-    if (currentTask?.type === 'flashcard' && !showFeedback && playbackState.autoPlayUnlocked) {
-      const content = currentTask.content as FlashcardContent;
-      if (content.frontAudio) {
-        const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content.frontAudio}`);
-        audio.play().catch(err => console.warn('Failed to auto-play frontAudio:', err));
+    if (!currentTask || !audioConfig || !playbackState.autoPlayUnlocked || showFeedback) return;
+
+    const fieldsToPlay = audioConfig.autoPlay?.onLoad || [];
+    const content = currentTask.content as any;
+
+    for (const field of fieldsToPlay) {
+      if (content[field]) {
+        const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content[field]}`);
+        audio.play().catch(err => console.warn(`Failed to auto-play ${field}:`, err));
+        break; // Only play first available audio
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentTask?.id]);
+  }, [currentTask?.id, audioConfig]);
 
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
@@ -898,10 +911,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {/* Front side */}
           <div className={styles['practice-session__flashcard-front']}>
             <div>{content.front}</div>
-            {content.frontAudio && (
+            {audioConfig?.buttons?.front?.show && (content as any)[audioConfig.buttons.front.field] && (
               <AudioButton
                 text={content.front}
-                audioUrl={`${import.meta.env.BASE_URL}audio/${content.frontAudio}`}
+                audioUrl={`${import.meta.env.BASE_URL}audio/${(content as any)[audioConfig.buttons.front.field]}`}
                 size="large"
               />
             )}
@@ -912,13 +925,19 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <button
               onClick={async () => {
                 setFlashcardRevealed(true);
-                // Auto-play backAudio when revealing (for German→Spanish cards)
-                if (content.backAudio && playbackState.autoPlayUnlocked) {
-                  try {
-                    const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content.backAudio}`);
-                    await audio.play();
-                  } catch (err) {
-                    console.warn('Failed to auto-play on reveal:', err);
+                // Auto-play audio when revealing (based on template config)
+                if (audioConfig && playbackState.autoPlayUnlocked) {
+                  const fieldsToPlay = audioConfig.autoPlay?.onReveal || [];
+                  for (const field of fieldsToPlay) {
+                    if ((content as any)[field]) {
+                      try {
+                        const audio = new Audio(`${import.meta.env.BASE_URL}audio/${(content as any)[field]}`);
+                        await audio.play();
+                        break; // Only play first available audio
+                      } catch (err) {
+                        console.warn(`Failed to auto-play ${field} on reveal:`, err);
+                      }
+                    }
                   }
                 }
               }}
@@ -939,10 +958,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               {/* Answer */}
               <div className={styles['practice-session__flashcard-back']}>
                 <div>{content.back}</div>
-                {content.backAudio && (
+                {audioConfig?.buttons?.back?.show && (content as any)[audioConfig.buttons.back.field] && (
                   <AudioButton
                     text={content.back}
-                    audioUrl={`${import.meta.env.BASE_URL}audio/${content.backAudio}`}
+                    audioUrl={`${import.meta.env.BASE_URL}audio/${(content as any)[audioConfig.buttons.back.field]}`}
                     size="large"
                   />
                 )}

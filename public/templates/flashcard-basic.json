@@ -1,0 +1,82 @@
+{
+  "id": "flashcard-basic",
+  "name": "Flashcard (Basic)",
+  "description": "Standard flashcard with front/back and optional audio",
+  "type": "flashcard",
+  "schema": {
+    "front": {
+      "type": "string",
+      "required": true,
+      "description": "Front side text (e.g., question or word to learn)"
+    },
+    "frontLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": true,
+      "description": "Language of front side"
+    },
+    "frontAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for front (e.g., 'spanish/hola.mp3')"
+    },
+    "back": {
+      "type": "string",
+      "required": true,
+      "description": "Back side text (e.g., answer or translation)"
+    },
+    "backLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": true,
+      "description": "Language of back side"
+    },
+    "backAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for back (e.g., 'german/hallo.mp3')"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Optional additional context"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["frontAudio"],
+      "onReveal": ["backAudio"]
+    },
+    "buttons": {
+      "front": {
+        "show": true,
+        "field": "frontAudio"
+      },
+      "back": {
+        "show": true,
+        "field": "backAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "front": "el perro",
+      "frontLanguage": "es",
+      "frontAudio": "spanish/el-perro.mp3",
+      "back": "der Hund",
+      "backLanguage": "de",
+      "explanation": "Common Spanish noun - masculine"
+    }
+  ]
+}

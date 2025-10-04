@@ -1,0 +1,71 @@
+{
+  "id": "true-false-basic",
+  "name": "True/False (Basic)",
+  "description": "Simple true or false statement question",
+  "type": "true-false",
+  "schema": {
+    "statement": {
+      "type": "string",
+      "required": true,
+      "description": "The statement to evaluate as true or false"
+    },
+    "statementLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the statement"
+    },
+    "statementAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for statement (e.g., 'spanish/statement.mp3')"
+    },
+    "correctAnswer": {
+      "type": "boolean",
+      "required": true,
+      "description": "Whether the statement is true (true) or false (false)"
+    },
+    "requireJustification": {
+      "type": "boolean",
+      "required": false,
+      "default": false,
+      "description": "If true, user must explain their reasoning"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["statementAudio"]
+    },
+    "buttons": {
+      "statement": {
+        "show": true,
+        "field": "statementAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "statement": "Wasser kocht bei 100 Grad Celsius auf Meereshöhe.",
+      "statementLanguage": "de",
+      "correctAnswer": true,
+      "explanation": "Richtig! Bei normalem Luftdruck (auf Meereshöhe) kocht Wasser bei genau 100°C.",
+      "hint": "Denke an den normalen Siedepunkt von Wasser"
+    }
+  ]
+}
