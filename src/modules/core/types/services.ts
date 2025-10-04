@@ -52,6 +52,16 @@ export interface Task {
   };
   createdAt: Date;
   updatedAt: Date;
+
+  // Audio feature fields (added for auto-play audio feature)
+  /** Whether this task has pronunciation audio */
+  hasAudio?: boolean;
+  /** Path to audio file (relative to /audio/) */
+  audioUrl?: string | null;
+  /** Content language (e.g., 'Spanish', 'French', 'German') */
+  language?: string;
+  /** IPA pronunciation guide (for accessibility) */
+  ipa?: string | null;
 }
 
 export interface MultipleChoiceContent {

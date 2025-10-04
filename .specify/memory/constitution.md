@@ -1,21 +1,37 @@
 <!-- Sync Impact Report
-Version change: 2.0.0 → 2.1.0
-Modified principles:
-- II. Separation of Concerns → II. Modular Architecture & Separation of Concerns (expanded)
-Added principles:
-- VI. Maintainability First
+Version change: 2.1.0 → 2.2.0
 Added sections:
-- Module Guidelines subsection in Architecture Patterns
+- Target Audience & Scale (new section defining Gymnasium students, <100 users, no mass-market scaling)
+Modified principles:
+- None (this is a MINOR version bump: new section added without changing existing principles)
 Templates requiring updates:
-- plan-template.md (✅ in sync)
-- spec-template.md (✅ compatible)
-- tasks-template.md (✅ compatible)
-- agent-file-template.md (✅ compatible)
-- .claude/commands/constitution.md (✅ updated 2025-10-04)
-Follow-up TODOs: None
+- plan-template.md (✅ compatible - no changes needed)
+- spec-template.md (✅ compatible - user persona guidance already flexible)
+- tasks-template.md (✅ compatible - no changes needed)
+- agent-file-template.md (✅ compatible - no changes needed)
+- .claude/commands/constitution.md (✅ compatible)
+Follow-up TODOs:
+- Update CLAUDE.md to reflect Gymnasium target demographic
+- Review issue #30 analytics dashboard to ensure age-appropriate UX (10-19 years)
+Previous changes (v2.0.0 → v2.1.0):
+- II. Separation of Concerns → II. Modular Architecture & Separation of Concerns (expanded)
+- Added VI. Maintainability First principle
+- Added Module Guidelines subsection
 -->
 
 # Learning Platform Constitution
+
+## Target Audience & Scale
+
+**Primary Users**: Students at Gymnasium (German secondary school, grades 5-13, ages 10-19)
+**User Base Size**: Small, focused user group (optimized for <100 concurrent users)
+**Scale Philosophy**: NOT designed for mass-market scaling. Prioritize simplicity, educational effectiveness, and user experience over scalability concerns.
+
+**Design Implications**:
+- Performance optimizations target small datasets (hundreds of questions, not millions)
+- UI/UX tailored for teenage learners, not enterprise users
+- Features prioritize educational value over scalability features (no CDN, no caching layers, no database sharding)
+- German language interface matches user demographic
 
 ## Core Principles
 
@@ -162,4 +178,4 @@ Infrastructure Layer (Storage/External APIs)
 - Semantic versioning with git tags
 - Module versions tracked independently
 
-**Version**: 2.1.0 | **Ratified**: 2025-09-29 | **Last Amended**: 2025-09-29
+**Version**: 2.2.0 | **Ratified**: 2025-09-29 | **Last Amended**: 2025-10-04

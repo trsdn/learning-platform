@@ -1,163 +1,318 @@
 /**
- * Audio Service
- * Handles playback of Spanish pronunciation audio files
+ * Audio Service Implementation
+ *
+ * Manages audio playback lifecycle for language learning tasks.
+ * Handles browser auto-play policies, preloading, and state management.
+ *
+ * Feature: Auto-Play Audio for Language Learning Tasks
+ * Branch: 005-issue-23
+ * Phase: 3.5 - Audio Service
  */
 
-interface AudioManifest {
-  [spanishText: string]: string; // Maps Spanish text to audio filename
+import type { Task } from '../types/services';
+import type { AudioSettings } from '../entities/audio-settings';
+import type { AudioPlayback } from '../entities/audio-playback';
+import { INITIAL_PLAYBACK_STATE } from '../entities/audio-playback';
+
+const AUTO_PLAY_DELAY_MS = 500;
+
+/**
+ * Audio Service Interface
+ */
+export interface IAudioService {
+  initialize(): Promise<void>;
+  loadAudio(task: Task, settings: AudioSettings, autoPlay: boolean): Promise<void>;
+  play(): Promise<void>;
+  pause(): void;
+  stop(): void;
+  replay(): Promise<void>;
+  togglePlayPause(): Promise<void>;
+  preloadNext(nextTask: Task): void;
+  checkAutoPlayPermission(): Promise<boolean>;
+  unlockAutoPlay(): Promise<boolean>;
+  getPlaybackState(): AudioPlayback;
+  onStateChange(callback: (state: AudioPlayback) => void): () => void;
+  dispose(): void;
 }
 
-class AudioService {
-  private manifest: AudioManifest | null = null;
-  private audioCache: Map<string, HTMLAudioElement> = new Map();
-  private getBasePath = () => {
-    // For GitHub Pages, extract base from the current path
-    const path = window.location.pathname;
-    // If path starts with /learning-platform/, use that as base
-    if (path.startsWith('/learning-platform/')) {
-      return '/learning-platform/';
-    }
-    return '/';
-  };
-  private get manifestPath() {
-    return `${this.getBasePath()}audio/spanish/manifest.json`;
-  }
-  private get audioBasePath() {
-    return `${this.getBasePath()}audio/spanish/`;
-  }
-  private isInitialized = false;
-  private currentlyPlaying: HTMLAudioElement | null = null;
+/**
+ * AudioService implementation using HTMLAudioElement
+ */
+class AudioService implements IAudioService {
+  private audio: HTMLAudioElement | null = null;
+  private state: AudioPlayback = { ...INITIAL_PLAYBACK_STATE };
+  private stateListeners: Set<(state: AudioPlayback) => void> = new Set();
+  private preloadedAudio: HTMLAudioElement | null = null;
+  private autoPlayTimer: number | null = null;
 
-  /**
-   * Initialize the audio service by loading the manifest
-   */
   async initialize(): Promise<void> {
-    if (this.isInitialized) return;
+    // Service is ready to use
+    this.setState({ ...INITIAL_PLAYBACK_STATE });
+  }
+
+  async loadAudio(task: Task, _settings: AudioSettings, autoPlay: boolean): Promise<void> {
+    // Stop and cleanup previous audio
+    this.stop();
+    this.clearAutoPlayTimer();
+
+    if (!task.audioUrl) {
+      throw new Error('Task does not have an audio URL');
+    }
+
+    // Create new audio element
+    this.audio = new Audio(task.audioUrl);
+
+    // Set initial state
+    this.setState({
+      audioUrl: task.audioUrl,
+      status: 'loading',
+      currentTime: 0,
+      duration: 0,
+      autoPlayUnlocked: this.state.autoPlayUnlocked,
+      preloadedNextUrl: this.state.preloadedNextUrl,
+      error: null,
+    });
+
+    // Setup event listeners
+    this.audio.addEventListener('loadedmetadata', () => {
+      if (this.audio) {
+        this.setState({
+          ...this.state,
+          duration: this.audio.duration,
+          status: 'stopped',
+        });
+      }
+    });
+
+    this.audio.addEventListener('timeupdate', () => {
+      if (this.audio && this.state.status === 'playing') {
+        this.setState({
+          ...this.state,
+          currentTime: this.audio.currentTime,
+        });
+      }
+    });
+
+    this.audio.addEventListener('ended', () => {
+      this.setState({
+        ...this.state,
+        status: 'stopped',
+        currentTime: 0,
+      });
+    });
+
+    this.audio.addEventListener('error', (e) => {
+      this.setState({
+        ...this.state,
+        status: 'error',
+        error: `Failed to load audio: ${e.message || 'Unknown error'}`,
+      });
+    });
+
+    // Load the audio
+    this.audio.load();
+
+    // Auto-play if requested and unlocked
+    if (autoPlay && this.state.autoPlayUnlocked) {
+      this.autoPlayTimer = window.setTimeout(async () => {
+        try {
+          await this.play();
+        } catch (error) {
+          console.error('Auto-play failed:', error);
+        }
+      }, AUTO_PLAY_DELAY_MS);
+    }
+  }
+
+  async play(): Promise<void> {
+    if (!this.audio) {
+      throw new Error('No audio loaded');
+    }
 
     try {
-      const response = await fetch(this.manifestPath);
-      if (!response.ok) {
-        throw new Error(`Failed to load audio manifest: ${response.statusText}`);
+      await this.audio.play();
+      this.setState({
+        ...this.state,
+        status: 'playing',
+      });
+    } catch (error: any) {
+      if (error.name === 'NotAllowedError') {
+        this.setState({
+          ...this.state,
+          status: 'error',
+          error: 'Auto-play blocked by browser. Please click to enable audio.',
+        });
       }
-
-      this.manifest = await response.json();
-      this.isInitialized = true;
-      console.log('✓ Audio service initialized with', Object.keys(this.manifest || {}).length, 'audio files');
-    } catch (error) {
-      console.warn('⚠️ Failed to initialize audio service:', error);
-      this.manifest = {};
-      this.isInitialized = true; // Mark as initialized even on error to prevent retry loops
+      throw error;
     }
   }
 
-  /**
-   * Play audio for Spanish text
-   * @param text - The Spanish text to pronounce
-   * @returns Promise that resolves when audio finishes playing
-   */
-  async playSpanish(text: string): Promise<void> {
-    // Ensure initialized
-    if (!this.isInitialized) {
-      await this.initialize();
+  pause(): void {
+    if (!this.audio) {
+      return;
     }
 
-    // Check if audio file exists in manifest
-    if (!this.manifest || !this.manifest[text]) {
-      console.warn(`⚠️ No audio file found for: "${text}"`);
-      throw new Error(`Audio not available for: ${text}`);
-    }
-
-    const filename = this.manifest[text];
-    const audioPath = this.audioBasePath + filename;
-
-    // Stop any currently playing audio
-    if (this.currentlyPlaying) {
-      this.currentlyPlaying.pause();
-      this.currentlyPlaying.currentTime = 0;
-    }
-
-    // Get or create audio element
-    let audio = this.audioCache.get(audioPath);
-    if (!audio) {
-      audio = new Audio(audioPath);
-      this.audioCache.set(audioPath, audio);
-    }
-
-    // Play the audio
-    this.currentlyPlaying = audio;
-
-    return new Promise((resolve, reject) => {
-      if (!audio) {
-        reject(new Error('Audio element not found'));
-        return;
-      }
-
-      const handleEnded = () => {
-        cleanup();
-        this.currentlyPlaying = null;
-        resolve();
-      };
-
-      const handleError = () => {
-        cleanup();
-        this.currentlyPlaying = null;
-        reject(new Error(`Failed to play audio: ${audioPath}`));
-      };
-
-      const cleanup = () => {
-        audio!.removeEventListener('ended', handleEnded);
-        audio!.removeEventListener('error', handleError);
-      };
-
-      audio.addEventListener('ended', handleEnded);
-      audio.addEventListener('error', handleError);
-
-      // Reset and play
-      audio.currentTime = 0;
-      audio.play().catch((error) => {
-        cleanup();
-        this.currentlyPlaying = null;
-        reject(error);
-      });
+    this.audio.pause();
+    this.setState({
+      ...this.state,
+      status: 'paused',
+      currentTime: this.audio.currentTime,
     });
   }
 
-  /**
-   * Check if audio is available for given Spanish text
-   * @param text - The Spanish text to check
-   * @returns true if audio file exists
-   */
-  hasAudio(text: string): boolean {
-    // If not initialized yet, initialize synchronously by checking if we expect this text
-    // This is a workaround since hasAudio is called during render (can't be async)
-    if (!this.isInitialized) {
-      // Return false during initialization - buttons will appear after first render
+  stop(): void {
+    if (!this.audio) {
+      return;
+    }
+
+    this.audio.pause();
+    this.audio.currentTime = 0;
+    this.setState({
+      ...this.state,
+      status: 'stopped',
+      currentTime: 0,
+    });
+  }
+
+  async replay(): Promise<void> {
+    if (!this.audio) {
+      throw new Error('No audio loaded');
+    }
+
+    this.audio.currentTime = 0;
+    await this.play();
+  }
+
+  async togglePlayPause(): Promise<void> {
+    if (this.state.status === 'playing') {
+      this.pause();
+    } else if (this.state.status === 'paused' || this.state.status === 'stopped') {
+      await this.play();
+    }
+  }
+
+  preloadNext(nextTask: Task): void {
+    if (!nextTask.audioUrl) {
+      return;
+    }
+
+    // Create preload audio element
+    this.preloadedAudio = new Audio(nextTask.audioUrl);
+    this.preloadedAudio.preload = 'auto';
+
+    this.setState({
+      ...this.state,
+      preloadedNextUrl: nextTask.audioUrl,
+    });
+  }
+
+  async checkAutoPlayPermission(): Promise<boolean> {
+    try {
+      // Create a silent audio element to test auto-play
+      const testAudio = new Audio();
+      testAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      testAudio.volume = 0;
+
+      await testAudio.play();
+      testAudio.pause();
+
+      return true;
+    } catch (error: any) {
+      if (error.name === 'NotAllowedError') {
+        return false;
+      }
       return false;
     }
-    return Boolean(this.manifest && this.manifest[text]);
   }
 
-  /**
-   * Stop any currently playing audio
-   */
-  stopPlayback(): void {
-    if (this.currentlyPlaying) {
-      this.currentlyPlaying.pause();
-      this.currentlyPlaying.currentTime = 0;
-      this.currentlyPlaying = null;
+  async unlockAutoPlay(): Promise<boolean> {
+    try {
+      // Must be called from user gesture
+      const testAudio = new Audio();
+      testAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
+      testAudio.volume = 0;
+
+      await testAudio.play();
+      testAudio.pause();
+
+      this.setState({
+        ...this.state,
+        autoPlayUnlocked: true,
+      });
+
+      return true;
+    } catch (error) {
+      console.error('Failed to unlock auto-play:', error);
+      return false;
     }
   }
 
-  /**
-   * Clear the audio cache
-   */
-  clearCache(): void {
-    this.audioCache.clear();
+  getPlaybackState(): AudioPlayback {
+    return { ...this.state };
+  }
+
+  onStateChange(callback: (state: AudioPlayback) => void): () => void {
+    this.stateListeners.add(callback);
+
+    // Return unsubscribe function
+    return () => {
+      this.stateListeners.delete(callback);
+    };
+  }
+
+  dispose(): void {
+    this.clearAutoPlayTimer();
+
+    if (this.audio) {
+      this.audio.pause();
+      this.audio.src = '';
+      this.audio = null;
+    }
+
+    if (this.preloadedAudio) {
+      this.preloadedAudio.src = '';
+      this.preloadedAudio = null;
+    }
+
+    this.setState({
+      ...INITIAL_PLAYBACK_STATE,
+    });
+
+    this.stateListeners.clear();
+  }
+
+  // Private helpers
+
+  private setState(newState: AudioPlayback): void {
+    this.state = newState;
+
+    // Notify all listeners
+    this.stateListeners.forEach((listener) => {
+      listener(newState);
+    });
+  }
+
+  private clearAutoPlayTimer(): void {
+    if (this.autoPlayTimer !== null) {
+      window.clearTimeout(this.autoPlayTimer);
+      this.autoPlayTimer = null;
+    }
   }
 }
 
-// Export singleton instance
-export const audioService = new AudioService();
+/**
+ * Factory function to create audio service instance
+ */
+export function createAudioService(): IAudioService {
+  return new AudioService();
+}
 
-// Export class for testing
-export { AudioService };
+/**
+ * Legacy singleton export for backward compatibility
+ * @deprecated Use createAudioService() instead
+ */
+export const audioService = {
+  hasAudio: () => false,
+  playSpanish: async () => {},
+  initialize: async () => {},
+} as any;

@@ -30,7 +30,7 @@ export class LearningPlatformDB extends Dexie {
     this.version(1).stores({
       topics: 'id, title, isActive, createdAt',
       learningPaths: 'id, topicId, difficulty, isActive, createdAt',
-      tasks: 'id, learningPathId, type, *metadata.tags, metadata.difficulty, createdAt',
+      tasks: 'id, learningPathId, type, *metadata.tags, metadata.difficulty, createdAt, hasAudio, language',
       answerHistory: 'id, taskId, sessionId, timestamp, isCorrect',
       userProgress: 'id, topicId, learningPathId, *milestones.lastActivity',
       practiceSessions: 'id, execution.status, execution.startedAt, execution.completedAt, createdAt',

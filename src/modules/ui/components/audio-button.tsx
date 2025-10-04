@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import clsx from 'clsx';
-import { audioService } from '@core/services/audio-service';
+import { useAudioPlayback } from '../hooks/use-audio-playback';
+import { useAudioSettings } from '../hooks/use-audio-settings';
 import styles from './audio-button.module.css';
+import type { Task } from '@core/types/services';
 
 interface AudioButtonProps {
   text: string;
+  audioUrl?: string | null;
   className?: string;
   disabled?: boolean;
   size?: 'small' | 'medium' | 'large';
@@ -35,28 +38,58 @@ const VolumeOffIcon = ({ size }: { size: string }) => (
 
 /**
  * Audio Button Component
- * Plays Spanish pronunciation when clicked
+ * Plays pronunciation when clicked
  */
-export function AudioButton({ text, className, disabled = false, size = 'medium' }: AudioButtonProps) {
-  const [isPlaying, setIsPlaying] = useState(false);
+export function AudioButton({ text, audioUrl, className, disabled = false, size = 'medium' }: AudioButtonProps) {
+  const { playbackState, loadAudio, play } = useAudioPlayback();
+  const { settings } = useAudioSettings();
   const [error, setError] = useState<string | null>(null);
 
-  // Check if audio is available for this text
-  const hasAudio = audioService.hasAudio(text);
+  // Check if audio is available
+  const hasAudio = !!audioUrl;
+
+  // Check if this button's audio is currently playing
+  const isPlaying = playbackState.status === 'playing' && playbackState.audioUrl === audioUrl;
 
   const handleClick = async () => {
-    if (isPlaying || disabled || !hasAudio) return;
+    if (disabled || !hasAudio || !audioUrl) return;
 
-    setIsPlaying(true);
     setError(null);
 
     try {
-      await audioService.playSpanish(text);
+      // If this audio is already loaded, just play it
+      if (playbackState.audioUrl === audioUrl) {
+        await play();
+      } else {
+        // Load and play this audio (without auto-play delay)
+        const task: Task = {
+          id: 'audio-button-temp',
+          learningPathId: 'temp',
+          templateId: 'temp',
+          type: 'flashcard',
+          content: {
+            front: text,
+            back: '',
+            frontLanguage: 'es',
+            backLanguage: 'de',
+          },
+          metadata: {
+            difficulty: 'medium' as const,
+            tags: [],
+            estimatedTime: 0,
+            points: 0,
+          },
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          hasAudio: true,
+          audioUrl: audioUrl,
+        };
+        await loadAudio(task, settings, false); // false = no auto-play delay
+        await play();
+      }
     } catch (err) {
       console.error('Failed to play audio:', err);
       setError('Audio playback failed');
-    } finally {
-      setIsPlaying(false);
     }
   };
 

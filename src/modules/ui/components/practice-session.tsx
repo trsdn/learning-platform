@@ -8,7 +8,9 @@ import {
   getTaskRepository,
   getSpacedRepetitionRepository,
 } from '@storage/factory';
-import { audioService } from '@core/services/audio-service';
+import { useAudioPlayback } from '../hooks/use-audio-playback';
+import { useAudioSettings } from '../hooks/use-audio-settings';
+import { isEligibleForAutoPlay } from '@core/utils/audio-helpers';
 import { AudioButton } from './audio-button';
 import { FeedbackCard } from './common/FeedbackCard';
 import { Input, Checkbox, Select, Slider } from './forms';
@@ -65,15 +67,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Text Input state
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
-  // Audio service state
-  const [audioReady, setAudioReady] = useState(false);
+  // Audio hooks
+  const { playbackState, loadAudio, togglePlayPause, replay, stop } = useAudioPlayback();
+  const { settings: audioSettings } = useAudioSettings();
 
-  // Initialize session and audio service
+  // Initialize session
   useEffect(() => {
     initializeSession();
-    audioService.initialize().then(() => {
-      setAudioReady(true);
-    });
   }, []);
 
   // Load current task when session is first loaded
@@ -118,6 +118,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
     setCurrentTask(task);
     setStartTime(Date.now());
+
+    // Auto-play audio if eligible
+    if (isEligibleForAutoPlay(task, audioSettings)) {
+      loadAudio(task, audioSettings, true).catch((error) => {
+        console.error('Failed to load audio:', error);
+      });
+    }
 
     // Reset all state
     setSelectedAnswer(null);
@@ -309,12 +316,38 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     onComplete();
   }
 
-  // Helper function to check if text has Spanish audio available
-  function isSpanishText(text: string): boolean {
-    if (!text || !audioReady) return false;
-    // Only return true if we actually have audio for this text
-    return audioService.hasAudio(text);
-  }
+  // Keyboard shortcuts for audio controls
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Don't trigger shortcuts if user is typing in an input
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) {
+        return;
+      }
+
+      // Don't trigger if no audio is loaded
+      if (!playbackState.audioUrl) {
+        return;
+      }
+
+      switch (e.key.toLowerCase()) {
+        case ' ': // Space - Toggle play/pause
+          e.preventDefault();
+          togglePlayPause().catch(console.error);
+          break;
+        case 'r': // R - Replay
+          e.preventDefault();
+          replay().catch(console.error);
+          break;
+        case 's': // S - Stop
+          e.preventDefault();
+          stop();
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, [playbackState.audioUrl, togglePlayPause, replay, stop]);
 
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
@@ -370,9 +403,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     return (
       <div className={styles['practice-session__mc-options']}>
         {shuffledOptions.map((option, index) => {
-          const hasAudio = isSpanishText(option);
           const isCorrectOption = index === correctAnswerIndex;
-          const showAudio = showFeedback && isCorrectOption && hasAudio;
+          const showAudio = showFeedback && isCorrectOption && currentTask.audioUrl;
 
           const optionClasses = [
             styles['practice-session__mc-option'],
@@ -390,7 +422,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               className={optionClasses}
             >
               <span>{option}</span>
-              {showAudio && <AudioButton text={option} size="small" />}
+              {showAudio && currentTask.audioUrl && <AudioButton text={option} audioUrl={currentTask.audioUrl} size="small" />}
             </button>
           );
         })}
@@ -598,7 +630,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               <React.Fragment key={leftIndex}>
                 <div className={styles['practice-session__matching-left-item']}>
                   <span>{pair.left}</span>
-                  {isSpanishText(pair.left) && <AudioButton text={pair.left} size="small" />}
+                  {currentTask.audioUrl && <AudioButton text={pair.left} audioUrl={currentTask.audioUrl} size="small" />}
                 </div>
                 <Select
                   value={matchingAnswers[leftIndex]?.toString() ?? ''}
@@ -832,7 +864,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {/* Front side */}
           <div className={styles['practice-session__flashcard-front']}>
             <div>{content.front}</div>
-            {isSpanishText(content.front) && <AudioButton text={content.front} size="large" />}
+            {currentTask.audioUrl && <AudioButton text={content.front} audioUrl={currentTask.audioUrl} size="large" />}
           </div>
 
           {/* Back side or reveal button */}
@@ -856,7 +888,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               {/* Answer */}
               <div className={styles['practice-session__flashcard-back']}>
                 <div>{content.back}</div>
-                {isSpanishText(content.back) && <AudioButton text={content.back} size="large" />}
+                {currentTask.audioUrl && <AudioButton text={content.back} audioUrl={currentTask.audioUrl} size="large" />}
               </div>
             </>
           )}
@@ -922,7 +954,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               <div>
                 <strong>Richtige Antwort:</strong> {content.correctAnswer}
               </div>
-              {isSpanishText(content.correctAnswer) && <AudioButton text={content.correctAnswer} size="small" />}
+              {currentTask.audioUrl && <AudioButton text={content.correctAnswer} audioUrl={currentTask.audioUrl} size="small" />}
             </div>
           )}
         </div>
@@ -990,8 +1022,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <h3 className={styles['practice-session__question-text']}>
               {(currentTask.content as any).question}
             </h3>
-            {isSpanishText((currentTask.content as any).question) && (
-              <AudioButton text={(currentTask.content as any).question} size="medium" />
+            {currentTask.audioUrl && (
+              <AudioButton text={(currentTask.content as any).question} audioUrl={currentTask.audioUrl} size="medium" />
             )}
           </div>
         )}
