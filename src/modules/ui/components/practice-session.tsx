@@ -119,25 +119,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setCurrentTask(task);
     setStartTime(Date.now());
 
-    // Auto-play audio if eligible (with error boundary)
-    console.log('🔊 Auto-play check:', {
-      hasAudio: task.hasAudio,
-      audioUrl: task.audioUrl,
-      language: task.language,
-      autoPlayEnabled: audioSettings.autoPlayEnabled,
-      languageFilter: audioSettings.languageFilter,
-      isEligible: isEligibleForAutoPlay(task, audioSettings)
-    });
-
-    if (isEligibleForAutoPlay(task, audioSettings)) {
-      console.log('✅ Auto-play triggered for:', task.audioUrl);
-      loadAudio(task, audioSettings, true).catch((error) => {
-        console.warn('Auto-play failed, continuing without audio:', error);
-        // Don't crash the session - audio is optional
-      });
-    } else {
-      console.log('❌ Auto-play NOT eligible');
-    }
+    // NOTE: Auto-play is handled in feedback section after user answers
+    // This prevents revealing the correct answer before the user responds
 
     // Preload next task audio for better UX
     const nextTaskIndex = currentTaskIndex + 1;
@@ -376,6 +359,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     window.addEventListener('keydown', handleKeyPress);
     return () => window.removeEventListener('keydown', handleKeyPress);
   }, [playbackState.audioUrl, togglePlayPause, replay, stop]);
+
+  // Auto-play audio when feedback is shown (after user answers)
+  useEffect(() => {
+    if (showFeedback && currentTask && isEligibleForAutoPlay(currentTask, audioSettings)) {
+      console.log('🔊 Auto-play in feedback:', currentTask.audioUrl);
+      loadAudio(currentTask, audioSettings, true).catch((error) => {
+        console.warn('Auto-play in feedback failed:', error);
+      });
+    }
+  }, [showFeedback, currentTask, audioSettings, loadAudio]);
 
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
