@@ -1,5 +1,7 @@
 import { useState } from 'react';
+import clsx from 'clsx';
 import { audioService } from '@core/services/audio-service';
+import styles from './audio-button.module.css';
 
 interface AudioButtonProps {
   text: string;
@@ -35,7 +37,7 @@ const VolumeOffIcon = ({ size }: { size: string }) => (
  * Audio Button Component
  * Plays Spanish pronunciation when clicked
  */
-export function AudioButton({ text, className = '', disabled = false, size = 'medium' }: AudioButtonProps) {
+export function AudioButton({ text, className, disabled = false, size = 'medium' }: AudioButtonProps) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -58,13 +60,6 @@ export function AudioButton({ text, className = '', disabled = false, size = 'me
     }
   };
 
-  // Size styles
-  const sizeClasses = {
-    small: 'w-7 h-7',
-    medium: 'w-9 h-9',
-    large: 'w-11 h-11'
-  };
-
   const iconSizes = {
     small: '16px',
     medium: '20px',
@@ -73,26 +68,19 @@ export function AudioButton({ text, className = '', disabled = false, size = 'me
 
   // Determine button state
   const isDisabled = disabled || !hasAudio;
-  const buttonClasses = `
-    ${sizeClasses[size]}
-    inline-flex items-center justify-center
-    rounded-lg
-    transition-all duration-200
-    shadow-sm hover:shadow-md
-    ${isDisabled
-      ? 'bg-gray-100 text-gray-400 cursor-not-allowed border border-gray-200'
-      : isPlaying
-        ? 'bg-blue-600 text-white scale-95'
-        : 'bg-gradient-to-br from-blue-500 to-blue-600 text-white hover:from-blue-600 hover:to-blue-700 active:scale-95 cursor-pointer'
-    }
-    ${className}
-  `;
 
   return (
     <button
       onClick={handleClick}
       disabled={isDisabled}
-      className={buttonClasses}
+      className={clsx(
+        styles['audio-button'],
+        styles[`audio-button--${size}`],
+        isDisabled && styles['audio-button--disabled'],
+        isPlaying && styles['audio-button--playing'],
+        !isDisabled && !isPlaying && styles['audio-button--active'],
+        className
+      )}
       title={
         !hasAudio
           ? 'Audio nicht verfügbar'
@@ -104,13 +92,17 @@ export function AudioButton({ text, className = '', disabled = false, size = 'me
       type="button"
     >
       {isPlaying ? (
-        <div style={{ animation: 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite' }}>
+        <div className={clsx(styles['audio-button__icon'], styles['audio-button__icon--playing'])}>
           <VolumeIcon size={iconSizes[size]} />
         </div>
       ) : !hasAudio || error ? (
-        <VolumeOffIcon size={iconSizes[size]} />
+        <div className={styles['audio-button__icon']}>
+          <VolumeOffIcon size={iconSizes[size]} />
+        </div>
       ) : (
-        <VolumeIcon size={iconSizes[size]} />
+        <div className={styles['audio-button__icon']}>
+          <VolumeIcon size={iconSizes[size]} />
+        </div>
       )}
     </button>
   );
@@ -125,9 +117,9 @@ interface AudioButtonInlineProps {
  * Inline Audio Button with Text
  * Shows the Spanish text with a small audio button next to it
  */
-export function AudioButtonInline({ text, className = '' }: AudioButtonInlineProps) {
+export function AudioButtonInline({ text, className }: AudioButtonInlineProps) {
   return (
-    <span className={`inline-flex items-center gap-2 ${className}`}>
+    <span className={clsx(styles['audio-button-inline'], className)}>
       <span>{text}</span>
       <AudioButton text={text} size="small" />
     </span>

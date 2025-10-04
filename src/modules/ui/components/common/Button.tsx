@@ -1,5 +1,6 @@
 import React from 'react';
-import { colors, spacing, typography, transitions, components } from '@ui/design-tokens';
+import clsx from 'clsx';
+import styles from './Button.module.css';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'danger';
 export type ButtonSize = 'small' | 'medium' | 'large';
@@ -44,7 +45,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  * Button Component
  *
  * A reusable button component with multiple variants, sizes, and states.
- * Built with design tokens for consistency across the application.
+ * Styled with CSS Modules for type-safe, scoped styling.
  *
  * @example
  * ```tsx
@@ -70,77 +71,21 @@ export function Button({
   startIcon,
   endIcon,
   children,
-  className = '',
-  style = {},
+  className,
   ...props
 }: ButtonProps) {
-  // Get variant styles
-  const variantStyles = getVariantStyles(variant);
-
-  // Get size styles
-  const sizeStyles = getSizeStyles(size);
-
-  // Combine all styles
-  const buttonStyles: React.CSSProperties = {
-    // Base styles
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: spacing[2],
-    border: 'none',
-    borderRadius: components.button.borderRadius,
-    fontFamily: typography.fontFamily.sans,
-    fontWeight: typography.fontWeight.medium,
-    cursor: disabled || loading ? 'not-allowed' : 'pointer',
-    transition: transitions.presets.colors,
-    textDecoration: 'none',
-    userSelect: 'none',
-    outline: 'none',
-    width: fullWidth ? '100%' : 'auto',
-
-    // Variant styles
-    ...variantStyles,
-
-    // Size styles
-    ...sizeStyles,
-
-    // Opacity for disabled/loading state
-    opacity: disabled || loading ? 0.6 : 1,
-
-    // Custom styles
-    ...style,
-  };
-
   return (
     <button
       {...props}
       disabled={disabled || loading}
-      style={buttonStyles}
-      className={className}
-      onMouseEnter={(e) => {
-        if (!disabled && !loading) {
-          const hoverStyles = getVariantHoverStyles(variant);
-          Object.assign(e.currentTarget.style, hoverStyles);
-        }
-        props.onMouseEnter?.(e);
-      }}
-      onMouseLeave={(e) => {
-        if (!disabled && !loading) {
-          Object.assign(e.currentTarget.style, variantStyles);
-        }
-        props.onMouseLeave?.(e);
-      }}
-      onFocus={(e) => {
-        if (!disabled && !loading) {
-          e.currentTarget.style.outline = `2px solid ${colors.primary[300]}`;
-          e.currentTarget.style.outlineOffset = '2px';
-        }
-        props.onFocus?.(e);
-      }}
-      onBlur={(e) => {
-        e.currentTarget.style.outline = 'none';
-        props.onBlur?.(e);
-      }}
+      className={clsx(
+        styles.button,
+        styles[`button--${variant}`],
+        styles[`button--${size}`],
+        loading && styles['button--loading'],
+        fullWidth && styles['button--full-width'],
+        className
+      )}
     >
       {loading ? (
         <>
@@ -149,117 +94,13 @@ export function Button({
         </>
       ) : (
         <>
-          {startIcon && <span style={{ display: 'flex', alignItems: 'center' }}>{startIcon}</span>}
+          {startIcon && <span className={styles.button__icon}>{startIcon}</span>}
           {children}
-          {endIcon && <span style={{ display: 'flex', alignItems: 'center' }}>{endIcon}</span>}
+          {endIcon && <span className={styles.button__icon}>{endIcon}</span>}
         </>
       )}
     </button>
   );
-}
-
-// ============================================================================
-// VARIANT STYLES
-// ============================================================================
-
-function getVariantStyles(variant: ButtonVariant): React.CSSProperties {
-  const baseStyles: React.CSSProperties = {
-    border: '2px solid transparent',
-  };
-
-  switch (variant) {
-    case 'primary':
-      return {
-        ...baseStyles,
-        backgroundColor: colors.primary[500],
-        color: colors.neutral[0],
-      };
-
-    case 'secondary':
-      return {
-        ...baseStyles,
-        backgroundColor: colors.neutral[200],
-        color: colors.neutral[700],
-      };
-
-    case 'ghost':
-      return {
-        ...baseStyles,
-        backgroundColor: 'transparent',
-        color: colors.neutral[700],
-        border: `2px solid ${colors.neutral[300]}`,
-      };
-
-    case 'danger':
-      return {
-        ...baseStyles,
-        backgroundColor: colors.error[500],
-        color: colors.neutral[0],
-      };
-
-    default:
-      return baseStyles;
-  }
-}
-
-function getVariantHoverStyles(variant: ButtonVariant): React.CSSProperties {
-  switch (variant) {
-    case 'primary':
-      return {
-        backgroundColor: colors.primary[600],
-      };
-
-    case 'secondary':
-      return {
-        backgroundColor: colors.neutral[300],
-      };
-
-    case 'ghost':
-      return {
-        backgroundColor: colors.neutral[50],
-        borderColor: colors.neutral[400],
-      };
-
-    case 'danger':
-      return {
-        backgroundColor: colors.error[600],
-      };
-
-    default:
-      return {};
-  }
-}
-
-// ============================================================================
-// SIZE STYLES
-// ============================================================================
-
-function getSizeStyles(size: ButtonSize): React.CSSProperties {
-  switch (size) {
-    case 'small':
-      return {
-        height: components.button.height.sm,
-        padding: components.button.padding.sm,
-        fontSize: components.button.fontSize.sm,
-      };
-
-    case 'medium':
-      return {
-        height: components.button.height.md,
-        padding: components.button.padding.md,
-        fontSize: components.button.fontSize.md,
-      };
-
-    case 'large':
-      return {
-        height: components.button.height.lg,
-        padding: components.button.padding.lg,
-        fontSize: components.button.fontSize.lg,
-      };
-
-    default:
-      return {};
-  }
 }
 
 // ============================================================================
@@ -280,16 +121,8 @@ function LoadingSpinner({ size }: LoadingSpinnerProps) {
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-      style={{
-        animation: 'spin 1s linear infinite',
-      }}
+      className={styles.button__spinner}
     >
-      <style>{`
-        @keyframes spin {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
       <circle
         cx="12"
         cy="12"

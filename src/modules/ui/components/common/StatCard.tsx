@@ -1,11 +1,7 @@
 import React from 'react';
 import { Card } from './Card';
-import {
-  typography,
-  semanticColors,
-  spacing,
-  colors,
-} from '@ui/design-tokens';
+import { colors } from '@ui/design-tokens';
+import styles from './StatCard.module.css';
 
 export interface StatCardProps extends React.HTMLAttributes<HTMLDivElement> {
   /**
@@ -65,85 +61,40 @@ export function StatCard({
   subtitle,
   color = colors.primary[500],
   icon,
-  className = '',
-  style = {},
+  className,
+  style,
   ...props
 }: StatCardProps) {
-  const containerStyles: React.CSSProperties = {
-    borderLeft: `4px solid ${color}`,
-    ...style,
-  };
-
   return (
     <Card
       {...props}
       padding="medium"
       shadow
       border
-      style={containerStyles}
+      style={{ borderLeft: `4px solid ${color}`, ...style }}
       className={className}
     >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          gap: spacing[2],
-        }}
-      >
+      <div className={styles['stat-card__container']}>
         {/* Title and Icon Row */}
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
-        >
-          <h3
-            style={{
-              margin: 0,
-              fontSize: typography.fontSize.sm,
-              fontWeight: typography.fontWeight.medium,
-              color: semanticColors.text.secondary,
-              textTransform: 'uppercase',
-              letterSpacing: typography.letterSpacing.wide,
-            }}
-          >
+        <div className={styles['stat-card__header']}>
+          <h3 className={styles['stat-card__title']}>
             {title}
           </h3>
           {icon && (
-            <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                color: color,
-                fontSize: typography.fontSize.xl,
-              }}
-            >
+            <div className={styles['stat-card__icon']} style={{ color }}>
               {icon}
             </div>
           )}
         </div>
 
         {/* Value */}
-        <div
-          style={{
-            fontSize: typography.fontSize['3xl'],
-            fontWeight: typography.fontWeight.bold,
-            color: semanticColors.text.primary,
-            lineHeight: typography.lineHeight.tight,
-          }}
-        >
+        <div className={styles['stat-card__value']}>
           {value}
         </div>
 
         {/* Subtitle */}
         {subtitle && (
-          <div
-            style={{
-              fontSize: typography.fontSize.sm,
-              color: semanticColors.text.tertiary,
-            }}
-          >
+          <div className={styles['stat-card__subtitle']}>
             {subtitle}
           </div>
         )}

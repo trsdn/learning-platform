@@ -1,0 +1,86 @@
+/* SessionResults Component - CSS Modules */
+
+/* Container */
+.session-results {
+  padding: var(--spacing-2xl);
+  max-width: 600px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* Header section */
+.session-results__header {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.session-results__emoji {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-lg);
+}
+
+.session-results__title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.session-results__rating {
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+/* Stats grid */
+.session-results__stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+}
+
+/* Total time card */
+.session-results__time-card {
+  background-color: rgba(59, 130, 246, 0.1);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.session-results__time-text {
+  margin: 0;
+  font-size: var(--font-size-md);
+}
+
+/* Progress section */
+.session-results__progress-card {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.session-results__progress-title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.session-results__progress-text {
+  margin: 0;
+  font-size: var(--font-size-md);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-relaxed);
+}
+
+/* Spaced repetition info */
+.session-results__sr-card {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.session-results__sr-title {
+  margin-bottom: var(--spacing-sm);
+}
+
+.session-results__sr-text {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-normal);
+}
+
+/* Actions */
+.session-results__actions {
+  display: flex;
+  gap: var(--spacing-lg);
+  justify-content: center;
+}

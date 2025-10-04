@@ -12,6 +12,7 @@ import { audioService } from '@core/services/audio-service';
 import { AudioButton } from './audio-button';
 import { FeedbackCard } from './common/FeedbackCard';
 import { Input, Checkbox, Select, Slider } from './forms';
+import styles from './practice-session.module.css';
 
 interface Props {
   topicId: string;
@@ -367,48 +368,26 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (!currentTask || currentTask.type !== 'multiple-choice') return null;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', flex: 1, minHeight: 0 }}>
+      <div className={styles['practice-session__mc-options']}>
         {shuffledOptions.map((option, index) => {
-          let backgroundColor = '#ffffff';
-          let borderColor = '#d1d5db';
-
-          if (showFeedback) {
-            if (index === correctAnswerIndex) {
-              backgroundColor = '#dcfce7';
-              borderColor = '#86efac';
-            } else if (index === selectedAnswer && !isCorrect) {
-              backgroundColor = '#fee2e2';
-              borderColor = '#fca5a5';
-            }
-          } else if (selectedAnswer === index) {
-            backgroundColor = '#dbeafe';
-            borderColor = '#3b82f6';
-          }
-
           const hasAudio = isSpanishText(option);
           const isCorrectOption = index === correctAnswerIndex;
           const showAudio = showFeedback && isCorrectOption && hasAudio;
+
+          const optionClasses = [
+            styles['practice-session__mc-option'],
+            showFeedback && index === correctAnswerIndex && styles['practice-session__mc-option--correct'],
+            showFeedback && index === selectedAnswer && !isCorrect && styles['practice-session__mc-option--incorrect'],
+            !showFeedback && selectedAnswer === index && styles['practice-session__mc-option--selected'],
+            showFeedback && styles['practice-session__mc-option--disabled']
+          ].filter(Boolean).join(' ');
 
           return (
             <button
               key={index}
               onClick={() => !showFeedback && setSelectedAnswer(index)}
               disabled={showFeedback}
-              style={{
-                padding: '0.875rem',
-                background: backgroundColor,
-                border: `2px solid ${borderColor}`,
-                borderRadius: '6px',
-                cursor: showFeedback ? 'default' : 'pointer',
-                textAlign: 'left',
-                fontSize: '0.95rem',
-                transition: 'all 0.2s',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'space-between',
-                gap: '0.5rem',
-                opacity: 1,
-              }}
+              className={optionClasses}
             >
               <span>{option}</span>
               {showAudio && <AudioButton text={option} size="small" />}
@@ -427,8 +406,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const parts = content.text.split(/\{\{blank\}\}/g);
 
     return (
-      <div style={{ flex: 1, minHeight: 0 }}>
-        <div style={{ fontSize: '1rem', lineHeight: '1.8' }}>
+      <div className={styles['practice-session__cloze-container']}>
+        <div className={styles['practice-session__cloze-text']}>
           {parts.map((part, i) => (
             <span key={i}>
               {part}
@@ -449,11 +428,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                     disabled={showFeedback}
                     error={showFeedback && hasAnswer && !isCorrect ? true : false}
                     success={showFeedback && isCorrect ? true : false}
-                    style={{
-                      fontSize: '0.95rem',
-                      minWidth: '100px',
-                      display: 'inline-block',
-                    }}
+                    className={styles['practice-session__cloze-input']}
                   />
                 );
               })()}
@@ -461,23 +436,22 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           ))}
         </div>
         {showFeedback && (
-          <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '6px' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', color: '#374151' }}>
+          <div className={styles['practice-session__cloze-feedback']}>
+            <div className={styles['practice-session__cloze-feedback-title']}>
               Richtige Antworten:
             </div>
             {content.blanks.map((blank, i) => {
               const userAnswer = blankAnswers[i]?.trim().toLowerCase() || '';
               const isCorrect = userAnswer === blank.correctAnswer.toLowerCase() ||
                 blank.alternatives?.map(a => a.toLowerCase()).includes(userAnswer);
+              const answerClass = isCorrect
+                ? styles['practice-session__cloze-answer--correct']
+                : styles['practice-session__cloze-answer--neutral'];
               return (
-                <div key={i} style={{
-                  fontSize: '0.875rem',
-                  marginTop: '0.25rem',
-                  color: isCorrect ? '#10b981' : '#374151'
-                }}>
-                  Lücke {i + 1}: <strong style={{ color: '#10b981' }}>{blank.correctAnswer}</strong>
+                <div key={i} className={`${styles['practice-session__cloze-answer']} ${answerClass}`}>
+                  Lücke {i + 1}: <strong className={styles['practice-session__cloze-answer-correct']}>{blank.correctAnswer}</strong>
                   {blank.alternatives && blank.alternatives.length > 0 && (
-                    <span style={{ color: '#6b7280', fontSize: '0.8rem' }}>
+                    <span className={styles['practice-session__cloze-alternatives']}>
                       {' '}(auch richtig: {blank.alternatives.join(', ')})
                     </span>
                   )}
@@ -495,44 +469,26 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as TrueFalseContent;
 
     return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-        <div style={{ fontSize: '1rem', lineHeight: '1.6', flex: 1 }}>
+      <div className={styles['practice-session__tf-container']}>
+        <div className={styles['practice-session__tf-statement']}>
           {content.statement}
         </div>
-        <div style={{ display: 'flex', gap: '1rem' }}>
+        <div className={styles['practice-session__tf-buttons']}>
           {[true, false].map((value) => {
-            let backgroundColor = '#ffffff';
-            let borderColor = '#d1d5db';
-
-            if (showFeedback) {
-              if (value === content.correctAnswer) {
-                backgroundColor = '#dcfce7';
-                borderColor = '#86efac';
-              } else if (value === trueFalseAnswer && !isCorrect) {
-                backgroundColor = '#fee2e2';
-                borderColor = '#fca5a5';
-              }
-            } else if (trueFalseAnswer === value) {
-              backgroundColor = '#dbeafe';
-              borderColor = '#3b82f6';
-            }
+            const btnClasses = [
+              styles['practice-session__tf-button'],
+              showFeedback && value === content.correctAnswer && styles['practice-session__tf-button--correct'],
+              showFeedback && value === trueFalseAnswer && !isCorrect && styles['practice-session__tf-button--incorrect'],
+              !showFeedback && trueFalseAnswer === value && styles['practice-session__tf-button--selected'],
+              showFeedback && styles['practice-session__tf-button--disabled']
+            ].filter(Boolean).join(' ');
 
             return (
               <button
                 key={value.toString()}
                 onClick={() => !showFeedback && setTrueFalseAnswer(value)}
                 disabled={showFeedback}
-                style={{
-                  flex: 1,
-                  padding: '1rem',
-                  background: backgroundColor,
-                  border: `2px solid ${borderColor}`,
-                  borderRadius: '6px',
-                  cursor: showFeedback ? 'default' : 'pointer',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                  transition: 'all 0.2s',
-                }}
+                className={btnClasses}
               >
                 {value ? 'Richtig' : 'Falsch'}
               </button>
@@ -548,50 +504,36 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as OrderingContent;
 
     return (
-      <div style={{ flex: 1, minHeight: 0 }}>
-        <div style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#6b7280' }}>
+      <div className={styles['practice-session__ordering-container']}>
+        <div className={styles['practice-session__ordering-instruction']}>
           Ordne die Elemente in die richtige Reihenfolge
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
+        <div className={styles['practice-session__ordering-items']}>
           {orderedItems.map((item, index) => {
             const originalIndex = content.items.indexOf(item);
             const isInCorrectPosition = showFeedback && content.correctOrder[index] === originalIndex;
             const shouldBeAtPosition = showFeedback ? content.correctOrder.indexOf(originalIndex) : -1;
 
+            const itemClasses = [
+              styles['practice-session__ordering-item'],
+              showFeedback && isInCorrectPosition && styles['practice-session__ordering-item--correct']
+            ].filter(Boolean).join(' ');
+
             return (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '0.5rem',
-                  padding: '0.75rem',
-                  background: showFeedback
-                    ? isInCorrectPosition
-                      ? '#dcfce7'
-                      : '#ffffff'
-                    : '#ffffff',
-                  border: showFeedback
-                    ? isInCorrectPosition
-                      ? '2px solid #86efac'
-                      : '2px solid #d1d5db'
-                    : '2px solid #d1d5db',
-                  borderRadius: '6px',
-                }}
-              >
-                <div style={{ fontWeight: '500', color: '#6b7280', minWidth: '24px' }}>
+              <div key={index} className={itemClasses}>
+                <div className={styles['practice-session__ordering-item-number']}>
                   {index + 1}.
                 </div>
-                <div style={{ flex: 1 }}>
+                <div className={styles['practice-session__ordering-item-text']}>
                   {item}
                   {showFeedback && !isInCorrectPosition && (
-                    <span style={{ fontSize: '0.8rem', color: '#ef4444', marginLeft: '0.5rem' }}>
+                    <span className={styles['practice-session__ordering-hint']}>
                       → Position {shouldBeAtPosition + 1}
                     </span>
                   )}
                 </div>
                 {!showFeedback && (
-                  <div style={{ display: 'flex', gap: '0.25rem' }}>
+                  <div className={styles['practice-session__ordering-controls']}>
                     {index > 0 && (
                       <button
                         onClick={() => {
@@ -599,13 +541,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                           [newItems[index]!, newItems[index - 1]!] = [newItems[index - 1]!, newItems[index]!];
                           setOrderedItems(newItems);
                         }}
-                        style={{
-                          padding: '0.25rem 0.5rem',
-                          background: '#f3f4f6',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                        }}
+                        className={styles['practice-session__ordering-btn']}
                       >
                         ↑
                       </button>
@@ -617,13 +553,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                           [newItems[index]!, newItems[index + 1]!] = [newItems[index + 1]!, newItems[index]!];
                           setOrderedItems(newItems);
                         }}
-                        style={{
-                          padding: '0.25rem 0.5rem',
-                          background: '#f3f4f6',
-                          border: 'none',
-                          borderRadius: '4px',
-                          cursor: 'pointer',
-                        }}
+                        className={styles['practice-session__ordering-btn']}
                       >
                         ↓
                       </button>
@@ -635,12 +565,12 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           })}
         </div>
         {showFeedback && !isCorrect && (
-          <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '6px' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', color: '#374151' }}>
+          <div className={styles['practice-session__ordering-feedback']}>
+            <div className={styles['practice-session__ordering-feedback-title']}>
               Richtige Reihenfolge:
             </div>
             {content.correctOrder.map((originalIndex, position) => (
-              <div key={position} style={{ fontSize: '0.875rem', marginTop: '0.25rem', color: '#10b981' }}>
+              <div key={position} className={styles['practice-session__ordering-feedback-item']}>
                 {position + 1}. <strong>{content.items[originalIndex]}</strong>
               </div>
             ))}
@@ -655,29 +585,18 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as MatchingContent;
 
     return (
-      <div style={{ flex: 1, minHeight: 0 }}>
-        <div style={{ marginBottom: '0.5rem', fontSize: '0.875rem', color: '#6b7280' }}>
+      <div className={styles['practice-session__matching-container']}>
+        <div className={styles['practice-session__matching-instruction']}>
           Ordne die passenden Paare zu
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+        <div className={styles['practice-session__matching-grid']}>
           {content.pairs.map((pair, leftIndex) => {
             const isCorrect = showFeedback && matchingAnswers[leftIndex] === leftIndex;
             const hasAnswer = matchingAnswers[leftIndex] !== undefined && matchingAnswers[leftIndex] !== null;
 
             return (
               <React.Fragment key={leftIndex}>
-                <div
-                  style={{
-                    padding: '0.75rem',
-                    background: '#f9fafb',
-                    border: '2px solid #d1d5db',
-                    borderRadius: '6px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    gap: '0.5rem',
-                  }}
-                >
+                <div className={styles['practice-session__matching-left-item']}>
                   <span>{pair.left}</span>
                   {isSpanishText(pair.left) && <AudioButton text={pair.left} size="small" />}
                 </div>
@@ -702,12 +621,12 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           })}
         </div>
         {showFeedback && !isCorrect && (
-          <div style={{ marginTop: '1rem', padding: '1rem', background: '#f9fafb', borderRadius: '6px' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', color: '#374151' }}>
+          <div className={styles['practice-session__matching-feedback']}>
+            <div className={styles['practice-session__matching-feedback-title']}>
               Richtige Zuordnungen:
             </div>
             {content.pairs.map((pair, i) => (
-              <div key={i} style={{ fontSize: '0.875rem', marginTop: '0.25rem', color: '#10b981' }}>
+              <div key={i} className={styles['practice-session__matching-feedback-item']}>
                 <strong>{pair.left}</strong> → <strong>{pair.right}</strong>
               </div>
             ))}
@@ -733,66 +652,48 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     };
 
     return (
-      <div style={{ flex: 1, minHeight: 0 }}>
-        <div style={{ marginBottom: '0.75rem', fontSize: '0.875rem', color: '#6b7280' }}>
+      <div className={styles['practice-session__ms-container']}>
+        <div className={styles['practice-session__ms-instruction']}>
           Wähle alle zutreffenden Antworten
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+        <div className={styles['practice-session__ms-options']}>
           {content.options.map((option, index) => {
             const isSelected = selectedOptions.has(index);
             const isCorrectAnswer = content.correctAnswers.includes(index);
-            let backgroundColor = '#ffffff';
-            let borderColor = '#d1d5db';
             let statusIcon = '';
 
             if (showFeedback) {
-              // Show green for all correct answers (whether selected or not)
               if (isCorrectAnswer) {
-                backgroundColor = '#dcfce7';
-                borderColor = '#86efac';
-                statusIcon = isSelected ? '✓' : '○'; // Check if selected, circle if missed
-              }
-              // Show red for wrong selections
-              else if (isSelected && !isCorrectAnswer) {
-                backgroundColor = '#fee2e2';
-                borderColor = '#fca5a5';
+                statusIcon = isSelected ? '✓' : '○';
+              } else if (isSelected && !isCorrectAnswer) {
                 statusIcon = '✗';
               }
-            } else if (isSelected) {
-              backgroundColor = '#dbeafe';
-              borderColor = '#3b82f6';
             }
 
+            const optionClasses = [
+              styles['practice-session__ms-option'],
+              showFeedback && isCorrectAnswer && styles['practice-session__ms-option--correct'],
+              showFeedback && isSelected && !isCorrectAnswer && styles['practice-session__ms-option--incorrect'],
+              !showFeedback && isSelected && styles['practice-session__ms-option--selected']
+            ].filter(Boolean).join(' ');
+
+            const iconClass = isCorrectAnswer
+              ? styles['practice-session__ms-status-icon--correct']
+              : styles['practice-session__ms-status-icon--incorrect'];
+
             return (
-              <div
-                key={index}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  padding: '0.875rem',
-                  background: backgroundColor,
-                  border: `2px solid ${borderColor}`,
-                  borderRadius: '6px',
-                  transition: 'all 0.2s',
-                  position: 'relative',
-                }}
-              >
+              <div key={index} className={optionClasses}>
                 <Checkbox
                   checked={isSelected}
                   onChange={() => toggleOption(index)}
                   disabled={showFeedback}
-                  label={<span style={{ fontSize: '0.95rem', flex: 1 }}>{option}</span>}
+                  label={<span className={styles['practice-session__ms-option-label']}>{option}</span>}
                   error={showFeedback && isSelected && !isCorrectAnswer}
                   success={showFeedback && isCorrectAnswer && isSelected}
                   style={{ flex: 1 }}
                 />
                 {showFeedback && statusIcon && (
-                  <span style={{
-                    fontSize: '1.25rem',
-                    fontWeight: 'bold',
-                    marginLeft: '0.5rem',
-                    color: isCorrectAnswer ? '#10b981' : '#ef4444'
-                  }}>
+                  <span className={`${styles['practice-session__ms-status-icon']} ${iconClass}`}>
                     {statusIcon}
                   </span>
                 )}
@@ -809,24 +710,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as SliderContent;
     const step = content.step || 1;
     const tolerance = content.tolerance || 0;
+    const isCorrectValue = Math.abs(sliderValue - content.correctValue) <= tolerance;
+
+    const valueClass = showFeedback
+      ? isCorrectValue
+        ? styles['practice-session__slider-value--correct']
+        : styles['practice-session__slider-value--incorrect']
+      : '';
 
     return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{ textAlign: 'center' }}>
-          <div style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            color: showFeedback
-              ? Math.abs(sliderValue - content.correctValue) <= tolerance
-                ? '#10b981'
-                : '#ef4444'
-              : '#3b82f6'
-          }}>
+      <div className={styles['practice-session__slider-container']}>
+        <div className={styles['practice-session__slider-value-display']}>
+          <div className={`${styles['practice-session__slider-value']} ${valueClass}`}>
             {sliderValue}{content.unit || ''}
           </div>
         </div>
 
-        <div style={{ padding: '0 1rem' }}>
+        <div className={styles['practice-session__slider-wrapper']}>
           <Slider
             value={sliderValue}
             onChange={setSliderValue}
@@ -840,18 +740,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         </div>
 
         {showFeedback && (
-          <div style={{
-            padding: '1rem',
-            background: '#f9fafb',
-            borderRadius: '6px',
-            textAlign: 'center'
-          }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: '500', color: '#374151' }}>
-              Richtige Antwort: <strong style={{ color: '#10b981', fontSize: '1.1rem' }}>
+          <div className={styles['practice-session__slider-feedback']}>
+            <div className={styles['practice-session__slider-feedback-text']}>
+              Richtige Antwort: <strong className={styles['practice-session__slider-correct-value']}>
                 {content.correctValue}{content.unit || ''}
               </strong>
               {tolerance > 0 && (
-                <span style={{ fontSize: '0.8rem', color: '#6b7280' }}>
+                <span className={styles['practice-session__slider-tolerance']}>
                   {' '}(±{tolerance})
                 </span>
               )}
@@ -866,41 +761,35 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (!currentTask || currentTask.type !== 'word-scramble') return null;
     const content = currentTask.content as WordScrambleContent;
 
+    const isAnswerCorrect = scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase();
+    const hasAnswer = scrambleAnswer.trim() !== '';
+
+    const inputClass = showFeedback
+      ? isAnswerCorrect
+        ? styles['practice-session__scramble-input--correct']
+        : hasAnswer
+        ? styles['practice-session__scramble-input--incorrect']
+        : ''
+      : '';
+
     return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{
-          padding: '1.5rem',
-          background: '#f9fafb',
-          borderRadius: '8px',
-          textAlign: 'center'
-        }}>
-          <div style={{ fontSize: '0.875rem', color: '#6b7280', marginBottom: '0.5rem' }}>
+      <div className={styles['practice-session__scramble-container']}>
+        <div className={styles['practice-session__scramble-display']}>
+          <div className={styles['practice-session__scramble-label']}>
             Buchstabensalat:
           </div>
-          <div style={{
-            fontSize: '2rem',
-            fontWeight: 'bold',
-            letterSpacing: '0.5rem',
-            color: '#3b82f6',
-            fontFamily: 'monospace'
-          }}>
+          <div className={styles['practice-session__scramble-word']}>
             {content.scrambledWord}
           </div>
           {content.showLength && (
-            <div style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem' }}>
+            <div className={styles['practice-session__scramble-length']}>
               ({content.correctWord.length} Buchstaben)
             </div>
           )}
         </div>
 
         <div>
-          <label style={{
-            display: 'block',
-            fontSize: '0.875rem',
-            fontWeight: '500',
-            marginBottom: '0.5rem',
-            color: '#374151'
-          }}>
+          <label className={styles['practice-session__scramble-input-label']}>
             Deine Lösung:
           </label>
           <input
@@ -909,37 +798,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             onChange={(e) => setScrambleAnswer(e.target.value)}
             disabled={showFeedback}
             placeholder="Entschlüssle das Wort..."
-            style={{
-              width: '100%',
-              padding: '0.875rem',
-              fontSize: '1.1rem',
-              border: showFeedback
-                ? scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase()
-                  ? '2px solid #86efac'
-                  : scrambleAnswer.trim()
-                  ? '2px solid #fca5a5'
-                  : '2px solid #d1d5db'
-                : '2px solid #d1d5db',
-              borderRadius: '6px',
-              backgroundColor: showFeedback
-                ? scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase()
-                  ? '#dcfce7'
-                  : scrambleAnswer.trim()
-                  ? '#fee2e2'
-                  : '#ffffff'
-                : '#ffffff',
-              textAlign: 'center',
-              fontWeight: '500'
-            }}
+            className={`${styles['practice-session__scramble-input']} ${inputClass}`}
           />
         </div>
 
         {showFeedback && !isCorrect && (
-          <div style={{ padding: '1rem', background: '#f9fafb', borderRadius: '6px', textAlign: 'center' }}>
-            <div style={{ fontSize: '0.875rem', fontWeight: '500', marginBottom: '0.5rem', color: '#374151' }}>
+          <div className={styles['practice-session__scramble-feedback']}>
+            <div className={styles['practice-session__scramble-feedback-label']}>
               Richtige Lösung:
             </div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#10b981' }}>
+            <div className={styles['practice-session__scramble-feedback-word']}>
               {content.correctWord}
             </div>
           </div>
@@ -953,48 +821,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as FlashcardContent;
 
     return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '2rem', padding: '2rem' }}>
+      <div className={styles['practice-session__flashcard-container']}>
         {/* Flashcard */}
-        <div style={{
-          width: '100%',
-          maxWidth: '500px',
-          minHeight: '300px',
-          background: 'white',
-          border: '3px solid #e5e7eb',
-          borderRadius: '16px',
-          padding: '3rem',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          gap: '1.5rem',
-          boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-          transition: 'all 0.3s ease',
-        }}>
+        <div className={styles['practice-session__flashcard']}>
           {/* Language indicator */}
-          <div style={{
-            fontSize: '0.75rem',
-            fontWeight: '600',
-            color: '#6b7280',
-            textTransform: 'uppercase',
-            letterSpacing: '0.05em'
-          }}>
+          <div className={styles['practice-session__flashcard-lang']}>
             {content.frontLanguage === 'de' ? 'Deutsch' : content.frontLanguage === 'es' ? 'Español' : 'English'}
           </div>
 
           {/* Front side */}
-          <div style={{
-            fontSize: '2.5rem',
-            fontWeight: 'bold',
-            color: '#1f2937',
-            textAlign: 'center',
-            minHeight: '80px',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            gap: '1rem',
-          }}>
+          <div className={styles['practice-session__flashcard-front']}>
             <div>{content.front}</div>
             {isSpanishText(content.front) && <AudioButton text={content.front} size="large" />}
           </div>
@@ -1004,62 +840,21 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <button
               onClick={() => setFlashcardRevealed(true)}
               disabled={showFeedback}
-              style={{
-                padding: '1rem 2.5rem',
-                background: '#3b82f6',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '1.125rem',
-                fontWeight: '500',
-                transition: 'all 0.2s',
-                boxShadow: '0 2px 4px rgba(59, 130, 246, 0.3)',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#2563eb';
-                e.currentTarget.style.transform = 'translateY(-1px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#3b82f6';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className={styles['practice-session__flashcard-reveal-btn']}
             >
               Ergebnis anzeigen
             </button>
           ) : (
             <>
-              <div style={{
-                width: '100%',
-                height: '2px',
-                background: '#e5e7eb',
-                margin: '0.5rem 0'
-              }} />
+              <div className={styles['practice-session__flashcard-divider']} />
 
               {/* Language indicator for back */}
-              <div style={{
-                fontSize: '0.75rem',
-                fontWeight: '600',
-                color: '#6b7280',
-                textTransform: 'uppercase',
-                letterSpacing: '0.05em'
-              }}>
+              <div className={styles['practice-session__flashcard-lang']}>
                 {content.backLanguage === 'de' ? 'Deutsch' : content.backLanguage === 'es' ? 'Español' : 'English'}
               </div>
 
               {/* Answer */}
-              <div style={{
-                fontSize: '2rem',
-                fontWeight: 'bold',
-                color: '#10b981',
-                textAlign: 'center',
-                minHeight: '60px',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '1rem',
-              }}>
+              <div className={styles['practice-session__flashcard-back']}>
                 <div>{content.back}</div>
                 {isSpanishText(content.back) && <AudioButton text={content.back} size="large" />}
               </div>
@@ -1069,44 +864,15 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
         {/* Self-assessment buttons - only shown after reveal */}
         {flashcardRevealed && !showFeedback && (
-          <div style={{
-            display: 'flex',
-            gap: '1.5rem',
-            justifyContent: 'center',
-            width: '100%',
-            maxWidth: '500px',
-          }}>
+          <div className={styles['practice-session__flashcard-assessment']}>
             <button
               onClick={() => {
                 setFlashcardKnown(false);
                 handleAnswerSubmit();
               }}
-              style={{
-                flex: 1,
-                padding: '1.25rem',
-                background: '#fee2e2',
-                color: '#dc2626',
-                border: '2px solid #fca5a5',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                fontSize: '1.125rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.75rem',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#fecaca';
-                e.currentTarget.style.transform = 'scale(1.02)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#fee2e2';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
+              className={`${styles['practice-session__flashcard-btn']} ${styles['practice-session__flashcard-btn--unknown']}`}
             >
-              <span style={{ fontSize: '1.75rem' }}>✗</span>
+              <span className={styles['practice-session__flashcard-icon']}>✗</span>
               <span>Nicht gewusst</span>
             </button>
 
@@ -1115,32 +881,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                 setFlashcardKnown(true);
                 handleAnswerSubmit();
               }}
-              style={{
-                flex: 1,
-                padding: '1.25rem',
-                background: '#dcfce7',
-                color: '#16a34a',
-                border: '2px solid #86efac',
-                borderRadius: '12px',
-                cursor: 'pointer',
-                fontSize: '1.125rem',
-                fontWeight: '600',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                gap: '0.75rem',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.background = '#bbf7d0';
-                e.currentTarget.style.transform = 'scale(1.02)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.background = '#dcfce7';
-                e.currentTarget.style.transform = 'scale(1)';
-              }}
+              className={`${styles['practice-session__flashcard-btn']} ${styles['practice-session__flashcard-btn--known']}`}
             >
-              <span style={{ fontSize: '1.75rem' }}>✓</span>
+              <span className={styles['practice-session__flashcard-icon']}>✓</span>
               <span>Gewusst</span>
             </button>
           </div>
@@ -1148,16 +891,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
         {/* Explanation after answer */}
         {showFeedback && content.explanation && (
-          <div style={{
-            width: '100%',
-            maxWidth: '500px',
-            padding: '1rem',
-            background: '#f3f4f6',
-            borderRadius: '8px',
-            fontSize: '0.95rem',
-            color: '#4b5563',
-            lineHeight: '1.6',
-          }}>
+          <div className={styles['practice-session__flashcard-explanation']}>
             <strong>Hinweis:</strong> {content.explanation}
           </div>
         )}
@@ -1170,13 +904,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const content = currentTask.content as TextInputContent;
 
     return (
-      <div style={{ flex: 1, minHeight: 0, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-        <div style={{
-          padding: '2rem',
-          background: '#ffffff',
-          borderRadius: '12px',
-          boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
-        }}>
+      <div className={styles['practice-session__text-input-container']}>
+        <div className={styles['practice-session__text-input-wrapper']}>
           <Input
             value={textInputAnswer}
             onChange={(e) => setTextInputAnswer(e.target.value)}
@@ -1185,24 +914,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             error={showFeedback && !isCorrect}
             success={showFeedback && isCorrect}
             fullWidth
-            style={{
-              fontSize: '1.125rem',
-              padding: '1rem',
-            }}
+            className={styles['practice-session__text-input']}
           />
 
           {showFeedback && !isCorrect && (
-            <div style={{
-              marginTop: '1rem',
-              padding: '0.75rem',
-              background: '#f3f4f6',
-              borderRadius: '6px',
-              fontSize: '0.95rem',
-              color: '#4b5563',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}>
+            <div className={styles['practice-session__text-input-feedback']}>
               <div>
                 <strong>Richtige Antwort:</strong> {content.correctAnswer}
               </div>
@@ -1212,14 +928,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         </div>
 
         {content.hint && !showFeedback && (
-          <div style={{
-            padding: '0.75rem 1rem',
-            background: '#fef3c7',
-            border: '1px solid #fbbf24',
-            borderRadius: '6px',
-            fontSize: '0.9rem',
-            color: '#92400e',
-          }}>
+          <div className={styles['practice-session__text-input-hint']}>
             💡 <strong>Tipp:</strong> {content.hint}
           </div>
         )}
@@ -1229,7 +938,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   if (!session || !currentTask) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <div className={styles['practice-session__loading']}>
         <p>Wird geladen...</p>
       </div>
     );
@@ -1238,82 +947,38 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   const progress = ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100;
 
   return (
-    <div style={{
-      minHeight: '100vh',
-      display: 'flex',
-      flexDirection: 'column',
-      padding: '1rem',
-      maxWidth: '900px',
-      margin: '0 auto'
-    }}>
+    <div className={styles['practice-session']}>
       {/* Header - compact */}
-      <div style={{ marginBottom: '1rem', flexShrink: 0 }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            marginBottom: '0.75rem',
-          }}
-        >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <h2 style={{ margin: 0, fontSize: '1.25rem' }}>Übungssitzung</h2>
-            <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+      <div className={styles['practice-session__header']}>
+        <div className={styles['practice-session__header-top']}>
+          <div className={styles['practice-session__header-left']}>
+            <h2 className={styles['practice-session__title']}>Übungssitzung</h2>
+            <span className={styles['practice-session__task-counter']}>
               {currentTaskIndex + 1}/{session.execution.taskIds.length}
             </span>
-            <span style={{ fontSize: '0.75rem', color: '#9ca3af', fontFamily: 'monospace' }}>
+            <span className={styles['practice-session__task-id']}>
               ID: {currentTask.id}
             </span>
           </div>
           <button
             onClick={onCancel}
-            style={{
-              padding: '0.5rem 1rem',
-              background: '#e5e7eb',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer',
-              fontSize: '0.875rem',
-            }}
+            className={styles['practice-session__cancel-btn']}
           >
             Abbrechen
           </button>
         </div>
 
         {/* Progress bar */}
-        <div
-          style={{
-            width: '100%',
-            height: '6px',
-            background: '#e5e7eb',
-            borderRadius: '3px',
-            overflow: 'hidden',
-          }}
-        >
+        <div className={styles['practice-session__progress-bar']}>
           <div
-            style={{
-              width: `${progress}%`,
-              height: '100%',
-              background: '#3b82f6',
-              transition: 'width 0.3s ease',
-            }}
+            className={styles['practice-session__progress-fill']}
+            style={{ width: `${progress}%` }}
           />
         </div>
       </div>
 
       {/* Question - main content area */}
-      <div
-        style={{
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          background: '#f9fafb',
-          padding: '1.5rem',
-          borderRadius: '8px',
-          marginBottom: '1rem',
-          minHeight: 0,
-        }}
-      >
+      <div className={styles['practice-session__question-area']}>
         {(currentTask.type === 'multiple-choice' ||
           currentTask.type === 'ordering' ||
           currentTask.type === 'matching' ||
@@ -1321,8 +986,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           currentTask.type === 'slider' ||
           currentTask.type === 'word-scramble' ||
           currentTask.type === 'text-input') && (
-          <div style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-            <h3 style={{ margin: 0, fontSize: '1.1rem', lineHeight: '1.4', flex: 1 }}>
+          <div className={styles['practice-session__question-header']}>
+            <h3 className={styles['practice-session__question-text']}>
               {(currentTask.content as any).question}
             </h3>
             {isSpanishText((currentTask.content as any).question) && (
@@ -1336,7 +1001,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
       {/* Feedback - compact */}
       {showFeedback && (
-        <div style={{ marginBottom: '1rem', flexShrink: 0 }}>
+        <div className={styles['practice-session__feedback']}>
           <FeedbackCard
             variant={isCorrect ? 'success' : 'error'}
             title={isCorrect ? 'Richtig!' : 'Nicht ganz richtig'}
@@ -1349,39 +1014,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       )}
 
       {/* Actions and Statistics - combined footer */}
-      <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className={styles['practice-session__footer']}>
         {/* Action buttons */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <div className={styles['practice-session__actions']}>
           {!showFeedback ? (
             <>
               <button
                 onClick={handleAnswerSubmit}
                 disabled={!canSubmit()}
-                style={{
-                  padding: '0.875rem 2rem',
-                  background: canSubmit() ? '#3b82f6' : '#9ca3af',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: canSubmit() ? 'pointer' : 'not-allowed',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                }}
+                className={canSubmit()
+                  ? `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--enabled']}`
+                  : `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--disabled']}`}
               >
                 Antwort überprüfen
               </button>
               <button
                 onClick={currentTaskIndex < session.execution.taskIds.length - 1 ? handleSkipTask : handleComplete}
-                style={{
-                  padding: '0.875rem 2rem',
-                  background: '#f3f4f6',
-                  color: '#6b7280',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                }}
+                className={styles['practice-session__btn-skip']}
               >
                 {currentTaskIndex < session.execution.taskIds.length - 1
                   ? 'Überspringen →'
@@ -1391,16 +1040,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           ) : (
             <button
               onClick={handleNextTask}
-              style={{
-                padding: '0.875rem 2rem',
-                background: '#3b82f6',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: '500',
-              }}
+              className={styles['practice-session__btn-next']}
             >
               {currentTaskIndex < session.execution.taskIds.length - 1
                 ? 'Nächste Aufgabe →'
@@ -1410,39 +1050,30 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         </div>
 
         {/* Compact statistics */}
-        <div
-          style={{
-            padding: '0.75rem 1rem',
-            background: '#f9fafb',
-            borderRadius: '6px',
-            display: 'flex',
-            justifyContent: 'space-around',
-            gap: '1rem',
-          }}
-        >
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#3b82f6' }}>
+        <div className={styles['practice-session__stats']}>
+          <div className={styles['practice-session__stat']}>
+            <div className={`${styles['practice-session__stat-value']} ${styles['practice-session__stat-value--completed']}`}>
               {session.execution.completedCount}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+            <div className={styles['practice-session__stat-label']}>
               beantwortet
             </div>
           </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#10b981' }}>
+          <div className={styles['practice-session__stat']}>
+            <div className={`${styles['practice-session__stat-value']} ${styles['practice-session__stat-value--correct']}`}>
               {session.execution.correctCount}
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+            <div className={styles['practice-session__stat-label']}>
               richtig
             </div>
           </div>
-          <div style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '1.25rem', fontWeight: 'bold', color: '#f59e0b' }}>
+          <div className={styles['practice-session__stat']}>
+            <div className={`${styles['practice-session__stat-value']} ${styles['practice-session__stat-value--accuracy']}`}>
               {session.execution.completedCount > 0
                 ? Math.round((session.execution.correctCount / session.execution.completedCount) * 100)
                 : 0}%
             </div>
-            <div style={{ fontSize: '0.75rem', color: '#6b7280' }}>
+            <div className={styles['practice-session__stat-label']}>
               genau
             </div>
           </div>

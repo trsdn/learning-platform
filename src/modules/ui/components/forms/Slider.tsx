@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  semanticColors,
-  spacing,
-  typography,
-  borderRadius,
-  colors,
-} from '@ui/design-tokens';
+import clsx from 'clsx';
+import styles from './Slider.module.css';
 
 export interface SliderProps {
   /**
@@ -99,80 +94,30 @@ export function Slider({
   disabled = false,
   unit = '',
   showValue = true,
-  className = '',
-  style = {},
+  className,
+  style,
   id,
   'aria-label': ariaLabel,
 }: SliderProps) {
   const percentage = ((value - min) / (max - min)) * 100;
 
-  const containerStyles: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: spacing[2],
-    width: '100%',
-    ...style,
-  };
-
-  const sliderTrackStyles: React.CSSProperties = {
-    position: 'relative',
-    width: '100%',
-    height: '8px',
-    backgroundColor: semanticColors.background.tertiary,
-    borderRadius: borderRadius.full,
-    overflow: 'visible',
-  };
-
-  const sliderFillStyles: React.CSSProperties = {
-    position: 'absolute',
-    left: 0,
-    top: 0,
-    height: '100%',
-    width: `${percentage}%`,
-    backgroundColor: disabled ? semanticColors.border.dark : colors.primary[500],
-    borderRadius: borderRadius.full,
-    transition: 'width 0.1s ease',
-  };
-
-  const sliderInputStyles: React.CSSProperties = {
-    position: 'absolute',
-    width: '100%',
-    height: '100%',
-    opacity: 0,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    margin: 0,
-    zIndex: 2,
-  };
-
-  const thumbStyles: React.CSSProperties = {
-    position: 'absolute',
-    left: `calc(${percentage}% - 12px)`,
-    top: '50%',
-    transform: 'translateY(-50%)',
-    width: '24px',
-    height: '24px',
-    backgroundColor: disabled ? semanticColors.border.dark : colors.primary[600],
-    borderRadius: borderRadius.full,
-    border: `3px solid ${semanticColors.background.primary}`,
-    boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
-    pointerEvents: 'none',
-    transition: 'left 0.1s ease',
-    zIndex: 1,
-  };
-
-  const valueDisplayStyles: React.CSSProperties = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontSize: typography.fontSize.sm,
-    color: semanticColors.text.secondary,
-  };
-
   return (
-    <div style={containerStyles} className={className}>
-      <div style={sliderTrackStyles}>
-        <div style={sliderFillStyles} />
-        <div style={thumbStyles} />
+    <div style={style} className={clsx(styles['slider-container'], className)}>
+      <div className={styles['slider-track']}>
+        <div
+          className={clsx(
+            styles['slider-fill'],
+            disabled && styles['slider-fill--disabled']
+          )}
+          style={{ width: `${percentage}%` }}
+        />
+        <div
+          className={clsx(
+            styles['slider-thumb'],
+            disabled && styles['slider-thumb--disabled']
+          )}
+          style={{ left: `calc(${percentage}% - 12px)` }}
+        />
         <input
           type="range"
           id={id}
@@ -182,7 +127,7 @@ export function Slider({
           value={value}
           onChange={(e) => onChange(Number(e.target.value))}
           disabled={disabled}
-          style={sliderInputStyles}
+          className={styles['slider-input']}
           aria-label={ariaLabel}
           aria-valuenow={value}
           aria-valuemin={min}
@@ -192,18 +137,12 @@ export function Slider({
       </div>
 
       {showValue && (
-        <div style={valueDisplayStyles}>
+        <div className={styles['slider-value-display']}>
           <span>
             {min}
             {unit}
           </span>
-          <span
-            style={{
-              fontWeight: typography.fontWeight.semibold,
-              color: semanticColors.text.primary,
-              fontSize: typography.fontSize.base,
-            }}
-          >
+          <span className={styles['slider-value-display__current']}>
             {value}
             {unit}
           </span>

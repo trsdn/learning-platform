@@ -1,0 +1,46 @@
+/* StatCard Component - CSS Modules */
+
+/* Container */
+.stat-card__container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+/* Header row (title + icon) */
+.stat-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Title */
+.stat-card__title {
+  margin: 0;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Icon */
+.stat-card__icon {
+  display: flex;
+  align-items: center;
+  font-size: var(--font-size-xl);
+}
+
+/* Value */
+.stat-card__value {
+  font-size: 1.875rem;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+}
+
+/* Subtitle */
+.stat-card__subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-tertiary);
+}
