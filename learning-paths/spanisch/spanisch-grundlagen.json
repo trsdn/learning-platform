@@ -32,7 +32,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -55,7 +59,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -68,12 +76,18 @@
       "content": {
         "question": "Wie fragt man auf Spanisch 'Wie heißt du?'?",
         "correctAnswer": "¿Cómo te llamas?",
-        "alternatives": ["Como te llamas"],
+        "alternatives": [
+          "Como te llamas"
+        ],
         "explanation": "'¿Cómo te llamas?' ist die informelle Art zu fragen, wie jemand heißt."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "vorstellung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "vorstellung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -86,12 +100,18 @@
       "content": {
         "question": "Wie sagt man 'Ich heiße...' auf Spanisch?",
         "correctAnswer": "Me llamo...",
-        "alternatives": ["me llamo"],
+        "alternatives": [
+          "me llamo"
+        ],
         "explanation": "'Me llamo...' bedeutet 'Ich heiße...' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "vorstellung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "vorstellung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -114,7 +134,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "begruessung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "begruessung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -137,7 +161,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "verabschiedung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "verabschiedung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -150,12 +178,18 @@
       "content": {
         "question": "Wie sagt man 'Bis später' auf Spanisch?",
         "correctAnswer": "Hasta luego",
-        "alternatives": ["hasta luego"],
+        "alternatives": [
+          "hasta luego"
+        ],
         "explanation": "'Hasta luego' bedeutet 'Bis später' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "verabschiedung", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "verabschiedung",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -178,7 +212,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "kommunikation", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "kommunikation",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -191,12 +229,19 @@
       "content": {
         "question": "Wie antwortet man auf '¿Cómo estás?' wenn es einem gut geht?",
         "correctAnswer": "Muy bien",
-        "alternatives": ["muy bien", "Bien"],
+        "alternatives": [
+          "muy bien",
+          "Bien"
+        ],
         "explanation": "'Muy bien' bedeutet 'Sehr gut'. Man kann auch einfach 'Bien' (gut) antworten."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "kommunikation", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "kommunikation",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -219,7 +264,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -242,7 +291,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -255,12 +308,18 @@
       "content": {
         "question": "Wie sagt man 'der Bruder' auf Spanisch?",
         "correctAnswer": "el hermano",
-        "alternatives": ["El hermano"],
+        "alternatives": [
+          "El hermano"
+        ],
         "explanation": "'El hermano' bedeutet 'der Bruder' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -273,12 +332,18 @@
       "content": {
         "question": "Wie sagt man 'die Schwester' auf Spanisch?",
         "correctAnswer": "la hermana",
-        "alternatives": ["La hermana"],
+        "alternatives": [
+          "La hermana"
+        ],
         "explanation": "'La hermana' bedeutet 'die Schwester' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -301,7 +366,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -314,12 +383,18 @@
       "content": {
         "question": "Wie sagt man 'die Geschwister' auf Spanisch?",
         "correctAnswer": "los hermanos",
-        "alternatives": ["Los hermanos"],
+        "alternatives": [
+          "Los hermanos"
+        ],
         "explanation": "'Los hermanos' bedeutet 'die Geschwister' oder 'die Brüder' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "familie", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "familie",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -342,7 +417,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -355,12 +434,22 @@
       "content": {
         "question": "Wie sagt man 'Ich bin ... Jahre alt' auf Spanisch?",
         "correctAnswer": "Tengo ... años",
-        "alternatives": ["tengo años", "Tengo años", "Tengo... años", "Tengo ...años", "Tengo...años"],
+        "alternatives": [
+          "tengo años",
+          "Tengo años",
+          "Tengo... años",
+          "Tengo ...años",
+          "Tengo...años"
+        ],
         "explanation": "'Tengo ... años' bedeutet wörtlich 'Ich habe ... Jahre' und wird verwendet, um das Alter anzugeben."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -383,7 +472,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "freundschaft", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "freundschaft",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -396,12 +489,18 @@
       "content": {
         "question": "Wie sagt man 'die beste Freundin' auf Spanisch?",
         "correctAnswer": "la mejor amiga",
-        "alternatives": ["La mejor amiga"],
+        "alternatives": [
+          "La mejor amiga"
+        ],
         "explanation": "'La mejor amiga' bedeutet 'die beste Freundin' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "freundschaft", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "freundschaft",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -424,7 +523,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "grammatik", "pronomen"],
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "pronomen"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -437,12 +540,18 @@
       "content": {
         "question": "Wie sagt man 'meine Freunde' auf Spanisch?",
         "correctAnswer": "mis amigos",
-        "alternatives": ["Mis amigos"],
+        "alternatives": [
+          "Mis amigos"
+        ],
         "explanation": "'Mis amigos' bedeutet 'meine Freunde' auf Spanisch. 'Mis' ist der Plural von 'mi'."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "grammatik", "pronomen"],
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "pronomen"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -465,7 +574,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -478,12 +591,18 @@
       "content": {
         "question": "Wie sagt man 'Ich lebe in...' auf Spanisch?",
         "correctAnswer": "Vivo en...",
-        "alternatives": ["vivo en"],
+        "alternatives": [
+          "vivo en"
+        ],
         "explanation": "'Vivo en...' bedeutet 'Ich lebe in...' oder 'Ich wohne in...' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -506,7 +625,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -519,12 +642,18 @@
       "content": {
         "question": "Wie sagt man 'Ich komme aus...' auf Spanisch?",
         "correctAnswer": "Soy de...",
-        "alternatives": ["soy de"],
+        "alternatives": [
+          "soy de"
+        ],
         "explanation": "'Soy de...' bedeutet wörtlich 'Ich bin aus...' und wird verwendet, um die Herkunft anzugeben."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -547,7 +676,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "laender", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "laender",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -570,7 +703,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "laender", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "laender",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -593,7 +730,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -606,12 +747,18 @@
       "content": {
         "question": "Wie sagt man 'Mein Lieblingstier ist...' auf Spanisch?",
         "correctAnswer": "Mi animal favorito es...",
-        "alternatives": ["mi animal favorito es"],
+        "alternatives": [
+          "mi animal favorito es"
+        ],
         "explanation": "'Mi animal favorito es...' bedeutet 'Mein Lieblingstier ist...' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -634,7 +781,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -657,7 +808,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -670,12 +825,18 @@
       "content": {
         "question": "Wie sagt man 'Ich habe...' auf Spanisch?",
         "correctAnswer": "Tengo",
-        "alternatives": ["tengo"],
+        "alternatives": [
+          "tengo"
+        ],
         "explanation": "'Tengo' bedeutet 'Ich habe' auf Spanisch und kommt vom Verb 'tener'."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "grammatik", "verben"],
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "verben"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -698,7 +859,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "farben", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "farben",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -721,7 +886,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "persoenliches", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "persoenliches",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -744,7 +913,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "zeit", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "zeit",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -767,7 +940,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -790,7 +967,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -803,12 +984,18 @@
       "content": {
         "question": "Wie sagt man 'der Vogel' auf Spanisch?",
         "correctAnswer": "el pájaro",
-        "alternatives": ["El pájaro"],
+        "alternatives": [
+          "El pájaro"
+        ],
         "explanation": "'El pájaro' bedeutet 'der Vogel' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -831,7 +1018,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -844,12 +1035,18 @@
       "content": {
         "question": "Wie sagt man 'die Schildkröte' auf Spanisch?",
         "correctAnswer": "la tortuga",
-        "alternatives": ["La tortuga"],
+        "alternatives": [
+          "La tortuga"
+        ],
         "explanation": "'La tortuga' bedeutet 'die Schildkröte' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -872,7 +1069,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -885,12 +1086,18 @@
       "content": {
         "question": "Wie sagt man 'der Elefant' auf Spanisch?",
         "correctAnswer": "el elefante",
-        "alternatives": ["El elefante"],
+        "alternatives": [
+          "El elefante"
+        ],
         "explanation": "'El elefante' bedeutet 'der Elefant' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -913,7 +1120,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -926,12 +1137,18 @@
       "content": {
         "question": "Wie sagt man 'der Löwe' auf Spanisch?",
         "correctAnswer": "el león",
-        "alternatives": ["El león"],
+        "alternatives": [
+          "El león"
+        ],
         "explanation": "'El león' bedeutet 'der Löwe' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -954,7 +1171,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -967,12 +1188,18 @@
       "content": {
         "question": "Wie sagt man 'der Pinguin' auf Spanisch?",
         "correctAnswer": "el pingüino",
-        "alternatives": ["El pingüino"],
+        "alternatives": [
+          "El pingüino"
+        ],
         "explanation": "'El pingüino' bedeutet 'der Pinguin' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -995,7 +1222,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -1008,12 +1239,18 @@
       "content": {
         "question": "Wie sagt man 'das Schaf' auf Spanisch?",
         "correctAnswer": "la oveja",
-        "alternatives": ["La oveja"],
+        "alternatives": [
+          "La oveja"
+        ],
         "explanation": "'La oveja' bedeutet 'das Schaf' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -1036,7 +1273,11 @@
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
@@ -1049,12 +1290,18 @@
       "content": {
         "question": "Wie sagt man 'das Pferd' auf Spanisch?",
         "correctAnswer": "el caballo",
-        "alternatives": ["El caballo"],
+        "alternatives": [
+          "El caballo"
+        ],
         "explanation": "'El caballo' bedeutet 'das Pferd' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["spanisch", "tiere", "vokabeln"],
+        "tags": [
+          "spanisch",
+          "tiere",
+          "vokabeln"
+        ],
         "estimatedTime": 60,
         "points": 10
       }
