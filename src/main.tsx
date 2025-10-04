@@ -39,15 +39,25 @@ function App() {
 
   async function initializeApp() {
     try {
+      // Database version for forced re-seeding when data schema changes
+      const DB_VERSION = '2'; // Bumped to force re-seed with language: 'Spanish'
+      const currentVersion = localStorage.getItem('dbVersion');
+
       // Check if database has data
       const topicCount = await db.topics.count();
       const taskCount = await db.tasks.count();
 
-      console.log(`Database status: ${topicCount} topics, ${taskCount} tasks`);
+      console.log(`Database status: ${topicCount} topics, ${taskCount} tasks, version: ${currentVersion}`);
 
-      if (topicCount === 0 || taskCount === 0) {
-        console.log('Database empty or incomplete, seeding...');
+      // Force re-seed if version changed or DB is empty
+      if (topicCount === 0 || taskCount === 0 || currentVersion !== DB_VERSION) {
+        if (currentVersion !== DB_VERSION) {
+          console.log(`Database version mismatch (${currentVersion} -> ${DB_VERSION}), re-seeding...`);
+        } else {
+          console.log('Database empty or incomplete, seeding...');
+        }
         await seedDatabase(db);
+        localStorage.setItem('dbVersion', DB_VERSION);
       } else {
         console.log('Database already seeded, skipping seed');
       }
