@@ -144,6 +144,8 @@ export interface FlashcardContent {
   back: string; // The translation/answer (hidden until revealed)
   frontLanguage: 'de' | 'es' | 'en'; // Language of front side
   backLanguage: 'de' | 'es' | 'en'; // Language of back side
+  frontAudio?: string; // Audio file path for front (e.g., "spanish/hola.mp3")
+  backAudio?: string; // Audio file path for back (e.g., "german/hallo.mp3")
   explanation?: string; // Optional additional context
   hint?: string; // Optional hint
 }

@@ -1,9 +1,6 @@
-import { useState, memo } from 'react';
+import { useState, useRef, memo } from 'react';
 import clsx from 'clsx';
-import { useAudioPlayback } from '../hooks/use-audio-playback';
-import { useAudioSettings } from '../hooks/use-audio-settings';
 import styles from './audio-button.module.css';
-import type { Task } from '@core/types/services';
 
 interface AudioButtonProps {
   text: string;
@@ -42,15 +39,12 @@ const VolumeOffIcon = ({ size }: { size: string }) => (
  * Memoized to prevent unnecessary re-renders
  */
 const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, size = 'medium' }: AudioButtonProps) => {
-  const { playbackState, loadAudio, replay } = useAudioPlayback();
-  const { settings } = useAudioSettings();
+  const [isPlaying, setIsPlaying] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Check if audio is available
   const hasAudio = !!audioUrl;
-
-  // Check if this button's audio is currently playing
-  const isPlaying = playbackState.status === 'playing' && playbackState.audioUrl === audioUrl;
 
   const handleClick = async () => {
     if (disabled || !hasAudio || !audioUrl) return;
@@ -58,39 +52,24 @@ const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, siz
     setError(null);
 
     try {
-      // If this audio is already loaded, replay it from start
-      if (playbackState.audioUrl === audioUrl) {
-        await replay();
-      } else {
-        // Load and play this audio (without auto-play delay)
-        const task: Task = {
-          id: 'audio-button-temp',
-          learningPathId: 'temp',
-          templateId: 'temp',
-          type: 'flashcard',
-          content: {
-            front: text,
-            back: '',
-            frontLanguage: 'es',
-            backLanguage: 'de',
-          },
-          metadata: {
-            difficulty: 'medium' as const,
-            tags: [],
-            estimatedTime: 0,
-            points: 0,
-          },
-          createdAt: new Date(),
-          updatedAt: new Date(),
-          hasAudio: true,
-          audioUrl: audioUrl,
-        };
-        await loadAudio(task, settings, false); // false = no auto-play delay
-        await replay();
+      // Create or reuse audio element
+      if (!audioRef.current) {
+        audioRef.current = new Audio(audioUrl);
+        audioRef.current.addEventListener('ended', () => setIsPlaying(false));
+        audioRef.current.addEventListener('error', () => {
+          setError('Audio playback failed');
+          setIsPlaying(false);
+        });
       }
+
+      // Reset to start and play
+      audioRef.current.currentTime = 0;
+      setIsPlaying(true);
+      await audioRef.current.play();
     } catch (err) {
       console.error('Failed to play audio:', err);
       setError('Audio playback failed');
+      setIsPlaying(false);
     }
   };
 

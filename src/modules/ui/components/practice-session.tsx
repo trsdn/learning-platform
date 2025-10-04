@@ -376,6 +376,18 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showFeedback, currentTask?.id, audioSettings.autoPlayEnabled, audioSettings.languageFilter]);
 
+  // Auto-play frontAudio when flashcard loads (for Spanish→German cards)
+  useEffect(() => {
+    if (currentTask?.type === 'flashcard' && !showFeedback && playbackState.autoPlayUnlocked) {
+      const content = currentTask.content as FlashcardContent;
+      if (content.frontAudio) {
+        const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content.frontAudio}`);
+        audio.play().catch(err => console.warn('Failed to auto-play frontAudio:', err));
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentTask?.id]);
+
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
     if (showFeedback) return false;
@@ -886,7 +898,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {/* Front side */}
           <div className={styles['practice-session__flashcard-front']}>
             <div>{content.front}</div>
-            {currentTask.hasAudio && currentTask.audioUrl && <AudioButton text={content.front} audioUrl={currentTask.audioUrl} size="large" />}
+            {content.frontAudio && (
+              <AudioButton
+                text={content.front}
+                audioUrl={`${import.meta.env.BASE_URL}audio/${content.frontAudio}`}
+                size="large"
+              />
+            )}
           </div>
 
           {/* Back side or reveal button */}
@@ -894,10 +912,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <button
               onClick={async () => {
                 setFlashcardRevealed(true);
-                // Auto-play audio when revealing Spanish flashcards
-                if (currentTask.hasAudio && currentTask.audioUrl && playbackState.autoPlayUnlocked) {
+                // Auto-play backAudio when revealing (for German→Spanish cards)
+                if (content.backAudio && playbackState.autoPlayUnlocked) {
                   try {
-                    await togglePlayPause();
+                    const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content.backAudio}`);
+                    await audio.play();
                   } catch (err) {
                     console.warn('Failed to auto-play on reveal:', err);
                   }
@@ -920,7 +939,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               {/* Answer */}
               <div className={styles['practice-session__flashcard-back']}>
                 <div>{content.back}</div>
-                {currentTask.hasAudio && currentTask.audioUrl && <AudioButton text={content.back} audioUrl={currentTask.audioUrl} size="large" />}
+                {content.backAudio && (
+                  <AudioButton
+                    text={content.back}
+                    audioUrl={`${import.meta.env.BASE_URL}audio/${content.backAudio}`}
+                    size="large"
+                  />
+                )}
               </div>
             </>
           )}

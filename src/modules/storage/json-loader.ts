@@ -70,13 +70,12 @@ export async function loadLearningPathsFromJSON(): Promise<{
           topic.learningPathIds.push(learningPath.id);
         }
 
-        // Add tasks with audio enrichment
+        // Add tasks
         for (const taskData of data.tasks) {
           const task: Task = {
             ...taskData,
             createdAt: new Date('2024-01-01'),
             updatedAt: new Date('2024-01-01'),
-            ...enrichTaskWithAudio(taskData, topicId), // Add audio fields
           };
           tasks.push(task);
         }
@@ -91,94 +90,6 @@ export async function loadLearningPathsFromJSON(): Promise<{
     learningPaths,
     tasks,
   };
-}
-
-/**
- * Enrich task with audio data for language learning topics
- * Automatically generates audio URLs for Spanish vocabulary
- */
-function enrichTaskWithAudio(
-  task: Omit<Task, 'createdAt' | 'updatedAt'>,
-  topicId: string
-): Partial<Task> {
-  // Only add audio for language learning topics
-  if (topicId !== 'spanisch') {
-    return {};
-  }
-
-  // Extract Spanish text from task content
-  let spanishText = extractSpanishText(task);
-  if (!spanishText) {
-    return {};
-  }
-
-  // Convert Spanish text to audio filename
-  const audioFilename = spanishTextToAudioFilename(spanishText);
-  // Use BASE_URL to handle production base path (/learning-platform/)
-  const basePath = import.meta.env.BASE_URL || '/';
-  const audioUrl = `${basePath}audio/spanish/${audioFilename}.mp3`;
-
-  return {
-    hasAudio: true,
-    audioUrl,
-    language: 'Spanish',
-  };
-}
-
-/**
- * Extract Spanish text from task content
- * Handles multiple task types (multiple-choice, text-input, flashcard, etc.)
- */
-function extractSpanishText(task: Omit<Task, 'createdAt' | 'updatedAt'>): string | null {
-  const content = task.content as any;
-
-  // Multiple choice: extract correct answer text
-  if (task.type === 'multiple-choice' && content.options && typeof content.correctAnswer === 'number') {
-    return content.options[content.correctAnswer] || null;
-  }
-
-  // Text input: use correct answer
-  if (task.type === 'text-input' && content.correctAnswer) {
-    return content.correctAnswer;
-  }
-
-  // Flashcard: use front text
-  if (task.type === 'flashcard' && content.front) {
-    return content.front;
-  }
-
-  // Matching: extract first left text
-  if (task.type === 'matching' && content.pairs && content.pairs.length > 0) {
-    return content.pairs[0].left || null;
-  }
-
-  // Ordering: join items
-  if (task.type === 'ordering' && content.items && content.items.length > 0) {
-    return content.items.join(' ');
-  }
-
-  return null;
-}
-
-/**
- * Convert Spanish text to audio filename
- * Examples:
- *   "Buenos días" -> "buenos-dias"
- *   "¿Cómo estás?" -> "como-estas"
- *   "Hola" -> "hola"
- */
-function spanishTextToAudioFilename(text: string): string {
-  return text
-    .toLowerCase()
-    .replace(/¿|¡|\.\.\.|\?|!|,|\.|\(|\)/g, '') // Remove punctuation
-    .replace(/á/g, 'a')
-    .replace(/é/g, 'e')
-    .replace(/í/g, 'i')
-    .replace(/ó/g, 'o')
-    .replace(/ú/g, 'u')
-    .replace(/ñ/g, 'n')
-    .trim()
-    .replace(/\s+/g, '-'); // Replace spaces with hyphens
 }
 
 /**

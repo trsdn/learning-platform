@@ -23,7 +23,8 @@
         "front": "der Hund",
         "back": "el perro",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-perro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -45,7 +46,8 @@
         "front": "el perro",
         "back": "der Hund",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-perro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -67,7 +69,8 @@
         "front": "die Katze",
         "back": "el gato",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-gato.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -89,7 +92,8 @@
         "front": "el gato",
         "back": "die Katze",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-gato.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -111,7 +115,8 @@
         "front": "der Vater",
         "back": "el padre",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-padre.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -133,7 +138,8 @@
         "front": "el padre",
         "back": "der Vater",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-padre.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -155,7 +161,8 @@
         "front": "die Mutter",
         "back": "la madre",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-madre.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -177,7 +184,8 @@
         "front": "la madre",
         "back": "die Mutter",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-madre.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -199,7 +207,8 @@
         "front": "der Bruder",
         "back": "el hermano",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-hermano.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -221,7 +230,8 @@
         "front": "el hermano",
         "back": "der Bruder",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-hermano.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -243,7 +253,8 @@
         "front": "die Schwester",
         "back": "la hermana",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-hermana.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -265,7 +276,8 @@
         "front": "la hermana",
         "back": "die Schwester",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-hermana.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -287,7 +299,8 @@
         "front": "der Freund",
         "back": "el amigo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-amigo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -309,7 +322,8 @@
         "front": "el amigo",
         "back": "der Freund",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-amigo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -331,7 +345,8 @@
         "front": "die Freundin",
         "back": "la amiga",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-amiga.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -353,7 +368,8 @@
         "front": "la amiga",
         "back": "die Freundin",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-amiga.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -375,7 +391,8 @@
         "front": "rot",
         "back": "rojo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/rojo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -397,7 +414,8 @@
         "front": "rojo",
         "back": "rot",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/rojo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -419,7 +437,8 @@
         "front": "blau",
         "back": "azul",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/azul.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -441,7 +460,8 @@
         "front": "azul",
         "back": "blau",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/azul.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -463,7 +483,8 @@
         "front": "grün",
         "back": "verde",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/verde.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -485,7 +506,8 @@
         "front": "verde",
         "back": "grün",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/verde.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -507,7 +529,8 @@
         "front": "gelb",
         "back": "amarillo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/amarillo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -529,7 +552,8 @@
         "front": "amarillo",
         "back": "gelb",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/amarillo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -551,7 +575,8 @@
         "front": "schwarz",
         "back": "negro",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/negro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -573,7 +598,8 @@
         "front": "negro",
         "back": "schwarz",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/negro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -595,7 +621,8 @@
         "front": "weiß",
         "back": "blanco",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/blanco.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -617,7 +644,8 @@
         "front": "blanco",
         "back": "weiß",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/blanco.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -639,7 +667,8 @@
         "front": "eins",
         "back": "uno",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/uno.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -661,7 +690,8 @@
         "front": "uno",
         "back": "eins",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/uno.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -683,7 +713,8 @@
         "front": "zwei",
         "back": "dos",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/dos.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -705,7 +736,8 @@
         "front": "dos",
         "back": "zwei",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/dos.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -727,7 +759,8 @@
         "front": "drei",
         "back": "tres",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/tres.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -749,7 +782,8 @@
         "front": "tres",
         "back": "drei",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/tres.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -771,7 +805,8 @@
         "front": "zehn",
         "back": "diez",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/diez.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -793,7 +828,8 @@
         "front": "diez",
         "back": "zehn",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/diez.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -815,7 +851,8 @@
         "front": "zwanzig",
         "back": "veinte",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/veinte.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -837,7 +874,8 @@
         "front": "veinte",
         "back": "zwanzig",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/veinte.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -859,7 +897,8 @@
         "front": "Hallo",
         "back": "Hola",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/hola.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -881,7 +920,8 @@
         "front": "Hola",
         "back": "Hallo",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/hola.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -903,7 +943,8 @@
         "front": "Danke",
         "back": "Gracias",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/gracias.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -925,7 +966,8 @@
         "front": "Gracias",
         "back": "Danke",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/gracias.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -947,7 +989,8 @@
         "front": "Bitte",
         "back": "Por favor",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/por-favor.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -969,7 +1012,8 @@
         "front": "Por favor",
         "back": "Bitte",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/por-favor.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -991,7 +1035,8 @@
         "front": "Auf Wiedersehen",
         "back": "Adiós",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/adios.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1013,7 +1058,8 @@
         "front": "Adiós",
         "back": "Auf Wiedersehen",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/adios.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1035,7 +1081,8 @@
         "front": "der Elefant",
         "back": "el elefante",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-elefante.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1057,7 +1104,8 @@
         "front": "el elefante",
         "back": "der Elefant",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-elefante.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1079,7 +1127,8 @@
         "front": "die Giraffe",
         "back": "la jirafa",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-jirafa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1101,7 +1150,8 @@
         "front": "la jirafa",
         "back": "die Giraffe",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-jirafa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1123,7 +1173,8 @@
         "front": "der Löwe",
         "back": "el león",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-leon.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1145,7 +1196,8 @@
         "front": "el león",
         "back": "der Löwe",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-leon.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1167,7 +1219,8 @@
         "front": "die Schildkröte",
         "back": "la tortuga",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-tortuga.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1189,7 +1242,8 @@
         "front": "la tortuga",
         "back": "die Schildkröte",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-tortuga.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1211,7 +1265,8 @@
         "front": "das Pferd",
         "back": "el caballo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-caballo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1233,7 +1288,8 @@
         "front": "el caballo",
         "back": "das Pferd",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-caballo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1255,7 +1311,8 @@
         "front": "die Kuh",
         "back": "la vaca",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-vaca.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1277,7 +1334,8 @@
         "front": "la vaca",
         "back": "die Kuh",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-vaca.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1299,7 +1357,8 @@
         "front": "das Schwein",
         "back": "el cerdo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-cerdo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1321,7 +1380,8 @@
         "front": "el cerdo",
         "back": "das Schwein",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-cerdo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1343,7 +1403,8 @@
         "front": "der Vogel",
         "back": "el pájaro",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-pajaro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1365,7 +1426,8 @@
         "front": "el pájaro",
         "back": "der Vogel",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-pajaro.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1387,7 +1449,8 @@
         "front": "der Fisch",
         "back": "el pez",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-pez.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1409,7 +1472,8 @@
         "front": "el pez",
         "back": "der Fisch",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-pez.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1431,7 +1495,8 @@
         "front": "die Sonne",
         "back": "el sol",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-sol.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1453,7 +1518,8 @@
         "front": "el sol",
         "back": "die Sonne",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-sol.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1475,7 +1541,8 @@
         "front": "der Mond",
         "back": "la luna",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-luna.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1497,7 +1564,8 @@
         "front": "la luna",
         "back": "der Mond",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-luna.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1519,7 +1587,8 @@
         "front": "der Strand",
         "back": "la playa",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-playa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1541,7 +1610,8 @@
         "front": "la playa",
         "back": "der Strand",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-playa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1563,7 +1633,8 @@
         "front": "die Stadt",
         "back": "la ciudad",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-ciudad.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1585,7 +1656,8 @@
         "front": "la ciudad",
         "back": "die Stadt",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-ciudad.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1607,7 +1679,8 @@
         "front": "das Haus",
         "back": "la casa",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-casa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1629,7 +1702,8 @@
         "front": "la casa",
         "back": "das Haus",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-casa.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1651,7 +1725,8 @@
         "front": "der Rucksack",
         "back": "la mochila",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-mochila.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1673,7 +1748,8 @@
         "front": "la mochila",
         "back": "der Rucksack",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-mochila.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1695,7 +1771,8 @@
         "front": "das Foto",
         "back": "la foto",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-foto.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1717,7 +1794,8 @@
         "front": "la foto",
         "back": "das Foto",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-foto.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1739,7 +1817,8 @@
         "front": "das Ei",
         "back": "el huevo",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-huevo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1761,7 +1840,8 @@
         "front": "el huevo",
         "back": "das Ei",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-huevo.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1783,7 +1863,8 @@
         "front": "der Käse",
         "back": "el queso",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-queso.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1805,7 +1886,8 @@
         "front": "el queso",
         "back": "der Käse",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-queso.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1827,7 +1909,8 @@
         "front": "die Tomate",
         "back": "el tomate",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-tomate.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1849,7 +1932,8 @@
         "front": "el tomate",
         "back": "die Tomate",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-tomate.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1871,7 +1955,8 @@
         "front": "das Gymnasium",
         "back": "el instituto",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-instituto.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1893,7 +1978,8 @@
         "front": "el instituto",
         "back": "das Gymnasium",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-instituto.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1915,7 +2001,8 @@
         "front": "der Park",
         "back": "el parque",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-parque.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1937,7 +2024,8 @@
         "front": "el parque",
         "back": "der Park",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-parque.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1959,7 +2047,8 @@
         "front": "das Zebra",
         "back": "la cebra",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-cebra.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1981,7 +2070,8 @@
         "front": "la cebra",
         "back": "das Zebra",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-cebra.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2003,7 +2093,8 @@
         "front": "der Koala",
         "back": "el koala",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/el-koala.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2025,7 +2116,8 @@
         "front": "el koala",
         "back": "der Koala",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/el-koala.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2047,7 +2139,8 @@
         "front": "das Haustier",
         "back": "la mascota",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/la-mascota.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2069,7 +2162,8 @@
         "front": "la mascota",
         "back": "das Haustier",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/la-mascota.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2091,7 +2185,8 @@
         "front": "ja",
         "back": "sí",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/si.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2113,7 +2208,8 @@
         "front": "sí",
         "back": "ja",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/si.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2135,7 +2231,8 @@
         "front": "nein",
         "back": "no",
         "frontLanguage": "de",
-        "backLanguage": "es"
+        "backLanguage": "es",
+        "backAudio": "spanish/no.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -2157,7 +2254,8 @@
         "front": "no",
         "back": "nein",
         "frontLanguage": "es",
-        "backLanguage": "de"
+        "backLanguage": "de",
+        "frontAudio": "spanish/no.mp3"
       },
       "metadata": {
         "difficulty": "easy",
