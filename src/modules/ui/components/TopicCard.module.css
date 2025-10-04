@@ -1,0 +1,82 @@
+/* TopicCard Component Styles */
+
+.card {
+  /* === Button Reset === */
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  display: block;
+  width: 100%;
+  text-align: left;
+  box-sizing: border-box;
+
+  /* === Card Styles === */
+  padding: 2rem;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  border: 2px solid transparent;
+
+  /* === Accessibility === */
+  min-width: 44px;
+  min-height: 44px;
+}
+
+/* Keyboard focus */
+.card:focus-visible {
+  outline: 2px solid var(--focus-color, #0066cc);
+  outline-offset: 2px;
+}
+
+/* Mouse focus (no outline) */
+.card:focus:not(:focus-visible) {
+  outline: none;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .card:focus-visible {
+    outline-width: 3px;
+  }
+}
+
+/* Hover state */
+.card:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  border-color: #3b82f6;
+}
+
+/* Active/pressed */
+.card:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+/* Disabled state */
+.card:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Icon */
+.icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  display: block;
+}
+
+/* Title */
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Description */
+.description {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.5;
+  margin: 0;
+}

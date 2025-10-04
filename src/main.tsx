@@ -6,6 +6,7 @@ import type { Topic, LearningPath, PracticeSession as IPracticeSession } from '.
 import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
+import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
 import './index.css';
 
 /**
@@ -370,6 +371,20 @@ function App() {
     }
   }
 
+  // Convert Topic to TopicCardTopic
+  function topicToCardTopic(topic: Topic): TopicCardTopic {
+    const icon = topic.id === 'test' ? '🎯' : topic.id === 'mathematik' ? '🔢' : '🧬';
+    const color = topic.id === 'test' ? '#fef3c7' : topic.id === 'mathematik' ? '#dbeafe' : '#dcfce7';
+
+    return {
+      id: topic.id,
+      name: topic.title,
+      description: `${topic.learningPathIds.length} Lernpfade`,
+      icon,
+      color,
+    };
+  }
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -428,35 +443,15 @@ function App() {
         }}
       >
         {topics.map((topic) => (
-          <div
+          <TopicCard
             key={topic.id}
-            onClick={() => selectTopic(topic)}
-            style={{
-              padding: '2rem',
-              background: topic.id === 'test' ? '#fef3c7' : topic.id === 'mathematik' ? '#dbeafe' : '#dcfce7',
-              borderRadius: '12px',
-              cursor: 'pointer',
-              transition: 'transform 0.2s, box-shadow 0.2s',
-              border: '2px solid transparent',
+            topic={topicToCardTopic(topic)}
+            onSelect={(topicId) => {
+              const selectedTopic = topics.find(t => t.id === topicId);
+              if (selectedTopic) selectTopic(selectedTopic);
             }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.transform = 'translateY(-4px)';
-              e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.1)';
-              e.currentTarget.style.borderColor = '#3b82f6';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.transform = 'translateY(0)';
-              e.currentTarget.style.boxShadow = 'none';
-              e.currentTarget.style.borderColor = 'transparent';
-            }}
-          >
-            <h2 style={{ marginBottom: '0.5rem' }}>
-              {topic.id === 'test' ? '🎯' : topic.id === 'mathematik' ? '🔢' : '🧬'} {topic.title}
-            </h2>
-            <div style={{ fontSize: '0.85rem', opacity: 0.7 }}>
-              {topic.learningPathIds.length} Lernpfade
-            </div>
-          </div>
+            data-testid={`topic-card-${topic.id}`}
+          />
         ))}
       </div>
     </div>
