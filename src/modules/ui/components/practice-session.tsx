@@ -68,7 +68,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
   // Audio hooks
-  const { playbackState, loadAudio, togglePlayPause, replay, stop, preloadNext } = useAudioPlayback();
+  const { playbackState, loadAudio, togglePlayPause, replay, stop, preloadNext, unlockAutoPlay } = useAudioPlayback();
   const { settings: audioSettings } = useAudioSettings();
 
   // Initialize session
@@ -201,6 +201,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   async function handleAnswerSubmit() {
     if (!currentTask || !session) return;
+
+    // Unlock auto-play on first user interaction (browser requirement)
+    if (!playbackState.autoPlayUnlocked) {
+      unlockAutoPlay().catch(err => console.warn('Failed to unlock auto-play:', err));
+    }
 
     let correct = false;
 
