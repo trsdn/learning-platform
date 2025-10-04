@@ -11,7 +11,9 @@ import {
 import { audioService } from '@core/services/audio-service';
 import { AudioButton } from './audio-button';
 import { FeedbackCard } from './common/FeedbackCard';
+import { Button } from './common/Button';
 import { Input, Checkbox, Select, Slider } from './forms';
+import { spacing } from '@ui/design-tokens';
 
 interface Props {
   topicId: string;
@@ -1351,61 +1353,35 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       {/* Actions and Statistics - combined footer */}
       <div style={{ flexShrink: 0, display: 'flex', flexDirection: 'column', gap: '1rem' }}>
         {/* Action buttons */}
-        <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', gap: spacing[4] }}>
           {!showFeedback ? (
             <>
-              <button
+              <Button
                 onClick={handleAnswerSubmit}
                 disabled={!canSubmit()}
-                style={{
-                  padding: '0.875rem 2rem',
-                  background: canSubmit() ? '#3b82f6' : '#9ca3af',
-                  color: 'white',
-                  border: 'none',
-                  borderRadius: '8px',
-                  cursor: canSubmit() ? 'pointer' : 'not-allowed',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                }}
+                variant="primary"
               >
                 Antwort überprüfen
-              </button>
-              <button
-                onClick={currentTaskIndex < session.execution.taskIds.length - 1 ? handleSkipTask : handleComplete}
-                style={{
-                  padding: '0.875rem 2rem',
-                  background: '#f3f4f6',
-                  color: '#6b7280',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  cursor: 'pointer',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                }}
+              </Button>
+              <Button
+                onClick={
+                  currentTaskIndex < session.execution.taskIds.length - 1
+                    ? handleSkipTask
+                    : handleComplete
+                }
+                variant="secondary"
               >
                 {currentTaskIndex < session.execution.taskIds.length - 1
                   ? 'Überspringen →'
                   : 'Sitzung beenden'}
-              </button>
+              </Button>
             </>
           ) : (
-            <button
-              onClick={handleNextTask}
-              style={{
-                padding: '0.875rem 2rem',
-                background: '#3b82f6',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: '500',
-              }}
-            >
+            <Button onClick={handleNextTask} variant="primary">
               {currentTaskIndex < session.execution.taskIds.length - 1
                 ? 'Nächste Aufgabe →'
                 : 'Sitzung beenden'}
-            </button>
+            </Button>
           )}
         </div>
 
