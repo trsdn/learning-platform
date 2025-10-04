@@ -2,6 +2,18 @@
 
 Auto-generated from all feature plans. Last updated: 2025-10-04
 
+## Target Audience & Scale
+
+**Primary Users**: Students at Gymnasium (German secondary school, grades 5-13, ages 10-19)
+**User Base**: Small, focused group (<100 concurrent users)
+**Design Philosophy**: Optimized for educational effectiveness, NOT mass-market scaling
+
+**Key Implications**:
+- UI/UX tailored for teenage learners (ages 10-19)
+- German language interface required
+- Performance targets: hundreds of questions, not millions
+- Simplicity over enterprise scalability features
+
 ## Active Technologies
 - **Language**: TypeScript 5.x / JavaScript ES2022
 - **Build Tool**: Vite (zero-config bundler)
@@ -11,6 +23,8 @@ Auto-generated from all feature plans. Last updated: 2025-10-04
 - **Testing**: Vitest for unit tests, Playwright for E2E tests, jest-axe for accessibility
 - **PWA**: Workbox (service worker), Web App Manifest
 - **Offline**: Service workers with multiple caching strategies
+- TypeScript 5.x / JavaScript ES2022 + React (UI framework), Vite (build tool), HTML5 Audio API (005-issue-23)
+- LocalStorage for audio settings (user preferences), IndexedDB with Dexie.js for audio metadata caching (005-issue-23)
 
 ## Project Structure
 ```
@@ -276,6 +290,7 @@ it('has no WCAG violations', async () => {
 **Reference**: See `tests/unit/ui/components/TopicCard.a11y.test.tsx` for examples.
 
 ## Recent Changes
+- 005-issue-23: Added TypeScript 5.x / JavaScript ES2022 + React (UI framework), Vite (build tool), HTML5 Audio API
 1. [2025-09-29] Added German Learning Platform with Spaced Repetition
    - Implemented SM-2 algorithm for learning optimization
    - Added modular architecture with clear separation of concerns
