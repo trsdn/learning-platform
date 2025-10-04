@@ -225,44 +225,20 @@ class AudioService implements IAudioService {
   }
 
   async checkAutoPlayPermission(): Promise<boolean> {
-    try {
-      // Create a silent audio element to test auto-play
-      const testAudio = new Audio();
-      testAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-      testAudio.volume = 0;
-
-      await testAudio.play();
-      testAudio.pause();
-
-      return true;
-    } catch (error: any) {
-      if (error.name === 'NotAllowedError') {
-        return false;
-      }
-      return false;
-    }
+    // Return current unlock status
+    // Auto-play permission will be validated on actual play attempt
+    return this.state.autoPlayUnlocked;
   }
 
   async unlockAutoPlay(): Promise<boolean> {
-    try {
-      // Must be called from user gesture
-      const testAudio = new Audio();
-      testAudio.src = 'data:audio/wav;base64,UklGRigAAABXQVZFZm10IBIAAAABAAEARKwAAIhYAQACABAAAABkYXRhAgAAAAEA';
-      testAudio.volume = 0;
+    // Simply mark as unlocked - will be validated on first actual play attempt
+    // This avoids CSP issues with data URIs
+    this.setState({
+      ...this.state,
+      autoPlayUnlocked: true,
+    });
 
-      await testAudio.play();
-      testAudio.pause();
-
-      this.setState({
-        ...this.state,
-        autoPlayUnlocked: true,
-      });
-
-      return true;
-    } catch (error) {
-      console.error('Failed to unlock auto-play:', error);
-      return false;
-    }
+    return true;
   }
 
   getPlaybackState(): AudioPlayback {
