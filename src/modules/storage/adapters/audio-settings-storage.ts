@@ -12,6 +12,7 @@ import type { AudioSettings } from '../../core/entities/audio-settings';
 import { DEFAULT_AUDIO_SETTINGS, validateAudioSettings } from '../../core/entities/audio-settings';
 
 const STORAGE_KEY = 'audioSettings';
+const DEBOUNCE_DELAY_MS = 500; // Delay for debouncing localStorage writes
 
 /**
  * Audio settings storage interface
@@ -40,6 +41,8 @@ export interface IAudioSettingsStorage {
  * LocalStorage-based audio settings storage
  */
 class AudioSettingsStorage implements IAudioSettingsStorage {
+  private saveTimer: number | null = null;
+
   load(): AudioSettings {
     try {
       const stored = localStorage.getItem(STORAGE_KEY);
@@ -66,12 +69,22 @@ class AudioSettingsStorage implements IAudioSettingsStorage {
   save(settings: AudioSettings): void {
     try {
       validateAudioSettings(settings);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+
+      // Debounce localStorage writes for better performance
+      if (this.saveTimer !== null) {
+        window.clearTimeout(this.saveTimer);
+      }
+
+      this.saveTimer = window.setTimeout(() => {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(settings));
+        this.saveTimer = null;
+      }, DEBOUNCE_DELAY_MS);
     } catch (error) {
       console.error('Failed to save audio settings:', error);
       throw error;
     }
   }
+
 
   update(updates: Partial<AudioSettings>): void {
     const current = this.load();

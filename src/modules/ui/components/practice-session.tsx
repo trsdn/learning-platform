@@ -68,7 +68,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
   // Audio hooks
-  const { playbackState, loadAudio, togglePlayPause, replay, stop } = useAudioPlayback();
+  const { playbackState, loadAudio, togglePlayPause, replay, stop, preloadNext } = useAudioPlayback();
   const { settings: audioSettings } = useAudioSettings();
 
   // Initialize session
@@ -119,11 +119,27 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setCurrentTask(task);
     setStartTime(Date.now());
 
-    // Auto-play audio if eligible
+    // Auto-play audio if eligible (with error boundary)
     if (isEligibleForAutoPlay(task, audioSettings)) {
       loadAudio(task, audioSettings, true).catch((error) => {
-        console.error('Failed to load audio:', error);
+        console.warn('Auto-play failed, continuing without audio:', error);
+        // Don't crash the session - audio is optional
       });
+    }
+
+    // Preload next task audio for better UX
+    const nextTaskIndex = currentTaskIndex + 1;
+    if (nextTaskIndex < session.execution.taskIds.length) {
+      const nextTaskId = session.execution.taskIds[nextTaskIndex];
+      if (nextTaskId) {
+        db.tasks.get(nextTaskId).then((nextTask) => {
+          if (nextTask && nextTask.audioUrl) {
+            preloadNext(nextTask);
+          }
+        }).catch((error) => {
+          console.warn('Failed to preload next task audio:', error);
+        });
+      }
     }
 
     // Reset all state

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import clsx from 'clsx';
 import { useAudioPlayback } from '../hooks/use-audio-playback';
 import { useAudioSettings } from '../hooks/use-audio-settings';
@@ -39,8 +39,9 @@ const VolumeOffIcon = ({ size }: { size: string }) => (
 /**
  * Audio Button Component
  * Plays pronunciation when clicked
+ * Memoized to prevent unnecessary re-renders
  */
-export function AudioButton({ text, audioUrl, className, disabled = false, size = 'medium' }: AudioButtonProps) {
+const AudioButtonComponent = ({ text, audioUrl, className, disabled = false, size = 'medium' }: AudioButtonProps) => {
   const { playbackState, loadAudio, play } = useAudioPlayback();
   const { settings } = useAudioSettings();
   const [error, setError] = useState<string | null>(null);
@@ -139,7 +140,10 @@ export function AudioButton({ text, audioUrl, className, disabled = false, size 
       )}
     </button>
   );
-}
+};
+
+// Export memoized version
+export const AudioButton = memo(AudioButtonComponent);
 
 interface AudioButtonInlineProps {
   text: string;

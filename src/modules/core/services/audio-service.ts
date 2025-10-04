@@ -15,6 +15,8 @@ import type { AudioPlayback } from '../entities/audio-playback';
 import { INITIAL_PLAYBACK_STATE } from '../entities/audio-playback';
 
 const AUTO_PLAY_DELAY_MS = 500;
+const MAX_AUDIO_URL_LENGTH = 2048; // Maximum URL length for security
+const MIN_PLAY_INTERVAL_MS = 100; // Minimum time between play() calls (rate limiting)
 
 /**
  * Audio Service Interface
@@ -44,6 +46,7 @@ class AudioService implements IAudioService {
   private stateListeners: Set<(state: AudioPlayback) => void> = new Set();
   private preloadedAudio: HTMLAudioElement | null = null;
   private autoPlayTimer: number | null = null;
+  private lastPlayTime: number = 0; // For rate limiting
 
   async initialize(): Promise<void> {
     // Service is ready to use
@@ -57,6 +60,12 @@ class AudioService implements IAudioService {
 
     if (!task.audioUrl) {
       throw new Error('Task does not have an audio URL');
+    }
+
+    // Validate audio URL
+    const validatedUrl = this.validateAudioUrl(task.audioUrl);
+    if (!validatedUrl) {
+      throw new Error('Invalid audio URL');
     }
 
     // Create new audio element
@@ -128,6 +137,15 @@ class AudioService implements IAudioService {
     if (!this.audio) {
       throw new Error('No audio loaded');
     }
+
+    // Rate limiting: prevent rapid successive play() calls
+    const now = Date.now();
+    const timeSinceLastPlay = now - this.lastPlayTime;
+    if (timeSinceLastPlay < MIN_PLAY_INTERVAL_MS) {
+      console.warn('Rate limit: Too many play() calls. Please wait.');
+      return;
+    }
+    this.lastPlayTime = now;
 
     try {
       await this.audio.play();
@@ -297,6 +315,26 @@ class AudioService implements IAudioService {
       window.clearTimeout(this.autoPlayTimer);
       this.autoPlayTimer = null;
     }
+  }
+
+  /**
+   * Validate audio URL for security
+   * Only allows /audio/ paths and data URIs for testing
+   */
+  private validateAudioUrl(url: string): boolean {
+    // Check length
+    if (url.length > MAX_AUDIO_URL_LENGTH) {
+      console.warn('Audio URL exceeds maximum length');
+      return false;
+    }
+
+    // Only allow /audio/ paths (relative URLs) or data URIs (for testing)
+    if (url.startsWith('/audio/') || url.startsWith('data:audio/')) {
+      return true;
+    }
+
+    console.warn('Audio URL must start with /audio/ or data:audio/', url);
+    return false;
   }
 }
 

@@ -72,10 +72,18 @@ export function useAudioPlayback(): UseAudioPlaybackReturn {
       setPlaybackState(newState);
     });
 
-    // Cleanup on unmount
+    // Cleanup on unmount - stop all audio and clean up resources
     return () => {
+      // Stop audio playback immediately
+      service.stop();
+
+      // Unsubscribe from state changes
       unsubscribe();
+
+      // Clean up all resources (audio elements, timers, etc.)
       service.dispose();
+
+      // Clear the service reference
       audioServiceRef.current = null;
     };
   }, []);
