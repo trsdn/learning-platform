@@ -120,11 +120,23 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setStartTime(Date.now());
 
     // Auto-play audio if eligible (with error boundary)
+    console.log('🔊 Auto-play check:', {
+      hasAudio: task.hasAudio,
+      audioUrl: task.audioUrl,
+      language: task.language,
+      autoPlayEnabled: audioSettings.autoPlayEnabled,
+      languageFilter: audioSettings.languageFilter,
+      isEligible: isEligibleForAutoPlay(task, audioSettings)
+    });
+
     if (isEligibleForAutoPlay(task, audioSettings)) {
+      console.log('✅ Auto-play triggered for:', task.audioUrl);
       loadAudio(task, audioSettings, true).catch((error) => {
         console.warn('Auto-play failed, continuing without audio:', error);
         // Don't crash the session - audio is optional
       });
+    } else {
+      console.log('❌ Auto-play NOT eligible');
     }
 
     // Preload next task audio for better UX
