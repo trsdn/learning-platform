@@ -1,0 +1,107 @@
+{
+  "id": "cloze-deletion-basic",
+  "name": "Cloze Deletion (Basic)",
+  "description": "Fill-in-the-blank question with multiple blanks",
+  "type": "cloze-deletion",
+  "schema": {
+    "text": {
+      "type": "string",
+      "required": true,
+      "description": "Text with {{blank}} markers for each blank"
+    },
+    "textLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the text"
+    },
+    "textAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for text (e.g., 'spanish/text.mp3')"
+    },
+    "blanks": {
+      "type": "array",
+      "required": true,
+      "minItems": 1,
+      "description": "Array of blank definitions",
+      "items": {
+        "index": {
+          "type": "number",
+          "required": true,
+          "description": "Position of the blank (0-based, in order of appearance)"
+        },
+        "correctAnswer": {
+          "type": "string",
+          "required": true,
+          "description": "The correct answer for this blank"
+        },
+        "correctAnswerLanguage": {
+          "type": "string",
+          "enum": ["de", "es", "en"],
+          "required": false,
+          "description": "Language of the correct answer"
+        },
+        "correctAnswerAudio": {
+          "type": "string",
+          "required": false,
+          "description": "Audio file path for correct answer"
+        },
+        "alternatives": {
+          "type": "array",
+          "required": false,
+          "description": "Alternative correct answers (e.g., lowercase versions)"
+        }
+      }
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["textAudio"]
+    },
+    "buttons": {
+      "text": {
+        "show": true,
+        "field": "textAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "text": "Die Erde dreht sich um die {{blank}}, und der Mond dreht sich um die {{blank}}.",
+      "textLanguage": "de",
+      "blanks": [
+        {
+          "index": 0,
+          "correctAnswer": "Sonne",
+          "correctAnswerLanguage": "de",
+          "alternatives": ["sonne"]
+        },
+        {
+          "index": 1,
+          "correctAnswer": "Erde",
+          "correctAnswerLanguage": "de",
+          "alternatives": ["erde"]
+        }
+      ],
+      "explanation": "Die Erde umkreist die Sonne, der Mond umkreist die Erde.",
+      "hint": "Denke an unser Sonnensystem"
+    }
+  ]
+}

@@ -1,0 +1,92 @@
+{
+  "id": "multiple-select-basic",
+  "name": "Multiple Select (Basic)",
+  "description": "Multiple choice question with multiple correct answers",
+  "type": "multiple-select",
+  "schema": {
+    "question": {
+      "type": "string",
+      "required": true,
+      "description": "The main question text"
+    },
+    "questionLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the question"
+    },
+    "questionAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for question (e.g., 'spanish/pregunta.mp3')"
+    },
+    "options": {
+      "type": "array",
+      "required": true,
+      "minItems": 3,
+      "maxItems": 8,
+      "description": "Answer options (3-8 choices)"
+    },
+    "optionsLanguage": {
+      "type": "string",
+      "enum": ["de", "es", "en"],
+      "required": false,
+      "description": "Language of the options"
+    },
+    "optionsAudio": {
+      "type": "array",
+      "required": false,
+      "description": "Audio file paths for each option (same length as options)"
+    },
+    "correctAnswers": {
+      "type": "array",
+      "required": true,
+      "minItems": 2,
+      "description": "Array of correct answer indices (0-based)"
+    },
+    "minRequired": {
+      "type": "number",
+      "required": false,
+      "description": "Minimum number of selections required"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Optional hint for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": ["questionAudio"]
+    },
+    "buttons": {
+      "question": {
+        "show": true,
+        "field": "questionAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": ["easy", "medium", "hard"],
+    "tags": ["array"],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "question": "Welche der folgenden sind Primzahlen?",
+      "questionLanguage": "de",
+      "options": ["2", "4", "7", "9", "11"],
+      "optionsLanguage": "de",
+      "correctAnswers": [0, 2, 4],
+      "minRequired": 3,
+      "explanation": "Die Primzahlen sind: 2, 7 und 11. Eine Primzahl ist nur durch 1 und sich selbst teilbar.",
+      "hint": "Welche Zahlen sind nur durch 1 und sich selbst teilbar?"
+    }
+  ]
+}
