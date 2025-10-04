@@ -419,9 +419,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     return (
       <div className={styles['practice-session__mc-options']}>
         {shuffledOptions.map((option, index) => {
-          const isCorrectOption = index === correctAnswerIndex;
-          const showAudio = showFeedback && isCorrectOption && currentTask.audioUrl;
-
           const optionClasses = [
             styles['practice-session__mc-option'],
             showFeedback && index === correctAnswerIndex && styles['practice-session__mc-option--correct'],
@@ -438,7 +435,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               className={optionClasses}
             >
               <span>{option}</span>
-              {showAudio && currentTask.audioUrl && <AudioButton text={option} audioUrl={currentTask.audioUrl} size="small" />}
             </button>
           );
         })}
@@ -646,7 +642,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               <React.Fragment key={leftIndex}>
                 <div className={styles['practice-session__matching-left-item']}>
                   <span>{pair.left}</span>
-                  {currentTask.audioUrl && <AudioButton text={pair.left} audioUrl={currentTask.audioUrl} size="small" />}
                 </div>
                 <Select
                   value={matchingAnswers[leftIndex]?.toString() ?? ''}
@@ -1038,9 +1033,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <h3 className={styles['practice-session__question-text']}>
               {(currentTask.content as any).question}
             </h3>
-            {currentTask.audioUrl && (
-              <AudioButton text={(currentTask.content as any).question} audioUrl={currentTask.audioUrl} size="medium" />
-            )}
           </div>
         )}
 
@@ -1056,6 +1048,19 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           >
             {currentTask.content.explanation && (
               <p style={{ margin: 0 }}>{currentTask.content.explanation}</p>
+            )}
+            {/* Audio button in feedback for language learning */}
+            {currentTask.audioUrl && currentTask.type === 'multiple-choice' && (
+              <div style={{ marginTop: '0.75rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)' }}>
+                  Aussprache:
+                </span>
+                <AudioButton
+                  text={(currentTask.content as any).options[(currentTask.content as any).correctAnswer]}
+                  audioUrl={currentTask.audioUrl}
+                  size="small"
+                />
+              </div>
             )}
           </FeedbackCard>
         </div>

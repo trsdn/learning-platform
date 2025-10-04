@@ -119,7 +119,7 @@ function enrichTaskWithAudio(
   return {
     hasAudio: true,
     audioUrl,
-    language: 'es',
+    language: 'Spanish',
   };
 }
 
