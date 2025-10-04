@@ -368,7 +368,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
         console.warn('Auto-play in feedback failed:', error);
       });
     }
-  }, [showFeedback, currentTask, audioSettings, loadAudio]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showFeedback, currentTask?.id, audioSettings.autoPlayEnabled, audioSettings.languageFilter]);
 
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
