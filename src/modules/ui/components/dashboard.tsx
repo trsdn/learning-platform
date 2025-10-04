@@ -3,6 +3,16 @@ import { db } from '@storage/database';
 import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Card } from './common/Card';
+import { Button } from './common/Button';
+import { MasteryBar } from './common/MasteryBar';
+import {
+  semanticColors,
+  spacing,
+  typography,
+  colors,
+  borderRadius,
+  transitions,
+} from '@ui/design-tokens';
 
 interface DashboardStats {
   totalSessions: number;
@@ -174,7 +184,13 @@ export function Dashboard({ onClose }: DashboardProps) {
 
   if (isLoading) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
+      <div
+        style={{
+          padding: spacing[8],
+          fontFamily: typography.fontFamily.sans,
+          textAlign: 'center',
+        }}
+      >
         <h1>📊 Dashboard</h1>
         <p>Lade Statistiken...</p>
       </div>
@@ -183,20 +199,15 @@ export function Dashboard({ onClose }: DashboardProps) {
 
   if (!stats) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-        <button
-          onClick={onClose}
-          style={{
-            padding: '0.5rem 1rem',
-            background: '#e5e7eb',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginBottom: '1rem',
-          }}
-        >
+      <div
+        style={{
+          padding: spacing[8],
+          fontFamily: typography.fontFamily.sans,
+        }}
+      >
+        <Button variant="secondary" onClick={onClose} style={{ marginBottom: spacing[4] }}>
           ← Zurück
-        </button>
+        </Button>
         <h1>📊 Dashboard</h1>
         <p>Keine Daten verfügbar.</p>
       </div>
@@ -204,24 +215,26 @@ export function Dashboard({ onClose }: DashboardProps) {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', maxWidth: '1200px', margin: '0 auto' }}>
+    <div
+      style={{
+        padding: spacing[8],
+        fontFamily: typography.fontFamily.sans,
+        maxWidth: '1200px',
+        margin: '0 auto',
+      }}
+    >
       {/* Header */}
-      <div style={{ marginBottom: '2rem' }}>
-        <button
-          onClick={onClose}
+      <div style={{ marginBottom: spacing[8] }}>
+        <Button variant="secondary" onClick={onClose} style={{ marginBottom: spacing[4] }}>
+          ← Zurück
+        </Button>
+        <h1 style={{ margin: 0 }}>📊 Lern-Dashboard</h1>
+        <p
           style={{
-            padding: '0.5rem 1rem',
-            background: '#e5e7eb',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginBottom: '1rem',
+            color: semanticColors.text.secondary,
+            marginTop: spacing[2],
           }}
         >
-          ← Zurück
-        </button>
-        <h1 style={{ margin: 0 }}>📊 Lern-Dashboard</h1>
-        <p style={{ color: '#6b7280', marginTop: '0.5rem' }}>
           Deine Fortschritte und Statistiken im Überblick
         </p>
       </div>
@@ -231,82 +244,116 @@ export function Dashboard({ onClose }: DashboardProps) {
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
-          gap: '1rem',
-          marginBottom: '2rem',
+          gap: spacing[4],
+          marginBottom: spacing[8],
         }}
       >
         <StatCard
           title="Gesamt Sitzungen"
           value={stats.completedSessions.toString()}
           subtitle={`von ${stats.totalSessions} gestartet`}
-          color="#3b82f6"
+          color={colors.primary[500]}
         />
         <StatCard
           title="Genauigkeit"
           value={`${Math.round(stats.accuracyRate)}%`}
           subtitle={`${stats.correctAnswers}/${stats.totalQuestions} richtig`}
-          color="#10b981"
+          color={colors.success[500]}
         />
         <StatCard
           title="Lernzeit"
           value={formatTime(stats.totalStudyTime)}
           subtitle={`Ø ${formatTime(stats.averageSessionTime)} pro Sitzung`}
-          color="#f59e0b"
+          color={colors.warning[500]}
         />
         <StatCard
           title="Anstehende Wiederholungen"
           value={stats.upcomingReviews.toString()}
           subtitle="bereit zum Üben"
-          color="#8b5cf6"
+          color={colors.info[500]}
         />
       </div>
 
       {/* Mastery Levels */}
-      <Card padding="medium" style={{ marginBottom: '2rem' }}>
+      <Card padding="medium" style={{ marginBottom: spacing[8] }}>
         <h2 style={{ marginTop: 0 }}>🎯 Beherrschungsniveau</h2>
-        <div style={{ display: 'flex', gap: '1rem', marginTop: '1rem' }}>
+        <div style={{ display: 'flex', gap: spacing[4], marginTop: spacing[4] }}>
           <MasteryBar
             label="Gemeistert"
             count={stats.masteryLevels.mastered}
-            color="#10b981"
+            color={colors.success[500]}
           />
           <MasteryBar
             label="In Arbeit"
             count={stats.masteryLevels.learning}
-            color="#f59e0b"
+            color={colors.warning[500]}
           />
-          <MasteryBar
-            label="Neu"
-            count={stats.masteryLevels.new}
-            color="#6b7280"
-          />
+          <MasteryBar label="Neu" count={stats.masteryLevels.new} color={colors.primary[500]} />
         </div>
       </Card>
 
       {/* Topic Progress */}
       {stats.topicProgress.length > 0 && (
-        <Card padding="medium" style={{ marginBottom: '2rem' }}>
+        <Card padding="medium" style={{ marginBottom: spacing[8] }}>
           <h2 style={{ marginTop: 0 }}>📚 Fortschritt nach Thema</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: spacing[4],
+              marginTop: spacing[4],
+            }}
+          >
             {stats.topicProgress.map((topic) => (
               <div key={topic.topicId}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-                  <span style={{ fontWeight: '500' }}>{topic.topicName}</span>
-                  <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    marginBottom: spacing[2],
+                  }}
+                >
+                  <span style={{ fontWeight: typography.fontWeight.medium }}>
+                    {topic.topicName}
+                  </span>
+                  <span
+                    style={{
+                      color: semanticColors.text.secondary,
+                      fontSize: typography.fontSize.sm,
+                    }}
+                  >
                     {topic.sessionsCompleted} Sitzungen • {Math.round(topic.accuracy)}% genau
                   </span>
                 </div>
-                <div style={{ background: '#f3f4f6', height: '8px', borderRadius: '4px', overflow: 'hidden' }}>
+                <div
+                  style={{
+                    background: semanticColors.background.tertiary,
+                    height: '8px',
+                    borderRadius: borderRadius.md,
+                    overflow: 'hidden',
+                  }}
+                >
                   <div
                     style={{
-                      background: topic.accuracy >= 75 ? '#10b981' : topic.accuracy >= 50 ? '#f59e0b' : '#ef4444',
+                      background:
+                        topic.accuracy >= 75
+                          ? colors.success[500]
+                          : topic.accuracy >= 50
+                          ? colors.warning[500]
+                          : colors.error[500],
                       height: '100%',
                       width: `${topic.accuracy}%`,
-                      transition: 'width 0.3s ease',
+                      transition: transitions.presets.base,
                     }}
                   />
                 </div>
-                <div style={{ fontSize: '0.75rem', color: '#6b7280', marginTop: '0.25rem' }}>
+                <div
+                  style={{
+                    fontSize: typography.fontSize.xs,
+                    color: semanticColors.text.secondary,
+                    marginTop: spacing[1],
+                  }}
+                >
                   {topic.tasksReviewed} Aufgaben bearbeitet
                 </div>
               </div>
@@ -319,30 +366,57 @@ export function Dashboard({ onClose }: DashboardProps) {
       {stats.recentSessions.length > 0 && (
         <Card padding="medium">
           <h2 style={{ marginTop: 0 }}>🕐 Letzte Sitzungen</h2>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', marginTop: '1rem' }}>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: spacing[3],
+              marginTop: spacing[4],
+            }}
+          >
             {stats.recentSessions.map((session) => (
               <div
                 key={session.id}
                 style={{
-                  padding: '1rem',
-                  background: '#f9fafb',
-                  borderRadius: '6px',
+                  padding: spacing[4],
+                  background: semanticColors.background.secondary,
+                  borderRadius: borderRadius.md,
                   display: 'flex',
                   justifyContent: 'space-between',
                   alignItems: 'center',
                 }}
               >
                 <div>
-                  <div style={{ fontWeight: '500' }}>{session.configuration.topicId}</div>
-                  <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                  <div style={{ fontWeight: typography.fontWeight.medium }}>
+                    {session.configuration.topicId}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: typography.fontSize.sm,
+                      color: semanticColors.text.secondary,
+                    }}
+                  >
                     {session.execution.completedAt && formatDate(session.execution.completedAt)}
                   </div>
                 </div>
                 <div style={{ textAlign: 'right' }}>
-                  <div style={{ fontWeight: '500', color: session.results.accuracy >= 75 ? '#10b981' : '#f59e0b' }}>
+                  <div
+                    style={{
+                      fontWeight: typography.fontWeight.medium,
+                      color:
+                        session.results.accuracy >= 75
+                          ? colors.success[500]
+                          : colors.warning[500],
+                    }}
+                  >
                     {Math.round(session.results.accuracy)}%
                   </div>
-                  <div style={{ fontSize: '0.875rem', color: '#6b7280' }}>
+                  <div
+                    style={{
+                      fontSize: typography.fontSize.sm,
+                      color: semanticColors.text.secondary,
+                    }}
+                  >
                     {session.execution.correctCount}/{session.execution.completedCount}
                   </div>
                 </div>
@@ -351,33 +425,6 @@ export function Dashboard({ onClose }: DashboardProps) {
           </div>
         </Card>
       )}
-    </div>
-  );
-}
-
-interface MasteryBarProps {
-  label: string;
-  count: number;
-  color: string;
-}
-
-function MasteryBar({ label, count, color }: MasteryBarProps) {
-  return (
-    <div style={{ flex: 1 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
-        <span style={{ fontSize: '0.875rem', fontWeight: '500' }}>{label}</span>
-        <span style={{ fontSize: '0.875rem', color: '#6b7280' }}>{count}</span>
-      </div>
-      <div style={{ background: '#f3f4f6', height: '8px', borderRadius: '4px', overflow: 'hidden' }}>
-        <div
-          style={{
-            background: color,
-            height: '100%',
-            width: count > 0 ? '100%' : '0%',
-            transition: 'width 0.3s ease',
-          }}
-        />
-      </div>
     </div>
   );
 }
