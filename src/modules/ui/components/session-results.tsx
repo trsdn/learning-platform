@@ -2,7 +2,6 @@ import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Button } from './common/Button';
 import { Card } from './common/Card';
-import { FeedbackCard } from './common/FeedbackCard';
 import { colors } from '@ui/design-tokens';
 import styles from './session-results.module.css';
 
@@ -105,15 +104,6 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
             'Bleib dran! Übung macht den Meister. Die nächste Sitzung wird noch besser!'}
         </p>
       </Card>
-
-      {/* Spaced Repetition Info */}
-      <FeedbackCard variant="success" className={styles['session-results__sr-card']}>
-        <h4 className={styles['session-results__sr-title']}>🧠 Spaced Repetition aktiviert</h4>
-        <p className={styles['session-results__sr-text']}>
-          Deine Antworten wurden gespeichert. Aufgaben, die du nicht sofort beherrscht hast, werden
-          dir in optimalen Abständen wieder vorgelegt, um dein Langzeitgedächtnis zu trainieren.
-        </p>
-      </FeedbackCard>
 
       {/* Actions */}
       <div className={styles['session-results__actions']}>

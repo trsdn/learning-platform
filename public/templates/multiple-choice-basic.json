@@ -11,7 +11,11 @@
     },
     "questionLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the question"
     },
@@ -29,7 +33,11 @@
     },
     "optionsLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the options"
     },
@@ -56,7 +64,12 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["questionAudio"]
+      "onLoad": [
+        "questionAudio"
+      ],
+      "onReveal": [
+        "correctAnswerAudio"
+      ]
     },
     "buttons": {
       "question": {
@@ -66,8 +79,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
@@ -75,7 +94,12 @@
     {
       "question": "Was ist 2 + 2?",
       "questionLanguage": "de",
-      "options": ["3", "4", "5", "6"],
+      "options": [
+        "3",
+        "4",
+        "5",
+        "6"
+      ],
       "optionsLanguage": "de",
       "correctAnswer": 1,
       "explanation": "2 + 2 = 4",

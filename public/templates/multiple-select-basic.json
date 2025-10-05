@@ -11,7 +11,11 @@
     },
     "questionLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the question"
     },
@@ -29,7 +33,11 @@
     },
     "optionsLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the options"
     },
@@ -62,7 +70,12 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["questionAudio"]
+      "onLoad": [
+        "questionAudio"
+      ],
+      "onReveal": [
+        "correctOptionsAudio"
+      ]
     },
     "buttons": {
       "question": {
@@ -72,8 +85,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
@@ -81,9 +100,19 @@
     {
       "question": "Welche der folgenden sind Primzahlen?",
       "questionLanguage": "de",
-      "options": ["2", "4", "7", "9", "11"],
+      "options": [
+        "2",
+        "4",
+        "7",
+        "9",
+        "11"
+      ],
       "optionsLanguage": "de",
-      "correctAnswers": [0, 2, 4],
+      "correctAnswers": [
+        0,
+        2,
+        4
+      ],
       "minRequired": 3,
       "explanation": "Die Primzahlen sind: 2, 7 und 11. Eine Primzahl ist nur durch 1 und sich selbst teilbar.",
       "hint": "Welche Zahlen sind nur durch 1 und sich selbst teilbar?"

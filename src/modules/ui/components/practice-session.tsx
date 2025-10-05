@@ -37,6 +37,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   // Multiple choice state
   const [shuffledOptions, setShuffledOptions] = useState<string[]>([]);
+  const [shuffledIndices, setShuffledIndices] = useState<number[]>([]);
   const [correctAnswerIndex, setCorrectAnswerIndex] = useState<number>(0);
 
   // Cloze deletion state
@@ -178,6 +179,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       const newCorrectIndex = indices.findIndex(originalIndex => originalIndex === originalCorrectAnswer);
 
       setShuffledOptions(shuffled);
+      setShuffledIndices(indices);
       setCorrectAnswerIndex(newCorrectIndex);
     } else if (task.type === 'cloze-deletion') {
       const content = task.content as ClozeDeletionContent;
@@ -386,20 +388,147 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   // Auto-play audio on load (based on template config)
   useEffect(() => {
-    if (!currentTask || !audioConfig || !playbackState.autoPlayUnlocked || showFeedback) return;
+    if (!currentTask || !audioConfig || showFeedback) return;
 
     const fieldsToPlay = audioConfig.autoPlay?.onLoad || [];
     const content = currentTask.content as any;
 
-    for (const field of fieldsToPlay) {
-      if (content[field]) {
-        const audio = new Audio(`${import.meta.env.BASE_URL}audio/${content[field]}`);
-        audio.play().catch(err => console.warn(`Failed to auto-play ${field}:`, err));
-        break; // Only play first available audio
+    // Try to auto-play immediately
+    const tryAutoPlay = async () => {
+      for (const field of fieldsToPlay) {
+        const fieldValue = content[field];
+
+        if (!fieldValue) continue;
+
+        // Handle array fields (like optionsAudio) - play first item
+        const audioFile = Array.isArray(fieldValue) ? fieldValue[0] : fieldValue;
+
+        if (audioFile) {
+          try {
+            const audio = new Audio(`${import.meta.env.BASE_URL}audio/${audioFile}`);
+            await audio.play();
+            console.log(`✅ Auto-played ${field}: ${audioFile}`);
+            break; // Only play first available audio
+          } catch (err) {
+            console.warn(`⚠️ Auto-play blocked for ${field}. User interaction required first.`, err);
+            // Try to unlock auto-play for next time
+            if (!playbackState.autoPlayUnlocked) {
+              unlockAutoPlay().catch(e => console.warn('Failed to unlock auto-play:', e));
+            }
+          }
+        }
       }
-    }
+    };
+
+    tryAutoPlay();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask?.id, audioConfig]);
+
+  // Auto-play audio on reveal/feedback (based on template config)
+  useEffect(() => {
+    if (!currentTask || !audioConfig || !showFeedback) return;
+
+    const fieldsToPlay = audioConfig.autoPlay?.onReveal || [];
+    const content = currentTask.content as any;
+
+    // Try to auto-play immediately
+    const tryAutoPlayOnReveal = async () => {
+      for (const field of fieldsToPlay) {
+        const audioFiles: string[] = [];
+
+        // Special handling for different task types
+        if (field === 'correctAnswerAudio' && currentTask.type === 'multiple-choice') {
+          // Multiple choice: play correct option audio
+          if (content.optionsAudio?.[content.correctAnswer]) {
+            audioFiles.push(content.optionsAudio[content.correctAnswer]);
+          }
+        } else if (field === 'correctAnswerAudio' && currentTask.type === 'text-input') {
+          // Text input: play correct answer audio
+          if (content.correctAnswerAudio) {
+            audioFiles.push(content.correctAnswerAudio);
+          }
+        } else if (field === 'itemsAudioInOrder' && currentTask.type === 'ordering') {
+          // Ordering: play all items in correct order
+          const itemsAudio = content.itemsAudio;
+          const correctOrder = content.correctOrder;
+          if (itemsAudio && correctOrder) {
+            for (const originalIndex of correctOrder) {
+              if (itemsAudio[originalIndex]) {
+                audioFiles.push(itemsAudio[originalIndex]);
+              }
+            }
+          }
+        } else if (field === 'blanksAudioInOrder' && currentTask.type === 'cloze-deletion') {
+          // Cloze deletion: play all blanks in order
+          const blanks = content.blanks;
+          if (blanks) {
+            for (const blank of blanks) {
+              if (blank.correctAnswerAudio) {
+                audioFiles.push(blank.correctAnswerAudio);
+              }
+            }
+          }
+        } else if (field === 'correctOptionsAudio' && currentTask.type === 'multiple-select') {
+          // Multiple select: play all correct options
+          const optionsAudio = content.optionsAudio;
+          const correctAnswers = content.correctAnswers;
+          if (optionsAudio && correctAnswers) {
+            for (const correctIndex of correctAnswers) {
+              if (optionsAudio[correctIndex]) {
+                audioFiles.push(optionsAudio[correctIndex]);
+              }
+            }
+          }
+        } else if (field === 'correctValueAudio' && currentTask.type === 'slider') {
+          // Slider: play correct value audio
+          if (content.correctValueAudio) {
+            audioFiles.push(content.correctValueAudio);
+          }
+        } else if (field === 'correctWordAudio' && currentTask.type === 'word-scramble') {
+          // Word scramble: play correct word audio
+          if (content.correctWordAudio) {
+            audioFiles.push(content.correctWordAudio);
+          }
+        } else {
+          // Generic: try to get field value
+          const fieldValue = content[field];
+          if (fieldValue) {
+            const audioFile = Array.isArray(fieldValue) ? fieldValue[0] : fieldValue;
+            if (audioFile) audioFiles.push(audioFile);
+          }
+        }
+
+        // Play all audio files sequentially
+        if (audioFiles.length > 0) {
+          for (const audioFile of audioFiles) {
+            try {
+              const audio = new Audio(`${import.meta.env.BASE_URL}audio/${audioFile}`);
+              await audio.play();
+              // Wait for audio to finish before playing next one
+              await new Promise(resolve => {
+                audio.onended = resolve;
+                // Fallback timeout in case onended doesn't fire
+                setTimeout(resolve, 5000);
+              });
+              console.log(`✅ Auto-played on reveal ${field}: ${audioFile}`);
+            } catch (err) {
+              console.warn(`⚠️ Auto-play on reveal blocked for ${audioFile}.`, err);
+              break; // Stop if one fails
+            }
+          }
+          break; // Only process first field with audio
+        }
+      }
+    };
+
+    // Small delay to ensure feedback is visible before playing
+    const timer = setTimeout(() => {
+      tryAutoPlayOnReveal();
+    }, 100);
+
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [showFeedback, currentTask?.id, audioConfig]);
 
   // Helper function to check if answer is ready to submit
   function canSubmit(): boolean {
@@ -451,6 +580,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   function renderMultipleChoice() {
     if (!currentTask || currentTask.type !== 'multiple-choice') return null;
+    const content = currentTask.content as any;
 
     return (
       <div className={styles['practice-session__mc-options']}>
@@ -463,6 +593,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             showFeedback && styles['practice-session__mc-option--disabled']
           ].filter(Boolean).join(' ');
 
+          // Get the audio URL for this option if available
+          // Use the original index from shuffledIndices to get the correct audio
+          const originalIndex = shuffledIndices[index];
+          const optionAudioUrl = content.optionsAudio && originalIndex !== undefined && content.optionsAudio[originalIndex]
+            ? `${import.meta.env.BASE_URL}audio/${content.optionsAudio[originalIndex]}`
+            : null;
+
           return (
             <button
               key={index}
@@ -471,6 +608,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               className={optionClasses}
             >
               <span>{option}</span>
+              {optionAudioUrl && (
+                <AudioButton
+                  text={option}
+                  audioUrl={optionAudioUrl}
+                  size="small"
+                />
+              )}
             </button>
           );
         })}
@@ -581,7 +725,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   function renderOrdering() {
     if (!currentTask || currentTask.type !== 'ordering') return null;
-    const content = currentTask.content as OrderingContent;
+    const content = currentTask.content as any;
 
     return (
       <div className={styles['practice-session__ordering-container']}>
@@ -599,6 +743,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               showFeedback && isInCorrectPosition && styles['practice-session__ordering-item--correct']
             ].filter(Boolean).join(' ');
 
+            // Get audio URL for this item
+            const itemAudioUrl = content.itemsAudio && content.itemsAudio[originalIndex]
+              ? `${import.meta.env.BASE_URL}audio/${content.itemsAudio[originalIndex]}`
+              : null;
+
             return (
               <div key={index} className={itemClasses}>
                 <div className={styles['practice-session__ordering-item-number']}>
@@ -606,6 +755,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                 </div>
                 <div className={styles['practice-session__ordering-item-text']}>
                   {item}
+                  {itemAudioUrl && (
+                    <AudioButton
+                      text={item}
+                      audioUrl={itemAudioUrl}
+                      size="small"
+                    />
+                  )}
                   {showFeedback && !isInCorrectPosition && (
                     <span className={styles['practice-session__ordering-hint']}>
                       → Position {shouldBeAtPosition + 1}
@@ -649,7 +805,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <div className={styles['practice-session__ordering-feedback-title']}>
               Richtige Reihenfolge:
             </div>
-            {content.correctOrder.map((originalIndex, position) => (
+            {content.correctOrder.map((originalIndex: number, position: number) => (
               <div key={position} className={styles['practice-session__ordering-feedback-item']}>
                 {position + 1}. <strong>{content.items[originalIndex]}</strong>
               </div>
@@ -662,7 +818,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   function renderMatching() {
     if (!currentTask || currentTask.type !== 'matching') return null;
-    const content = currentTask.content as MatchingContent;
+    const content = currentTask.content as any;
 
     return (
       <div className={styles['practice-session__matching-container']}>
@@ -670,14 +826,26 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           Ordne die passenden Paare zu
         </div>
         <div className={styles['practice-session__matching-grid']}>
-          {content.pairs.map((pair, leftIndex) => {
+          {content.pairs.map((pair: any, leftIndex: number) => {
             const isCorrect = showFeedback && matchingAnswers[leftIndex] === leftIndex;
             const hasAnswer = matchingAnswers[leftIndex] !== undefined && matchingAnswers[leftIndex] !== null;
+
+            // Get audio URL for left item
+            const leftAudioUrl = content.leftAudio && content.leftAudio[leftIndex]
+              ? `${import.meta.env.BASE_URL}audio/${content.leftAudio[leftIndex]}`
+              : null;
 
             return (
               <React.Fragment key={leftIndex}>
                 <div className={styles['practice-session__matching-left-item']}>
                   <span>{pair.left}</span>
+                  {leftAudioUrl && (
+                    <AudioButton
+                      text={pair.left}
+                      audioUrl={leftAudioUrl}
+                      size="small"
+                    />
+                  )}
                 </div>
                 <Select
                   value={matchingAnswers[leftIndex]?.toString() ?? ''}
@@ -704,7 +872,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <div className={styles['practice-session__matching-feedback-title']}>
               Richtige Zuordnungen:
             </div>
-            {content.pairs.map((pair, i) => (
+            {content.pairs.map((pair: any, i: number) => (
               <div key={i} className={styles['practice-session__matching-feedback-item']}>
                 <strong>{pair.left}</strong> → <strong>{pair.right}</strong>
               </div>
@@ -1017,7 +1185,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   function renderTextInput() {
     if (!currentTask || currentTask.type !== 'text-input') return null;
-    const content = currentTask.content as TextInputContent;
+    const content = currentTask.content as any;
+
+    const correctAnswerAudioUrl = (content.correctAnswerAudio)
+      ? `${import.meta.env.BASE_URL}audio/${content.correctAnswerAudio}`
+      : currentTask.audioUrl;
 
     return (
       <div className={styles['practice-session__text-input-container']}>
@@ -1038,7 +1210,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               <div>
                 <strong>Richtige Antwort:</strong> {content.correctAnswer}
               </div>
-              {currentTask.audioUrl && <AudioButton text={content.correctAnswer} audioUrl={currentTask.audioUrl} size="small" />}
+              {correctAnswerAudioUrl && <AudioButton text={content.correctAnswer} audioUrl={correctAnswerAudioUrl} size="small" />}
             </div>
           )}
         </div>
@@ -1062,8 +1234,15 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   const progress = ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100;
 
+  // Unlock auto-play on first user interaction with the practice session
+  const handlePracticeSessionClick = () => {
+    if (!playbackState.autoPlayUnlocked) {
+      unlockAutoPlay().catch(err => console.warn('Failed to unlock auto-play on click:', err));
+    }
+  };
+
   return (
-    <div className={styles['practice-session']}>
+    <div className={styles['practice-session']} onClick={handlePracticeSessionClick}>
       {/* Header - compact */}
       <div className={styles['practice-session__header']}>
         <div className={styles['practice-session__header-top']}>
@@ -1106,6 +1285,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <h3 className={styles['practice-session__question-text']}>
               {(currentTask.content as any).question}
             </h3>
+            {audioConfig?.buttons?.question?.show && (currentTask.content as any)[audioConfig.buttons.question.field] && (
+              <AudioButton
+                text={(currentTask.content as any).question}
+                audioUrl={`${import.meta.env.BASE_URL}audio/${(currentTask.content as any)[audioConfig.buttons.question.field]}`}
+                size="small"
+              />
+            )}
           </div>
         )}
 

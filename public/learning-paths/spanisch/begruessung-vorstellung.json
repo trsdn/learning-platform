@@ -30,10 +30,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/adios.mp3",
-          "spanish/hola.mp3",
-          "spanish/gracias.mp3",
-          "spanish/buenos-dias.mp3"
+          "spanish/greetings/adios.mp3",
+          "spanish/greetings/hola.mp3",
+          "spanish/greetings/gracias.mp3",
+          "spanish/greetings/buenos-dias.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Hola' ist die universelle spanische Begrüßung und bedeutet 'Hallo'."
@@ -65,10 +65,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/buenas-noches.mp3",
-          "spanish/buenos-dias.mp3",
-          "spanish/buenas-tardes.mp3",
-          "spanish/hola.mp3"
+          "spanish/greetings/buenas-noches.mp3",
+          "spanish/greetings/buenos-dias.mp3",
+          "spanish/greetings/buenas-tardes.mp3",
+          "spanish/greetings/hola.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Buenos días' bedeutet 'Guten Tag' oder 'Guten Morgen' auf Spanisch."
@@ -100,10 +100,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/buenos-dias.mp3",
-          "spanish/buenas-tardes.mp3",
-          "spanish/buenas-noches.mp3",
-          "spanish/hasta-luego.mp3"
+          "spanish/greetings/buenos-dias.mp3",
+          "spanish/greetings/buenas-tardes.mp3",
+          "spanish/greetings/buenas-noches.mp3",
+          "spanish/greetings/hasta-luego.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Buenas tardes' wird nachmittags und am frühen Abend verwendet."
@@ -135,10 +135,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/buenos-dias.mp3",
-          "spanish/buenas-tardes.mp3",
-          "spanish/buenas-noches.mp3",
-          "spanish/adios.mp3"
+          "spanish/greetings/buenos-dias.mp3",
+          "spanish/greetings/buenas-tardes.mp3",
+          "spanish/greetings/buenas-noches.mp3",
+          "spanish/greetings/adios.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Buenas noches' bedeutet 'Gute Nacht' und wird spät abends verwendet."
@@ -164,7 +164,7 @@
         "questionLanguage": "de",
         "correctAnswer": "¿Cómo te llamas?",
         "correctAnswerLanguage": "es",
-        "correctAnswerAudio": "spanish/como-te-llamas.mp3",
+        "correctAnswerAudio": "spanish/phrases/como-te-llamas.mp3",
         "alternatives": [
           "Como te llamas"
         ],
@@ -191,7 +191,7 @@
         "questionLanguage": "de",
         "correctAnswer": "Me llamo...",
         "correctAnswerLanguage": "es",
-        "correctAnswerAudio": "spanish/me-llamo.mp3",
+        "correctAnswerAudio": "spanish/phrases/me-llamo.mp3",
         "alternatives": [
           "me llamo"
         ],
@@ -224,10 +224,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/como-te-llamas.mp3",
-          "spanish/como-estas.mp3",
-          "spanish/de-donde-eres.mp3",
-          "spanish/cuantos-anos-tienes.mp3"
+          "spanish/phrases/como-te-llamas.mp3",
+          "spanish/phrases/como-estas.mp3",
+          "spanish/phrases/de-donde-eres.mp3",
+          "spanish/phrases/cuantos-anos-tienes.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Cómo estás?' ist die informelle Art zu fragen 'Wie geht es dir?'"
@@ -251,7 +251,7 @@
       "content": {
         "question": "Wie antwortet man 'Sehr gut' auf '¿Cómo estás?'?",
         "questionLanguage": "de",
-        "questionAudio": "spanish/como-estas.mp3",
+        "questionAudio": "spanish/phrases/como-estas.mp3",
         "options": [
           "Mal",
           "Muy bien",
@@ -260,10 +260,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/mal.mp3",
-          "spanish/muy-bien.mp3",
-          "spanish/regular.mp3",
-          "spanish/asi-asi.mp3"
+          "spanish/phrases/mal.mp3",
+          "spanish/phrases/muy-bien.mp3",
+          "spanish/phrases/regular.mp3",
+          "spanish/phrases/asi-asi.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Muy bien' bedeutet 'sehr gut'. Man kann auch einfach 'Bien' (gut) sagen."
@@ -295,10 +295,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/hola.mp3",
-          "spanish/hasta-luego.mp3",
-          "spanish/adios.mp3",
-          "spanish/buenos-dias.mp3"
+          "spanish/greetings/hola.mp3",
+          "spanish/greetings/hasta-luego.mp3",
+          "spanish/greetings/adios.mp3",
+          "spanish/greetings/buenos-dias.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Adiós' bedeutet 'Auf Wiedersehen' und ist eine formelle Verabschiedung."
@@ -324,7 +324,7 @@
         "questionLanguage": "de",
         "correctAnswer": "Hasta luego",
         "correctAnswerLanguage": "es",
-        "correctAnswerAudio": "spanish/hasta-luego.mp3",
+        "correctAnswerAudio": "spanish/greetings/hasta-luego.mp3",
         "alternatives": [
           "hasta luego"
         ],
@@ -357,10 +357,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/por-favor.mp3",
-          "spanish/perdon.mp3",
-          "spanish/gracias.mp3",
-          "spanish/de-nada.mp3"
+          "spanish/phrases/por-favor.mp3",
+          "spanish/phrases/perdon.mp3",
+          "spanish/greetings/gracias.mp3",
+          "spanish/phrases/de-nada.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Gracias' bedeutet 'Danke' auf Spanisch."
@@ -384,7 +384,7 @@
       "content": {
         "question": "Wie antwortet man auf 'Gracias'?",
         "questionLanguage": "de",
-        "questionAudio": "spanish/gracias.mp3",
+        "questionAudio": "spanish/greetings/gracias.mp3",
         "options": [
           "Hola",
           "Adiós",
@@ -393,10 +393,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/hola.mp3",
-          "spanish/adios.mp3",
-          "spanish/de-nada.mp3",
-          "spanish/perdon.mp3"
+          "spanish/greetings/hola.mp3",
+          "spanish/greetings/adios.mp3",
+          "spanish/phrases/de-nada.mp3",
+          "spanish/phrases/perdon.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'De nada' bedeutet 'Gern geschehen' oder 'Bitte schön'."
@@ -422,7 +422,7 @@
         "questionLanguage": "de",
         "correctAnswer": "Por favor",
         "correctAnswerLanguage": "es",
-        "correctAnswerAudio": "spanish/por-favor.mp3",
+        "correctAnswerAudio": "spanish/phrases/por-favor.mp3",
         "alternatives": [
           "por favor"
         ],
@@ -455,10 +455,10 @@
         ],
         "optionsLanguage": "es",
         "optionsAudio": [
-          "spanish/gracias.mp3",
-          "spanish/perdon.mp3",
-          "spanish/por-favor.mp3",
-          "spanish/de-nada.mp3"
+          "spanish/greetings/gracias.mp3",
+          "spanish/phrases/perdon.mp3",
+          "spanish/phrases/por-favor.mp3",
+          "spanish/phrases/de-nada.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Perdón' bedeutet 'Entschuldigung' auf Spanisch."
@@ -484,7 +484,7 @@
         "questionLanguage": "de",
         "correctAnswer": "Lo siento",
         "correctAnswerLanguage": "es",
-        "correctAnswerAudio": "spanish/lo-siento.mp3",
+        "correctAnswerAudio": "spanish/phrases/lo-siento.mp3",
         "alternatives": [
           "lo siento"
         ],
@@ -513,28 +513,28 @@
           {
             "left": "Buenos días",
             "leftLanguage": "es",
-            "leftAudio": "spanish/buenos-dias.mp3",
+            "leftAudio": "spanish/greetings/buenos-dias.mp3",
             "right": "Guten Morgen",
             "rightLanguage": "de"
           },
           {
             "left": "Buenas tardes",
             "leftLanguage": "es",
-            "leftAudio": "spanish/buenas-tardes.mp3",
+            "leftAudio": "spanish/greetings/buenas-tardes.mp3",
             "right": "Guten Nachmittag",
             "rightLanguage": "de"
           },
           {
             "left": "Buenas noches",
             "leftLanguage": "es",
-            "leftAudio": "spanish/buenas-noches.mp3",
+            "leftAudio": "spanish/greetings/buenas-noches.mp3",
             "right": "Gute Nacht",
             "rightLanguage": "de"
           },
           {
             "left": "Hasta luego",
             "leftLanguage": "es",
-            "leftAudio": "spanish/hasta-luego.mp3",
+            "leftAudio": "spanish/greetings/hasta-luego.mp3",
             "right": "Bis später",
             "rightLanguage": "de"
           }
@@ -567,9 +567,9 @@
         ],
         "itemsLanguage": "es",
         "itemsAudio": [
-          "spanish/como.mp3",
+          "spanish/phrases/como.mp3",
           "spanish/te.mp3",
-          "spanish/llamas.mp3"
+          "spanish/verbs/llamas.mp3"
         ],
         "correctOrder": [
           0,
@@ -605,7 +605,7 @@
         "itemsLanguage": "es",
         "itemsAudio": [
           "spanish/me.mp3",
-          "spanish/llamo.mp3",
+          "spanish/verbs/llamo.mp3",
           "spanish/maria.mp3"
         ],
         "correctOrder": [

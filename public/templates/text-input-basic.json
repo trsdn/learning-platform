@@ -1,13 +1,13 @@
 {
-  "id": "ordering-basic",
-  "name": "Ordering (Basic)",
-  "description": "Sort items into the correct order",
-  "type": "ordering",
+  "id": "text-input-basic",
+  "name": "Text Input (Basic)",
+  "description": "Type the correct answer",
+  "type": "text-input",
   "schema": {
     "question": {
       "type": "string",
       "required": true,
-      "description": "The main question text explaining what order to use"
+      "description": "The main question text"
     },
     "questionLanguage": {
       "type": "string",
@@ -22,16 +22,14 @@
     "questionAudio": {
       "type": "string",
       "required": false,
-      "description": "Audio file path for question (e.g., 'spanish/pregunta.mp3')"
+      "description": "Audio file path for question"
     },
-    "items": {
-      "type": "array",
+    "correctAnswer": {
+      "type": "string",
       "required": true,
-      "minItems": 2,
-      "maxItems": 8,
-      "description": "Items to be ordered (shown in random order)"
+      "description": "The correct answer text"
     },
-    "itemsLanguage": {
+    "correctAnswerLanguage": {
       "type": "string",
       "enum": [
         "de",
@@ -39,17 +37,22 @@
         "en"
       ],
       "required": false,
-      "description": "Language of the items"
+      "description": "Language of the correct answer"
     },
-    "itemsAudio": {
+    "correctAnswerAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for correct answer"
+    },
+    "alternatives": {
       "type": "array",
       "required": false,
-      "description": "Audio file paths for each item (same length as items)"
+      "description": "Alternative correct answers"
     },
-    "correctOrder": {
-      "type": "array",
-      "required": true,
-      "description": "Array of indices representing the correct order (0-based)"
+    "caseSensitive": {
+      "type": "boolean",
+      "required": false,
+      "description": "Whether the answer is case sensitive"
     },
     "explanation": {
       "type": "string",
@@ -68,7 +71,7 @@
         "questionAudio"
       ],
       "onReveal": [
-        "itemsAudioInOrder"
+        "correctAnswerAudio"
       ]
     },
     "buttons": {
@@ -92,23 +95,17 @@
   },
   "examples": [
     {
-      "question": "Ordne diese Zahlen von klein nach groß:",
+      "question": "Wie sagt man 'Danke' auf Spanisch?",
       "questionLanguage": "de",
-      "items": [
-        "1000",
-        "10",
-        "100",
-        "1"
+      "correctAnswer": "Gracias",
+      "correctAnswerLanguage": "es",
+      "correctAnswerAudio": "spanish/greetings/gracias.mp3",
+      "alternatives": [
+        "gracias"
       ],
-      "itemsLanguage": "de",
-      "correctOrder": [
-        3,
-        1,
-        2,
-        0
-      ],
-      "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
-      "hint": "Welche Zahl ist am kleinsten?"
+      "caseSensitive": false,
+      "explanation": "'Gracias' bedeutet 'Danke' auf Spanisch.",
+      "hint": "Es beginnt mit 'Gra...'"
     }
   ]
 }

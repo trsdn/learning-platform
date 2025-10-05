@@ -21,11 +21,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'Guten Tag' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "Buenos días",
           "Buenas noches",
           "Buenas tardes",
           "Adiós"
+        ],
+        "optionsAudio": [
+          "spanish/greetings/buenos-dias.mp3",
+          "spanish/greetings/buenas-noches.mp3",
+          "spanish/greetings/buenas-tardes.mp3",
+          "spanish/greetings/adios.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "Buenos días bedeutet 'Guten Tag' oder 'Guten Morgen' auf Spanisch."
@@ -48,11 +55,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'Guten Abend' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "Buenos días",
           "Buenas tardes",
           "Buenas noches",
           "Hasta luego"
+        ],
+        "optionsAudio": [
+          "spanish/greetings/buenos-dias.mp3",
+          "spanish/greetings/buenas-tardes.mp3",
+          "spanish/greetings/buenas-noches.mp3",
+          "spanish/greetings/hasta-luego.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "Buenas tardes bedeutet 'Guten Nachmittag/Guten Abend' auf Spanisch."
@@ -75,7 +89,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie fragt man auf Spanisch 'Wie heißt du?'?",
+        "questionLanguage": "de",
         "correctAnswer": "¿Cómo te llamas?",
+        "correctAnswerAudio": "spanish/phrases/como-te-llamas.mp3",
         "alternatives": [
           "Como te llamas"
         ],
@@ -99,7 +115,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Ich heiße...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Me llamo...",
+        "correctAnswerAudio": "spanish/phrases/me-llamo.mp3",
         "alternatives": [
           "me llamo"
         ],
@@ -123,6 +141,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Was bedeutet 'Hola' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/greetings/hola.mp3",
         "options": [
           "Tschüss",
           "Hallo",
@@ -150,11 +170,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'Auf Wiedersehen' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "Hola",
           "Gracias",
           "Adiós",
           "Buenos días"
+        ],
+        "optionsAudio": [
+          "spanish/greetings/hola.mp3",
+          "spanish/greetings/gracias.mp3",
+          "spanish/greetings/adios.mp3",
+          "spanish/greetings/buenos-dias.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Adiós' bedeutet 'Auf Wiedersehen' auf Spanisch."
@@ -177,7 +204,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Bis später' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Hasta luego",
+        "correctAnswerAudio": "spanish/greetings/hasta-luego.mp3",
         "alternatives": [
           "hasta luego"
         ],
@@ -201,6 +230,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Was bedeutet '¿Cómo estás?' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/phrases/como-estas.mp3",
         "options": [
           "Wie heißt du?",
           "Wie geht es dir?",
@@ -228,7 +259,10 @@
       "type": "text-input",
       "content": {
         "question": "Wie antwortet man auf '¿Cómo estás?' wenn es einem gut geht?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/phrases/como-estas.mp3",
         "correctAnswer": "Muy bien",
+        "correctAnswerAudio": "spanish/phrases/muy-bien.mp3",
         "alternatives": [
           "muy bien",
           "Bien"
@@ -253,11 +287,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Vater' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "la madre",
           "el padre",
           "el hermano",
           "los padres"
+        ],
+        "optionsAudio": [
+          "spanish/family/la-madre.mp3",
+          "spanish/family/el-padre.mp3",
+          "spanish/family/el-hermano.mp3",
+          "spanish/family/los-padres.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'El padre' bedeutet 'der Vater' auf Spanisch."
@@ -280,11 +321,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Mutter' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el padre",
           "la hermana",
           "la madre",
           "los padres"
+        ],
+        "optionsAudio": [
+          "spanish/family/el-padre.mp3",
+          "spanish/family/la-hermana.mp3",
+          "spanish/family/la-madre.mp3",
+          "spanish/family/los-padres.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'La madre' bedeutet 'die Mutter' auf Spanisch."
@@ -307,7 +355,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Bruder' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el hermano",
+        "correctAnswerAudio": "spanish/family/el-hermano.mp3",
         "alternatives": [
           "El hermano"
         ],
@@ -331,7 +381,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'die Schwester' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la hermana",
+        "correctAnswerAudio": "spanish/family/la-hermana.mp3",
         "alternatives": [
           "La hermana"
         ],
@@ -355,6 +407,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Was bedeutet 'los padres' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/family/los-padres.mp3",
         "options": [
           "die Väter",
           "die Mütter",
@@ -382,7 +436,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'die Geschwister' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "los hermanos",
+        "correctAnswerAudio": "spanish/family/los-hermanos.mp3",
         "alternatives": [
           "Los hermanos"
         ],
@@ -406,11 +462,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man auf Spanisch 'Wie alt bist du?'?",
+        "questionLanguage": "de",
         "options": [
           "¿Cómo te llamas?",
           "¿Cuántos años tienes?",
           "¿De dónde eres?",
           "¿Cómo estás?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/como-te-llamas.mp3",
+          "spanish/phrases/cuantos-anos-tienes.mp3",
+          "spanish/phrases/de-donde-eres.mp3",
+          "spanish/phrases/como-estas.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Cuántos años tienes?' bedeutet 'Wie alt bist du?' auf Spanisch."
@@ -433,7 +496,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Ich bin ... Jahre alt' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Tengo ... años",
+        "correctAnswerAudio": "spanish/phrases/tengo-anos.mp3",
         "alternatives": [
           "tengo años",
           "Tengo años",
@@ -461,11 +526,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der beste Freund' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el amigo",
           "la mejor amiga",
           "el mejor amigo",
           "los amigos"
+        ],
+        "optionsAudio": [
+          "spanish/vocabulary/el-amigo.mp3",
+          "spanish/family/la-mejor-amiga.mp3",
+          "spanish/vocabulary/el-mejor-amigo.mp3",
+          "spanish/vocabulary/los-amigos.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El mejor amigo' bedeutet 'der beste Freund' auf Spanisch."
@@ -488,7 +560,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'die beste Freundin' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la mejor amiga",
+        "correctAnswerAudio": "spanish/family/la-mejor-amiga.mp3",
         "alternatives": [
           "La mejor amiga"
         ],
@@ -512,6 +586,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Was bedeutet 'mi' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/vocabulary/mi.mp3",
         "options": [
           "dein/deine",
           "mein/meine",
@@ -539,7 +615,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'meine Freunde' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "mis amigos",
+        "correctAnswerAudio": "spanish/family/mis-amigos.mp3",
         "alternatives": [
           "Mis amigos"
         ],
@@ -563,11 +641,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Wo lebst du?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿De dónde eres?",
           "¿Dónde vives?",
           "¿Cómo te llamas?",
           "¿Qué haces?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/de-donde-eres.mp3",
+          "spanish/phrases/donde-vives.mp3",
+          "spanish/phrases/como-te-llamas.mp3",
+          "spanish/phrases/que-haces.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Dónde vives?' bedeutet 'Wo lebst du?' auf Spanisch."
@@ -590,7 +675,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Ich lebe in...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Vivo en...",
+        "correctAnswerAudio": "spanish/phrases/vivo-en.mp3",
         "alternatives": [
           "vivo en"
         ],
@@ -614,11 +701,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Woher kommst du?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Dónde vives?",
           "¿De dónde eres?",
           "¿Cómo estás?",
           "¿Cuántos años tienes?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/donde-vives.mp3",
+          "spanish/phrases/de-donde-eres.mp3",
+          "spanish/phrases/como-estas.mp3",
+          "spanish/phrases/cuantos-anos-tienes.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿De dónde eres?' bedeutet 'Woher kommst du?' auf Spanisch."
@@ -641,7 +735,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Ich komme aus...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Soy de...",
+        "correctAnswerAudio": "spanish/phrases/soy-de.mp3",
         "alternatives": [
           "soy de"
         ],
@@ -665,11 +761,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'Deutschland' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "Alemania",
           "España",
           "Francia",
           "Italia"
+        ],
+        "optionsAudio": [
+          "spanish/vocabulary/alemania.mp3",
+          "spanish/vocabulary/espana.mp3",
+          "spanish/vocabulary/francia.mp3",
+          "spanish/vocabulary/italia.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'Alemania' ist das spanische Wort für 'Deutschland'."
@@ -692,11 +795,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'Spanien' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "Alemania",
           "España",
           "Portugal",
           "Italia"
+        ],
+        "optionsAudio": [
+          "spanish/vocabulary/alemania.mp3",
+          "spanish/vocabulary/espana.mp3",
+          "spanish/vocabulary/portugal.mp3",
+          "spanish/vocabulary/italia.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'España' ist das spanische Wort für 'Spanien'."
@@ -719,11 +829,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Was ist dein Lieblingstier?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Cuál es tu animal favorito?",
           "¿Cuál es tu color favorito?",
           "¿Tienes mascotas?",
           "¿Cómo se llama?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/cual-es-tu-animal-favorito.mp3",
+          "spanish/phrases/cual-es-tu-color-favorito.mp3",
+          "spanish/phrases/tienes-mascotas.mp3",
+          "spanish/phrases/como-se-llama.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'¿Cuál es tu animal favorito?' bedeutet 'Was ist dein Lieblingstier?' auf Spanisch."
@@ -746,7 +863,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Mein Lieblingstier ist...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Mi animal favorito es...",
+        "correctAnswerAudio": "spanish/phrases/mi-animal-favorito-es.mp3",
         "alternatives": [
           "mi animal favorito es"
         ],
@@ -770,11 +889,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'das Haustier' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el animal",
           "la mascota",
           "el perro",
           "el gato"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-animal.mp3",
+          "spanish/animals/la-mascota.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-gato.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La mascota' bedeutet 'das Haustier' auf Spanisch."
@@ -797,11 +923,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Hast du Haustiere?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Tienes hermanos?",
           "¿Tienes mascotas?",
           "¿Cuántos años tienes?",
           "¿Tienes amigos?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/tienes-hermanos.mp3",
+          "spanish/phrases/tienes-mascotas.mp3",
+          "spanish/phrases/cuantos-anos-tienes.mp3",
+          "spanish/phrases/tienes-amigos.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Tienes mascotas?' bedeutet 'Hast du Haustiere?' auf Spanisch."
@@ -824,7 +957,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Ich habe...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Tengo",
+        "correctAnswerAudio": "spanish/verbs/tengo.mp3",
         "alternatives": [
           "tengo"
         ],
@@ -848,11 +983,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Was ist deine Lieblingsfarbe?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Cuál es tu número de teléfono?",
           "¿Cuál es tu color favorito?",
           "¿Cuál es tu animal favorito?",
           "¿Cómo te llamas?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/cual-es-tu-numero-de-telefono.mp3",
+          "spanish/phrases/cual-es-tu-color-favorito.mp3",
+          "spanish/phrases/cual-es-tu-animal-favorito.mp3",
+          "spanish/phrases/como-te-llamas.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Cuál es tu color favorito?' bedeutet 'Was ist deine Lieblingsfarbe?' auf Spanisch."
@@ -875,11 +1017,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man nach der Telefonnummer auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Cuál es tu nombre?",
           "¿Cuál es tu edad?",
           "¿Cuál es tu número de teléfono?",
           "¿Cuál es tu dirección?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/cual-es-tu-nombre.mp3",
+          "spanish/phrases/cual-es-tu-edad.mp3",
+          "spanish/phrases/cual-es-tu-numero-de-telefono.mp3",
+          "spanish/phrases/cual-es-tu-direccion.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'¿Cuál es tu número de teléfono?' bedeutet 'Was ist deine Telefonnummer?' auf Spanisch."
@@ -902,6 +1051,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Was bedeutet 'el año' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/vocabulary/el_ano.mp3",
         "options": [
           "der Tag",
           "das Jahr",
@@ -929,11 +1080,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Hund' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el gato",
           "el perro",
           "el pájaro",
           "el pez"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-pajaro.mp3",
+          "spanish/animals/el-pez.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'El perro' bedeutet 'der Hund' auf Spanisch."
@@ -956,11 +1114,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Katze' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el perro",
           "el ratón",
           "el gato",
           "el pájaro"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-raton.mp3",
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-pajaro.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El gato' bedeutet 'die Katze' auf Spanisch (maskulin im Spanischen)."
@@ -983,7 +1148,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Vogel' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el pájaro",
+        "correctAnswerAudio": "spanish/animals/el-pajaro.mp3",
         "alternatives": [
           "El pájaro"
         ],
@@ -1007,11 +1174,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Fisch' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el pez",
           "el perro",
           "el gato",
           "el ratón"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-pez.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-raton.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'El pez' bedeutet 'der Fisch' auf Spanisch."
@@ -1034,7 +1208,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'die Schildkröte' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la tortuga",
+        "correctAnswerAudio": "spanish/animals/la-tortuga.mp3",
         "alternatives": [
           "La tortuga"
         ],
@@ -1058,11 +1234,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Hamster' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el gato",
           "el ratón",
           "el hámster",
           "el conejo"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-raton.mp3",
+          "spanish/animals/el-hamster.mp3",
+          "spanish/animals/el-conejo.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El hámster' bedeutet 'der Hamster' auf Spanisch."
@@ -1085,7 +1268,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Elefant' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el elefante",
+        "correctAnswerAudio": "spanish/animals/el-elefante.mp3",
         "alternatives": [
           "El elefante"
         ],
@@ -1109,11 +1294,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Giraffe' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el elefante",
           "la jirafa",
           "el león",
           "el oso"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-elefante.mp3",
+          "spanish/animals/la-jirafa.mp3",
+          "spanish/animals/el-leon.mp3",
+          "spanish/animals/el-oso.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La jirafa' bedeutet 'die Giraffe' auf Spanisch."
@@ -1136,7 +1328,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Löwe' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el león",
+        "correctAnswerAudio": "spanish/animals/el-leon.mp3",
         "alternatives": [
           "El león"
         ],
@@ -1160,11 +1354,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Bär' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el lobo",
           "el león",
           "el oso",
           "el tigre"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-lobo.mp3",
+          "spanish/animals/el-leon.mp3",
+          "spanish/animals/el-oso.mp3",
+          "spanish/animals/el-tigre.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El oso' bedeutet 'der Bär' auf Spanisch."
@@ -1187,7 +1388,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Pinguin' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el pingüino",
+        "correctAnswerAudio": "spanish/animals/el-pinguino.mp3",
         "alternatives": [
           "El pingüino"
         ],
@@ -1211,11 +1414,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Kuh' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el cerdo",
           "la vaca",
           "la oveja",
           "el caballo"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-cerdo.mp3",
+          "spanish/animals/la-vaca.mp3",
+          "spanish/animals/la-oveja.mp3",
+          "spanish/animals/el-caballo.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La vaca' bedeutet 'die Kuh' auf Spanisch."
@@ -1238,7 +1448,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'das Schaf' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la oveja",
+        "correctAnswerAudio": "spanish/animals/la-oveja.mp3",
         "alternatives": [
           "La oveja"
         ],
@@ -1262,11 +1474,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'das Schwein' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el cerdo",
           "la vaca",
           "el caballo",
           "el perro"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-cerdo.mp3",
+          "spanish/animals/la-vaca.mp3",
+          "spanish/animals/el-caballo.mp3",
+          "spanish/animals/el-perro.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'El cerdo' bedeutet 'das Schwein' auf Spanisch."
@@ -1289,7 +1508,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'das Pferd' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el caballo",
+        "correctAnswerAudio": "spanish/animals/el-caballo.mp3",
         "alternatives": [
           "El caballo"
         ],

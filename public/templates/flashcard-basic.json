@@ -11,7 +11,11 @@
     },
     "frontLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": true,
       "description": "Language of front side"
     },
@@ -27,7 +31,11 @@
     },
     "backLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": true,
       "description": "Language of back side"
     },
@@ -49,8 +57,12 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["frontAudio"],
-      "onReveal": ["backAudio"]
+      "onLoad": [
+        "frontAudio"
+      ],
+      "onReveal": [
+        "backAudio"
+      ]
     },
     "buttons": {
       "front": {
@@ -64,8 +76,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
@@ -73,7 +91,7 @@
     {
       "front": "el perro",
       "frontLanguage": "es",
-      "frontAudio": "spanish/el-perro.mp3",
+      "frontAudio": "spanish/animals/el-perro.mp3",
       "back": "der Hund",
       "backLanguage": "de",
       "explanation": "Common Spanish noun - masculine"
