@@ -535,6 +535,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   useEffect(() => {
     if (!currentTask || !audioConfig || showFeedback) return;
 
+    // Skip auto-play for flashcards - they have their own reveal audio logic
+    if (currentTask.type === 'flashcard') return;
+
     const fieldsToPlay = audioConfig.autoPlay?.onLoad || [];
     const content = currentTask.content as any;
 
