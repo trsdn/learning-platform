@@ -30,14 +30,14 @@ export const TopicCard: React.FC<TopicCardProps> = ({
 
   const cardStyle: React.CSSProperties = {
     padding: '2rem',
-    background: topic.color || '#dbeafe',
+    background: 'var(--color-bg-secondary)',
     borderRadius: '12px',
     cursor: disabled ? 'not-allowed' : 'pointer',
     transition: 'transform 0.2s, box-shadow 0.2s',
     border: '2px solid transparent',
-    borderColor: isHovered ? '#3b82f6' : 'transparent',
+    borderColor: isHovered ? 'var(--color-primary)' : 'transparent',
     transform: isHovered && !disabled ? 'translateY(-4px)' : 'translateY(0)',
-    boxShadow: isHovered && !disabled ? '0 10px 25px rgba(0,0,0,0.1)' : 'none',
+    boxShadow: isHovered && !disabled ? 'var(--shadow-lg)' : 'none',
     opacity: disabled ? 0.5 : 1,
   };
 
@@ -61,10 +61,10 @@ export const TopicCard: React.FC<TopicCardProps> = ({
           {topic.icon}
         </span>
       )}
-      <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px' }}>
+      <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px', color: 'var(--color-text-primary)' }}>
         {topic.name}
       </h3>
-      <p style={{ fontSize: '14px', color: '#666', lineHeight: 1.5, margin: 0 }}>
+      <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
         {topic.description}
       </p>
     </button>
