@@ -92,6 +92,11 @@ function App() {
 
   async function initializeApp() {
     try {
+      // Log deployment version
+      const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content');
+      const buildTime = document.querySelector('meta[name="deployment-version"]')?.getAttribute('data-build-time');
+      console.log('🚀 Deployment Version:', deploymentVersion, 'Build Time:', buildTime);
+
       // Database version for forced re-seeding when data schema changes
       const DB_VERSION = '2'; // Bumped to force re-seed with language: 'Spanish'
       const currentVersion = localStorage.getItem('dbVersion');
@@ -484,6 +489,8 @@ function App() {
     };
   }
 
+  const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content') || 'unknown';
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
@@ -491,6 +498,9 @@ function App() {
           <h1>🧠 MindForge Academy</h1>
           <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>
             Erweitere dein Wissen, eine Frage nach der anderen
+          </p>
+          <p style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary, #999)', marginTop: '0.25rem' }}>
+            v{deploymentVersion}
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
