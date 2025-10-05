@@ -94,13 +94,24 @@ describe('AuthService', () => {
       expect(hash1).not.toBe(hash2);
     });
 
-    it('should handle empty string', async () => {
-      const hash = await hashPassword('');
-      expect(typeof hash).toBe('string');
+    it('should throw error for empty string', async () => {
+      await expect(hashPassword('')).rejects.toThrow('Passwort darf nicht leer sein.');
     });
 
     it('should handle special characters', async () => {
       const hash = await hashPassword('Pä$$w0rd!@#');
+      expect(typeof hash).toBe('string');
+      expect(hash.length).toBeGreaterThan(0);
+    });
+
+    it('should throw error for password exceeding max length', async () => {
+      const longPassword = 'a'.repeat(1001); // MAX_PASSWORD_LENGTH is 1000
+      await expect(hashPassword(longPassword)).rejects.toThrow('Passwort ist zu lang.');
+    });
+
+    it('should accept password at max length', async () => {
+      const maxLengthPassword = 'a'.repeat(1000);
+      const hash = await hashPassword(maxLengthPassword);
       expect(typeof hash).toBe('string');
       expect(hash.length).toBeGreaterThan(0);
     });
@@ -293,6 +304,37 @@ describe('AuthService', () => {
       await service.authenticate('math-basics', 'wrong', hash);
 
       expect(service.isAuthenticated('math-basics')).toBe(false);
+    });
+
+    it('should track failed attempts and enforce rate limiting', async () => {
+      const hash = await hashPassword('correct');
+      const pathId = 'rate-limit-test';
+
+      // Make 5 failed attempts
+      for (let i = 0; i < 5; i++) {
+        await service.authenticate(pathId, 'wrong', hash);
+      }
+
+      // 6th attempt should be rate limited
+      await expect(service.authenticate(pathId, 'wrong', hash))
+        .rejects.toThrow(/Zu viele fehlgeschlagene Versuche/);
+    });
+
+    it('should clear failed attempts on successful authentication', async () => {
+      const hash = await hashPassword('correct');
+      const pathId = 'clear-attempts-test';
+
+      // Make 3 failed attempts
+      for (let i = 0; i < 3; i++) {
+        await service.authenticate(pathId, 'wrong', hash);
+      }
+
+      // Successful authentication should clear attempts
+      await service.authenticate(pathId, 'correct', hash);
+
+      // Should allow attempts again after success
+      const result = await service.authenticate(pathId, 'wrong', hash);
+      expect(result).toBe(false);
     });
   });
 

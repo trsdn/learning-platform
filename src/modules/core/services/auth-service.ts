@@ -9,7 +9,12 @@
  * convenience rather than security.
  */
 
+// Constants
 const STORAGE_KEY_PREFIX = 'mindforge.auth.';
+const RATE_LIMIT_KEY_PREFIX = 'mindforge.auth.attempts.';
+const MAX_PASSWORD_LENGTH = 1000; // Prevent DoS attacks
+const MAX_ATTEMPTS = 5; // Maximum failed attempts before rate limiting
+const RATE_LIMIT_WINDOW_MS = 300000; // 5 minutes in milliseconds
 
 /**
  * Hash a password using SHA-256
@@ -17,6 +22,14 @@ const STORAGE_KEY_PREFIX = 'mindforge.auth.';
  * @returns Promise resolving to hex-encoded SHA-256 hash
  */
 export async function hashPassword(password: string): Promise<string> {
+  // Input validation
+  if (!password || password.length === 0) {
+    throw new Error('Passwort darf nicht leer sein.');
+  }
+  if (password.length > MAX_PASSWORD_LENGTH) {
+    throw new Error('Passwort ist zu lang.');
+  }
+
   const encoder = new TextEncoder();
   const data = encoder.encode(password);
   const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -107,17 +120,93 @@ export class AuthService {
    * @param password - Password to verify
    * @param passwordHash - Expected password hash from learning path metadata
    * @returns Promise resolving to true if authentication successful, false otherwise
+   * @throws Error if rate limited
    */
   async authenticate(
     learningPathId: string,
     password: string,
     passwordHash: string
   ): Promise<boolean> {
+    // Check rate limiting
+    this.checkRateLimit(learningPathId);
+
     const isValid = await verifyPassword(password, passwordHash);
+
     if (isValid) {
       this.setAuthenticated(learningPathId);
+      this.clearAttempts(learningPathId); // Clear failed attempts on success
+    } else {
+      this.recordFailedAttempt(learningPathId);
     }
+
     return isValid;
+  }
+
+  /**
+   * Check if rate limit has been exceeded
+   * @param learningPathId - ID of the learning path
+   * @throws Error if rate limited
+   */
+  private checkRateLimit(learningPathId: string): void {
+    try {
+      const key = this.getRateLimitKey(learningPathId);
+      const data = localStorage.getItem(key);
+
+      if (!data) return; // No attempts recorded
+
+      const attempts = JSON.parse(data);
+      const now = Date.now();
+      const timePassed = now - attempts.lastAttempt;
+
+      if (attempts.count >= MAX_ATTEMPTS && timePassed < RATE_LIMIT_WINDOW_MS) {
+        const remainingMinutes = Math.ceil((RATE_LIMIT_WINDOW_MS - timePassed) / 60000);
+        throw new Error(
+          `Zu viele fehlgeschlagene Versuche. Bitte versuchen Sie es in ${remainingMinutes} Minute(n) erneut.`
+        );
+      }
+
+      // Rate limit window has passed, reset counter
+      if (timePassed >= RATE_LIMIT_WINDOW_MS) {
+        localStorage.removeItem(key);
+      }
+    } catch (error) {
+      if (error instanceof Error && error.message.includes('Zu viele')) {
+        throw error; // Re-throw rate limit errors
+      }
+      console.warn('[Auth] Failed to check rate limit', error);
+    }
+  }
+
+  /**
+   * Record a failed authentication attempt
+   * @param learningPathId - ID of the learning path
+   */
+  private recordFailedAttempt(learningPathId: string): void {
+    try {
+      const key = this.getRateLimitKey(learningPathId);
+      const data = localStorage.getItem(key);
+
+      const attempts = data ? JSON.parse(data) : { count: 0, lastAttempt: 0 };
+      attempts.count += 1;
+      attempts.lastAttempt = Date.now();
+
+      localStorage.setItem(key, JSON.stringify(attempts));
+    } catch (error) {
+      console.warn('[Auth] Failed to record failed attempt', error);
+    }
+  }
+
+  /**
+   * Clear failed attempts for a learning path
+   * @param learningPathId - ID of the learning path
+   */
+  private clearAttempts(learningPathId: string): void {
+    try {
+      const key = this.getRateLimitKey(learningPathId);
+      localStorage.removeItem(key);
+    } catch (error) {
+      console.warn('[Auth] Failed to clear attempts', error);
+    }
   }
 
   /**
@@ -125,6 +214,13 @@ export class AuthService {
    */
   private getStorageKey(learningPathId: string): string {
     return `${STORAGE_KEY_PREFIX}${learningPathId}`;
+  }
+
+  /**
+   * Get LocalStorage key for rate limiting
+   */
+  private getRateLimitKey(learningPathId: string): string {
+    return `${RATE_LIMIT_KEY_PREFIX}${learningPathId}`;
   }
 }
 

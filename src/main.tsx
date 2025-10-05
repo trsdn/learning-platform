@@ -187,23 +187,33 @@ function App() {
     setIsAuthenticating(true);
     setAuthError('');
 
-    const isValid = await authService.authenticate(
-      pendingAuthPath.id,
-      password,
-      pendingAuthPath.passwordHash
-    );
+    try {
+      const isValid = await authService.authenticate(
+        pendingAuthPath.id,
+        password,
+        pendingAuthPath.passwordHash
+      );
 
-    setIsAuthenticating(false);
+      setIsAuthenticating(false);
 
-    if (isValid) {
-      // Authentication successful
-      setShowPasswordPrompt(false);
-      setPendingAuthPath(null);
-      setSelectedLearningPath(pendingAuthPath);
-      setShowSessionConfig(true);
-    } else {
-      // Authentication failed
-      setAuthError('Falsches Passwort. Bitte versuche es erneut.');
+      if (isValid) {
+        // Authentication successful
+        setShowPasswordPrompt(false);
+        setPendingAuthPath(null);
+        setSelectedLearningPath(pendingAuthPath);
+        setShowSessionConfig(true);
+      } else {
+        // Authentication failed
+        setAuthError('Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.');
+      }
+    } catch (error) {
+      setIsAuthenticating(false);
+      // Handle rate limiting and validation errors
+      if (error instanceof Error) {
+        setAuthError(error.message);
+      } else {
+        setAuthError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      }
     }
   }
 
