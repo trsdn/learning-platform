@@ -12,6 +12,8 @@ Goal: Deploy to production environment at `/learning-platform/` with full safety
 
 **⚠️ CRITICAL**: This deploys to PRODUCTION. Requires explicit user confirmation.
 
+**📚 Documentation**: See [docs/DEPLOYMENT.md](../../../docs/DEPLOYMENT.md) for detailed deployment guide and troubleshooting.
+
 Execution steps:
 
 1. **Parse user input** from `$ARGUMENTS`:
@@ -75,19 +77,25 @@ Execution steps:
       git push --tags
       ```
 
-   b. **Deployment via GitHub Actions** (recommended):
-      - Create a GitHub Release to trigger automatic deployment
-      - Or manually trigger: `gh workflow run "Deploy to GitHub Pages"`
-      - Monitor: `gh run watch`
-
-   c. **Local deployment** (alternative):
+   b. **Deployment via GitHub Actions** (REQUIRED - see docs/DEPLOYMENT.md):
       ```bash
-      npm run deploy
+      gh workflow run deploy.yml -f confirm=deploy-production
       ```
 
-   d. Monitor deployment output for errors
+      Monitor deployment:
+      ```bash
+      gh run watch
+      ```
 
-   e. Verify deployment command completed successfully
+      **IMPORTANT**:
+      - This uses `actions/deploy-pages@v4` (modern method)
+      - DO NOT use `npm run deploy` or push to gh-pages branch
+      - GitHub Pages is configured with `build_type: workflow`
+      - See docs/DEPLOYMENT.md for troubleshooting if deployment succeeds but site doesn't update
+
+   c. Monitor deployment output for errors
+
+   d. Verify deployment command completed successfully
 
 5. **Post-deployment verification**:
    a. Provide production URL: https://trsdn.github.io/learning-platform/

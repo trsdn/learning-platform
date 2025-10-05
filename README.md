@@ -56,6 +56,33 @@ npm run build
 npm run preview
 ```
 
+## 🚀 Deployment
+
+### Production Deployment
+
+Deploy to https://trsdn.github.io/learning-platform/ using GitHub Actions:
+
+```bash
+gh workflow run deploy.yml -f confirm=deploy-production
+gh run watch
+```
+
+**Important**: This project uses the modern `actions/deploy-pages` GitHub Pages deployment method. DO NOT push to `gh-pages` branch or use `npm run deploy`.
+
+See [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) for:
+- Complete deployment guide
+- Troubleshooting steps
+- Verification procedures
+- Common issues and solutions
+
+### Test Environment
+
+Deploy to test environment at https://trsdn.github.io/learning-platform/test/:
+
+```bash
+/deploy-test
+```
+
 ## 🧪 Testing
 
 The project follows Test-Driven Development (TDD):
