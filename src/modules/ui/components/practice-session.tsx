@@ -446,6 +446,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     currentTask,
     shuffledOptions,
@@ -454,12 +455,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     flashcardRevealed,
     flashcardKnown,
     hintVisible,
-    onCancel,
-    toggleMultipleSelectOption,
-    repeatQuestionAudio,
-    canSubmit,
-    handleAnswerSubmit,
-    handleNextTask,
   ]);
 
   async function initializeSession() {
