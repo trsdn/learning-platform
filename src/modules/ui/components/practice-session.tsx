@@ -580,6 +580,10 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   useEffect(() => {
     if (!currentTask || !audioConfig || !showFeedback) return;
 
+    // For flashcards, audio was already played when revealing.
+    // Skip auto-play on assessment to avoid playing twice.
+    if (currentTask.type === 'flashcard' && flashcardRevealed) return;
+
     const fieldsToPlay = audioConfig.autoPlay?.onReveal || [];
     const content = currentTask.content as any;
 
@@ -680,7 +684,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
     return () => clearTimeout(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showFeedback, currentTask?.id, audioConfig]);
+  }, [showFeedback, currentTask?.id, audioConfig, flashcardRevealed]);
 
   // Helper function to check if answer is ready to submit
 
