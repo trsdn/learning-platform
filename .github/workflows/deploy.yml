@@ -14,7 +14,18 @@ jobs:
   deploy-production:
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
+      pages: write
+      id-token: write
+
+    # Prevent concurrent deployments
+    concurrency:
+      group: "pages"
+      cancel-in-progress: false
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Validate confirmation (manual trigger only)
@@ -45,22 +56,24 @@ jobs:
       - name: Add 404.html for SPA routing
         run: cp dist/index.html dist/404.html
 
-      - name: Deploy to GitHub Pages (root)
-        uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          destination_dir: .  # Deploy to root
-          keep_files: true    # Keep test directory
-          exclude_assets: 'test/**'  # Don't touch test directory
-          commit_message: 'Deploy production: ${{ github.event.release.tag_name || github.sha }}'
+          path: './dist'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
 
       - name: Deployment summary
         run: |
           echo "✅ Production deployment successful!"
           echo ""
           echo "🔗 Production URL: https://trsdn.github.io/learning-platform/"
-          echo "🔗 Test URL: https://trsdn.github.io/learning-platform/test/ (unchanged)"
+          echo "🔗 Deployment URL: ${{ steps.deployment.outputs.page_url }}"
           echo ""
           echo "📦 Database: mindforge-academy"
           echo "🏷️  Release: ${{ github.event.release.tag_name || 'Manual deployment' }}"
