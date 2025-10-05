@@ -539,6 +539,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentTask?.id, audioConfig]);
 
+  // Reset hint visibility when feedback is shown
+  useEffect(() => {
+    if (showFeedback) {
+      setHintVisible(false);
+    }
+  }, [showFeedback]);
+
   // Auto-play audio on reveal/feedback (based on template config)
   useEffect(() => {
     if (!currentTask || !audioConfig || !showFeedback) return;
@@ -1330,12 +1337,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
   const progress = ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100;
   const questionHint = (currentTask.content as any)?.hint as string | undefined;
-
-  useEffect(() => {
-    if (showFeedback) {
-      setHintVisible(false);
-    }
-  }, [showFeedback]);
 
   // Helper functions - defined after all hooks to avoid hook order violations
   async function initializeSession() {
