@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="#667eea" stroke="#5568d3" stroke-width="2"/>
+
+  <!-- Brain icon -->
+  <g transform="translate(50, 50)">
+    <!-- Left hemisphere -->
+    <path d="M -15,-20 Q -25,-20 -25,-10 Q -25,0 -25,10 Q -25,20 -15,20 L -5,20 L -5,-20 Z"
+          fill="#fff" opacity="0.95"/>
+
+    <!-- Right hemisphere -->
+    <path d="M 15,-20 Q 25,-20 25,-10 Q 25,0 25,10 Q 25,20 15,20 L 5,20 L 5,-20 Z"
+          fill="#fff" opacity="0.95"/>
+
+    <!-- Brain details - left -->
+    <path d="M -20,-15 Q -15,-12 -20,-8" stroke="#667eea" stroke-width="2" fill="none"/>
+    <path d="M -20,-5 Q -15,-2 -20,2" stroke="#667eea" stroke-width="2" fill="none"/>
+    <path d="M -20,5 Q -15,8 -20,12" stroke="#667eea" stroke-width="2" fill="none"/>
+
+    <!-- Brain details - right -->
+    <path d="M 20,-15 Q 15,-12 20,-8" stroke="#667eea" stroke-width="2" fill="none"/>
+    <path d="M 20,-5 Q 15,-2 20,2" stroke="#667eea" stroke-width="2" fill="none"/>
+    <path d="M 20,5 Q 15,8 20,12" stroke="#667eea" stroke-width="2" fill="none"/>
+
+    <!-- Center line -->
+    <line x1="0" y1="-20" x2="0" y2="20" stroke="#667eea" stroke-width="1.5"/>
+  </g>
+
+  <!-- Sparkle for "forge" concept -->
+  <circle cx="75" cy="25" r="3" fill="#fbbf24"/>
+  <circle cx="80" cy="20" r="2" fill="#fbbf24"/>
+  <circle cx="70" cy="20" r="2" fill="#fbbf24"/>
+</svg>
