@@ -41,7 +41,7 @@ export async function loadTemplate(templateId: string): Promise<TaskTemplate | n
   }
 
   try {
-    const response = await fetch(`/learning-platform/templates/${templateId}.json`);
+    const response = await fetch(`${import.meta.env.BASE_URL}templates/${templateId}.json`);
     if (!response.ok) {
       console.warn(`Template ${templateId} not found`);
       return null;
