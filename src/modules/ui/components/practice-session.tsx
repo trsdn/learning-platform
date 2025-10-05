@@ -380,6 +380,26 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             setOptionCursor(index);
             toggleMultipleSelectOption(index);
           }
+        } else if (taskType === 'true-false') {
+          if (key === '1') {
+            event.preventDefault();
+            setTrueFalseAnswer(true);
+          } else if (key === '2') {
+            event.preventDefault();
+            setTrueFalseAnswer(false);
+          }
+        } else if (taskType === 'flashcard' && flashcardRevealed && !showFeedback) {
+          if (key === '1') {
+            event.preventDefault();
+            setFlashcardKnown(false);
+            handleAnswerSubmit(false);
+            setTimeout(() => handleNextTask(), 300);
+          } else if (key === '2') {
+            event.preventDefault();
+            setFlashcardKnown(true);
+            handleAnswerSubmit(true);
+            setTimeout(() => handleNextTask(), 300);
+          }
         }
         return;
       }
