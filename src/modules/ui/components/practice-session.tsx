@@ -457,137 +457,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     hintVisible,
   ]);
 
-  async function initializeSession() {
-    const sessionService = new PracticeSessionService(
-      getPracticeSessionRepository(),
-      getTaskRepository(),
-      getSpacedRepetitionRepository()
-    );
-
-    const newSession = await sessionService.createSession({
-      topicId,
-      learningPathIds,
-      targetCount,
-      includeReview,
-    });
-
-    setSession(newSession);
-  }
-
-  async function loadCurrentTask() {
-    if (!session || currentTaskIndex >= session.execution.taskIds.length) return;
-
-    const taskId = session.execution.taskIds[currentTaskIndex];
-    if (!taskId) return;
-
-    const task = await db.tasks.get(taskId);
-    if (!task) return;
-
-    setCurrentTask(task);
-    setStartTime(Date.now());
-
-    // Load audio configuration from template
-    const config = await getAudioConfig(task.templateId);
-    setAudioConfig(config);
-
-    // NOTE: Auto-play is handled in feedback section after user answers
-    // This prevents revealing the correct answer before the user responds
-
-    // Preload next task audio for better UX
-    const nextTaskIndex = currentTaskIndex + 1;
-    if (nextTaskIndex < session.execution.taskIds.length) {
-      const nextTaskId = session.execution.taskIds[nextTaskIndex];
-      if (nextTaskId) {
-        db.tasks.get(nextTaskId).then((nextTask) => {
-          if (nextTask && nextTask.audioUrl) {
-            preloadNext(nextTask);
-          }
-        }).catch((error) => {
-          console.warn('Failed to preload next task audio:', error);
-        });
-      }
-    }
-
-    // Reset all state
-    setSelectedAnswer(null);
-    setTrueFalseAnswer(null);
-    setBlankAnswers([]);
-    setOrderedItems([]);
-    setMatchingAnswers({});
-    setShuffledRightColumn([]);
-    setSelectedOptions(new Set());
-    setSliderValue(0);
-    setScrambleAnswer('');
-    setFlashcardRevealed(false);
-    setFlashcardKnown(null);
-    setTextInputAnswer('');
-    setOptionCursor(0);
-    setShowShortcutHelp(false);
-    setHintVisible(false);
-
-    // Type-specific initialization
-    if (task.type === 'multiple-choice') {
-      const content = task.content as any;
-      const originalOptions = [...content.options];
-      const originalCorrectAnswer = content.correctAnswer;
-
-      // Create array of indices and shuffle
-      const indices = originalOptions.map((_: any, i: number) => i);
-      for (let i = indices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i]!, indices[j]!] = [indices[j]!, indices[i]!];
-      }
-
-      // Apply shuffle to options and find new position of correct answer
-      const shuffled = indices.map(i => originalOptions[i]!);
-      // Find the position where the original correct answer ended up after shuffling
-      const newCorrectIndex = indices.findIndex(originalIndex => originalIndex === originalCorrectAnswer);
-
-      setShuffledOptions(shuffled);
-      setShuffledIndices(indices);
-      setCorrectAnswerIndex(newCorrectIndex);
-    } else if (task.type === 'cloze-deletion') {
-      const content = task.content as ClozeDeletionContent;
-      setBlankAnswers(new Array(content.blanks.length).fill(''));
-    } else if (task.type === 'ordering') {
-      const content = task.content as OrderingContent;
-      // Shuffle items for ordering task
-      const shuffled = [...content.items].sort(() => Math.random() - 0.5);
-      setOrderedItems(shuffled);
-    } else if (task.type === 'matching') {
-      const content = task.content as MatchingContent;
-      // Shuffle right column for matching
-      const indices = content.pairs.map((_, i) => i);
-      for (let i = indices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i]!, indices[j]!] = [indices[j]!, indices[i]!];
-      }
-      setShuffledRightColumn(indices);
-      setMatchingAnswers({});
-    } else if (task.type === 'multiple-select') {
-      setSelectedOptions(new Set());
-    } else if (task.type === 'slider') {
-      const content = task.content as SliderContent;
-      setSliderValue(Math.floor((content.min + content.max) / 2)); // Start in middle
-    } else if (task.type === 'word-scramble') {
-      setScrambleAnswer('');
-    }
-  }
-
-
-  function handleSkipTask() {
-    if (!session) return;
-
-    setShowFeedback(false);
-    setSelectedAnswer(null);
-
-    if (currentTaskIndex < session.execution.taskIds.length - 1) {
-      setCurrentTaskIndex(currentTaskIndex + 1);
-    }
-  }
-
-
-
   // Keyboard shortcuts for audio controls
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -1467,6 +1336,135 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       setHintVisible(false);
     }
   }, [showFeedback]);
+
+  // Helper functions - defined after all hooks to avoid hook order violations
+  async function initializeSession() {
+    const sessionService = new PracticeSessionService(
+      getPracticeSessionRepository(),
+      getTaskRepository(),
+      getSpacedRepetitionRepository()
+    );
+
+    const newSession = await sessionService.createSession({
+      topicId,
+      learningPathIds,
+      targetCount,
+      includeReview,
+    });
+
+    setSession(newSession);
+  }
+
+  async function loadCurrentTask() {
+    if (!session || currentTaskIndex >= session.execution.taskIds.length) return;
+
+    const taskId = session.execution.taskIds[currentTaskIndex];
+    if (!taskId) return;
+
+    const task = await db.tasks.get(taskId);
+    if (!task) return;
+
+    setCurrentTask(task);
+    setStartTime(Date.now());
+
+    // Load audio configuration from template
+    const config = await getAudioConfig(task.templateId);
+    setAudioConfig(config);
+
+    // NOTE: Auto-play is handled in feedback section after user answers
+    // This prevents revealing the correct answer before the user responds
+
+    // Preload next task audio for better UX
+    const nextTaskIndex = currentTaskIndex + 1;
+    if (nextTaskIndex < session.execution.taskIds.length) {
+      const nextTaskId = session.execution.taskIds[nextTaskIndex];
+      if (nextTaskId) {
+        db.tasks.get(nextTaskId).then((nextTask) => {
+          if (nextTask && nextTask.audioUrl) {
+            preloadNext(nextTask);
+          }
+        }).catch((error) => {
+          console.warn('Failed to preload next task audio:', error);
+        });
+      }
+    }
+
+    // Reset all state
+    setSelectedAnswer(null);
+    setTrueFalseAnswer(null);
+    setBlankAnswers([]);
+    setOrderedItems([]);
+    setMatchingAnswers({});
+    setShuffledRightColumn([]);
+    setSelectedOptions(new Set());
+    setSliderValue(0);
+    setScrambleAnswer('');
+    setFlashcardRevealed(false);
+    setFlashcardKnown(null);
+    setTextInputAnswer('');
+    setOptionCursor(0);
+    setShowShortcutHelp(false);
+    setHintVisible(false);
+
+    // Type-specific initialization
+    if (task.type === 'multiple-choice') {
+      const content = task.content as any;
+      const originalOptions = [...content.options];
+      const originalCorrectAnswer = content.correctAnswer;
+
+      // Create array of indices and shuffle
+      const indices = originalOptions.map((_: any, i: number) => i);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i]!, indices[j]!] = [indices[j]!, indices[i]!];
+      }
+
+      // Apply shuffle to options and find new position of correct answer
+      const shuffled = indices.map(i => originalOptions[i]!);
+      // Find the position where the original correct answer ended up after shuffling
+      const newCorrectIndex = indices.findIndex(originalIndex => originalIndex === originalCorrectAnswer);
+
+      setShuffledOptions(shuffled);
+      setShuffledIndices(indices);
+      setCorrectAnswerIndex(newCorrectIndex);
+    } else if (task.type === 'cloze-deletion') {
+      const content = task.content as ClozeDeletionContent;
+      setBlankAnswers(new Array(content.blanks.length).fill(''));
+    } else if (task.type === 'ordering') {
+      const content = task.content as OrderingContent;
+      // Shuffle items for ordering task
+      const shuffled = [...content.items].sort(() => Math.random() - 0.5);
+      setOrderedItems(shuffled);
+    } else if (task.type === 'matching') {
+      const content = task.content as MatchingContent;
+      // Shuffle right column for matching
+      const indices = content.pairs.map((_, i) => i);
+      for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i]!, indices[j]!] = [indices[j]!, indices[i]!];
+      }
+      setShuffledRightColumn(indices);
+      setMatchingAnswers({});
+    } else if (task.type === 'multiple-select') {
+      setSelectedOptions(new Set());
+    } else if (task.type === 'slider') {
+      const content = task.content as SliderContent;
+      setSliderValue(Math.floor((content.min + content.max) / 2)); // Start in middle
+    } else if (task.type === 'word-scramble') {
+      setScrambleAnswer('');
+    }
+  }
+
+  function handleSkipTask() {
+    if (!session) return;
+
+    setShowFeedback(false);
+    setSelectedAnswer(null);
+
+    if (currentTaskIndex < session.execution.taskIds.length - 1) {
+      setCurrentTaskIndex(currentTaskIndex + 1);
+    }
+  }
 
   // Unlock auto-play on first user interaction with the practice session
   const handlePracticeSessionClick = () => {
