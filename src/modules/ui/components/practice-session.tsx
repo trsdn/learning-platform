@@ -231,6 +231,12 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   const handleComplete = useCallback(async () => {
     if (!session) return;
 
+    // Prevent double completion (race condition with setTimeout auto-complete)
+    if (session.execution.status === 'completed' || session.execution.status === 'abandoned') {
+      onComplete(); // Just navigate away
+      return;
+    }
+
     const sessionService = new PracticeSessionService(
       getPracticeSessionRepository(),
       getTaskRepository(),
