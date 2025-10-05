@@ -77,8 +77,8 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should return saved settings when they exist', () => {
       const customSettings: AudioSettings = {
-        version: 1,
-        autoPlayEnabled: false,
+        version: 2,
+        autoPlayEnabled: true,
         languageFilter: 'all languages',
         perTopicOverrides: {},
         accessibilityMode: true,
@@ -118,7 +118,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
   describe('save()', () => {
     it('should save settings to LocalStorage', () => {
       const settings: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: false,
         languageFilter: 'none',
         perTopicOverrides: {},
@@ -135,7 +135,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should overwrite existing settings', () => {
       const settings1: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: true,
         languageFilter: 'non-German only',
         perTopicOverrides: {},
@@ -143,8 +143,8 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
       };
 
       const settings2: AudioSettings = {
-        version: 1,
-        autoPlayEnabled: false,
+        version: 2,
+        autoPlayEnabled: true,
         languageFilter: 'all languages',
         perTopicOverrides: {},
         accessibilityMode: true,
@@ -159,8 +159,8 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should persist settings across load calls', () => {
       const settings: AudioSettings = {
-        version: 1,
-        autoPlayEnabled: false,
+        version: 2,
+        autoPlayEnabled: true,
         languageFilter: 'none',
         perTopicOverrides: { 'spanish-vocab': { autoPlayEnabled: true } },
         accessibilityMode: true,
@@ -176,7 +176,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
   describe('update()', () => {
     it('should merge partial updates with existing settings', () => {
       const initial: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: true,
         languageFilter: 'non-German only',
         perTopicOverrides: {},
@@ -226,7 +226,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
   describe('reset()', () => {
     it('should clear all stored settings', () => {
       const customSettings: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: false,
         languageFilter: 'all languages',
         perTopicOverrides: {},
@@ -241,7 +241,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should return default settings after reset', () => {
       const customSettings: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: false,
         languageFilter: 'none',
         perTopicOverrides: {},
@@ -284,7 +284,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
       const migrated = storage.migrate(oldSettings);
 
-      expect(migrated.version).toBe(1);
+      expect(migrated.version).toBe(2);
       expect(migrated.autoPlayEnabled).toBe(true);
       expect(migrated.languageFilter).toBe('non-German only');
       expect(migrated.perTopicOverrides).toBeDefined();
@@ -300,7 +300,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
       const migrated = storage.migrate(invalidSettings);
 
       expect(migrated).toBeDefined();
-      expect(migrated.version).toBe(1);
+      expect(migrated.version).toBe(2);
     });
 
     it('should preserve valid fields during migration', () => {
@@ -344,7 +344,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should serialize settings as JSON', () => {
       const settings: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: false,
         languageFilter: 'none',
         perTopicOverrides: { test: { autoPlayEnabled: true } },
@@ -361,7 +361,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
 
     it('should deserialize JSON correctly on load', () => {
       const settings: AudioSettings = {
-        version: 1,
+        version: 2,
         autoPlayEnabled: false,
         languageFilter: 'all languages',
         perTopicOverrides: {},
