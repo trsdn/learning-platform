@@ -579,6 +579,102 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     }
   }
 
+  const handleAnswerSubmit = useCallback(async (flashcardResult?: boolean) => {
+    if (!currentTask || !session) return;
+
+    // Unlock auto-play on first user interaction (browser requirement)
+    if (!playbackState.autoPlayUnlocked) {
+      unlockAutoPlay().catch(err => console.warn('Failed to unlock auto-play:', err));
+    }
+
+    let correct = false;
+
+    // Check answer based on task type
+    if (currentTask.type === 'multiple-choice') {
+      if (selectedAnswer === null) return;
+      correct = selectedAnswer === correctAnswerIndex;
+    } else if (currentTask.type === 'cloze-deletion') {
+      const content = currentTask.content as ClozeDeletionContent;
+      correct = content.blanks.every((blank, i) => {
+        const userAnswer = blankAnswers[i]?.trim().toLowerCase() || '';
+        const correctAnswer = blank.correctAnswer.toLowerCase();
+        const alternatives = blank.alternatives?.map(a => a.toLowerCase()) || [];
+        return userAnswer === correctAnswer || alternatives.includes(userAnswer);
+      });
+    } else if (currentTask.type === 'true-false') {
+      if (trueFalseAnswer === null) return;
+      const content = currentTask.content as TrueFalseContent;
+      correct = trueFalseAnswer === content.correctAnswer;
+    } else if (currentTask.type === 'ordering') {
+      const content = currentTask.content as OrderingContent;
+      correct = orderedItems.every((item, i) => {
+        const originalIndex = content.items.indexOf(item);
+        return content.correctOrder[i]! === originalIndex;
+      });
+    } else if (currentTask.type === 'matching') {
+      const content = currentTask.content as MatchingContent;
+      correct = content.pairs.every((_pair, i) => matchingAnswers[i] === i);
+    } else if (currentTask.type === 'multiple-select') {
+      const content = currentTask.content as MultipleSelectContent;
+      if (selectedOptions.size === 0) return;
+      // Check if all correct answers are selected and no wrong ones
+      correct = content.correctAnswers.length === selectedOptions.size &&
+        content.correctAnswers.every(ans => selectedOptions.has(ans));
+    } else if (currentTask.type === 'slider') {
+      const content = currentTask.content as SliderContent;
+      const tolerance = content.tolerance || 0;
+      correct = Math.abs(sliderValue - content.correctValue) <= tolerance;
+    } else if (currentTask.type === 'word-scramble') {
+      if (!scrambleAnswer.trim()) return;
+      const content = currentTask.content as WordScrambleContent;
+      correct = scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase();
+    } else if (currentTask.type === 'flashcard') {
+      const result = flashcardResult ?? flashcardKnown;
+      if (result === null || result === undefined) return;
+      correct = result;
+      // Ensure state reflects the recorded result when triggered via override
+      setFlashcardKnown(result);
+    } else if (currentTask.type === 'text-input') {
+      if (!textInputAnswer.trim()) return;
+      const content = currentTask.content as TextInputContent;
+      const caseSensitive = content.caseSensitive || false;
+      const userAnswer = caseSensitive ? textInputAnswer.trim() : textInputAnswer.trim().toLowerCase();
+      const correctAnswer = caseSensitive ? content.correctAnswer : content.correctAnswer.toLowerCase();
+      const alternatives = (content.alternatives || []).map(a => caseSensitive ? a : a.toLowerCase());
+      correct = userAnswer === correctAnswer || alternatives.includes(userAnswer);
+    }
+
+    setIsCorrect(correct);
+    setShowFeedback(true);
+
+    // Calculate time spent
+    const timeSpent = Math.round((Date.now() - startTime) / 1000);
+
+    // Record answer in session
+    const sessionService = new PracticeSessionService(
+      getPracticeSessionRepository(),
+      getTaskRepository(),
+      getSpacedRepetitionRepository()
+    );
+
+    await sessionService.recordSessionAnswer(session.id, correct, timeSpent);
+
+    // Update spaced repetition
+    const spacedRepService = new SpacedRepetitionService(
+      getSpacedRepetitionRepository(),
+      getTaskRepository()
+    );
+
+    // Convert boolean to grade (0-5 scale)
+    const grade = correct ? 4 : 2;
+    await spacedRepService.recordAnswer(currentTask.id, correct, grade);
+
+    // Update session state
+    const updatedSession = await db.practiceSessions.get(session.id);
+    if (updatedSession) {
+      setSession(updatedSession);
+    }
+  }, [currentTask, session, playbackState.autoPlayUnlocked, unlockAutoPlay, selectedAnswer, correctAnswerIndex, blankAnswers, trueFalseAnswer, orderedItems, matchingAnswers, selectedOptions, sliderValue, scrambleAnswer, flashcardKnown, textInputAnswer, startTime]);
 
   function handleSkipTask() {
     if (!session) return;
@@ -591,7 +687,33 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     }
   }
 
+  const handleComplete = useCallback(async () => {
+    if (!session) return;
 
+    const sessionService = new PracticeSessionService(
+      getPracticeSessionRepository(),
+      getTaskRepository(),
+      getSpacedRepetitionRepository()
+    );
+
+    await sessionService.completeSession(session.id);
+
+    // Wait a bit to ensure the session is saved to the database
+    await new Promise(resolve => setTimeout(resolve, 100));
+
+    onComplete();
+  }, [session, onComplete]);
+
+  const handleNextTask = useCallback(() => {
+    setShowFeedback(false);
+    setSelectedAnswer(null);
+
+    if (session && currentTaskIndex < session.execution.taskIds.length - 1) {
+      setCurrentTaskIndex(currentTaskIndex + 1);
+    } else {
+      handleComplete();
+    }
+  }, [session, currentTaskIndex, handleComplete]);
 
   // Keyboard shortcuts for audio controls
   useEffect(() => {
@@ -782,6 +904,24 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   }, [showFeedback, currentTask?.id, audioConfig]);
 
   // Helper function to check if answer is ready to submit
+  const canSubmit = useCallback((): boolean => {
+    if (showFeedback) return false;
+
+    if (currentTask?.type === 'multiple-choice') return selectedAnswer !== null;
+    if (currentTask?.type === 'cloze-deletion') return blankAnswers.every(a => a.trim().length > 0);
+    if (currentTask?.type === 'true-false') return trueFalseAnswer !== null;
+    if (currentTask?.type === 'ordering') return orderedItems.length > 0;
+    if (currentTask?.type === 'matching') {
+      const content = currentTask.content as MatchingContent;
+      return Object.keys(matchingAnswers).length === content.pairs.length;
+    }
+    if (currentTask?.type === 'multiple-select') return selectedOptions.size > 0;
+    if (currentTask?.type === 'slider') return true; // Slider always has a value
+    if (currentTask?.type === 'word-scramble') return scrambleAnswer.trim().length > 0;
+    if (currentTask?.type === 'flashcard') return flashcardKnown !== null;
+    if (currentTask?.type === 'text-input') return textInputAnswer.trim().length > 0;
+    return false;
+  }, [showFeedback, currentTask, selectedAnswer, blankAnswers, trueFalseAnswer, orderedItems, matchingAnswers, selectedOptions, scrambleAnswer, flashcardKnown, textInputAnswer]);
 
   // Render task-specific content
   function renderTaskContent() {
