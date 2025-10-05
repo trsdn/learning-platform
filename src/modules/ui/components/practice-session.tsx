@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent, FlashcardContent, TextInputContent } from '@core/types/services';
 import { db } from '@storage/database';
 import { PracticeSessionService } from '@core/services/practice-session-service';
@@ -69,12 +69,47 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   // Text Input state
   const [textInputAnswer, setTextInputAnswer] = useState<string>('');
 
+  // Keyboard & accessibility state
+  const [optionCursor, setOptionCursor] = useState<number>(0);
+  const [showShortcutHelp, setShowShortcutHelp] = useState<boolean>(false);
+  const [hintVisible, setHintVisible] = useState<boolean>(false);
+
   // Template audio configuration
   const [audioConfig, setAudioConfig] = useState<AudioConfig | null>(null);
 
   // Audio hooks
   const { playbackState, loadAudio, togglePlayPause, replay, stop, preloadNext, unlockAutoPlay } = useAudioPlayback();
   const { settings: audioSettings } = useAudioSettings();
+
+  const toggleMultipleSelectOption = useCallback((index: number) => {
+    if (showFeedback || currentTask?.type !== 'multiple-select') return;
+    setSelectedOptions((prev) => {
+      const updated = new Set(prev);
+      if (updated.has(index)) {
+        updated.delete(index);
+      } else {
+        updated.add(index);
+      }
+      return updated;
+    });
+  }, [showFeedback, currentTask]);
+
+  const repeatQuestionAudio = useCallback(() => {
+    if (!currentTask) return;
+    const content: any = currentTask.content;
+    const questionField = audioConfig?.buttons?.question?.field;
+    const hasAudio = Boolean(currentTask.audioUrl || (questionField && content?.[questionField]));
+    if (!hasAudio) return;
+    try {
+      unlockAutoPlay();
+      replay();
+    } catch (error) {
+      console.warn('Audio replay failed', error);
+    }
+    loadAudio(currentTask, audioSettings, true).catch((error) => {
+      console.warn('Audio reload failed', error);
+    });
+  }, [currentTask, audioSettings, loadAudio, replay, unlockAutoPlay, audioConfig]);
 
   // Initialize session
   useEffect(() => {
@@ -94,6 +129,193 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       loadCurrentTask();
     }
   }, [currentTaskIndex]);
+
+  useEffect(() => {
+    if (!currentTask) {
+      setOptionCursor(0);
+      return;
+    }
+
+    if (currentTask.type === 'multiple-choice') {
+      const total = shuffledOptions.length;
+      setOptionCursor((prev) => {
+        if (total === 0) return 0;
+        return Math.min(prev, total - 1);
+      });
+    } else if (currentTask.type === 'multiple-select') {
+      const total = (currentTask.content as MultipleSelectContent).options.length;
+      setOptionCursor((prev) => {
+        if (total === 0) return 0;
+        return Math.min(prev, total - 1);
+      });
+    } else {
+      setOptionCursor(0);
+    }
+  }, [currentTask, shuffledOptions]);
+
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (!currentTask) return;
+      const active = document.activeElement as HTMLElement | null;
+      const tagName = active?.tagName?.toLowerCase();
+      const isTyping = Boolean(active && (tagName === 'input' || tagName === 'textarea' || active.isContentEditable));
+      const key = event.key;
+
+      const taskType = currentTask.type as string;
+
+      const toggleHintIfAvailable = () => {
+        const hint = (currentTask.content as any)?.hint;
+        if (hint) {
+          setHintVisible((prev) => !prev);
+        }
+      };
+
+      const moveCursor = (delta: number) => {
+        if (taskType === 'multiple-choice') {
+          const total = shuffledOptions.length;
+          if (total === 0) return;
+          setOptionCursor((prev) => {
+            const next = (prev + delta + total) % total;
+            setSelectedAnswer(next);
+            return next;
+          });
+        } else if (taskType === 'multiple-select') {
+          const options = (currentTask.content as MultipleSelectContent).options;
+          if (options.length === 0) return;
+          setOptionCursor((prev) => {
+            const next = (prev + delta + options.length) % options.length;
+            return next;
+          });
+        }
+      };
+
+      const submitCurrent = () => {
+        if (taskType === 'flashcard') {
+          if (!flashcardRevealed) {
+            setFlashcardRevealed(true);
+          } else if (flashcardKnown !== null) {
+            handleNextTask();
+          }
+          return;
+        }
+
+        if (!showFeedback) {
+          if (canSubmit()) {
+            void handleAnswerSubmit();
+          }
+        } else if (taskType !== 'flashcard') {
+          handleNextTask();
+        }
+      };
+
+      if ((key === '?' || (key === '/' && event.shiftKey)) && !event.metaKey && !event.ctrlKey) {
+        event.preventDefault();
+        setShowShortcutHelp((prev) => !prev);
+        return;
+      }
+
+      if (showShortcutHelp) {
+        if (key === 'Escape' || key === '?' || (key === '/' && event.shiftKey)) {
+          event.preventDefault();
+          setShowShortcutHelp(false);
+        }
+        return;
+      }
+
+      if (/^[1-9]$/.test(key) && !isTyping) {
+        const index = Number(key) - 1;
+        if (taskType === 'multiple-choice' && index < shuffledOptions.length) {
+          event.preventDefault();
+          setOptionCursor(index);
+          setSelectedAnswer(index);
+        } else if (taskType === 'multiple-select') {
+          const options = (currentTask.content as MultipleSelectContent).options;
+          if (index < options.length) {
+            event.preventDefault();
+            setOptionCursor(index);
+            toggleMultipleSelectOption(index);
+          }
+        }
+        return;
+      }
+
+      switch (key) {
+        case 'Escape':
+          event.preventDefault();
+          if (hintVisible) {
+            setHintVisible(false);
+          } else {
+            onCancel();
+          }
+          break;
+        case 'Enter':
+          event.preventDefault();
+          submitCurrent();
+          break;
+        case ' ': {
+          if (isTyping) return;
+          if (taskType === 'multiple-choice') {
+            event.preventDefault();
+            setSelectedAnswer(optionCursor);
+          } else if (taskType === 'multiple-select') {
+            event.preventDefault();
+            toggleMultipleSelectOption(optionCursor);
+          }
+          break;
+        }
+        case 'ArrowUp':
+        case 'ArrowLeft':
+          if (isTyping) return;
+          if (taskType === 'multiple-choice' || taskType === 'multiple-select') {
+            event.preventDefault();
+            moveCursor(-1);
+          }
+          break;
+        case 'ArrowDown':
+        case 'ArrowRight':
+          if (isTyping) return;
+          if (taskType === 'multiple-choice' || taskType === 'multiple-select') {
+            event.preventDefault();
+            moveCursor(1);
+          }
+          break;
+        case 'r':
+        case 'R':
+          if (isTyping) return;
+          event.preventDefault();
+          repeatQuestionAudio();
+          break;
+        case 'h':
+        case 'H':
+          if (isTyping) return;
+          event.preventDefault();
+          toggleHintIfAvailable();
+          break;
+        case '?':
+          // Already handled above
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [
+    currentTask,
+    shuffledOptions,
+    optionCursor,
+    showFeedback,
+    flashcardRevealed,
+    flashcardKnown,
+    hintVisible,
+    onCancel,
+    toggleMultipleSelectOption,
+    repeatQuestionAudio,
+    canSubmit,
+    handleAnswerSubmit,
+    handleNextTask,
+  ]);
 
   async function initializeSession() {
     const sessionService = new PracticeSessionService(
@@ -159,6 +381,9 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     setFlashcardRevealed(false);
     setFlashcardKnown(null);
     setTextInputAnswer('');
+    setOptionCursor(0);
+    setShowShortcutHelp(false);
+    setHintVisible(false);
 
     // Type-specific initialization
     if (task.type === 'multiple-choice') {
@@ -209,7 +434,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     }
   }
 
-  async function handleAnswerSubmit() {
+  async function handleAnswerSubmit(flashcardResult?: boolean) {
     if (!currentTask || !session) return;
 
     // Unlock auto-play on first user interaction (browser requirement)
@@ -259,8 +484,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       const content = currentTask.content as WordScrambleContent;
       correct = scrambleAnswer.trim().toLowerCase() === content.correctWord.toLowerCase();
     } else if (currentTask.type === 'flashcard') {
-      if (flashcardKnown === null) return;
-      correct = flashcardKnown;
+      const result = flashcardResult ?? flashcardKnown;
+      if (result === null || result === undefined) return;
+      correct = result;
+      // Ensure state reflects the recorded result when triggered via override
+      setFlashcardKnown(result);
     } else if (currentTask.type === 'text-input') {
       if (!textInputAnswer.trim()) return;
       const content = currentTask.content as TextInputContent;
@@ -585,11 +813,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     return (
       <div className={styles['practice-session__mc-options']}>
         {shuffledOptions.map((option, index) => {
+          const isFocused = !showFeedback && optionCursor === index;
           const optionClasses = [
             styles['practice-session__mc-option'],
             showFeedback && index === correctAnswerIndex && styles['practice-session__mc-option--correct'],
             showFeedback && index === selectedAnswer && !isCorrect && styles['practice-session__mc-option--incorrect'],
             !showFeedback && selectedAnswer === index && styles['practice-session__mc-option--selected'],
+            isFocused && styles['practice-session__mc-option--focused'],
             showFeedback && styles['practice-session__mc-option--disabled']
           ].filter(Boolean).join(' ');
 
@@ -603,9 +833,14 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           return (
             <button
               key={index}
-              onClick={() => !showFeedback && setSelectedAnswer(index)}
+              onClick={() => {
+                if (showFeedback) return;
+                setOptionCursor(index);
+                setSelectedAnswer(index);
+              }}
               disabled={showFeedback}
               className={optionClasses}
+              onMouseEnter={() => setOptionCursor(index)}
             >
               <span>{option}</span>
               {optionAudioUrl && (
@@ -754,7 +989,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
                   {index + 1}.
                 </div>
                 <div className={styles['practice-session__ordering-item-text']}>
-                  {item}
+                  <span className={styles['practice-session__ordering-word']}>{item}</span>
                   {itemAudioUrl && (
                     <AudioButton
                       text={item}
@@ -887,17 +1122,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (!currentTask || currentTask.type !== 'multiple-select') return null;
     const content = currentTask.content as MultipleSelectContent;
 
-    const toggleOption = (index: number) => {
-      if (showFeedback) return;
-      const newSelected = new Set(selectedOptions);
-      if (newSelected.has(index)) {
-        newSelected.delete(index);
-      } else {
-        newSelected.add(index);
-      }
-      setSelectedOptions(newSelected);
-    };
-
     return (
       <div className={styles['practice-session__ms-container']}>
         <div className={styles['practice-session__ms-instruction']}>
@@ -907,6 +1131,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           {content.options.map((option, index) => {
             const isSelected = selectedOptions.has(index);
             const isCorrectAnswer = content.correctAnswers.includes(index);
+            const isFocused = !showFeedback && optionCursor === index;
             let statusIcon = '';
 
             if (showFeedback) {
@@ -919,6 +1144,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
 
             const optionClasses = [
               styles['practice-session__ms-option'],
+              isFocused && styles['practice-session__ms-option--focused'],
               showFeedback && isCorrectAnswer && styles['practice-session__ms-option--correct'],
               showFeedback && isSelected && !isCorrectAnswer && styles['practice-session__ms-option--incorrect'],
               !showFeedback && isSelected && styles['practice-session__ms-option--selected']
@@ -929,10 +1155,17 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               : styles['practice-session__ms-status-icon--incorrect'];
 
             return (
-              <div key={index} className={optionClasses}>
+              <div
+                key={index}
+                className={optionClasses}
+                onMouseEnter={() => setOptionCursor(index)}
+              >
                 <Checkbox
                   checked={isSelected}
-                  onChange={() => toggleOption(index)}
+                  onChange={() => {
+                    toggleMultipleSelectOption(index);
+                    setOptionCursor(index);
+                  }}
                   disabled={showFeedback}
                   label={<span className={styles['practice-session__ms-option-label']}>{option}</span>}
                   error={showFeedback && isSelected && !isCorrectAnswer}
@@ -1144,7 +1377,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <button
               onClick={() => {
                 setFlashcardKnown(false);
-                handleAnswerSubmit();
+                handleAnswerSubmit(false);
                 // Auto-advance to next task after brief delay
                 setTimeout(() => {
                   handleNextTask();
@@ -1159,7 +1392,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             <button
               onClick={() => {
                 setFlashcardKnown(true);
-                handleAnswerSubmit();
+                handleAnswerSubmit(true);
                 // Auto-advance to next task after brief delay
                 setTimeout(() => {
                   handleNextTask();
@@ -1214,12 +1447,6 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
             </div>
           )}
         </div>
-
-        {content.hint && !showFeedback && (
-          <div className={styles['practice-session__text-input-hint']}>
-            💡 <strong>Tipp:</strong> {content.hint}
-          </div>
-        )}
       </div>
     );
   }
@@ -1233,6 +1460,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
   }
 
   const progress = ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100;
+  const questionHint = (currentTask.content as any)?.hint as string | undefined;
+
+  useEffect(() => {
+    if (showFeedback) {
+      setHintVisible(false);
+    }
+  }, [showFeedback]);
 
   // Unlock auto-play on first user interaction with the practice session
   const handlePracticeSessionClick = () => {
@@ -1295,6 +1529,24 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           </div>
         )}
 
+        {questionHint && !showFeedback && (
+          <div className={styles['practice-session__hint-controls']}>
+            <button
+              type="button"
+              className={styles['practice-session__hint-button']}
+              onClick={() => setHintVisible((prev) => !prev)}
+            >
+              {hintVisible ? 'Hinweis verbergen' : 'Hinweis anzeigen'} (H)
+            </button>
+          </div>
+        )}
+
+        {questionHint && hintVisible && !showFeedback && (
+          <div className={styles['practice-session__hint']}>
+            💡 <strong>Hinweis:</strong> {questionHint}
+          </div>
+        )}
+
         {renderTaskContent()}
       </div>
 
@@ -1334,7 +1586,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               {/* Hide "Antwort überprüfen" for flashcards - they use self-assessment */}
               {currentTask?.type !== 'flashcard' && (
                 <button
-                  onClick={handleAnswerSubmit}
+                  onClick={() => handleAnswerSubmit()}
                   disabled={!canSubmit()}
                   className={canSubmit()
                     ? `${styles['practice-session__btn-submit']} ${styles['practice-session__btn-submit--enabled']}`
@@ -1395,8 +1647,70 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
               genau
             </div>
           </div>
-        </div>
       </div>
+    </div>
+
+      {showShortcutHelp && (
+        <div
+          className={styles['practice-session__shortcuts-overlay']}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="practice-shortcuts-title"
+        >
+          <div className={styles['practice-session__shortcuts-content']}>
+            <h2 id="practice-shortcuts-title">Tastaturkürzel</h2>
+            <div className={styles['practice-session__shortcuts-groups']}>
+              <div>
+                <div className={styles['practice-session__shortcuts-group-title']}>Navigation</div>
+                <ul className={styles['practice-session__shortcuts-list']}>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Escape</span>
+                    <span className={styles['practice-session__shortcut-keys']}>Esc</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Zur nächsten/vorherigen Option</span>
+                    <span className={styles['practice-session__shortcut-keys']}>← ↑ → ↓</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Option wählen / Checkbox umschalten</span>
+                    <span className={styles['practice-session__shortcut-keys']}>Leertaste</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Option direkt wählen</span>
+                    <span className={styles['practice-session__shortcut-keys']}>1–9</span>
+                  </li>
+                </ul>
+              </div>
+              <div>
+                <div className={styles['practice-session__shortcuts-group-title']}>Aktionen</div>
+                <ul className={styles['practice-session__shortcuts-list']}>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Antwort überprüfen / weiter</span>
+                    <span className={styles['practice-session__shortcut-keys']}>Enter</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Frage erneut abspielen</span>
+                    <span className={styles['practice-session__shortcut-keys']}>R</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Hinweis anzeigen (falls vorhanden)</span>
+                    <span className={styles['practice-session__shortcut-keys']}>H</span>
+                  </li>
+                  <li className={styles['practice-session__shortcut-item']}>
+                    <span>Hilfe umschalten</span>
+                    <span className={styles['practice-session__shortcut-keys']}>?</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div className={styles['practice-session__shortcuts-close']}>
+              <button type="button" onClick={() => setShowShortcutHelp(false)}>
+                Schließen (Esc)
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

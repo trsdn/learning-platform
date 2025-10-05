@@ -36,6 +36,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@napi-rs/canvas": "^0.1.80",
     "@playwright/test": "^1.41.2",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",

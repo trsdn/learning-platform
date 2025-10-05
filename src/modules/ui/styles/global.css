@@ -17,11 +17,24 @@ html {
   line-height: var(--line-height-normal);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color var(--transition-slow, 300ms) var(--transition-ease-in-out, ease),
+    color var(--transition-slow, 300ms) var(--transition-ease-in-out, ease);
 }
 
 body {
   color: var(--color-text-primary);
   background-color: var(--color-bg-primary);
+  transition: background-color var(--transition-slow, 300ms) var(--transition-ease-in-out, ease),
+    color var(--transition-slow, 300ms) var(--transition-ease-in-out, ease);
+}
+
+.reduced-motion *,
+.reduced-motion *::before,
+.reduced-motion *::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 button {

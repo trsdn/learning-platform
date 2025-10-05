@@ -1,0 +1,286 @@
+.settingsPage {
+  padding: 2rem;
+  font-family: var(--font-family-base, system-ui, sans-serif);
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.settingsHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.settingsTitle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.settingsTitle h1 {
+  margin: 0;
+  font-size: 2rem;
+}
+
+.saveIndicator {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+}
+
+.saveIndicator--saved {
+  color: var(--color-success, #22c55e);
+}
+
+.searchBar {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.75rem;
+  border: 1px solid var(--color-bg-tertiary, #e5e7eb);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  background: var(--color-bg-secondary, #f3f4f6);
+  transition: border-color var(--transition-fast, 150ms);
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--color-primary, #667eea);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+.searchIcon {
+  position: absolute;
+  top: 50%;
+  left: 1rem;
+  transform: translateY(-50%);
+  pointer-events: none;
+  font-size: 1.25rem;
+}
+
+.presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.presetButton {
+  padding: 0.5rem 0.9rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-bg-tertiary, #e5e7eb);
+  background: #fff;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background var(--transition-fast, 150ms), transform var(--transition-fast, 150ms);
+}
+
+.presetButton:hover {
+  background: var(--color-bg-secondary, #f3f4f6);
+  transform: translateY(-1px);
+}
+
+.sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.section {
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+  border: 1px solid var(--color-bg-tertiary, #e5e7eb);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.1rem 1.3rem;
+  cursor: pointer;
+  gap: 1rem;
+}
+
+.sectionHeader h2 {
+  margin: 0;
+  font-size: 1.15rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.sectionHeaderIcon {
+  font-size: 1.5rem;
+}
+
+.sectionCaret {
+  font-size: 1rem;
+  transition: transform var(--transition-fast, 150ms);
+}
+
+.sectionCaret--collapsed {
+  transform: rotate(-90deg);
+}
+
+.sectionContent {
+  padding: 0 1.3rem 1.4rem 1.3rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.settingGroup {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.settingItem {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.settingLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 500;
+}
+
+.settingDescription {
+  color: var(--color-text-secondary, #6b7280);
+  font-size: 0.875rem;
+}
+
+.inlineOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.radioGroup,
+.toggleGroup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.radioOption {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: 9999px;
+  border: 1px solid var(--color-bg-tertiary, #e5e7eb);
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: background var(--transition-fast, 150ms);
+}
+
+.radioOption--active {
+  border-color: var(--color-primary, #667eea);
+  background: rgba(102, 126, 234, 0.12);
+}
+
+.sliderControl {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sliderControl input[type="range"] {
+  flex: 1;
+}
+
+.buttonRow {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.dangerButton {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.infoCard {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--color-bg-secondary, #f3f4f6);
+  border: 1px dashed var(--color-bg-tertiary, #e5e7eb);
+  font-size: 0.9rem;
+}
+
+.infoGrid {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.linksGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.linkButton {
+  color: var(--color-primary, #667eea);
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-decoration: none;
+}
+
+.footerActions {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.resetButton,
+.closeButton {
+  padding: 0.65rem 1.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-bg-tertiary, #e5e7eb);
+  background: #fff;
+  cursor: pointer;
+}
+
+.resetButton:hover,
+.closeButton:hover {
+  background: var(--color-bg-secondary, #f3f4f6);
+}
+
+@media (max-width: 720px) {
+  .settingsPage {
+    padding: 1.5rem 1rem 3rem 1rem;
+  }
+
+  .sectionContent {
+    padding: 0 1rem 1.1rem 1rem;
+  }
+
+  .settingsHeader {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .footerActions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resetButton,
+  .closeButton {
+    width: 100%;
+  }
+}

@@ -122,6 +122,11 @@
   opacity: 1;
 }
 
+.practice-session__mc-option--focused {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
 .practice-session__mc-option--selected {
   background: #dbeafe;
   border-color: #3b82f6;
@@ -289,6 +294,13 @@
 
 .practice-session__ordering-item-text {
   flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.practice-session__ordering-word {
+  flex: 0 1 auto;
 }
 
 .practice-session__ordering-hint {
@@ -408,6 +420,11 @@
   border-radius: 6px;
   transition: all 0.2s;
   position: relative;
+}
+
+.practice-session__ms-option--focused {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.18);
 }
 
 .practice-session__ms-option--selected {
@@ -774,6 +791,143 @@
   border-radius: 6px;
   font-size: 0.9rem;
   color: #92400e;
+}
+
+.practice-session__hint-controls {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.practice-session__hint-button {
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.practice-session__hint-button:hover {
+  background: #f3f4f6;
+}
+
+.practice-session__hint {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  background: #fef9c3;
+  border: 1px solid #facc15;
+  color: #854d0e;
+  font-size: 0.95rem;
+}
+
+.practice-session__shortcuts-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  z-index: 999;
+}
+
+.practice-session__shortcuts-content {
+  background: var(--color-bg-primary, #ffffff);
+  color: var(--color-text-primary, #111827);
+  border-radius: 1rem;
+  padding: 2rem;
+  max-width: 520px;
+  width: 100%;
+  box-shadow: 0 20px 40px rgba(15, 23, 42, 0.25);
+}
+
+.practice-session__shortcuts-content h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.practice-session__shortcuts-groups {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.practice-session__shortcuts-group-title {
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.practice-session__shortcuts-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.35rem;
+}
+
+.practice-session__shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+}
+
+.practice-session__shortcut-keys {
+  font-family: var(--font-family-mono, 'SF Mono', 'Cascadia Code', monospace);
+  background: var(--color-bg-secondary, #f3f4f6);
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.6rem;
+  white-space: nowrap;
+}
+
+.practice-session__shortcuts-close {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.practice-session__shortcuts-close button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.6rem;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  cursor: pointer;
+}
+
+.practice-session__shortcuts-close button:hover {
+  background: #f3f4f6;
+}
+
+.practice-session__hint-controls {
+  margin-top: 0.75rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.practice-session__hint-button {
+  padding: 0.4rem 0.85rem;
+  border-radius: 9999px;
+  border: 1px solid #d1d5db;
+  background: #ffffff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.practice-session__hint-button:hover {
+  background: #f3f4f6;
+}
+
+.practice-session__hint {
+  margin-top: 0.75rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  background: #fef9c3;
+  border: 1px solid #facc15;
+  color: #854d0e;
+  font-size: 0.95rem;
 }
 
 /* ==================== Feedback ==================== */

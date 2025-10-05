@@ -2,7 +2,6 @@ import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Button } from './common/Button';
 import { Card } from './common/Card';
-import { colors } from '@ui/design-tokens';
 import styles from './session-results.module.css';
 
 interface Props {
@@ -20,16 +19,16 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
   let performanceColor = '';
   if (accuracy >= 90) {
     performanceRating = 'Ausgezeichnet!';
-    performanceColor = colors.success[500];
+    performanceColor = 'var(--color-success)';
   } else if (accuracy >= 75) {
     performanceRating = 'Sehr gut!';
-    performanceColor = colors.primary[500];
+    performanceColor = 'var(--color-primary)';
   } else if (accuracy >= 60) {
     performanceRating = 'Gut gemacht!';
-    performanceColor = colors.warning[500];
+    performanceColor = 'var(--color-warning)';
   } else {
     performanceRating = 'Weiter üben!';
-    performanceColor = colors.error[500];
+    performanceColor = 'var(--color-error)';
   }
 
   // Format time
@@ -61,13 +60,13 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
         <StatCard
           title="Aufgaben bearbeitet"
           value={session.execution.completedCount}
-          color={colors.primary[500]}
+          color="var(--color-primary)"
         />
 
         <StatCard
           title="Richtige Antworten"
           value={session.execution.correctCount}
-          color={colors.success[500]}
+          color="var(--color-success)"
         />
 
         <StatCard
@@ -79,7 +78,7 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
         <StatCard
           title="Ø Zeit pro Aufgabe"
           value={formatTime(averageTime)}
-          color={colors.warning[500]}
+          color="var(--color-warning)"
         />
       </div>
 

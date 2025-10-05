@@ -7,6 +7,9 @@ import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
+import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
+import { settingsService } from '@core/services/settings-service';
+import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
 import './modules/ui/styles/utilities.css';
@@ -15,6 +18,10 @@ import './index.css';
 /**
  * German Learning Platform with Spaced Repetition
  */
+
+if (typeof window !== 'undefined') {
+  settingsService.load();
+}
 
 function App() {
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -28,6 +35,8 @@ function App() {
   const [showDashboard, setShowDashboard] = useState(false);
   const [showSessionConfig, setShowSessionConfig] = useState(false);
   const [sessionConfig, setSessionConfig] = useState({ targetCount: 10, includeReview: true });
+  const [showSettings, setShowSettings] = useState(false);
+  const [themeMode, setThemeMode] = useState<ThemeMode>('system');
   const initStarted = useRef(false);
 
   useEffect(() => {
@@ -36,6 +45,50 @@ function App() {
       initializeApp();
     }
   }, []);
+
+  useEffect(() => {
+    const handleReseedEvent = (_event: Event) => {
+      reseedDatabase(true).catch((error) => console.error('Reseed event failed', error));
+    };
+    const handleResetEvent = (_event: Event) => {
+      handleFullReset().catch((error) => console.error('Reset event failed', error));
+    };
+
+    window.addEventListener('app:database:reseed', handleReseedEvent);
+    window.addEventListener('app:database:reset', handleResetEvent);
+
+    return () => {
+      window.removeEventListener('app:database:reseed', handleReseedEvent);
+      window.removeEventListener('app:database:reset', handleResetEvent);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handler = (event: Event) => {
+      const detail = (event as CustomEvent<{ settings: AppSettings }>).detail;
+      if (detail?.settings?.theme?.mode) {
+        setThemeMode(detail.settings.theme.mode as ThemeMode);
+      }
+    };
+    window.addEventListener('app:settings:updated', handler);
+    setThemeMode(settingsService.getSettings().theme.mode as ThemeMode);
+    return () => {
+      window.removeEventListener('app:settings:updated', handler);
+    };
+  }, []);
+
+  const cycleThemeMode = () => {
+    const order: ThemeMode[] = ['system', 'light', 'dark'];
+    const currentIndex = order.indexOf(themeMode);
+    const nextMode = (order[(currentIndex + 1) % order.length] ?? 'system') as ThemeMode;
+    const updated = settingsService.update((prev) => ({
+      ...prev,
+      theme: { ...prev.theme, mode: nextMode },
+    }));
+    setThemeMode(updated.theme.mode as ThemeMode);
+  };
+
+  const themeLabel = themeMode === 'system' ? 'System' : themeMode === 'light' ? 'Hell' : 'Dunkel';
 
   async function initializeApp() {
     try {
@@ -165,6 +218,14 @@ function App() {
     );
   }
 
+  if (showSettings) {
+    return (
+      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <SettingsPage onClose={() => setShowSettings(false)} />
+      </div>
+    );
+  }
+
   // Show session results
   if (completedSession) {
     return (
@@ -186,7 +247,8 @@ function App() {
           onClick={cancelSessionConfig}
           style={{
             padding: '0.5rem 1rem',
-            background: '#e5e7eb',
+            background: 'var(--color-bg-tertiary)',
+            color: 'var(--color-text-primary)',
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer',
@@ -197,7 +259,7 @@ function App() {
         </button>
 
         <h1 style={{ marginBottom: '0.5rem' }}>Sitzung konfigurieren</h1>
-        <p style={{ color: '#6b7280', marginBottom: '2rem' }}>
+        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2rem' }}>
           {selectedLearningPath.title}
         </p>
 
@@ -212,8 +274,8 @@ function App() {
                 onClick={() => setSessionConfig({ ...sessionConfig, targetCount: count })}
                 style={{
                   padding: '0.75rem 1.5rem',
-                  background: sessionConfig.targetCount === count ? '#3b82f6' : '#f3f4f6',
-                  color: sessionConfig.targetCount === count ? 'white' : '#374151',
+                  background: sessionConfig.targetCount === count ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
+                  color: sessionConfig.targetCount === count ? 'var(--color-text-inverse)' : 'var(--color-text-primary)',
                   border: 'none',
                   borderRadius: '6px',
                   cursor: 'pointer',
@@ -237,7 +299,7 @@ function App() {
             />
             <span>Wiederholungsfragen einbeziehen</span>
           </label>
-          <p style={{ fontSize: '0.875rem', color: '#6b7280', marginTop: '0.5rem', marginLeft: '1.75rem' }}>
+          <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem', marginLeft: '1.75rem' }}>
             Fragen, die du bereits beantwortet hast und die zur Wiederholung fällig sind
           </p>
         </div>
@@ -246,8 +308,8 @@ function App() {
           onClick={startPracticeSession}
           style={{
             padding: '1rem 2rem',
-            background: '#3b82f6',
-            color: 'white',
+            background: 'var(--color-primary)',
+            color: 'var(--color-text-inverse)',
             border: 'none',
             borderRadius: '8px',
             cursor: 'pointer',
@@ -285,7 +347,8 @@ function App() {
           onClick={() => setSelectedTopic(null)}
           style={{
             padding: '0.5rem 1rem',
-            background: '#e5e7eb',
+            background: 'var(--color-bg-tertiary)',
+            color: 'var(--color-text-primary)',
             border: 'none',
             borderRadius: '4px',
             cursor: 'pointer',
@@ -310,26 +373,26 @@ function App() {
               key={path.id}
               style={{
                 padding: '1.5rem',
-                background: '#ffffff',
-                border: '2px solid #e5e7eb',
+                background: 'var(--color-bg-primary)',
+                border: '2px solid var(--color-bg-tertiary)',
                 borderRadius: '8px',
                 cursor: 'pointer',
                 transition: 'all 0.2s',
               }}
               onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = '#3b82f6';
+                e.currentTarget.style.borderColor = 'var(--color-primary)';
                 e.currentTarget.style.transform = 'translateY(-2px)';
               }}
               onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = '#e5e7eb';
+                e.currentTarget.style.borderColor = 'var(--color-bg-tertiary)';
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
               <h3 style={{ marginBottom: '0.5rem' }}>{path.title}</h3>
-              <p style={{ fontSize: '0.9rem', color: '#6b7280', marginBottom: '1rem' }}>
+              <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
                 {path.description}
               </p>
-              <div style={{ fontSize: '0.85rem', color: '#9ca3af' }}>
+              <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
                 <span style={{ marginRight: '1rem' }}>
                   {path.difficulty === 'easy'
                     ? '🟢 Leicht'
@@ -344,8 +407,8 @@ function App() {
                 style={{
                   marginTop: '1rem',
                   padding: '0.5rem 1rem',
-                  background: '#3b82f6',
-                  color: 'white',
+                  background: 'var(--color-primary)',
+                  color: 'var(--color-text-inverse)',
                   border: 'none',
                   borderRadius: '4px',
                   cursor: 'pointer',
@@ -361,26 +424,49 @@ function App() {
     );
   }
 
-  async function handleReseed() {
-    if (confirm('Datenbank neu laden? Dies wird alle Lernpfade aktualisieren, aber dein Fortschritt bleibt erhalten.')) {
-      try {
-        // Clear only topics, learning paths, and tasks - keep user progress
-        await db.topics.clear();
-        await db.learningPaths.clear();
-        await db.tasks.clear();
-
-        // Reseed
-        await seedDatabase(db);
-
-        // Reload topics
-        const loadedTopics = await db.topics.toArray();
-        setTopics(loadedTopics);
-
+  async function reseedDatabase(showNotification = true) {
+    try {
+      await db.topics.clear();
+      await db.learningPaths.clear();
+      await db.tasks.clear();
+      await seedDatabase(db);
+      const loadedTopics = await db.topics.toArray();
+      setTopics(loadedTopics);
+      let storageUsageBytes: number | undefined;
+      if (navigator.storage?.estimate) {
+        try {
+          const estimate = await navigator.storage.estimate();
+          storageUsageBytes = estimate.usage ?? undefined;
+        } catch (error) {
+          console.warn('Storage estimate failed', error);
+        }
+      }
+      const detail = {
+        lastUpdatedAt: new Date().toISOString(),
+        storageUsageBytes,
+      };
+      window.dispatchEvent(new CustomEvent('app:database:updated', { detail }));
+      if (showNotification) {
         alert('✅ Datenbank erfolgreich aktualisiert!');
-      } catch (error) {
-        console.error('Reseed failed:', error);
+      }
+    } catch (error) {
+      console.error('Reseed failed:', error);
+      if (showNotification) {
         alert('❌ Fehler beim Aktualisieren der Datenbank');
       }
+    }
+  }
+
+  async function handleFullReset() {
+    try {
+      await db.delete();
+      localStorage.removeItem('dbVersion');
+      localStorage.removeItem('mindforge.app-settings.v1');
+      localStorage.removeItem('audioSettings');
+      window.location.reload();
+    } catch (error) {
+      console.error('Reset failed:', error);
+      alert('❌ Fehler beim Löschen der Daten');
     }
   }
 
@@ -403,17 +489,18 @@ function App() {
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h1>🧠 MindForge Academy</h1>
-          <p style={{ fontSize: '1.1rem', color: '#6b7280', marginTop: '0.5rem' }}>
+          <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>
             Erweitere dein Wissen, eine Frage nach der anderen
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
           <button
-            onClick={handleReseed}
+            onClick={cycleThemeMode}
+            title={`Theme wechseln (aktuell: ${themeLabel})`}
             style={{
               padding: '0.75rem 1.5rem',
-              background: '#f59e0b',
-              color: 'white',
+              background: 'var(--color-primary, #667eea)',
+              color: '#ffffff',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',
@@ -424,14 +511,14 @@ function App() {
               gap: '0.5rem',
             }}
           >
-            🔄 DB Aktualisieren
+            🌓 {themeLabel}
           </button>
           <button
             onClick={() => setShowDashboard(true)}
             style={{
               padding: '0.75rem 1.5rem',
-              background: '#3b82f6',
-              color: 'white',
+              background: 'var(--color-primary)',
+              color: 'var(--color-text-inverse)',
               border: 'none',
               borderRadius: '6px',
               cursor: 'pointer',
@@ -443,6 +530,24 @@ function App() {
             }}
           >
             📊 Dashboard
+          </button>
+          <button
+            onClick={() => setShowSettings(true)}
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: 'var(--color-info)',
+              color: 'var(--color-text-inverse)',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+          >
+            ⚙️ Einstellungen
           </button>
         </div>
       </div>
