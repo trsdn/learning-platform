@@ -46,7 +46,7 @@ src/modules/
 **Conditional classes**: Use `clsx` helper
 **Dynamic values**: Pass via CSS custom properties
 
-**Details**: See `/specs/004-issue-11-on/contracts/css-modules.md` and reference implementation `TopicCard.tsx`
+**Details**: See `docs/css-modules.md` and reference implementation `TopicCard.tsx`
 
 ---
 
@@ -76,7 +76,7 @@ Each type has unique content interface:
 7. **slider**: `min`, `max`, `correctValue`, `tolerance`
 8. **word-scramble**: `scrambledWord`, `correctWord`
 
-**Full interfaces**: See AGENTS.md lines 43-139 or `src/modules/core/types/services.ts`
+**Full interfaces**: See `src/modules/core/types/services.ts`
 **Templates**: `data/templates/{type}-basic.json` (schema + examples)
 
 ---
@@ -145,9 +145,8 @@ Each type has unique content interface:
 
 ## 📚 Deep Dive References
 
-**Styling**: `/specs/004-issue-11-on/contracts/css-modules.md`
-**Architecture**: See full module breakdown in original AGENTS.md lines 14-30
-**Task type details**: Original AGENTS.md lines 38-139
+**Styling**: `docs/css-modules.md` (comprehensive CSS Modules guide)
+**Types**: `src/modules/core/types/services.ts` (all task type interfaces)
 **SM-2 Algorithm**: https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
 **Dexie.js**: https://dexie.org/
 
@@ -164,6 +163,5 @@ Each type has unique content interface:
 ---
 
 **For exhaustive details, consult**:
-- Original AGENTS.md (comprehensive task type interfaces, templates, debugging)
-- `/specs/` directory (feature specifications)
+- `docs/css-modules.md` (complete styling guide)
 - `src/modules/core/types/services.ts` (authoritative type definitions)

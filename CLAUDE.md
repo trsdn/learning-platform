@@ -2,7 +2,7 @@
 
 **Last Updated**: 2025-10-05
 
-> **AI Agents**: See [AGENTS.md](./AGENTS.md) for quick-start workflows and architecture guidance.
+agen> **AI Agents**: See [AGENTS.md](./AGENTS.md) for quick-start workflows and architecture guidance.
 
 ## Project Essentials
 
@@ -26,7 +26,7 @@ npm run deploy   # Deploy to GitHub Pages
 - **Use design tokens**: `src/modules/ui/styles/variables.css`
 - **No inline styles**, no Tailwind, no CSS-in-JS
 - **Class naming**: BEM-inspired kebab-case
-- **Reference**: `/specs/004-issue-11-on/contracts/css-modules.md`
+- **Reference**: `docs/css-modules.md`
 
 ### Accessibility (WCAG 2.1 AA)
 - Semantic HTML (`<button>` not `<div>`)
@@ -102,17 +102,10 @@ src/modules/
 
 ## Detailed Documentation
 
-**For comprehensive details, see**:
-- **[AGENTS.md](./AGENTS.md)**: AI agent workflows, task types, common patterns
-- **`/specs/`**: Feature specifications and contracts
-  - `/specs/004-issue-11-on/contracts/css-modules.md`: Styling rules
-  - `/specs/004-issue-11-on/quickstart.md`: CSS Modules quick start
+**For all details, see**:
+- **[AGENTS.md](./AGENTS.md)**: Complete AI agent guide (workflows, architecture, task types)
+- **[docs/css-modules.md](./docs/css-modules.md)**: CSS Modules styling guide
 - **`src/modules/core/types/services.ts`**: Authoritative type definitions
-
-**External resources**:
-- SM-2 Algorithm: https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
-- Dexie.js: https://dexie.org/
-- React TypeScript: https://react-typescript-cheatsheet.netlify.app/
 
 ---
 
