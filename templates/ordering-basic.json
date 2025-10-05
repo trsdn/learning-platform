@@ -11,7 +11,11 @@
     },
     "questionLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the question"
     },
@@ -29,7 +33,11 @@
     },
     "itemsLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the items"
     },
@@ -56,7 +64,12 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["questionAudio"]
+      "onLoad": [
+        "questionAudio"
+      ],
+      "onReveal": [
+        "itemsAudioInOrder"
+      ]
     },
     "buttons": {
       "question": {
@@ -66,8 +79,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
@@ -75,9 +94,19 @@
     {
       "question": "Ordne diese Zahlen von klein nach groß:",
       "questionLanguage": "de",
-      "items": ["1000", "10", "100", "1"],
+      "items": [
+        "1000",
+        "10",
+        "100",
+        "1"
+      ],
       "itemsLanguage": "de",
-      "correctOrder": [3, 1, 2, 0],
+      "correctOrder": [
+        3,
+        1,
+        2,
+        0
+      ],
       "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
       "hint": "Welche Zahl ist am kleinsten?"
     }
