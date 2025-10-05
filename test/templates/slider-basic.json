@@ -52,9 +52,31 @@
       "description": "Optional hint for the student"
     }
   },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": [
+        "questionAudio"
+      ],
+      "onReveal": [
+        "correctValueAudio"
+      ]
+    },
+    "buttons": {
+      "question": {
+        "show": true,
+        "field": "questionAudio"
+      }
+    }
+  },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },

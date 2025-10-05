@@ -11,7 +11,11 @@
     },
     "textLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the text"
     },
@@ -38,7 +42,11 @@
         },
         "correctAnswerLanguage": {
           "type": "string",
-          "enum": ["de", "es", "en"],
+          "enum": [
+            "de",
+            "es",
+            "en"
+          ],
           "required": false,
           "description": "Language of the correct answer"
         },
@@ -67,7 +75,12 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["textAudio"]
+      "onLoad": [
+        "textAudio"
+      ],
+      "onReveal": [
+        "blanksAudioInOrder"
+      ]
     },
     "buttons": {
       "text": {
@@ -77,8 +90,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
@@ -91,13 +110,17 @@
           "index": 0,
           "correctAnswer": "Sonne",
           "correctAnswerLanguage": "de",
-          "alternatives": ["sonne"]
+          "alternatives": [
+            "sonne"
+          ]
         },
         {
           "index": 1,
           "correctAnswer": "Erde",
           "correctAnswerLanguage": "de",
-          "alternatives": ["erde"]
+          "alternatives": [
+            "erde"
+          ]
         }
       ],
       "explanation": "Die Erde umkreist die Sonne, der Mond umkreist die Erde.",

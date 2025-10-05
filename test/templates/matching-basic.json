@@ -11,7 +11,11 @@
     },
     "questionLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the question"
     },
@@ -34,7 +38,11 @@
         },
         "leftLanguage": {
           "type": "string",
-          "enum": ["de", "es", "en"],
+          "enum": [
+            "de",
+            "es",
+            "en"
+          ],
           "required": false,
           "description": "Language of left item"
         },
@@ -50,7 +58,11 @@
         },
         "rightLanguage": {
           "type": "string",
-          "enum": ["de", "es", "en"],
+          "enum": [
+            "de",
+            "es",
+            "en"
+          ],
           "required": false,
           "description": "Language of right item"
         },
@@ -74,7 +86,9 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["questionAudio"]
+      "onLoad": [
+        "questionAudio"
+      ]
     },
     "buttons": {
       "question": {
@@ -84,8 +98,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },

@@ -21,6 +21,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'cero' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/cero.mp3",
         "options": [
           "null",
           "eins",
@@ -49,6 +51,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'uno' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/uno.mp3",
         "options": [
           "null",
           "eins",
@@ -77,6 +81,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'dos' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/dos.mp3",
         "options": [
           "eins",
           "zwei",
@@ -105,6 +111,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'tres' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/tres.mp3",
         "options": [
           "zwei",
           "drei",
@@ -133,6 +141,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'cuatro' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/cuatro.mp3",
         "options": [
           "drei",
           "vier",
@@ -161,6 +171,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'cinco' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/cinco.mp3",
         "options": [
           "vier",
           "fünf",
@@ -189,6 +201,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'seis' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/seis.mp3",
         "options": [
           "fünf",
           "sechs",
@@ -217,6 +231,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'siete' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/siete.mp3",
         "options": [
           "sechs",
           "sieben",
@@ -245,6 +261,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'ocho' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/ocho.mp3",
         "options": [
           "sieben",
           "acht",
@@ -273,6 +291,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'nueve' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/nueve.mp3",
         "options": [
           "acht",
           "neun",
@@ -301,6 +321,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'diez' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/diez.mp3",
         "options": [
           "neun",
           "zehn",
@@ -329,6 +351,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'once' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/once.mp3",
         "options": [
           "zehn",
           "elf",
@@ -357,6 +381,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'doce' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/doce.mp3",
         "options": [
           "elf",
           "zwölf",
@@ -385,6 +411,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'trece' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/trece.mp3",
         "options": [
           "zwölf",
           "dreizehn",
@@ -413,6 +441,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'catorce' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/catorce.mp3",
         "options": [
           "dreizehn",
           "vierzehn",
@@ -441,6 +471,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'quince' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/quince.mp3",
         "options": [
           "vierzehn",
           "fünfzehn",
@@ -469,6 +501,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'dieciséis' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/dieciseis.mp3",
         "options": [
           "fünfzehn",
           "sechzehn",
@@ -497,6 +531,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'diecisiete' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/diecisiete.mp3",
         "options": [
           "sechzehn",
           "siebzehn",
@@ -525,6 +561,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'dieciocho' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/dieciocho.mp3",
         "options": [
           "siebzehn",
           "achtzehn",
@@ -553,6 +591,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'diecinueve' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/diecinueve.mp3",
         "options": [
           "achtzehn",
           "neunzehn",
@@ -581,6 +621,8 @@
       "type": "multiple-choice",
       "content": {
         "question": "Welche Zahl ist 'veinte' auf Deutsch?",
+        "questionLanguage": "de",
+        "questionAudio": "spanish/numbers/veinte.mp3",
         "options": [
           "neunzehn",
           "zwanzig",
@@ -609,11 +651,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'rot' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "azul",
           "verde",
           "rojo",
           "amarillo"
+        ],
+        "optionsAudio": [
+          "spanish/colors/azul.mp3",
+          "spanish/colors/verde.mp3",
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/amarillo.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Rojo' bedeutet 'rot' auf Spanisch."
@@ -637,11 +686,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'blau' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "azul",
           "verde",
           "rojo",
           "negro"
+        ],
+        "optionsAudio": [
+          "spanish/colors/azul.mp3",
+          "spanish/colors/verde.mp3",
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/negro.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'Azul' bedeutet 'blau' auf Spanisch."
@@ -665,11 +721,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'grün' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "rojo",
           "amarillo",
           "verde",
           "azul"
+        ],
+        "optionsAudio": [
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/amarillo.mp3",
+          "spanish/colors/verde.mp3",
+          "spanish/colors/azul.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Verde' bedeutet 'grün' auf Spanisch."
@@ -693,11 +756,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'gelb' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "rojo",
           "amarillo",
           "naranja",
           "verde"
+        ],
+        "optionsAudio": [
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/amarillo.mp3",
+          "spanish/colors/naranja.mp3",
+          "spanish/colors/verde.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Amarillo' bedeutet 'gelb' auf Spanisch."
@@ -721,11 +791,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'orange' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "amarillo",
           "rojo",
           "naranja",
           "rosa"
+        ],
+        "optionsAudio": [
+          "spanish/colors/amarillo.mp3",
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/naranja.mp3",
+          "spanish/colors/rosa.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Naranja' bedeutet 'orange' auf Spanisch (auch 'die Orange')."
@@ -749,11 +826,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'schwarz' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "blanco",
           "gris",
           "negro",
           "marrón"
+        ],
+        "optionsAudio": [
+          "spanish/colors/blanco.mp3",
+          "spanish/colors/gris.mp3",
+          "spanish/colors/negro.mp3",
+          "spanish/colors/marron.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Negro' bedeutet 'schwarz' auf Spanisch."
@@ -777,11 +861,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'weiß' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "negro",
           "blanco",
           "gris",
           "azul"
+        ],
+        "optionsAudio": [
+          "spanish/colors/negro.mp3",
+          "spanish/colors/blanco.mp3",
+          "spanish/colors/gris.mp3",
+          "spanish/colors/azul.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Blanco' bedeutet 'weiß' auf Spanisch."
@@ -805,7 +896,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'grau' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "gris",
+        "correctAnswerAudio": "spanish/colors/gris.mp3",
         "alternatives": [
           "Gris"
         ],
@@ -830,11 +923,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'rosa' oder 'pink' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "rojo",
           "rosa",
           "morado",
           "blanco"
+        ],
+        "optionsAudio": [
+          "spanish/colors/rojo.mp3",
+          "spanish/colors/rosa.mp3",
+          "spanish/colors/morado.mp3",
+          "spanish/colors/blanco.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'Rosa' bedeutet 'rosa' oder 'pink' auf Spanisch."
@@ -858,7 +958,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'lila' oder 'violett' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "morado",
+        "correctAnswerAudio": "spanish/colors/morado.mp3",
         "alternatives": [
           "Morado",
           "violeta",
@@ -885,11 +987,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'braun' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "negro",
           "gris",
           "marrón",
           "beige"
+        ],
+        "optionsAudio": [
+          "spanish/colors/negro.mp3",
+          "spanish/colors/gris.mp3",
+          "spanish/colors/marron.mp3",
+          "spanish/colors/beige.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'Marrón' bedeutet 'braun' auf Spanisch."
@@ -913,11 +1022,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Farbe' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el número",
           "el color",
           "la forma",
           "el tamaño"
+        ],
+        "optionsAudio": [
+          "spanish/vocabulary/el-numero.mp3",
+          "spanish/vocabulary/el-color.mp3",
+          "spanish/vocabulary/la-forma.mp3",
+          "spanish/vocabulary/el-tamano.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'El color' bedeutet 'die Farbe' auf Spanisch."
@@ -941,11 +1057,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Was ist deine Lieblingsfarbe?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Cuál es tu número?",
           "¿Cuál es tu color favorito?",
           "¿Cuál es tu animal favorito?",
           "¿Cómo te llamas?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/cual-es-tu-numero.mp3",
+          "spanish/phrases/cual-es-tu-color-favorito.mp3",
+          "spanish/phrases/cual-es-tu-animal-favorito.mp3",
+          "spanish/phrases/como-te-llamas.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Cuál es tu color favorito?' bedeutet 'Was ist deine Lieblingsfarbe?'"
@@ -969,11 +1092,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Hund' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el gato",
           "el perro",
           "el pájaro",
           "el pez"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-pajaro.mp3",
+          "spanish/animals/el-pez.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'El perro' bedeutet 'der Hund' auf Spanisch."
@@ -997,11 +1127,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Katze' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el perro",
           "el ratón",
           "el gato",
           "el pájaro"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-raton.mp3",
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-pajaro.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El gato' bedeutet 'die Katze' auf Spanisch."
@@ -1025,7 +1162,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Vogel' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el pájaro",
+        "correctAnswerAudio": "spanish/animals/el-pajaro.mp3",
         "alternatives": [
           "El pájaro"
         ],
@@ -1050,11 +1189,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Fisch' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el pez",
           "el perro",
           "el gato",
           "el ratón"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-pez.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-raton.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'El pez' bedeutet 'der Fisch' auf Spanisch."
@@ -1078,7 +1224,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'die Schildkröte' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la tortuga",
+        "correctAnswerAudio": "spanish/animals/la-tortuga.mp3",
         "alternatives": [
           "La tortuga"
         ],
@@ -1103,11 +1251,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Hamster' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el gato",
           "el ratón",
           "el hámster",
           "el conejo"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-gato.mp3",
+          "spanish/animals/el-raton.mp3",
+          "spanish/animals/el-hamster.mp3",
+          "spanish/animals/el-conejo.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El hámster' bedeutet 'der Hamster' auf Spanisch."
@@ -1131,7 +1286,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Elefant' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el elefante",
+        "correctAnswerAudio": "spanish/animals/el-elefante.mp3",
         "alternatives": [
           "El elefante"
         ],
@@ -1156,11 +1313,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Giraffe' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el elefante",
           "la jirafa",
           "el león",
           "el oso"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-elefante.mp3",
+          "spanish/animals/la-jirafa.mp3",
+          "spanish/animals/el-leon.mp3",
+          "spanish/animals/el-oso.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La jirafa' bedeutet 'die Giraffe' auf Spanisch."
@@ -1184,7 +1348,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Löwe' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el león",
+        "correctAnswerAudio": "spanish/animals/el-leon.mp3",
         "alternatives": [
           "El león"
         ],
@@ -1209,11 +1375,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Bär' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el lobo",
           "el león",
           "el oso",
           "el tigre"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-lobo.mp3",
+          "spanish/animals/el-leon.mp3",
+          "spanish/animals/el-oso.mp3",
+          "spanish/animals/el-tigre.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El oso' bedeutet 'der Bär' auf Spanisch."
@@ -1237,7 +1410,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'der Pinguin' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el pingüino",
+        "correctAnswerAudio": "spanish/animals/el-pinguino.mp3",
         "alternatives": [
           "El pingüino"
         ],
@@ -1262,11 +1437,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'die Kuh' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el cerdo",
           "la vaca",
           "la oveja",
           "el caballo"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-cerdo.mp3",
+          "spanish/animals/la-vaca.mp3",
+          "spanish/animals/la-oveja.mp3",
+          "spanish/animals/el-caballo.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La vaca' bedeutet 'die Kuh' auf Spanisch."
@@ -1290,7 +1472,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'das Schaf' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "la oveja",
+        "correctAnswerAudio": "spanish/animals/la-oveja.mp3",
         "alternatives": [
           "La oveja"
         ],
@@ -1315,11 +1499,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'das Schwein' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el cerdo",
           "la vaca",
           "el caballo",
           "el perro"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-cerdo.mp3",
+          "spanish/animals/la-vaca.mp3",
+          "spanish/animals/el-caballo.mp3",
+          "spanish/animals/el-perro.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'El cerdo' bedeutet 'das Schwein' auf Spanisch."
@@ -1343,7 +1534,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'das Pferd' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el caballo",
+        "correctAnswerAudio": "spanish/animals/el-caballo.mp3",
         "alternatives": [
           "El caballo"
         ],
@@ -1368,7 +1561,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'das Krokodil' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "el cocodrilo",
+        "correctAnswerAudio": "spanish/animals/el-cocodrilo.mp3",
         "alternatives": [
           "El cocodrilo"
         ],
@@ -1393,11 +1588,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Delfin' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el pez",
           "el tiburón",
           "el delfín",
           "la ballena"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-pez.mp3",
+          "spanish/animals/el-tiburon.mp3",
+          "spanish/animals/el-delfin.mp3",
+          "spanish/animals/la-ballena.mp3"
         ],
         "correctAnswer": 2,
         "explanation": "'El delfín' bedeutet 'der Delfin' auf Spanisch."
@@ -1421,11 +1623,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'der Frosch' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el sapo",
           "la rana",
           "el pez",
           "la tortuga"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-sapo.mp3",
+          "spanish/animals/la-rana.mp3",
+          "spanish/animals/el-pez.mp3",
+          "spanish/animals/la-tortuga.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La rana' bedeutet 'der Frosch' auf Spanisch."
@@ -1449,11 +1658,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie sagt man 'das Haustier' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "el animal",
           "la mascota",
           "el perro",
           "el gato"
+        ],
+        "optionsAudio": [
+          "spanish/animals/el-animal.mp3",
+          "spanish/animals/la-mascota.mp3",
+          "spanish/animals/el-perro.mp3",
+          "spanish/animals/el-gato.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'La mascota' bedeutet 'das Haustier' auf Spanisch."
@@ -1477,11 +1693,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Hast du Haustiere?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Tienes hermanos?",
           "¿Tienes mascotas?",
           "¿Cuántos años tienes?",
           "¿Tienes amigos?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/tienes-hermanos.mp3",
+          "spanish/phrases/tienes-mascotas.mp3",
+          "spanish/phrases/cuantos-anos-tienes.mp3",
+          "spanish/phrases/tienes-amigos.mp3"
         ],
         "correctAnswer": 1,
         "explanation": "'¿Tienes mascotas?' bedeutet 'Hast du Haustiere?'"
@@ -1505,11 +1728,18 @@
       "type": "multiple-choice",
       "content": {
         "question": "Wie fragt man 'Was ist dein Lieblingstier?' auf Spanisch?",
+        "questionLanguage": "de",
         "options": [
           "¿Cuál es tu animal favorito?",
           "¿Cuál es tu color favorito?",
           "¿Tienes mascotas?",
           "¿Cómo se llama?"
+        ],
+        "optionsAudio": [
+          "spanish/phrases/cual-es-tu-animal-favorito.mp3",
+          "spanish/phrases/cual-es-tu-color-favorito.mp3",
+          "spanish/phrases/tienes-mascotas.mp3",
+          "spanish/phrases/como-se-llama.mp3"
         ],
         "correctAnswer": 0,
         "explanation": "'¿Cuál es tu animal favorito?' bedeutet 'Was ist dein Lieblingstier?'"
@@ -1533,7 +1763,9 @@
       "type": "text-input",
       "content": {
         "question": "Wie sagt man 'Mein Lieblingstier ist...' auf Spanisch?",
+        "questionLanguage": "de",
         "correctAnswer": "Mi animal favorito es...",
+        "correctAnswerAudio": "spanish/phrases/mi-animal-favorito-es.mp3",
         "alternatives": [
           "mi animal favorito es"
         ],
@@ -1558,6 +1790,11 @@
       "type": "matching",
       "content": {
         "question": "Ordne die Zahlen zu:",
+        "questionLanguage": "de",
+        "optionsLanguage": {
+          "left": "es",
+          "right": "de"
+        },
         "pairs": [
           {
             "left": "cinco",
@@ -1597,6 +1834,11 @@
       "type": "matching",
       "content": {
         "question": "Ordne die Farben zu:",
+        "questionLanguage": "de",
+        "optionsLanguage": {
+          "left": "es",
+          "right": "de"
+        },
         "pairs": [
           {
             "left": "rojo",
@@ -1636,6 +1878,11 @@
       "type": "matching",
       "content": {
         "question": "Ordne die Tiere zu:",
+        "questionLanguage": "de",
+        "optionsLanguage": {
+          "left": "es",
+          "right": "de"
+        },
         "pairs": [
           {
             "left": "el perro",

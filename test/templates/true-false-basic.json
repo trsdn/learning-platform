@@ -11,7 +11,11 @@
     },
     "statementLanguage": {
       "type": "string",
-      "enum": ["de", "es", "en"],
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
       "required": false,
       "description": "Language of the statement"
     },
@@ -44,7 +48,9 @@
   },
   "audioConfig": {
     "autoPlay": {
-      "onLoad": ["statementAudio"]
+      "onLoad": [
+        "statementAudio"
+      ]
     },
     "buttons": {
       "statement": {
@@ -54,8 +60,14 @@
     }
   },
   "metadata": {
-    "difficulty": ["easy", "medium", "hard"],
-    "tags": ["array"],
+    "difficulty": [
+      "easy",
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
     "estimatedTime": "number (seconds)",
     "points": "number"
   },
