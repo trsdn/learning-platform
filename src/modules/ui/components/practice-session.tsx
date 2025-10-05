@@ -387,13 +387,16 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
       switch (key) {
         case 'Escape':
           event.preventDefault();
-          if (hintVisible) {
+          if (showShortcutHelp) {
+            setShowShortcutHelp(false);
+          } else if (hintVisible) {
             setHintVisible(false);
           } else {
             onCancel();
           }
           break;
         case 'Enter':
+          if (isTyping) return; // Don't submit if user is typing
           event.preventDefault();
           submitCurrent();
           break;
@@ -455,6 +458,13 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     flashcardRevealed,
     flashcardKnown,
     hintVisible,
+    showShortcutHelp,
+    canSubmit,
+    handleAnswerSubmit,
+    handleNextTask,
+    selectedAnswer,
+    trueFalseAnswer,
+    textInputAnswer,
   ]);
 
   // Keyboard shortcuts for audio controls
