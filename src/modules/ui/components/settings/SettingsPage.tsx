@@ -248,7 +248,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
             </div>
             <button
               type="button"
-              style={{ marginTop: '0.75rem' }}
               onClick={() => {
                 void refreshStorageEstimate();
               }}

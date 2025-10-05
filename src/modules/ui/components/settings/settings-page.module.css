@@ -13,14 +13,22 @@
   color: var(--color-text-primary);
   background: var(--color-bg-secondary);
   border: 1px solid var(--color-bg-tertiary);
-  padding: 0.5rem 1rem;
+  padding: 0.6rem 1.2rem;
   border-radius: 0.5rem;
   cursor: pointer;
   transition: background var(--transition-fast, 150ms);
+  font-size: 0.95rem;
+  font-weight: 500;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .settingsPage button:hover {
   background: var(--color-bg-tertiary);
+}
+
+.settingsPage button:active {
+  transform: translateY(1px);
 }
 
 .settingsHeader {
@@ -84,8 +92,8 @@
 }
 
 .presets {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 0.75rem;
   margin-bottom: 2rem;
 }
@@ -161,8 +169,9 @@
 }
 
 .settingGroup {
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
 }
 
 .settingItem {
@@ -193,8 +202,16 @@
 .radioGroup,
 .toggleGroup {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 640px) {
+  .radioGroup {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
 }
 
 .radioOption {
@@ -227,9 +244,10 @@
 }
 
 .buttonRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 0.75rem;
-  flex-wrap: wrap;
+  width: 100%;
 }
 
 .dangerButton {
@@ -243,6 +261,9 @@
   background: var(--color-bg-secondary, #f3f4f6);
   border: 1px dashed var(--color-bg-tertiary, #e5e7eb);
   font-size: 0.9rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
 }
 
 .infoGrid {
