@@ -8,7 +8,9 @@ import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
+import { PasswordPrompt } from './modules/ui/components/password-prompt';
 import { settingsService } from '@core/services/settings-service';
+import { authService } from '@core/services/auth-service';
 import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
@@ -37,6 +39,10 @@ function App() {
   const [sessionConfig, setSessionConfig] = useState({ targetCount: 10, includeReview: true });
   const [showSettings, setShowSettings] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>('system');
+  const [showPasswordPrompt, setShowPasswordPrompt] = useState(false);
+  const [pendingAuthPath, setPendingAuthPath] = useState<LearningPath | null>(null);
+  const [authError, setAuthError] = useState<string>('');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
   const initStarted = useRef(false);
 
   useEffect(() => {
@@ -158,8 +164,53 @@ function App() {
   }
 
   function showConfigScreen(learningPath: LearningPath) {
+    // Check if learning path requires password
+    if (learningPath.requiresPassword && learningPath.passwordHash) {
+      // Check if already authenticated
+      if (!authService.isAuthenticated(learningPath.id)) {
+        // Show password prompt
+        setPendingAuthPath(learningPath);
+        setAuthError('');
+        setShowPasswordPrompt(true);
+        return;
+      }
+    }
+
+    // Either no password required or already authenticated
     setSelectedLearningPath(learningPath);
     setShowSessionConfig(true);
+  }
+
+  async function handlePasswordSubmit(password: string) {
+    if (!pendingAuthPath || !pendingAuthPath.passwordHash) return;
+
+    setIsAuthenticating(true);
+    setAuthError('');
+
+    const isValid = await authService.authenticate(
+      pendingAuthPath.id,
+      password,
+      pendingAuthPath.passwordHash
+    );
+
+    setIsAuthenticating(false);
+
+    if (isValid) {
+      // Authentication successful
+      setShowPasswordPrompt(false);
+      setPendingAuthPath(null);
+      setSelectedLearningPath(pendingAuthPath);
+      setShowSessionConfig(true);
+    } else {
+      // Authentication failed
+      setAuthError('Falsches Passwort. Bitte versuche es erneut.');
+    }
+  }
+
+  function handlePasswordCancel() {
+    setShowPasswordPrompt(false);
+    setPendingAuthPath(null);
+    setAuthError('');
   }
 
   function startPracticeSession() {
@@ -227,6 +278,21 @@ function App() {
     return (
       <div style={{ fontFamily: 'system-ui, sans-serif' }}>
         <SettingsPage onClose={() => setShowSettings(false)} />
+      </div>
+    );
+  }
+
+  // Show password prompt for protected learning paths
+  if (showPasswordPrompt && pendingAuthPath) {
+    return (
+      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <PasswordPrompt
+          title={pendingAuthPath.title}
+          onSubmit={handlePasswordSubmit}
+          onCancel={handlePasswordCancel}
+          errorMessage={authError}
+          isLoading={isAuthenticating}
+        />
       </div>
     );
   }
@@ -393,7 +459,10 @@ function App() {
                 e.currentTarget.style.transform = 'translateY(0)';
               }}
             >
-              <h3 style={{ marginBottom: '0.5rem' }}>{path.title}</h3>
+              <h3 style={{ marginBottom: '0.5rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                {path.title}
+                {path.requiresPassword && <span title="Passwortgeschützt">🔒</span>}
+              </h3>
               <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
                 {path.description}
               </p>

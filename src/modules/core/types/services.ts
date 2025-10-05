@@ -34,6 +34,9 @@ export interface LearningPath {
   };
   createdAt: Date;
   updatedAt: Date;
+  // Password protection (optional)
+  requiresPassword?: boolean;
+  passwordHash?: string;
 }
 
 export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard' | 'text-input';
