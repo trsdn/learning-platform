@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
-  testMatch: ['**/*.spec.ts', '**/*.test.ts'],
+  testDir: './tests/e2e',
+  testMatch: ['**/*.spec.ts'],
   fullyParallel: false, // Disable parallel execution to avoid DB race conditions
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
