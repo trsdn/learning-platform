@@ -28,7 +28,7 @@ export default defineConfig({
       statements: 80,
     },
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
-    exclude: ['tests/e2e/**/*', 'node_modules'],
+    exclude: ['tests/e2e/**/*', 'tests/visual/**/*', 'node_modules'],
     testTimeout: 10000,
   },
   resolve: {
