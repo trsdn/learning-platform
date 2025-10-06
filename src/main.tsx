@@ -8,7 +8,9 @@ import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
+import { WebsiteLoginScreen } from './modules/ui/components/website-login-screen';
 import { settingsService } from '@core/services/settings-service';
+import { websiteAuthService } from '@core/services/website-auth-service';
 import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
@@ -24,6 +26,11 @@ if (typeof window !== 'undefined') {
 }
 
 function App() {
+  // Website authentication state
+  const [isWebsiteAuthenticated, setIsWebsiteAuthenticated] = useState(false);
+  const [websiteAuthError, setWebsiteAuthError] = useState<string>('');
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
+
   const [topics, setTopics] = useState<Topic[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [learningPaths, setLearningPaths] = useState<LearningPath[]>([]);
@@ -38,6 +45,12 @@ function App() {
   const [showSettings, setShowSettings] = useState(false);
   const [themeMode, setThemeMode] = useState<ThemeMode>('system');
   const initStarted = useRef(false);
+
+  // Check website authentication on mount
+  useEffect(() => {
+    const isAuth = websiteAuthService.isAuthenticated();
+    setIsWebsiteAuthenticated(isAuth);
+  }, []);
 
   useEffect(() => {
     if (!initStarted.current) {
@@ -203,6 +216,49 @@ function App() {
     if (selectedLearningPath) {
       setInSession(true);
     }
+  }
+
+  async function handleWebsitePasswordSubmit(password: string) {
+    const passwordHash = import.meta.env.VITE_APP_PASSWORD_HASH;
+
+    if (!passwordHash) {
+      setWebsiteAuthError('Kein Passwort konfiguriert. Bitte VITE_APP_PASSWORD_HASH in .env.local setzen.');
+      return;
+    }
+
+    setIsAuthenticating(true);
+    setWebsiteAuthError('');
+
+    try {
+      const isValid = await websiteAuthService.authenticate(password, passwordHash);
+
+      setIsAuthenticating(false);
+
+      if (isValid) {
+        setIsWebsiteAuthenticated(true);
+        setWebsiteAuthError('');
+      } else {
+        setWebsiteAuthError('Das eingegebene Passwort ist nicht korrekt. Bitte versuchen Sie es erneut.');
+      }
+    } catch (error) {
+      setIsAuthenticating(false);
+      if (error instanceof Error) {
+        setWebsiteAuthError(error.message);
+      } else {
+        setWebsiteAuthError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+      }
+    }
+  }
+
+  // Show website login screen if not authenticated
+  if (!isWebsiteAuthenticated) {
+    return (
+      <WebsiteLoginScreen
+        onSubmit={handleWebsitePasswordSubmit}
+        errorMessage={websiteAuthError}
+        isLoading={isAuthenticating}
+      />
+    );
   }
 
   if (isLoading) {

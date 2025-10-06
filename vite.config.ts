@@ -1,15 +1,26 @@
-import { defineConfig } from 'vite';
+import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
+import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-export default defineConfig({
-  base: process.env.VITE_BASE_PATH || (process.env.NODE_ENV === 'production' ? '/learning-platform/' : '/'),
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+export default defineConfig(({ mode }) => {
+  // Load env file based on `mode` in the current working directory.
+  // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
+  const env = loadEnv(mode, process.cwd(), '');
+
+  return {
+  base: env.VITE_BASE_PATH || (mode === 'production' ? '/learning-platform/' : '/'),
   define: {
-    'import.meta.env.VITE_DB_NAME': JSON.stringify(process.env.VITE_DB_NAME || 'mindforge-academy'),
-    'import.meta.env.VITE_ENV': JSON.stringify(process.env.VITE_ENV || 'production'),
+    'import.meta.env.VITE_DB_NAME': JSON.stringify(env.VITE_DB_NAME || 'mindforge-academy'),
+    'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),
+    'import.meta.env.VITE_APP_PASSWORD_HASH': JSON.stringify(env.VITE_APP_PASSWORD_HASH || ''),
   },
   plugins: [
+    tsconfigPaths(),
     react(),
     VitePWA({
       registerType: 'autoUpdate',
@@ -139,16 +150,6 @@ export default defineConfig({
       },
     }),
   ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@modules': path.resolve(__dirname, './src/modules'),
-      '@core': path.resolve(__dirname, './src/modules/core'),
-      '@storage': path.resolve(__dirname, './src/modules/storage'),
-      '@ui': path.resolve(__dirname, './src/modules/ui'),
-      '@templates': path.resolve(__dirname, './src/modules/templates'),
-    },
-  },
   build: {
     target: 'es2022',
     outDir: 'dist',
@@ -179,4 +180,5 @@ export default defineConfig({
     strictPort: false,
     host: true,
   },
+};
 });
