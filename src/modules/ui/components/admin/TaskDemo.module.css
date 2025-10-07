@@ -1,0 +1,271 @@
+/* Task Demo Container */
+.taskDemo {
+  margin-bottom: 24px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: white;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* Demo Header */
+.demoHeader {
+  display: flex;
+  gap: 20px;
+  padding: 24px 32px;
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.demoIcon {
+  font-size: 48px;
+  flex-shrink: 0;
+}
+
+.demoHeaderContent {
+  flex: 1;
+}
+
+.demoTitle {
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.demoDescription {
+  margin: 0 0 16px 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.demoMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.demoMetaItem {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.demoMetaItem code {
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  padding: 2px 6px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+}
+
+/* Examples */
+.demoExamples {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Example Demo */
+.exampleDemo {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.exampleDemo:last-child {
+  border-bottom: none;
+}
+
+/* Example Toggle */
+.exampleToggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.exampleToggle:hover {
+  background: #f9fafb;
+}
+
+.exampleToggle:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+}
+
+.exampleToggleIcon {
+  font-size: 12px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  color: #6b7280;
+}
+
+.exampleToggleIconExpanded {
+  transform: rotate(90deg);
+}
+
+.exampleNumber {
+  font-weight: 700;
+  color: #3b82f6;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  flex-shrink: 0;
+}
+
+.exampleTitle {
+  font-weight: 600;
+  color: #111827;
+  font-size: 15px;
+  flex-shrink: 0;
+  min-width: 140px;
+}
+
+.exampleDescription {
+  color: #6b7280;
+  font-size: 14px;
+}
+
+/* Example Content */
+.exampleContent {
+  padding: 24px 32px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  background: #fafbfc;
+}
+
+/* Example Preview */
+.examplePreview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.previewLabel {
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.previewBox {
+  padding: 24px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  min-height: 100px;
+}
+
+/* Data Preview */
+.dataPreview {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.dataRow {
+  display: flex;
+  gap: 12px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+}
+
+.dataKey {
+  font-weight: 600;
+  color: #3b82f6;
+  min-width: 150px;
+}
+
+.dataValue {
+  color: #111827;
+  flex: 1;
+  word-break: break-word;
+}
+
+/* Example Data Section */
+.exampleDataSection {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.exampleDataToggle {
+  align-self: flex-start;
+  padding: 10px 16px;
+  background: white;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-size: 13px;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.exampleDataToggle:hover {
+  background: #f9fafb;
+  border-color: #3b82f6;
+}
+
+.exampleDataToggle:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+.exampleDataBlock {
+  margin: 0;
+  padding: 16px;
+  background: #1e1e1e;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.exampleDataBlock code {
+  color: #d4d4d4;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .demoHeader {
+    flex-direction: column;
+  }
+
+  .demoIcon {
+    font-size: 36px;
+  }
+
+  .demoMeta {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .exampleToggle {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .previewBox {
+    padding: 16px;
+  }
+
+  .dataRow {
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .dataKey {
+    min-width: auto;
+  }
+}

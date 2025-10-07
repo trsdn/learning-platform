@@ -1,0 +1,210 @@
+/* Admin Overlay - Full screen modal */
+.adminOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-medium);
+  animation: fadeIn 0.2s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Admin Panel - Main container */
+.adminPanel {
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-lg);
+  width: 100%;
+  height: 95vh;
+  max-width: 1600px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+  overflow: hidden;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Header */
+.adminHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-xl);
+  border-bottom: 2px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.adminHeaderLeft {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.adminTitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+  color: #111827;
+}
+
+.adminSubtitle {
+  font-size: var(--font-size-sm);
+  color: #6b7280;
+  margin: 0;
+}
+
+.closeButton {
+  background: none;
+  border: none;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-md);
+  cursor: pointer;
+  color: #6b7280;
+  transition: all var(--transition-normal) var(--transition-ease-in-out);
+}
+
+.closeButton:hover {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.closeButton:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Warning Banner */
+.warningBanner {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: #fef3c7;
+  border-bottom: 2px solid #f59e0b;
+  color: #92400e;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.warningIcon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+/* Tabs */
+.adminTabs {
+  display: flex;
+  gap: 0;
+  padding: 0 var(--spacing-xl);
+  border-bottom: 2px solid #e5e7eb;
+  background: #ffffff;
+}
+
+.adminTab {
+  background: none;
+  border: none;
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all var(--transition-normal) var(--transition-ease-in-out);
+  position: relative;
+}
+
+.adminTab:hover {
+  color: #111827;
+  background: #f9fafb;
+}
+
+.adminTab:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: -2px;
+  z-index: 1;
+}
+
+.adminTabActive {
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  background: #f9fafb;
+}
+
+/* Content Area */
+.adminContent {
+  flex: 1;
+  overflow: auto;
+  background: var(--color-bg-primary);
+}
+
+.adminTabPanel {
+  height: 100%;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .adminOverlay {
+    padding: 0;
+  }
+
+  .adminPanel {
+    border-radius: 0;
+    height: 100vh;
+    max-width: none;
+  }
+
+  .adminHeader {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
+  }
+
+  .closeButton {
+    position: absolute;
+    top: var(--spacing-xl);
+    right: var(--spacing-xl);
+  }
+
+  .adminTabs {
+    padding: 0 var(--spacing-md);
+  }
+
+  .adminTab {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .adminPanel {
+    height: 90vh;
+  }
+}

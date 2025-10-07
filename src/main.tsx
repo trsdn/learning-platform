@@ -8,6 +8,7 @@ import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
+import { AdminPage, type AdminTab } from './modules/ui/components/admin/AdminPage';
 import { WebsiteLoginScreen } from './modules/ui/components/website-login-screen';
 import { settingsService } from '@core/services/settings-service';
 import { websiteAuthService } from '@core/services/website-auth-service';
@@ -43,6 +44,8 @@ function App() {
   const [showSessionConfig, setShowSessionConfig] = useState(false);
   const [sessionConfig, setSessionConfig] = useState({ targetCount: 10, includeReview: true });
   const [showSettings, setShowSettings] = useState(false);
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [adminTab, setAdminTab] = useState<AdminTab>('components');
   const [themeMode, setThemeMode] = useState<ThemeMode>('system');
   const initStarted = useRef(false);
 
@@ -88,6 +91,36 @@ function App() {
     return () => {
       window.removeEventListener('app:settings:updated', handler);
     };
+  }, []);
+
+  // Admin panel keyboard shortcut (Ctrl+Shift+A / Cmd+Shift+A)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.shiftKey && e.key.toLowerCase() === 'a') {
+        e.preventDefault();
+        setShowAdmin(prev => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  // Admin panel hash fragment support (#admin, #admin/components, #admin/tasks)
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash.startsWith('#admin')) {
+        setShowAdmin(true);
+        if (hash === '#admin/tasks') {
+          setAdminTab('tasks');
+        } else {
+          setAdminTab('components');
+        }
+      }
+    };
+    handleHashChange(); // Check on mount
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
   const cycleThemeMode = () => {
@@ -284,6 +317,22 @@ function App() {
     return (
       <div style={{ fontFamily: 'system-ui, sans-serif' }}>
         <SettingsPage onClose={() => setShowSettings(false)} />
+      </div>
+    );
+  }
+
+  // Show admin panel
+  if (showAdmin) {
+    return (
+      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+        <AdminPage
+          activeTab={adminTab}
+          onTabChange={setAdminTab}
+          onClose={() => {
+            setShowAdmin(false);
+            window.location.hash = '';
+          }}
+        />
       </div>
     );
   }
@@ -615,6 +664,25 @@ function App() {
             }}
           >
             ⚙️ Einstellungen
+          </button>
+          <button
+            onClick={() => setShowAdmin(true)}
+            style={{
+              padding: '0.75rem 1.5rem',
+              background: 'var(--color-secondary)',
+              color: 'var(--color-text-inverse)',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '1rem',
+              fontWeight: '500',
+              display: 'flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+            }}
+            title="Keyboard shortcut: Ctrl+Shift+A"
+          >
+            🔧 Admin
           </button>
         </div>
       </div>
