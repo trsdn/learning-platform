@@ -2,8 +2,15 @@ import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { usePWAInstall } from '../usePWAInstall';
 
+// Type for BeforeInstallPromptEvent mock
+interface MockBeforeInstallPromptEvent {
+  prompt: ReturnType<typeof vi.fn>;
+  userChoice: Promise<{ outcome: string; platform: string }>;
+  platforms: string[];
+}
+
 describe('usePWAInstall', () => {
-  let mockDeferredPrompt: any;
+  let mockDeferredPrompt: MockBeforeInstallPromptEvent;
 
   beforeEach(() => {
     // Clear all mocks

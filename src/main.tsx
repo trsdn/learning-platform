@@ -250,8 +250,9 @@ function App() {
     }
   }
 
-  // Show website login screen if not authenticated
-  if (!isWebsiteAuthenticated) {
+  // Show website login screen if not authenticated AND password protection is enabled
+  const passwordHashConfigured = import.meta.env.VITE_APP_PASSWORD_HASH;
+  if (passwordHashConfigured && !isWebsiteAuthenticated) {
     return (
       <WebsiteLoginScreen
         onSubmit={handleWebsitePasswordSubmit}
