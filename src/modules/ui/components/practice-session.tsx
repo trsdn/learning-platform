@@ -1346,6 +1346,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
           <Input
             value={textInputAnswer}
             onChange={(e) => setTextInputAnswer(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' && canSubmit() && !showFeedback) {
+                handleAnswerSubmit();
+              }
+            }}
             disabled={showFeedback}
             placeholder="Deine Antwort..."
             error={showFeedback && !isCorrect}
