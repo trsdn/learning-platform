@@ -22,8 +22,8 @@
 
 /* Admin Panel - Main container */
 .adminPanel {
-  background: var(--color-background);
-  border-radius: var(--radius-large);
+  background: var(--color-bg-primary);
+  border-radius: var(--border-radius-lg);
   width: 100%;
   height: 95vh;
   max-width: 1600px;
@@ -50,27 +50,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: var(--spacing-large);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-background-secondary);
+  padding: var(--spacing-xl);
+  border-bottom: 2px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .adminHeaderLeft {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-tiny);
+  gap: var(--spacing-xs);
 }
 
 .adminTitle {
-  font-size: var(--font-size-large);
+  font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   margin: 0;
-  color: var(--color-text-primary);
+  color: #111827;
 }
 
 .adminSubtitle {
-  font-size: var(--font-size-small);
-  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  color: #6b7280;
   margin: 0;
 }
 
@@ -83,19 +83,19 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: var(--radius-medium);
+  border-radius: var(--border-radius-md);
   cursor: pointer;
-  color: var(--color-text-secondary);
-  transition: all 0.2s;
+  color: #6b7280;
+  transition: all var(--transition-normal) var(--transition-ease-in-out);
 }
 
 .closeButton:hover {
-  background: var(--color-background-hover);
-  color: var(--color-text-primary);
+  background: #f3f4f6;
+  color: #111827;
 }
 
 .closeButton:focus {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
 }
 
@@ -103,60 +103,64 @@
 .warningBanner {
   display: flex;
   align-items: center;
-  gap: var(--spacing-small);
-  padding: var(--spacing-small) var(--spacing-large);
-  background: #fff3cd;
-  border-bottom: 1px solid #ffc107;
-  color: #856404;
-  font-size: var(--font-size-small);
+  gap: var(--spacing-sm);
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: #fef3c7;
+  border-bottom: 2px solid #f59e0b;
+  color: #92400e;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 .warningIcon {
   font-size: 18px;
+  flex-shrink: 0;
 }
 
 /* Tabs */
 .adminTabs {
   display: flex;
   gap: 0;
-  padding: 0 var(--spacing-large);
-  border-bottom: 1px solid var(--color-border);
-  background: var(--color-background-secondary);
+  padding: 0 var(--spacing-xl);
+  border-bottom: 2px solid #e5e7eb;
+  background: #ffffff;
 }
 
 .adminTab {
   background: none;
   border: none;
-  padding: var(--spacing-medium) var(--spacing-large);
-  font-size: var(--font-size-medium);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
+  padding: var(--spacing-md) var(--spacing-lg);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: #6b7280;
   cursor: pointer;
   border-bottom: 3px solid transparent;
-  transition: all 0.2s;
+  transition: all var(--transition-normal) var(--transition-ease-in-out);
   position: relative;
 }
 
 .adminTab:hover {
-  color: var(--color-text-primary);
-  background: var(--color-background-hover);
+  color: #111827;
+  background: #f9fafb;
 }
 
 .adminTab:focus {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #3b82f6;
   outline-offset: -2px;
+  z-index: 1;
 }
 
 .adminTabActive {
-  color: var(--color-primary);
-  border-bottom-color: var(--color-primary);
+  color: #3b82f6;
+  border-bottom-color: #3b82f6;
+  background: #f9fafb;
 }
 
 /* Content Area */
 .adminContent {
   flex: 1;
   overflow: auto;
-  background: var(--color-background);
+  background: var(--color-bg-primary);
 }
 
 .adminTabPanel {
@@ -178,22 +182,23 @@
   .adminHeader {
     flex-direction: column;
     align-items: flex-start;
-    gap: var(--spacing-medium);
+    gap: var(--spacing-md);
+    padding: var(--spacing-lg);
   }
 
   .closeButton {
     position: absolute;
-    top: var(--spacing-large);
-    right: var(--spacing-large);
+    top: var(--spacing-xl);
+    right: var(--spacing-xl);
   }
 
   .adminTabs {
-    padding: 0 var(--spacing-medium);
+    padding: 0 var(--spacing-md);
   }
 
   .adminTab {
-    padding: var(--spacing-small) var(--spacing-medium);
-    font-size: var(--font-size-small);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: var(--font-size-sm);
   }
 }
 
