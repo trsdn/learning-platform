@@ -1,10 +1,11 @@
 /* Component Demo Container */
 .componentDemo {
   margin-bottom: var(--spacing-xlarge);
-  border: 1px solid var(--color-border);
+  border: 2px solid #e5e7eb;
   border-radius: var(--radius-large);
-  background: var(--color-background);
+  background: white;
   overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* Demo Header */
@@ -12,34 +13,35 @@
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: var(--spacing-medium);
-  padding: var(--spacing-large);
-  background: var(--color-background-secondary);
-  border-bottom: 1px solid var(--color-border);
+  gap: 24px;
+  padding: 24px 32px;
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .demoTitle {
-  margin: 0 0 var(--spacing-small) 0;
-  font-size: var(--font-size-large);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
+  margin: 0 0 8px 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
 }
 
 .demoDescription {
-  margin: 0 0 var(--spacing-small) 0;
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-medium);
+  margin: 0 0 12px 0;
+  color: #6b7280;
+  font-size: 14px;
+  line-height: 1.5;
 }
 
 .demoImport {
   display: inline-block;
-  padding: var(--spacing-tiny) var(--spacing-small);
-  background: var(--color-background);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-small);
-  font-family: 'Courier New', Courier, monospace;
-  font-size: var(--font-size-small);
-  color: var(--color-primary);
+  padding: 6px 12px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 13px;
+  color: #3b82f6;
 }
 
 .demoActions {
@@ -78,7 +80,7 @@
 
 /* Variant Demo */
 .variantDemo {
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 1px solid #e5e7eb;
 }
 
 .variantDemo:last-child {
@@ -94,28 +96,29 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: var(--spacing-small);
-  padding: var(--spacing-medium) var(--spacing-large);
+  gap: 12px;
+  padding: 16px 32px;
   background: none;
   border: none;
   text-align: left;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: background 0.15s;
 }
 
 .variantToggle:hover {
-  background: var(--color-background-hover);
+  background: #f9fafb;
 }
 
 .variantToggle:focus {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #3b82f6;
   outline-offset: -2px;
 }
 
 .variantToggleIcon {
-  font-size: 12px;
+  font-size: 14px;
   transition: transform 0.2s;
   flex-shrink: 0;
+  color: #6b7280;
 }
 
 .variantToggleIconExpanded {
@@ -123,50 +126,51 @@
 }
 
 .variantName {
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-medium);
+  font-weight: 600;
+  color: #111827;
+  font-size: 15px;
   flex-shrink: 0;
+  min-width: 140px;
 }
 
 .variantDescription {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-small);
+  color: #6b7280;
+  font-size: 14px;
 }
 
 /* Variant Content */
 .variantContent {
-  padding: var(--spacing-large);
-  padding-top: 0;
+  padding: 24px 32px 32px 32px;
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-medium);
+  gap: 24px;
+  background: #fafbfc;
 }
 
 /* Variant Preview */
 .variantPreview {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-small);
+  gap: 12px;
 }
 
 .variantPreviewLabel {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .variantPreviewBox {
-  padding: var(--spacing-large);
-  background: var(--color-background-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-medium);
+  padding: 32px;
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 80px;
+  min-height: 100px;
 }
 
 /* Variant Code */
@@ -219,39 +223,40 @@
 .variantProps {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-small);
+  gap: 12px;
 }
 
 .variantPropsLabel {
-  font-size: var(--font-size-small);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  color: #6b7280;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .variantPropsTable {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-medium);
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
   overflow: hidden;
-  font-size: var(--font-size-small);
+  font-size: 13px;
+  background: white;
 }
 
 .variantPropsTable th {
-  padding: var(--spacing-small) var(--spacing-medium);
-  background: var(--color-background-secondary);
-  color: var(--color-text-secondary);
-  font-weight: var(--font-weight-bold);
+  padding: 12px 16px;
+  background: #f9fafb;
+  color: #374151;
+  font-weight: 600;
   text-align: left;
-  border-bottom: 1px solid var(--color-border);
+  border-bottom: 2px solid #e5e7eb;
 }
 
 .variantPropsTable td {
-  padding: var(--spacing-small) var(--spacing-medium);
-  border-bottom: 1px solid var(--color-border);
-  color: var(--color-text-primary);
+  padding: 12px 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #111827;
 }
 
 .variantPropsTable tbody tr:last-child td {
@@ -259,17 +264,20 @@
 }
 
 .variantPropsTable tbody tr:hover {
-  background: var(--color-background-hover);
+  background: #f9fafb;
 }
 
 .variantPropsTable code {
-  font-family: 'Courier New', Courier, monospace;
-  font-size: var(--font-size-small);
+  font-family: 'SF Mono', 'Monaco', 'Courier New', monospace;
+  font-size: 12px;
+  padding: 2px 6px;
+  background: #f3f4f6;
+  border-radius: 3px;
 }
 
 .propType {
-  color: var(--color-primary);
-  font-weight: var(--font-weight-medium);
+  color: #3b82f6;
+  font-weight: 600;
 }
 
 /* Responsive */
