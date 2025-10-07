@@ -583,7 +583,7 @@ function App() {
 
   // Convert Topic to TopicCardTopic
   function topicToCardTopic(topic: Topic): TopicCardTopic {
-    const icon = topic.id === 'test' ? '🎯' : topic.id === 'mathematik' ? '🔢' : topic.id === 'spanisch' ? '🇪🇸' : '🧬';
+    const icon = topic.id === 'test' ? '🎯' : topic.id === 'mathematik' ? '🔢' : topic.id === 'spanisch' ? '🇪🇸' : topic.id === 'englisch' ? '🇬🇧' : '🧬';
     const color = topic.id === 'test' ? '#fef3c7' : topic.id === 'mathematik' ? '#dbeafe' : topic.id === 'spanisch' ? '#fef3c7' : '#dcfce7';
 
     return {
