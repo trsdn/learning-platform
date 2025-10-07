@@ -5,7 +5,7 @@
     "title": "Unregelmäßige Verben - Englisch",
     "description": "Lerne die wichtigsten unregelmäßigen Verben im Englischen: Infinitiv, Simple Past und Past Participle",
     "difficulty": "beginner",
-    "estimatedTime": 900,
+    "estimatedTime": 2700,
     "isActive": true,
     "createdAt": "2025-10-07T10:00:00.000Z",
     "requirements": {
@@ -20,15 +20,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Simple Past von 'go' (gehen)?",
+        "question": "Fill in: Yesterday, I ___ to school (gehen)",
         "questionLanguage": "de",
         "correctAnswer": "went",
         "alternatives": [],
-        "explanation": "Das Simple Past von 'go' ist 'went'. Beispiel: I went to school yesterday."
+        "explanation": "Das Verb 'go' wird im Simple Past zu 'went'. Beispiel: Yesterday, I went to school.",
+        "hint": "Rhymes with 'went'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -39,15 +44,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'go' (gehen)?",
+        "question": "Fill in: I have ___ to Paris before (gehen)",
         "questionLanguage": "de",
         "correctAnswer": "gone",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'go' ist 'gone'. Beispiel: I have gone to the park."
+        "explanation": "Das Past Participle von 'go' ist 'gone'. Beispiel: I have gone to Paris before.",
+        "hint": "Rhymes with 'phone'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -58,15 +68,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'eat' (essen)?",
+        "question": "Fill in: She ___ an apple for lunch (essen)",
         "questionLanguage": "de",
-        "options": ["eated", "ate", "eaten", "eat"],
+        "options": [
+          "eated",
+          "ate",
+          "eaten",
+          "eat"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'eat' ist 'ate'. Beispiel: I ate an apple."
+        "explanation": "Das Verb 'eat' wird im Simple Past zu 'ate'. Beispiel: She ate an apple for lunch.",
+        "hint": "Sounds like the number 8"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -77,15 +97,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'eat' (essen)?",
+        "question": "Fill in: We have ___ breakfast already (essen)",
         "questionLanguage": "de",
         "correctAnswer": "eaten",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'eat' ist 'eaten'. Beispiel: I have eaten breakfast."
+        "explanation": "Das Past Participle von 'eat' ist 'eaten'. Beispiel: We have eaten breakfast already.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -96,15 +121,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'drink' (trinken)?",
+        "question": "Fill in: He ___ water after running (trinken)",
         "questionLanguage": "de",
-        "options": ["drinked", "drunk", "drank", "drink"],
+        "options": [
+          "drinked",
+          "drunk",
+          "drank",
+          "drink"
+        ],
         "correctAnswer": 2,
-        "explanation": "Das Simple Past von 'drink' ist 'drank'. Beispiel: I drank water."
+        "explanation": "Das Verb 'drink' wird im Simple Past zu 'drank'. Beispiel: He drank water after running.",
+        "hint": "Rhymes with 'bank'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -115,15 +150,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'drink' (trinken)?",
+        "question": "Fill in: They have ___ all the juice (trinken)",
         "questionLanguage": "de",
         "correctAnswer": "drunk",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'drink' ist 'drunk'. Beispiel: I have drunk coffee."
+        "explanation": "Das Past Participle von 'drink' ist 'drunk'. Beispiel: They have drunk all the juice.",
+        "hint": "Rhymes with 'trunk'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -134,15 +174,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'see' (sehen)?",
+        "question": "Fill in: I ___ a beautiful sunset yesterday (sehen)",
         "questionLanguage": "de",
-        "options": ["seed", "saw", "seen", "see"],
+        "options": [
+          "seed",
+          "saw",
+          "seen",
+          "see"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'see' ist 'saw'. Beispiel: I saw a bird."
+        "explanation": "Das Verb 'see' wird im Simple Past zu 'saw'. Beispiel: I saw a beautiful sunset yesterday.",
+        "hint": "A tool for cutting wood"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -153,15 +203,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'see' (sehen)?",
+        "question": "Fill in: Have you ___ this movie? (sehen)",
         "questionLanguage": "de",
         "correctAnswer": "seen",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'see' ist 'seen'. Beispiel: I have seen that movie."
+        "explanation": "Das Past Participle von 'see' ist 'seen'. Beispiel: Have you seen this movie?.",
+        "hint": "Rhymes with 'been'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -172,15 +227,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'come' (kommen)?",
+        "question": "Fill in: She ___ to the party last night (kommen)",
         "questionLanguage": "de",
-        "options": ["comed", "came", "come", "camed"],
+        "options": [
+          "comed",
+          "came",
+          "come",
+          "camed"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'come' ist 'came'. Beispiel: He came to the party."
+        "explanation": "Das Verb 'come' wird im Simple Past zu 'came'. Beispiel: She came to the party last night.",
+        "hint": "Rhymes with 'game'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -191,15 +256,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'come' (kommen)?",
+        "question": "Fill in: They have ___ home early (kommen)",
         "questionLanguage": "de",
         "correctAnswer": "come",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'come' ist 'come'. Beispiel: She has come home."
+        "explanation": "Das Past Participle von 'come' ist 'come'. Beispiel: They have come home early.",
+        "hint": "Same as infinitive"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -210,15 +280,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'take' (nehmen)?",
+        "question": "Fill in: I ___ the bus this morning (nehmen)",
         "questionLanguage": "de",
-        "options": ["taked", "took", "taken", "take"],
+        "options": [
+          "taked",
+          "took",
+          "taken",
+          "take"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'take' ist 'took'. Beispiel: I took the bus."
+        "explanation": "Das Verb 'take' wird im Simple Past zu 'took'. Beispiel: I took the bus this morning.",
+        "hint": "Rhymes with 'book'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -229,15 +309,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'take' (nehmen)?",
+        "question": "Fill in: She has ___ my pen (nehmen)",
         "questionLanguage": "de",
         "correctAnswer": "taken",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'take' ist 'taken'. Beispiel: I have taken the test."
+        "explanation": "Das Past Participle von 'take' ist 'taken'. Beispiel: She has taken my pen.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -248,15 +333,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'give' (geben)?",
+        "question": "Fill in: He ___ me a present (geben)",
         "questionLanguage": "de",
-        "options": ["gived", "gave", "given", "give"],
+        "options": [
+          "gived",
+          "gave",
+          "given",
+          "give"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'give' ist 'gave'. Beispiel: She gave me a gift."
+        "explanation": "Das Verb 'give' wird im Simple Past zu 'gave'. Beispiel: He gave me a present.",
+        "hint": "Rhymes with 'save'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -267,15 +362,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'give' (geben)?",
+        "question": "Fill in: I have ___ him the key (geben)",
         "questionLanguage": "de",
         "correctAnswer": "given",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'give' ist 'given'. Beispiel: I have given him the book."
+        "explanation": "Das Past Participle von 'give' ist 'given'. Beispiel: I have given him the key.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -286,15 +386,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'make' (machen)?",
+        "question": "Fill in: She ___ a delicious cake (machen)",
         "questionLanguage": "de",
-        "options": ["maked", "made", "make", "maken"],
+        "options": [
+          "maked",
+          "made",
+          "make",
+          "maken"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'make' ist 'made'. Beispiel: I made a cake."
+        "explanation": "Das Verb 'make' wird im Simple Past zu 'made'. Beispiel: She made a delicious cake.",
+        "hint": "Rhymes with 'paid'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -305,15 +415,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'make' (machen)?",
+        "question": "Fill in: We have ___ a decision (machen)",
         "questionLanguage": "de",
         "correctAnswer": "made",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'make' ist 'made'. Beispiel: I have made dinner."
+        "explanation": "Das Past Participle von 'make' ist 'made'. Beispiel: We have made a decision.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -324,15 +439,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'write' (schreiben)?",
+        "question": "Fill in: I ___ a letter yesterday (schreiben)",
         "questionLanguage": "de",
-        "options": ["writed", "wrote", "written", "write"],
+        "options": [
+          "writed",
+          "wrote",
+          "written",
+          "write"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'write' ist 'wrote'. Beispiel: I wrote a letter."
+        "explanation": "Das Verb 'write' wird im Simple Past zu 'wrote'. Beispiel: I wrote a letter yesterday.",
+        "hint": "Rhymes with 'boat'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -343,15 +468,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'write' (schreiben)?",
+        "question": "Fill in: She has ___ three books (schreiben)",
         "questionLanguage": "de",
         "correctAnswer": "written",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'write' ist 'written'. Beispiel: I have written an email."
+        "explanation": "Das Past Participle von 'write' ist 'written'. Beispiel: She has written three books.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -362,15 +492,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'know' (wissen)?",
+        "question": "Fill in: I ___ the answer immediately (wissen)",
         "questionLanguage": "de",
-        "options": ["knowed", "knew", "known", "know"],
+        "options": [
+          "knowed",
+          "knew",
+          "known",
+          "know"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'know' ist 'knew'. Beispiel: I knew the answer."
+        "explanation": "Das Verb 'know' wird im Simple Past zu 'knew'. Beispiel: I knew the answer immediately.",
+        "hint": "Rhymes with 'new'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -381,15 +521,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'know' (wissen)?",
+        "question": "Fill in: I have ___ her for years (wissen)",
         "questionLanguage": "de",
         "correctAnswer": "known",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'know' ist 'known'. Beispiel: I have known her for years."
+        "explanation": "Das Past Participle von 'know' ist 'known'. Beispiel: I have known her for years.",
+        "hint": "Rhymes with 'grown'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -400,15 +545,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'speak' (sprechen)?",
+        "question": "Fill in: She ___ to the manager (sprechen)",
         "questionLanguage": "de",
-        "options": ["speaked", "spoke", "spoken", "speak"],
+        "options": [
+          "speaked",
+          "spoke",
+          "spoken",
+          "speak"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'speak' ist 'spoke'. Beispiel: He spoke to me."
+        "explanation": "Das Verb 'speak' wird im Simple Past zu 'spoke'. Beispiel: She spoke to the manager.",
+        "hint": "Rhymes with 'broke'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -419,15 +574,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'speak' (sprechen)?",
+        "question": "Fill in: Have you ___ to him? (sprechen)",
         "questionLanguage": "de",
         "correctAnswer": "spoken",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'speak' ist 'spoken'. Beispiel: I have spoken to him."
+        "explanation": "Das Past Participle von 'speak' ist 'spoken'. Beispiel: Have you spoken to him?.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -438,15 +598,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'break' (brechen)?",
+        "question": "Fill in: I ___ my phone yesterday (brechen)",
         "questionLanguage": "de",
-        "options": ["breaked", "broke", "broken", "break"],
+        "options": [
+          "breaked",
+          "broke",
+          "broken",
+          "break"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'break' ist 'broke'. Beispiel: I broke my phone."
+        "explanation": "Das Verb 'break' wird im Simple Past zu 'broke'. Beispiel: I broke my phone yesterday.",
+        "hint": "Rhymes with 'woke'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -457,15 +627,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'break' (brechen)?",
+        "question": "Fill in: The window has been ___ (brechen)",
         "questionLanguage": "de",
         "correctAnswer": "broken",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'break' ist 'broken'. Beispiel: I have broken the glass."
+        "explanation": "Das Past Participle von 'break' ist 'broken'. Beispiel: The window has been broken.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -476,15 +651,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'bring' (bringen)?",
+        "question": "Fill in: She ___ snacks to the party (bringen)",
         "questionLanguage": "de",
-        "options": ["bringed", "brought", "bring", "brang"],
+        "options": [
+          "bringed",
+          "brought",
+          "bring",
+          "brang"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'bring' ist 'brought'. Beispiel: I brought my umbrella."
+        "explanation": "Das Verb 'bring' wird im Simple Past zu 'brought'. Beispiel: She brought snacks to the party.",
+        "hint": "Rhymes with 'thought'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -495,15 +680,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'bring' (bringen)?",
+        "question": "Fill in: He has ___ his guitar (bringen)",
         "questionLanguage": "de",
         "correctAnswer": "brought",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'bring' ist 'brought'. Beispiel: I have brought my book."
+        "explanation": "Das Past Participle von 'bring' ist 'brought'. Beispiel: He has brought his guitar.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -514,15 +704,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'buy' (kaufen)?",
+        "question": "Fill in: I ___ a new car last week (kaufen)",
         "questionLanguage": "de",
-        "options": ["buyed", "bought", "buy", "buyd"],
+        "options": [
+          "buyed",
+          "bought",
+          "buy",
+          "buyd"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'buy' ist 'bought'. Beispiel: I bought a new car."
+        "explanation": "Das Verb 'buy' wird im Simple Past zu 'bought'. Beispiel: I bought a new car last week.",
+        "hint": "Rhymes with 'caught'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -533,15 +733,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'buy' (kaufen)?",
+        "question": "Fill in: They have ___ a house (kaufen)",
         "questionLanguage": "de",
         "correctAnswer": "bought",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'buy' ist 'bought'. Beispiel: I have bought groceries."
+        "explanation": "Das Past Participle von 'buy' ist 'bought'. Beispiel: They have bought a house.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -552,15 +757,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'think' (denken)?",
+        "question": "Fill in: I ___ about you yesterday (denken)",
         "questionLanguage": "de",
-        "options": ["thinked", "thought", "think", "thunk"],
+        "options": [
+          "thinked",
+          "thought",
+          "think",
+          "thunk"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'think' ist 'thought'. Beispiel: I thought about you."
+        "explanation": "Das Verb 'think' wird im Simple Past zu 'thought'. Beispiel: I thought about you yesterday.",
+        "hint": "Rhymes with 'caught'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -571,15 +786,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'think' (denken)?",
+        "question": "Fill in: I have ___ about it carefully (denken)",
         "questionLanguage": "de",
         "correctAnswer": "thought",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'think' ist 'thought'. Beispiel: I have thought about it."
+        "explanation": "Das Past Participle von 'think' ist 'thought'. Beispiel: I have thought about it carefully.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -590,15 +810,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'begin' (beginnen)?",
+        "question": "Fill in: The concert ___ at 8 PM (beginnen)",
         "questionLanguage": "de",
-        "options": ["begined", "began", "begun", "begin"],
+        "options": [
+          "begined",
+          "began",
+          "begun",
+          "begin"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'begin' ist 'began'. Beispiel: The movie began at 8 PM."
+        "explanation": "Das Verb 'begin' wird im Simple Past zu 'began'. Beispiel: The concert began at 8 PM.",
+        "hint": "Changes 'i' to 'a'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -609,15 +839,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'begin' (beginnen)?",
+        "question": "Fill in: The work has ___ (beginnen)",
         "questionLanguage": "de",
         "correctAnswer": "begun",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'begin' ist 'begun'. Beispiel: The work has begun."
+        "explanation": "Das Past Participle von 'begin' ist 'begun'. Beispiel: The work has begun.",
+        "hint": "Changes 'i' to 'u'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -628,15 +863,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'sing' (singen)?",
+        "question": "Fill in: She ___ a beautiful song (singen)",
         "questionLanguage": "de",
-        "options": ["singed", "sang", "sung", "sing"],
+        "options": [
+          "singed",
+          "sang",
+          "sung",
+          "sing"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'sing' ist 'sang'. Beispiel: She sang a beautiful song."
+        "explanation": "Das Verb 'sing' wird im Simple Past zu 'sang'. Beispiel: She sang a beautiful song.",
+        "hint": "Rhymes with 'rang'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -647,15 +892,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'sing' (singen)?",
+        "question": "Fill in: He has ___ in many choirs (singen)",
         "questionLanguage": "de",
         "correctAnswer": "sung",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'sing' ist 'sung'. Beispiel: I have sung in a choir."
+        "explanation": "Das Past Participle von 'sing' ist 'sung'. Beispiel: He has sung in many choirs.",
+        "hint": "Rhymes with 'rung'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -666,15 +916,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'swim' (schwimmen)?",
+        "question": "Fill in: I ___ in the lake yesterday (schwimmen)",
         "questionLanguage": "de",
-        "options": ["swimmed", "swam", "swum", "swim"],
+        "options": [
+          "swimmed",
+          "swam",
+          "swum",
+          "swim"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'swim' ist 'swam'. Beispiel: I swam in the lake."
+        "explanation": "Das Verb 'swim' wird im Simple Past zu 'swam'. Beispiel: I swam in the lake yesterday.",
+        "hint": "Rhymes with 'jam'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -685,15 +945,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'swim' (schwimmen)?",
+        "question": "Fill in: I have ___ across this river (schwimmen)",
         "questionLanguage": "de",
         "correctAnswer": "swum",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'swim' ist 'swum'. Beispiel: I have swum across the river."
+        "explanation": "Das Past Participle von 'swim' ist 'swum'. Beispiel: I have swum across this river.",
+        "hint": "Rhymes with 'gum'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -704,15 +969,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'run' (laufen)?",
+        "question": "Fill in: She ___ to catch the bus (laufen)",
         "questionLanguage": "de",
-        "options": ["runned", "ran", "run", "rund"],
+        "options": [
+          "runned",
+          "ran",
+          "run",
+          "rund"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'run' ist 'ran'. Beispiel: I ran to school."
+        "explanation": "Das Verb 'run' wird im Simple Past zu 'ran'. Beispiel: She ran to catch the bus.",
+        "hint": "Rhymes with 'can'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -723,15 +998,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'run' (laufen)?",
+        "question": "Fill in: I have ___ five kilometers (laufen)",
         "questionLanguage": "de",
         "correctAnswer": "run",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'run' ist 'run'. Beispiel: I have run a marathon."
+        "explanation": "Das Past Participle von 'run' ist 'run'. Beispiel: I have run five kilometers.",
+        "hint": "Same as infinitive"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -742,15 +1022,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'fly' (fliegen)?",
+        "question": "Fill in: The bird ___ away (fliegen)",
         "questionLanguage": "de",
-        "options": ["flyed", "flew", "flown", "fly"],
+        "options": [
+          "flyed",
+          "flew",
+          "flown",
+          "fly"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'fly' ist 'flew'. Beispiel: The bird flew away."
+        "explanation": "Das Verb 'fly' wird im Simple Past zu 'flew'. Beispiel: The bird flew away.",
+        "hint": "Rhymes with 'knew'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -761,15 +1051,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'fly' (fliegen)?",
+        "question": "Fill in: I have ___ to Paris twice (fliegen)",
         "questionLanguage": "de",
         "correctAnswer": "flown",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'fly' ist 'flown'. Beispiel: I have flown to Paris."
+        "explanation": "Das Past Participle von 'fly' ist 'flown'. Beispiel: I have flown to Paris twice.",
+        "hint": "Rhymes with 'grown'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -780,15 +1075,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'find' (finden)?",
+        "question": "Fill in: I ___ my keys under the bed (finden)",
         "questionLanguage": "de",
-        "options": ["finded", "found", "find", "fand"],
+        "options": [
+          "finded",
+          "found",
+          "find",
+          "fand"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'find' ist 'found'. Beispiel: I found my keys."
+        "explanation": "Das Verb 'find' wird im Simple Past zu 'found'. Beispiel: I found my keys under the bed.",
+        "hint": "Rhymes with 'sound'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -799,15 +1104,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'find' (finden)?",
+        "question": "Fill in: Have you ___ a solution? (finden)",
         "questionLanguage": "de",
         "correctAnswer": "found",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'find' ist 'found'. Beispiel: I have found a solution."
+        "explanation": "Das Past Participle von 'find' ist 'found'. Beispiel: Have you found a solution?.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -818,15 +1128,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'tell' (erzählen)?",
+        "question": "Fill in: She ___ me a secret (erzählen)",
         "questionLanguage": "de",
-        "options": ["telled", "told", "tell", "teld"],
+        "options": [
+          "telled",
+          "told",
+          "tell",
+          "teld"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'tell' ist 'told'. Beispiel: I told him a story."
+        "explanation": "Das Verb 'tell' wird im Simple Past zu 'told'. Beispiel: She told me a secret.",
+        "hint": "Rhymes with 'old'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -837,15 +1157,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'tell' (erzählen)?",
+        "question": "Fill in: I have ___ you before (erzählen)",
         "questionLanguage": "de",
         "correctAnswer": "told",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'tell' ist 'told'. Beispiel: I have told you before."
+        "explanation": "Das Past Participle von 'tell' ist 'told'. Beispiel: I have told you before.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -856,15 +1181,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'feel' (fühlen)?",
+        "question": "Fill in: I ___ very happy yesterday (fühlen)",
         "questionLanguage": "de",
-        "options": ["feeled", "felt", "feel", "felled"],
+        "options": [
+          "feeled",
+          "felt",
+          "feel",
+          "felled"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'feel' ist 'felt'. Beispiel: I felt happy."
+        "explanation": "Das Verb 'feel' wird im Simple Past zu 'felt'. Beispiel: I felt very happy yesterday.",
+        "hint": "Rhymes with 'belt'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -875,15 +1210,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'feel' (fühlen)?",
+        "question": "Fill in: I have ___ this way before (fühlen)",
         "questionLanguage": "de",
         "correctAnswer": "felt",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'feel' ist 'felt'. Beispiel: I have felt this before."
+        "explanation": "Das Past Participle von 'feel' ist 'felt'. Beispiel: I have felt this way before.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -894,15 +1234,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'fall' (fallen)?",
+        "question": "Fill in: The book ___ off the table (fallen)",
         "questionLanguage": "de",
-        "options": ["falled", "fell", "fallen", "fall"],
+        "options": [
+          "falled",
+          "fell",
+          "fallen",
+          "fall"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'fall' ist 'fell'. Beispiel: The tree fell down."
+        "explanation": "Das Verb 'fall' wird im Simple Past zu 'fell'. Beispiel: The book fell off the table.",
+        "hint": "Rhymes with 'bell'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -913,15 +1263,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'fall' (fallen)?",
+        "question": "Fill in: The snow has ___ (fallen)",
         "questionLanguage": "de",
         "correctAnswer": "fallen",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'fall' ist 'fallen'. Beispiel: The snow has fallen."
+        "explanation": "Das Past Participle von 'fall' ist 'fallen'. Beispiel: The snow has fallen.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -932,15 +1287,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'catch' (fangen)?",
+        "question": "Fill in: I ___ the ball easily (fangen)",
         "questionLanguage": "de",
-        "options": ["catched", "caught", "catch", "cutch"],
+        "options": [
+          "catched",
+          "caught",
+          "catch",
+          "cutch"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'catch' ist 'caught'. Beispiel: I caught the ball."
+        "explanation": "Das Verb 'catch' wird im Simple Past zu 'caught'. Beispiel: I caught the ball easily.",
+        "hint": "Rhymes with 'thought'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -951,15 +1316,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'catch' (fangen)?",
+        "question": "Fill in: I have ___ a cold (fangen)",
         "questionLanguage": "de",
         "correctAnswer": "caught",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'catch' ist 'caught'. Beispiel: I have caught a cold."
+        "explanation": "Das Past Participle von 'catch' ist 'caught'. Beispiel: I have caught a cold.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -970,15 +1340,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'teach' (lehren)?",
+        "question": "Fill in: She ___ me English (lehren)",
         "questionLanguage": "de",
-        "options": ["teached", "taught", "teach", "tought"],
+        "options": [
+          "teached",
+          "taught",
+          "teach",
+          "tought"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'teach' ist 'taught'. Beispiel: She taught me English."
+        "explanation": "Das Verb 'teach' wird im Simple Past zu 'taught'. Beispiel: She taught me English.",
+        "hint": "Rhymes with 'caught'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -989,15 +1369,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'teach' (lehren)?",
+        "question": "Fill in: I have ___ for 10 years (lehren)",
         "questionLanguage": "de",
         "correctAnswer": "taught",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'teach' ist 'taught'. Beispiel: I have taught for 10 years."
+        "explanation": "Das Past Participle von 'teach' ist 'taught'. Beispiel: I have taught for 10 years.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1008,15 +1393,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'sleep' (schlafen)?",
+        "question": "Fill in: I ___ very well last night (schlafen)",
         "questionLanguage": "de",
-        "options": ["sleeped", "slept", "sleep", "slapt"],
+        "options": [
+          "sleeped",
+          "slept",
+          "sleep",
+          "slapt"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'sleep' ist 'slept'. Beispiel: I slept well."
+        "explanation": "Das Verb 'sleep' wird im Simple Past zu 'slept'. Beispiel: I slept very well last night.",
+        "hint": "Rhymes with 'kept'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1027,15 +1422,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'sleep' (schlafen)?",
+        "question": "Fill in: I have ___ for 8 hours (schlafen)",
         "questionLanguage": "de",
         "correctAnswer": "slept",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'sleep' ist 'slept'. Beispiel: I have slept for 8 hours."
+        "explanation": "Das Past Participle von 'sleep' ist 'slept'. Beispiel: I have slept for 8 hours.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1046,15 +1446,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'wear' (tragen)?",
+        "question": "Fill in: She ___ a blue dress (tragen)",
         "questionLanguage": "de",
-        "options": ["weared", "wore", "worn", "wear"],
+        "options": [
+          "weared",
+          "wore",
+          "worn",
+          "wear"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'wear' ist 'wore'. Beispiel: I wore a blue shirt."
+        "explanation": "Das Verb 'wear' wird im Simple Past zu 'wore'. Beispiel: She wore a blue dress.",
+        "hint": "Rhymes with 'more'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1065,15 +1475,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'wear' (tragen)?",
+        "question": "Fill in: I have ___ these shoes before (tragen)",
         "questionLanguage": "de",
         "correctAnswer": "worn",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'wear' ist 'worn'. Beispiel: I have worn these shoes before."
+        "explanation": "Das Past Participle von 'wear' ist 'worn'. Beispiel: I have worn these shoes before.",
+        "hint": "Rhymes with 'born'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1084,15 +1499,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'meet' (treffen)?",
+        "question": "Fill in: I ___ her at the party (treffen)",
         "questionLanguage": "de",
-        "options": ["meeted", "met", "meet", "mat"],
+        "options": [
+          "meeted",
+          "met",
+          "meet",
+          "mat"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'meet' ist 'met'. Beispiel: I met her yesterday."
+        "explanation": "Das Verb 'meet' wird im Simple Past zu 'met'. Beispiel: I met her at the party.",
+        "hint": "Rhymes with 'bet'"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1103,15 +1528,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'meet' (treffen)?",
+        "question": "Fill in: We have ___ before (treffen)",
         "questionLanguage": "de",
         "correctAnswer": "met",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'meet' ist 'met'. Beispiel: I have met him before."
+        "explanation": "Das Past Participle von 'meet' ist 'met'. Beispiel: We have met before.",
+        "hint": "Same as simple past"
       },
       "metadata": {
         "difficulty": "easy",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1122,15 +1552,25 @@
       "templateId": "multiple-choice-basic",
       "type": "multiple-choice",
       "content": {
-        "question": "Wie lautet das Simple Past von 'forget' (vergessen)?",
+        "question": "Fill in: I ___ my password (vergessen)",
         "questionLanguage": "de",
-        "options": ["forgeted", "forgot", "forgotten", "forget"],
+        "options": [
+          "forgeted",
+          "forgot",
+          "forgotten",
+          "forget"
+        ],
         "correctAnswer": 1,
-        "explanation": "Das Simple Past von 'forget' ist 'forgot'. Beispiel: I forgot my password."
+        "explanation": "Das Verb 'forget' wird im Simple Past zu 'forgot'. Beispiel: I forgot my password.",
+        "hint": "Rhymes with 'hot'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "simple-past"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "simple-past"
+        ],
         "estimatedTime": 45,
         "points": 10
       }
@@ -1141,15 +1581,20 @@
       "templateId": "text-input-basic",
       "type": "text-input",
       "content": {
-        "question": "Wie lautet das Past Participle von 'forget' (vergessen)?",
+        "question": "Fill in: I have ___ his name (vergessen)",
         "questionLanguage": "de",
         "correctAnswer": "forgotten",
         "alternatives": [],
-        "explanation": "Das Past Participle von 'forget' ist 'forgotten'. Beispiel: I have forgotten his name."
+        "explanation": "Das Past Participle von 'forget' ist 'forgotten'. Beispiel: I have forgotten his name.",
+        "hint": "Ends with '-en'"
       },
       "metadata": {
         "difficulty": "medium",
-        "tags": ["englisch", "irregular-verbs", "past-participle"],
+        "tags": [
+          "englisch",
+          "irregular-verbs",
+          "past-participle"
+        ],
         "estimatedTime": 45,
         "points": 10
       }

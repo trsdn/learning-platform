@@ -26,6 +26,7 @@ export async function loadLearningPathsFromJSON(): Promise<{
     mathematik: ['algebra-basics.json', 'geometry-basics.json', 'advanced-tasks.json', 'brueche-grundlagen.json'],
     biologie: ['zellbiologie.json', 'genetik-basics.json'],
     spanisch: ['spanisch-grundlagen.json', 'begruessung-vorstellung.json', 'familie-persoenliches.json', 'zahlen-farben-tiere.json', 'vokabeltest-karteikarten.json'],
+    englisch: ['unregelmaessige-verben.json'],
     test: ['all-task-types.json'],
   };
 
@@ -133,6 +134,16 @@ function createTopicFromId(topicId: string): Topic {
       description: 'Lerne Spanisch: Vokabeln, Grammatik und Konversation',
       metadata: {
         estimatedHours: 50,
+        difficultyLevel: 'beginner',
+        prerequisites: [],
+      },
+    },
+    englisch: {
+      id: 'englisch',
+      title: 'Englisch',
+      description: 'Lerne Englisch: Unregelmäßige Verben und mehr',
+      metadata: {
+        estimatedHours: 1,
         difficultyLevel: 'beginner',
         prerequisites: [],
       },
