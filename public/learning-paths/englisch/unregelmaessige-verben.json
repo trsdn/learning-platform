@@ -25,7 +25,9 @@
         "correctAnswer": "went",
         "alternatives": [],
         "explanation": "Das Verb 'go' wird im Simple Past zu 'went'. Beispiel: Yesterday, I went to school.",
-        "hint": "Rhymes with 'went'"
+        "hint": "Rhymes with 'went'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/went.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -36,7 +38,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/went.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-2",
@@ -49,7 +54,9 @@
         "correctAnswer": "gone",
         "alternatives": [],
         "explanation": "Das Past Participle von 'go' ist 'gone'. Beispiel: I have gone to Paris before.",
-        "hint": "Rhymes with 'phone'"
+        "hint": "Rhymes with 'phone'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/gone.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -60,7 +67,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/gone.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-3",
@@ -78,7 +88,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'eat' wird im Simple Past zu 'ate'. Beispiel: She ate an apple for lunch.",
-        "hint": "Sounds like the number 8"
+        "hint": "Sounds like the number 8",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/ate.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -89,7 +101,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/ate.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-4",
@@ -102,7 +117,9 @@
         "correctAnswer": "eaten",
         "alternatives": [],
         "explanation": "Das Past Participle von 'eat' ist 'eaten'. Beispiel: We have eaten breakfast already.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/eaten.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -113,7 +130,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/eaten.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-5",
@@ -131,7 +151,9 @@
         ],
         "correctAnswer": 2,
         "explanation": "Das Verb 'drink' wird im Simple Past zu 'drank'. Beispiel: He drank water after running.",
-        "hint": "Rhymes with 'bank'"
+        "hint": "Rhymes with 'bank'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/drank.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -142,7 +164,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/drank.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-6",
@@ -155,7 +180,9 @@
         "correctAnswer": "drunk",
         "alternatives": [],
         "explanation": "Das Past Participle von 'drink' ist 'drunk'. Beispiel: They have drunk all the juice.",
-        "hint": "Rhymes with 'trunk'"
+        "hint": "Rhymes with 'trunk'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/drunk.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -166,7 +193,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/drunk.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-7",
@@ -184,7 +214,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'see' wird im Simple Past zu 'saw'. Beispiel: I saw a beautiful sunset yesterday.",
-        "hint": "A tool for cutting wood"
+        "hint": "A tool for cutting wood",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/saw.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -195,7 +227,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/saw.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-8",
@@ -208,7 +243,9 @@
         "correctAnswer": "seen",
         "alternatives": [],
         "explanation": "Das Past Participle von 'see' ist 'seen'. Beispiel: Have you seen this movie?.",
-        "hint": "Rhymes with 'been'"
+        "hint": "Rhymes with 'been'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/seen.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -219,7 +256,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/seen.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-9",
@@ -237,7 +277,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'come' wird im Simple Past zu 'came'. Beispiel: She came to the party last night.",
-        "hint": "Rhymes with 'game'"
+        "hint": "Rhymes with 'game'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/came.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -248,7 +290,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/came.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-10",
@@ -261,7 +306,9 @@
         "correctAnswer": "come",
         "alternatives": [],
         "explanation": "Das Past Participle von 'come' ist 'come'. Beispiel: They have come home early.",
-        "hint": "Same as infinitive"
+        "hint": "Same as infinitive",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/come.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -272,7 +319,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/come.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-11",
@@ -290,7 +340,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'take' wird im Simple Past zu 'took'. Beispiel: I took the bus this morning.",
-        "hint": "Rhymes with 'book'"
+        "hint": "Rhymes with 'book'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/took.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -301,7 +353,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/took.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-12",
@@ -314,7 +369,9 @@
         "correctAnswer": "taken",
         "alternatives": [],
         "explanation": "Das Past Participle von 'take' ist 'taken'. Beispiel: She has taken my pen.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/taken.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -325,7 +382,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/taken.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-13",
@@ -343,7 +403,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'give' wird im Simple Past zu 'gave'. Beispiel: He gave me a present.",
-        "hint": "Rhymes with 'save'"
+        "hint": "Rhymes with 'save'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/gave.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -354,7 +416,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/gave.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-14",
@@ -367,7 +432,9 @@
         "correctAnswer": "given",
         "alternatives": [],
         "explanation": "Das Past Participle von 'give' ist 'given'. Beispiel: I have given him the key.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/given.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -378,7 +445,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/given.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-15",
@@ -396,7 +466,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'make' wird im Simple Past zu 'made'. Beispiel: She made a delicious cake.",
-        "hint": "Rhymes with 'paid'"
+        "hint": "Rhymes with 'paid'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/made.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -407,7 +479,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/made.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-16",
@@ -420,7 +495,9 @@
         "correctAnswer": "made",
         "alternatives": [],
         "explanation": "Das Past Participle von 'make' ist 'made'. Beispiel: We have made a decision.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/made.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -431,7 +508,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/made.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-17",
@@ -449,7 +529,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'write' wird im Simple Past zu 'wrote'. Beispiel: I wrote a letter yesterday.",
-        "hint": "Rhymes with 'boat'"
+        "hint": "Rhymes with 'boat'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/wrote.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -460,7 +542,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/wrote.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-18",
@@ -473,7 +558,9 @@
         "correctAnswer": "written",
         "alternatives": [],
         "explanation": "Das Past Participle von 'write' ist 'written'. Beispiel: She has written three books.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/written.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -484,7 +571,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/written.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-19",
@@ -502,7 +592,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'know' wird im Simple Past zu 'knew'. Beispiel: I knew the answer immediately.",
-        "hint": "Rhymes with 'new'"
+        "hint": "Rhymes with 'new'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/knew.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -513,7 +605,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/knew.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-20",
@@ -526,7 +621,9 @@
         "correctAnswer": "known",
         "alternatives": [],
         "explanation": "Das Past Participle von 'know' ist 'known'. Beispiel: I have known her for years.",
-        "hint": "Rhymes with 'grown'"
+        "hint": "Rhymes with 'grown'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/known.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -537,7 +634,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/known.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-21",
@@ -555,7 +655,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'speak' wird im Simple Past zu 'spoke'. Beispiel: She spoke to the manager.",
-        "hint": "Rhymes with 'broke'"
+        "hint": "Rhymes with 'broke'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/spoke.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -566,7 +668,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/spoke.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-22",
@@ -579,7 +684,9 @@
         "correctAnswer": "spoken",
         "alternatives": [],
         "explanation": "Das Past Participle von 'speak' ist 'spoken'. Beispiel: Have you spoken to him?.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/spoken.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -590,7 +697,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/spoken.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-23",
@@ -608,7 +718,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'break' wird im Simple Past zu 'broke'. Beispiel: I broke my phone yesterday.",
-        "hint": "Rhymes with 'woke'"
+        "hint": "Rhymes with 'woke'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/broke.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -619,7 +731,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/broke.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-24",
@@ -632,7 +747,9 @@
         "correctAnswer": "broken",
         "alternatives": [],
         "explanation": "Das Past Participle von 'break' ist 'broken'. Beispiel: The window has been broken.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/broken.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -643,7 +760,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/broken.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-25",
@@ -661,7 +781,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'bring' wird im Simple Past zu 'brought'. Beispiel: She brought snacks to the party.",
-        "hint": "Rhymes with 'thought'"
+        "hint": "Rhymes with 'thought'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/brought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -672,7 +794,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/brought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-26",
@@ -685,7 +810,9 @@
         "correctAnswer": "brought",
         "alternatives": [],
         "explanation": "Das Past Participle von 'bring' ist 'brought'. Beispiel: He has brought his guitar.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/brought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -696,7 +823,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/brought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-27",
@@ -714,7 +844,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'buy' wird im Simple Past zu 'bought'. Beispiel: I bought a new car last week.",
-        "hint": "Rhymes with 'caught'"
+        "hint": "Rhymes with 'caught'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/bought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -725,7 +857,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/bought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-28",
@@ -738,7 +873,9 @@
         "correctAnswer": "bought",
         "alternatives": [],
         "explanation": "Das Past Participle von 'buy' ist 'bought'. Beispiel: They have bought a house.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/bought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -749,7 +886,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/bought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-29",
@@ -767,7 +907,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'think' wird im Simple Past zu 'thought'. Beispiel: I thought about you yesterday.",
-        "hint": "Rhymes with 'caught'"
+        "hint": "Rhymes with 'caught'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/thought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -778,7 +920,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/thought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-30",
@@ -791,7 +936,9 @@
         "correctAnswer": "thought",
         "alternatives": [],
         "explanation": "Das Past Participle von 'think' ist 'thought'. Beispiel: I have thought about it carefully.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/thought.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -802,7 +949,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/thought.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-31",
@@ -820,7 +970,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'begin' wird im Simple Past zu 'began'. Beispiel: The concert began at 8 PM.",
-        "hint": "Changes 'i' to 'a'"
+        "hint": "Changes 'i' to 'a'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/began.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -831,7 +983,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/began.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-32",
@@ -844,7 +999,9 @@
         "correctAnswer": "begun",
         "alternatives": [],
         "explanation": "Das Past Participle von 'begin' ist 'begun'. Beispiel: The work has begun.",
-        "hint": "Changes 'i' to 'u'"
+        "hint": "Changes 'i' to 'u'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/begun.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -855,7 +1012,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/begun.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-33",
@@ -873,7 +1033,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'sing' wird im Simple Past zu 'sang'. Beispiel: She sang a beautiful song.",
-        "hint": "Rhymes with 'rang'"
+        "hint": "Rhymes with 'rang'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/sang.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -884,7 +1046,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/sang.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-34",
@@ -897,7 +1062,9 @@
         "correctAnswer": "sung",
         "alternatives": [],
         "explanation": "Das Past Participle von 'sing' ist 'sung'. Beispiel: He has sung in many choirs.",
-        "hint": "Rhymes with 'rung'"
+        "hint": "Rhymes with 'rung'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/sung.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -908,7 +1075,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/sung.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-35",
@@ -926,7 +1096,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'swim' wird im Simple Past zu 'swam'. Beispiel: I swam in the lake yesterday.",
-        "hint": "Rhymes with 'jam'"
+        "hint": "Rhymes with 'jam'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/swam.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -937,7 +1109,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/swam.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-36",
@@ -950,7 +1125,9 @@
         "correctAnswer": "swum",
         "alternatives": [],
         "explanation": "Das Past Participle von 'swim' ist 'swum'. Beispiel: I have swum across this river.",
-        "hint": "Rhymes with 'gum'"
+        "hint": "Rhymes with 'gum'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/swum.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -961,7 +1138,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/swum.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-37",
@@ -979,7 +1159,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'run' wird im Simple Past zu 'ran'. Beispiel: She ran to catch the bus.",
-        "hint": "Rhymes with 'can'"
+        "hint": "Rhymes with 'can'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/ran.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -990,7 +1172,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/ran.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-38",
@@ -1003,7 +1188,9 @@
         "correctAnswer": "run",
         "alternatives": [],
         "explanation": "Das Past Participle von 'run' ist 'run'. Beispiel: I have run five kilometers.",
-        "hint": "Same as infinitive"
+        "hint": "Same as infinitive",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/run.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1014,7 +1201,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/run.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-39",
@@ -1032,7 +1222,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'fly' wird im Simple Past zu 'flew'. Beispiel: The bird flew away.",
-        "hint": "Rhymes with 'knew'"
+        "hint": "Rhymes with 'knew'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/flew.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1043,7 +1235,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/flew.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-40",
@@ -1056,7 +1251,9 @@
         "correctAnswer": "flown",
         "alternatives": [],
         "explanation": "Das Past Participle von 'fly' ist 'flown'. Beispiel: I have flown to Paris twice.",
-        "hint": "Rhymes with 'grown'"
+        "hint": "Rhymes with 'grown'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/flown.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1067,7 +1264,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/flown.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-41",
@@ -1085,7 +1285,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'find' wird im Simple Past zu 'found'. Beispiel: I found my keys under the bed.",
-        "hint": "Rhymes with 'sound'"
+        "hint": "Rhymes with 'sound'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/found.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1096,7 +1298,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/found.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-42",
@@ -1109,7 +1314,9 @@
         "correctAnswer": "found",
         "alternatives": [],
         "explanation": "Das Past Participle von 'find' ist 'found'. Beispiel: Have you found a solution?.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/found.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1120,7 +1327,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/found.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-43",
@@ -1138,7 +1348,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'tell' wird im Simple Past zu 'told'. Beispiel: She told me a secret.",
-        "hint": "Rhymes with 'old'"
+        "hint": "Rhymes with 'old'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/told.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1149,7 +1361,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/told.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-44",
@@ -1162,7 +1377,9 @@
         "correctAnswer": "told",
         "alternatives": [],
         "explanation": "Das Past Participle von 'tell' ist 'told'. Beispiel: I have told you before.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/told.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1173,7 +1390,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/told.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-45",
@@ -1191,7 +1411,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'feel' wird im Simple Past zu 'felt'. Beispiel: I felt very happy yesterday.",
-        "hint": "Rhymes with 'belt'"
+        "hint": "Rhymes with 'belt'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/felt.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1202,7 +1424,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/felt.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-46",
@@ -1215,7 +1440,9 @@
         "correctAnswer": "felt",
         "alternatives": [],
         "explanation": "Das Past Participle von 'feel' ist 'felt'. Beispiel: I have felt this way before.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/felt.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1226,7 +1453,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/felt.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-47",
@@ -1244,7 +1474,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'fall' wird im Simple Past zu 'fell'. Beispiel: The book fell off the table.",
-        "hint": "Rhymes with 'bell'"
+        "hint": "Rhymes with 'bell'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/fell.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1255,7 +1487,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/fell.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-48",
@@ -1268,7 +1503,9 @@
         "correctAnswer": "fallen",
         "alternatives": [],
         "explanation": "Das Past Participle von 'fall' ist 'fallen'. Beispiel: The snow has fallen.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/fallen.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1279,7 +1516,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/fallen.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-49",
@@ -1297,7 +1537,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'catch' wird im Simple Past zu 'caught'. Beispiel: I caught the ball easily.",
-        "hint": "Rhymes with 'thought'"
+        "hint": "Rhymes with 'thought'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/caught.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1308,7 +1550,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/caught.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-50",
@@ -1321,7 +1566,9 @@
         "correctAnswer": "caught",
         "alternatives": [],
         "explanation": "Das Past Participle von 'catch' ist 'caught'. Beispiel: I have caught a cold.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/caught.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1332,7 +1579,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/caught.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-51",
@@ -1350,7 +1600,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'teach' wird im Simple Past zu 'taught'. Beispiel: She taught me English.",
-        "hint": "Rhymes with 'caught'"
+        "hint": "Rhymes with 'caught'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/taught.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1361,7 +1613,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/taught.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-52",
@@ -1374,7 +1629,9 @@
         "correctAnswer": "taught",
         "alternatives": [],
         "explanation": "Das Past Participle von 'teach' ist 'taught'. Beispiel: I have taught for 10 years.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/taught.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1385,7 +1642,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/taught.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-53",
@@ -1403,7 +1663,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'sleep' wird im Simple Past zu 'slept'. Beispiel: I slept very well last night.",
-        "hint": "Rhymes with 'kept'"
+        "hint": "Rhymes with 'kept'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/slept.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1414,7 +1676,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/slept.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-54",
@@ -1427,7 +1692,9 @@
         "correctAnswer": "slept",
         "alternatives": [],
         "explanation": "Das Past Participle von 'sleep' ist 'slept'. Beispiel: I have slept for 8 hours.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/slept.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1438,7 +1705,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/slept.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-55",
@@ -1456,7 +1726,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'wear' wird im Simple Past zu 'wore'. Beispiel: She wore a blue dress.",
-        "hint": "Rhymes with 'more'"
+        "hint": "Rhymes with 'more'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/wore.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1467,7 +1739,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/wore.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-56",
@@ -1480,7 +1755,9 @@
         "correctAnswer": "worn",
         "alternatives": [],
         "explanation": "Das Past Participle von 'wear' ist 'worn'. Beispiel: I have worn these shoes before.",
-        "hint": "Rhymes with 'born'"
+        "hint": "Rhymes with 'born'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/worn.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1491,7 +1768,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/worn.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-57",
@@ -1509,7 +1789,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'meet' wird im Simple Past zu 'met'. Beispiel: I met her at the party.",
-        "hint": "Rhymes with 'bet'"
+        "hint": "Rhymes with 'bet'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/met.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1520,7 +1802,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/met.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-58",
@@ -1533,7 +1818,9 @@
         "correctAnswer": "met",
         "alternatives": [],
         "explanation": "Das Past Participle von 'meet' ist 'met'. Beispiel: We have met before.",
-        "hint": "Same as simple past"
+        "hint": "Same as simple past",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/met.mp3"
       },
       "metadata": {
         "difficulty": "easy",
@@ -1544,7 +1831,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/met.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-59",
@@ -1562,7 +1852,9 @@
         ],
         "correctAnswer": 1,
         "explanation": "Das Verb 'forget' wird im Simple Past zu 'forgot'. Beispiel: I forgot my password.",
-        "hint": "Rhymes with 'hot'"
+        "hint": "Rhymes with 'hot'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/forgot.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1573,7 +1865,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/forgot.mp3",
+      "language": "English"
     },
     {
       "id": "irregular-verbs-60",
@@ -1586,7 +1881,9 @@
         "correctAnswer": "forgotten",
         "alternatives": [],
         "explanation": "Das Past Participle von 'forget' ist 'forgotten'. Beispiel: I have forgotten his name.",
-        "hint": "Ends with '-en'"
+        "hint": "Ends with '-en'",
+        "correctAnswerLanguage": "en",
+        "correctAnswerAudio": "/audio/english/verbs/forgotten.mp3"
       },
       "metadata": {
         "difficulty": "medium",
@@ -1597,7 +1894,10 @@
         ],
         "estimatedTime": 45,
         "points": 10
-      }
+      },
+      "hasAudio": true,
+      "audioUrl": "/audio/english/verbs/forgotten.mp3",
+      "language": "English"
     }
   ]
 }
