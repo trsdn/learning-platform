@@ -187,30 +187,41 @@ export const componentRegistry: Record<string, ComponentMeta> = {
     importPath: '@ui/components/common/FeedbackCard',
     variants: [
       {
-        name: 'Correct Answer',
+        name: 'Success',
         description: 'Green card for correct feedback',
         props: {
-          isCorrect: true,
-          message: 'Richtig! Gut gemacht.',
+          variant: 'success',
+          title: 'Richtig!',
+          message: 'Gut gemacht.',
         },
         defaultVisible: true,
       },
       {
-        name: 'Incorrect Answer',
+        name: 'Error',
         description: 'Red card for incorrect feedback',
         props: {
-          isCorrect: false,
+          variant: 'error',
+          title: 'Falsch',
           message: 'Nicht ganz richtig. Versuche es noch einmal!',
         },
         defaultVisible: true,
       },
       {
-        name: 'With Explanation',
-        description: 'Feedback with detailed explanation',
+        name: 'Warning',
+        description: 'Warning feedback message',
         props: {
-          isCorrect: true,
-          message: 'Richtig!',
-          explanation: 'Die Photosynthese wandelt Lichtenergie in chemische Energie um.',
+          variant: 'warning',
+          title: 'Achtung',
+          message: 'Bitte überprüfe deine Eingabe sorgfältig.',
+        },
+      },
+      {
+        name: 'Info',
+        description: 'Informational message',
+        props: {
+          variant: 'info',
+          title: 'Hinweis',
+          message: 'Die Photosynthese wandelt Lichtenergie in chemische Energie um.',
         },
       },
     ],
@@ -288,7 +299,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
   statCard: {
     id: 'statCard',
     name: 'StatCard',
-    description: 'Displays a statistic with label and value',
+    description: 'Displays a statistic with title and value',
     category: 'cards',
     component: StatCard,
     importPath: '@ui/components/common/StatCard',
@@ -297,7 +308,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         name: 'Tasks Completed',
         description: 'Example task completion stat',
         props: {
-          label: 'Aufgaben abgeschlossen',
+          title: 'Aufgaben abgeschlossen',
           value: 127,
         },
         defaultVisible: true,
@@ -306,7 +317,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         name: 'Success Rate',
         description: 'Percentage statistic',
         props: {
-          label: 'Erfolgsquote',
+          title: 'Erfolgsquote',
           value: '87%',
         },
         defaultVisible: true,
@@ -315,7 +326,7 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         name: 'Study Streak',
         description: 'Days counter',
         props: {
-          label: 'Lernstreak',
+          title: 'Lernstreak',
           value: '12 Tage',
         },
       },
@@ -577,9 +588,9 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         props: {
           topic: {
             id: 'demo-math',
-            title: 'Mathematik',
+            name: 'Mathematik',
+            description: 'Grundlegende mathematische Konzepte und Aufgaben',
             icon: '🔢',
-            learningPathCount: 4,
           },
           onSelect: () => {},
         },
@@ -591,9 +602,9 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         props: {
           topic: {
             id: 'demo-biology',
-            title: 'Biologie',
+            name: 'Biologie',
+            description: 'Lerne über Zellen, Genetik und Ökosysteme',
             icon: '🧬',
-            learningPathCount: 2,
           },
           onSelect: () => {},
         },
@@ -605,9 +616,9 @@ export const componentRegistry: Record<string, ComponentMeta> = {
         props: {
           topic: {
             id: 'demo-spanish',
-            title: 'Spanisch',
+            name: 'Spanisch',
+            description: 'Verbessere deine Spanischkenntnisse',
             icon: '🇪🇸',
-            learningPathCount: 5,
           },
           onSelect: () => {},
         },
@@ -618,27 +629,35 @@ export const componentRegistry: Record<string, ComponentMeta> = {
   audioButton: {
     id: 'audioButton',
     name: 'AudioButton',
-    description: 'Button that plays audio using text-to-speech',
+    description: 'Button that plays audio pronunciation',
     category: 'interactive',
     component: AudioButton,
     importPath: '@ui/components/audio-button',
     variants: [
       {
-        name: 'Default',
-        description: 'Audio button with sample text',
+        name: 'With Audio',
+        description: 'Audio button with audioUrl',
         props: {
-          text: 'Hallo! Dies ist ein Beispieltext.',
-          'aria-label': 'Play audio',
+          text: 'Hola',
+          audioUrl: 'https://example.com/audio/hola.mp3',
+        },
+        defaultVisible: true,
+      },
+      {
+        name: 'Without Audio',
+        description: 'Audio button without audioUrl (disabled state)',
+        props: {
+          text: 'Buenos días',
         },
         defaultVisible: true,
       },
       {
         name: 'Disabled',
-        description: 'Disabled audio button',
+        description: 'Explicitly disabled audio button',
         props: {
-          text: 'This audio cannot be played',
+          text: 'Adiós',
+          audioUrl: 'https://example.com/audio/adios.mp3',
           disabled: true,
-          'aria-label': 'Play audio (disabled)',
         },
       },
     ],
