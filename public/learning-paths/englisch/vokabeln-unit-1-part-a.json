@@ -1,0 +1,401 @@
+{
+  "id": "vokabeln-unit-1-part-a",
+  "title": "Englisch Vokabeln Unit 1 - Part A",
+  "description": "Lerne die wichtigsten Vokabeln aus Unit 1 Part A: Kontakt halten, Schule, Gefühle und Alltagssituationen. Mit Beispielsätzen und Grammatik-Hinweisen.",
+  "topicId": "englisch",
+  "difficulty": "easy",
+  "estimatedTime": 45,
+  "requirements": {
+    "minimumAccuracy": 70,
+    "requiredTasks": 20
+  },
+  "tasks": [
+    {
+      "id": "vokabeln-unit-1-a-flashcard-1",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "communication"],
+      "front": "stay in touch (with sb.)",
+      "back": "(mit jm.) Kontakt halten, in Verbindung bleiben",
+      "explanation": "Beispiel: My grandpa and his best friend stayed in touch for over 50 years."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-2",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "technology"],
+      "front": "text message",
+      "back": "SMS",
+      "explanation": "Lautschrift: ['tekst mesɪdʒ]. Kann auch kurz als 'text' bezeichnet werden."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-3",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "adjectives"],
+      "front": "free",
+      "back": "kostenlos, frei",
+      "explanation": "Beispiel: We don't have to buy tickets. The show is free. Bedeutungen: 1. frei, 2. kostenlos"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-4",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "school"],
+      "front": "rule",
+      "back": "Regel, Vorschrift",
+      "explanation": "Lautschrift: [ru:l]. Beispiel: Football is fun because its rules are so easy."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-5",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "family"],
+      "front": "host family",
+      "back": "Gastfamilie",
+      "explanation": "Lautschrift: ['həʊst fæməli]. Wichtig bei Austauschprogrammen und Reisen."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-6",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "language"],
+      "front": "meaning",
+      "back": "Bedeutung",
+      "explanation": "Lautschrift: ['mi:nɪŋ]. Beispiel: What does 'get' mean? - It has lots of meanings."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-7",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "language"],
+      "front": "context",
+      "back": "(Text-, Satz-)Zusammenhang, Kontext",
+      "explanation": "Lautschrift: ['kɒntekst]. Beispiel: Show me the word in context."
+    },
+    {
+      "id": "vokabeln-unit-1-a-text-input-1",
+      "type": "text-input",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Übersetze ins Englische: 'Regel, Vorschrift'",
+      "correctAnswer": "rule",
+      "alternatives": [],
+      "explanation": "Lautschrift: [ru:l]"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-8",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "grammar"],
+      "front": "must",
+      "back": "müssen (Vermutung)",
+      "explanation": "Lautschrift: [mʌst]. Beispiel: There's somebody at the door. - That must be Uncle Bob. Verwendet für starke Vermutungen!"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-9",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "adjectives"],
+      "front": "similar (to sth./sb.)",
+      "back": "(etwas/jm.) ähnlich",
+      "explanation": "Lautschrift: ['sɪmɪlə]. Beispiel: Their eyes are similar but their noses are different."
+    },
+    {
+      "id": "vokabeln-unit-1-a-multiple-choice-1",
+      "type": "multiple-choice",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Was bedeutet 'host family'?",
+      "options": [
+        "Gastfamilie",
+        "Großfamilie",
+        "Kernfamilie",
+        "Patchworkfamilie"
+      ],
+      "correctAnswer": 0,
+      "explanation": "Eine 'host family' ist eine Gastfamilie, bei der man während eines Austauschs oder einer Reise wohnt."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-10",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "expressions"],
+      "front": "walk/run on",
+      "back": "weitergehen/-laufen",
+      "explanation": "Beispiel: He saw me but he didn't stop and just walked on."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-11",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "expressions"],
+      "front": "just like ...",
+      "back": "genau wie ...",
+      "explanation": "Lautschrift: ['dʒʌst laɪk]. Beispiel: You look just like your father."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-12",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "feelings"],
+      "front": "be/feel bored",
+      "back": "gelangweilt sein, sich langweilen",
+      "explanation": "Lautschrift: [bɔ:d]. Unterschied: The film was boring (langweilig) / I was bored (gelangweilt)."
+    },
+    {
+      "id": "vokabeln-unit-1-a-text-input-2",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Übersetze ins Deutsche: 'The film was boring.'",
+      "correctAnswer": "Der Film war langweilig.",
+      "alternatives": [],
+      "explanation": "Unterschied: boring = langweilig (das Ding), bored = gelangweilt (die Person)"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-13",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "school"],
+      "front": "term",
+      "back": "Trimester",
+      "explanation": "Lautschrift: [tɜ:m]. Beispiel: The school year in Britain has three terms."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-14",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "school"],
+      "front": "boarding school",
+      "back": "Internat",
+      "explanation": "Lautschrift: ['bɔ:dɪŋ sku:l]. Eine Schule, in der Schüler auch wohnen."
+    },
+    {
+      "id": "vokabeln-unit-1-a-multiple-choice-2",
+      "type": "multiple-choice",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Was bedeutet 'term' im Schulkontext?",
+      "options": [
+        "Schuljahr",
+        "Trimester",
+        "Halbjahr",
+        "Schulwoche"
+      ],
+      "correctAnswer": 1,
+      "explanation": "In Großbritannien hat das Schuljahr drei 'terms' (Trimester)."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-15",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "feelings"],
+      "front": "shocked",
+      "back": "schockiert, entsetzt",
+      "explanation": "Lautschrift: [ʃɒkt]. Ein starkes Gefühl von Überraschung oder Entsetzen."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-16",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "activities"],
+      "front": "outdoor",
+      "back": "Außen-, im Freien",
+      "explanation": "Lautschrift: ['aʊtdɔ:]. Beispiele: outdoor activities, an outdoor swimming pool."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-17",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "activities"],
+      "front": "climb",
+      "back": "klettern, hinaufklettern (auf)",
+      "explanation": "Lautschrift: [klaɪm] - das 'b' wird NICHT gesprochen! Beispiel: to climb a tree (auf einen Baum klettern)."
+    },
+    {
+      "id": "vokabeln-unit-1-a-true-false-1",
+      "type": "true-false",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "pronunciation"],
+      "question": "Bei 'climb' wird das 'b' am Ende mitgesprochen.",
+      "correctAnswer": false,
+      "explanation": "Falsch! Das 'b' in 'climb' wird NICHT gesprochen. Aussprache: [klaɪm]"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-18",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "expressions"],
+      "front": "look forward to sth.",
+      "back": "sich auf etwas freuen",
+      "explanation": "Lautschrift: ['fɔ:wəd]. Beispiel: I'm really looking forward to the summer holidays."
+    },
+    {
+      "id": "vokabeln-unit-1-a-text-input-3",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Übersetze ins Englische: 'Ich freue mich auf die Ferien.'",
+      "correctAnswer": "I'm looking forward to the holidays.",
+      "alternatives": ["I look forward to the holidays."],
+      "explanation": "Verwendung: look forward to + Substantiv/Gerund"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-19",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "feelings"],
+      "front": "tear",
+      "back": "Träne",
+      "explanation": "Lautschrift: [tɪə]. Plural: tears. Betonung beachten!"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-20",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "feelings"],
+      "front": "unhappy",
+      "back": "unglücklich",
+      "explanation": "Lautschrift: [ʌn'hæpi]. Gegenteil: happy (glücklich). Betonung: unhappy."
+    },
+    {
+      "id": "vokabeln-unit-1-a-matching-1",
+      "type": "matching",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Ordne die englischen Wörter den deutschen Übersetzungen zu:",
+      "pairs": [
+        {"left": "shocked", "right": "schockiert"},
+        {"left": "unhappy", "right": "unglücklich"},
+        {"left": "bored", "right": "gelangweilt"},
+        {"left": "free", "right": "kostenlos"}
+      ],
+      "explanation": "Diese Adjektive beschreiben Gefühle und Zustände."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-21",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "time"],
+      "front": "future",
+      "back": "Zukunft, zukünftige(r, s)",
+      "explanation": "Lautschrift: ['fju:tʃə]. Betonung: future. Ursprung: Latein 'futurus'."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-22",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "clothes"],
+      "front": "jacket",
+      "back": "Jacke, Jackett",
+      "explanation": "Lautschrift: ['dʒækɪt]. Kleidungsstück."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-23",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "clothes"],
+      "front": "pocket",
+      "back": "Tasche (Manteltasche, Hosentasche)",
+      "explanation": "Lautschrift: ['pɒkɪt]. Nicht verwechseln mit 'bag' (Tasche zum Tragen)."
+    },
+    {
+      "id": "vokabeln-unit-1-a-multiple-choice-3",
+      "type": "multiple-choice",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Was ist der Unterschied zwischen 'pocket' und 'bag'?",
+      "options": [
+        "'pocket' ist eine Tasche in der Kleidung, 'bag' ist eine Tasche zum Tragen",
+        "'pocket' ist größer als 'bag'",
+        "Es gibt keinen Unterschied",
+        "'pocket' ist nur für Geld"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'pocket' = Hosentasche, Manteltasche; 'bag' = Tasche, die man trägt (Handtasche, Schultasche)"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-24",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "objects"],
+      "front": "litter bin",
+      "back": "Abfalleimer",
+      "explanation": "Lautschrift: ['lɪtə bɪn]. Öffentlicher Mülleimer."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-25",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "actions"],
+      "front": "turn off",
+      "back": "ausschalten",
+      "explanation": "Lautschrift: [,tɜ:n 'ɒf]. Gegenteil: turn on (einschalten). Beispiel: turn off the TV."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-26",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "actions"],
+      "front": "turn on",
+      "back": "einschalten",
+      "explanation": "Gegenteil: turn off (ausschalten). Phrasal verb."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-27",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "actions"],
+      "front": "give sb. a hug",
+      "back": "jemanden umarmen",
+      "explanation": "Lautschrift: [hʌg]. Freundliche Geste."
+    },
+    {
+      "id": "vokabeln-unit-1-a-text-input-4",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "translation"],
+      "question": "Fülle die Lücke aus: 'Can you _____ off the light, please?' (ausschalten)",
+      "correctAnswer": "turn",
+      "alternatives": [],
+      "explanation": "Phrasal verb: turn off = ausschalten"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-28",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-1", "part-a", "time"],
+      "front": "this time",
+      "back": "dieses Mal",
+      "explanation": "Zeitangabe. Unterschied: time = 1. Zeit, Uhrzeit; 2. Mal"
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-29",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "expressions"],
+      "front": "my own room",
+      "back": "mein eigenes Zimmer",
+      "explanation": "Lautschrift: [əʊn]. Beispiel: Do you have your own room? (NICHT: an own room!)"
+    },
+    {
+      "id": "vokabeln-unit-1-a-true-false-2",
+      "type": "true-false",
+      "difficulty": "hard",
+      "tags": ["vocabulary", "unit-1", "part-a", "grammar"],
+      "question": "Man sagt 'an own room' auf Englisch.",
+      "correctAnswer": false,
+      "explanation": "Falsch! Man sagt 'my own room' oder 'your own room', aber NICHT 'an own room'."
+    },
+    {
+      "id": "vokabeln-unit-1-a-flashcard-30",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-1", "part-a", "feelings"],
+      "front": "memory",
+      "back": "Erinnerung",
+      "explanation": "Lautschrift: ['meməri]. Beispiel: He has very nice memories of the city. Ursprung: Französisch 'la mémoire', Latein 'memoria'."
+    }
+  ]
+}

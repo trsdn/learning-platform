@@ -1,0 +1,560 @@
+{
+  "id": "vokabeln-unit-2-holidays",
+  "title": "Englisch Vokabeln Unit 2 - In the holidays",
+  "description": "Erweitere deinen Wortschatz rund um das Thema Ferien und Urlaub: Reisen, Wetter, Aktivitäten, Telefonieren und mehr. Aus Unit 2: In the holidays.",
+  "topicId": "englisch",
+  "difficulty": "easy",
+  "estimatedTime": 50,
+  "requirements": {
+    "minimumAccuracy": 70,
+    "requiredTasks": 25
+  },
+  "tasks": [
+    {
+      "id": "vokabeln-unit-2-flashcard-1",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "time"],
+      "front": "holiday",
+      "back": "Urlaub",
+      "explanation": "Lautschrift: ['hɒlədə]. Unterschied: English: be on holiday / go on holiday; German: in Urlaub sein / in Urlaub fahren."
+    },
+    {
+      "id": "vokabeln-unit-2-true-false-1",
+      "type": "true-false",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "grammar"],
+      "question": "Man sagt auf Englisch 'I am in holiday' statt 'I am on holiday'.",
+      "correctAnswer": false,
+      "explanation": "Falsch! Englisch: be ON holiday (nicht IN). Deutsch: IN Urlaub sein."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-2",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "questions"],
+      "front": "What was it like?",
+      "back": "Wie war es?",
+      "explanation": "Häufige Frage nach Erfahrungen. Beispiel: We went to Spain. - What was it like?"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-3",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "time"],
+      "front": "at first",
+      "back": "zuerst, anfangs, am Anfang",
+      "explanation": "Lautschrift: [ət 'fɜ:st]. Beispiel: It was cold at first. Then later it was hot and sunny."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-4",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "activities"],
+      "front": "race",
+      "back": "Rennen",
+      "explanation": "Lautschrift: [reɪs]. Beispiel: a bike race."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-5",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "time"],
+      "front": "two days ago",
+      "back": "vor zwei Tagen",
+      "explanation": "Lautschrift: [ə'gəʊ]. Struktur: English: two days/five minutes/a year ago; German: vor zwei Tagen/fünf Minuten/einem Jahr."
+    },
+    {
+      "id": "vokabeln-unit-2-text-input-1",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Übersetze ins Englische: 'vor drei Tagen' (3 Wörter)",
+      "correctAnswer": "three days ago",
+      "alternatives": [],
+      "explanation": "Struktur: [Zahl] + [Zeiteinheit] + ago"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-6",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "country",
+      "back": "Land (Staat)",
+      "explanation": "Lautschrift: ['kʌntri]. Beispiel: Germany is a big country in the middle of Europe."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-7",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "building",
+      "back": "Gebäude",
+      "explanation": "Lautschrift: ['bɪldɪŋ]. Plural: buildings."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-8",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "time"],
+      "front": "tomorrow",
+      "back": "morgen",
+      "explanation": "Lautschrift: [tə'mɒrəʊ]. Beispiel: Can you call me back tomorrow morning? (English: tomorrow morning; German: morgen früh)"
+    },
+    {
+      "id": "vokabeln-unit-2-multiple-choice-1",
+      "type": "multiple-choice",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Wie sagt man 'morgen früh' auf Englisch?",
+      "options": [
+        "tomorrow morning",
+        "tomorrow early",
+        "morning tomorrow",
+        "early tomorrow"
+      ],
+      "correctAnswer": 0,
+      "explanation": "English: tomorrow morning (NICHT 'tomorrow early'). German: morgen früh."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-9",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "actions"],
+      "front": "bring (simple past: brought)",
+      "back": "(mit-, her)bringen",
+      "explanation": "Lautschrift: [brɪŋ], past: [brɔ:t]. Unterschied: bring = mitbringen/herbringen; take = wegbringen/hinbringen. Beispiel: Bring me the paper. / Take it to Dad."
+    },
+    {
+      "id": "vokabeln-unit-2-true-false-2",
+      "type": "true-false",
+      "difficulty": "hard",
+      "tags": ["vocabulary", "unit-2", "holidays", "grammar"],
+      "question": "'bring' und 'take' bedeuten beide 'bringen' und sind austauschbar.",
+      "correctAnswer": false,
+      "explanation": "Falsch! 'bring' = (mit-, her)bringen (zu mir hin). 'take' = (weg-, hin)bringen (von mir weg). Sie sind NICHT austauschbar!"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-10",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "grammar"],
+      "front": "if",
+      "back": "wenn, falls",
+      "explanation": "Lautschrift: [ɪf]. Unterschied: 'if' = wenn/falls (Bedingung); 'when' = wenn/sobald (Zeit). Beispiele: if you see them (falls), when you see them (sobald)."
+    },
+    {
+      "id": "vokabeln-unit-2-multiple-choice-2",
+      "type": "multiple-choice",
+      "difficulty": "hard",
+      "tags": ["vocabulary", "unit-2", "holidays", "grammar"],
+      "question": "Was ist der Unterschied zwischen 'if you see them' und 'when you see them'?",
+      "options": [
+        "'if' = falls (unsicher), 'when' = sobald/wenn (sicher)",
+        "Kein Unterschied, beides bedeutet dasselbe",
+        "'if' ist formeller als 'when'",
+        "'when' ist nur für Vergangenheit"
+      ],
+      "correctAnswer": 0,
+      "explanation": "'if' = wenn/falls (Bedingung, unsicher); 'when' = wenn/sobald (Zeit, wahrscheinlich/sicher)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-11",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "school"],
+      "front": "revision",
+      "back": "Wiederholung (des Lernstoffs)",
+      "explanation": "Lautschrift: [rɪ'vɪʒn]. Lernen und Wiederholen für Tests."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-12",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "Hold on (a minute).",
+      "back": "Bleib/Bleiben Sie am Apparat. (am Telefon)",
+      "explanation": "Lautschrift: [həʊld 'ɒn]. Kann auch kurz 'Hold on.' sein. Verwendung beim Telefonieren."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-13",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "school"],
+      "front": "make notes (on sth.)",
+      "back": "(sich) Notizen machen (über/zu etwas)",
+      "explanation": "Lautschrift: [nəʊts]. Zur Vorbereitung auf Tests."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-14",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "school"],
+      "front": "crib sheet (informal)",
+      "back": "Spickzettel, Merkzettel",
+      "explanation": "Lautschrift: ['krɪb ʃi:t]. Informell. Zettel mit Notizen zum Lernen (nicht zum Schummeln!)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-15",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "stop",
+      "back": "Halt, Station, Haltestelle",
+      "explanation": "Lautschrift: [stɒp]. Beispiele: The first stop on our walk was after 15 kilometres. / Get off the bus at the fifth stop."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-16",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "activities"],
+      "front": "camping",
+      "back": "Camping, Zelten",
+      "explanation": "Lautschrift: ['kæmpɪŋ]. Beispiel: We went camping in France last summer. Ursprung: Französisch 'la montagne'."
+    },
+    {
+      "id": "vokabeln-unit-2-text-input-2",
+      "type": "text-input",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Übersetze ins Englische: 'Wir sind campen gegangen.' (3 Wörter + in France)",
+      "correctAnswer": "We went camping in France.",
+      "alternatives": ["We went camping in France"],
+      "explanation": "go camping = campen gehen"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-17",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "world",
+      "back": "Welt",
+      "explanation": "Lautschrift: [wɜ:ld]. Beispiel: the best beach in the world (der beste Strand der Welt/auf der Welt)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-18",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "sunny",
+      "back": "sonnig",
+      "explanation": "Lautschrift: ['sʌni]. Wetter-Adjektiv. Von 'sun' (Sonne)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-19",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "mountain",
+      "back": "Berg",
+      "explanation": "Lautschrift: ['maʊntən]. Ursprung: Französisch 'la montagne'."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-20",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "adjectives"],
+      "front": "beautiful",
+      "back": "schön",
+      "explanation": "Lautschrift: ['bju:tɪfl]. Beispiel: Her face isn't just nice - it's beautiful. Stärker als 'nice'."
+    },
+    {
+      "id": "vokabeln-unit-2-matching-1",
+      "type": "matching",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "question": "Ordne die Wetter-Vokabeln zu:",
+      "pairs": [
+        {"left": "sunny", "right": "sonnig"},
+        {"left": "cloudy", "right": "bewölkt"},
+        {"left": "windy", "right": "windig"},
+        {"left": "rain", "right": "Regen"}
+      ],
+      "explanation": "Wichtige Wörter zur Beschreibung des Wetters."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-21",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "adjectives"],
+      "front": "alone",
+      "back": "allein",
+      "explanation": "Lautschrift: [ə'ləʊn]. Beispiel: Did you go camping alone? - No, I went with Dad."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-22",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "Say hello to ... for me.",
+      "back": "Grüß ... von mir.",
+      "explanation": "Höfliche Grußformel. Beispiel: And say hello to your brother for me."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-23",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "actions"],
+      "front": "wave",
+      "back": "Welle",
+      "explanation": "Lautschrift: [weɪv]. Im Meer oder als Geste (winken)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-24",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "weather",
+      "back": "Wetter",
+      "explanation": "Lautschrift: ['weðə]. Frage: What was the weather like?"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-25",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "cloudy",
+      "back": "bewölkt",
+      "explanation": "Lautschrift: ['klaʊdi]. Beispiel: It's cloudy. Von 'cloud' (Wolke)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-26",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "cloud",
+      "back": "Wolke",
+      "explanation": "Lautschrift: [klaʊd]. Plural: clouds. Adjektiv: cloudy (bewölkt)."
+    },
+    {
+      "id": "vokabeln-unit-2-text-input-3",
+      "type": "text-input",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Übersetze ins Englische: 'Es ist bewölkt.' (2 Wörter)",
+      "correctAnswer": "It's cloudy.",
+      "alternatives": ["It is cloudy.", "It's cloudy"],
+      "explanation": "cloudy = bewölkt (Adjektiv von 'cloud')"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-27",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "caravan",
+      "back": "Wohnwagen",
+      "explanation": "Lautschrift: ['kærəvæn]. Fahrzeug zum Campen."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-28",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "places"],
+      "front": "fun park",
+      "back": "Vergnügungspark",
+      "explanation": "Freizeitpark mit Attraktionen und Fahrgeschäften."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-29",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "windy",
+      "back": "windig",
+      "explanation": "Lautschrift: ['wɪndi]. Beispiel: It's windy. Betonung: windy. Von 'wind' (Wind)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-30",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "wind",
+      "back": "Wind",
+      "explanation": "Lautschrift: [wɪnd]. Adjektiv: windy (windig)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-31",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "school"],
+      "front": "project",
+      "back": "Projekt",
+      "explanation": "Lautschrift: ['prɒdʒekt]. Betonung: project. Ursprung: Französisch 'le projet'."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-32",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "expressions"],
+      "front": "I can't wait to see ...",
+      "back": "Ich kann es kaum erwarten, ... zu sehen.",
+      "explanation": "Ausdruck der Vorfreude. Beispiel: James Bond is great. I can't wait to see the next film."
+    },
+    {
+      "id": "vokabeln-unit-2-text-input-4",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Fülle die Lücke: 'I _____ wait to see the movie!' (kann kaum erwarten)",
+      "correctAnswer": "can't",
+      "alternatives": ["cannot"],
+      "explanation": "I can't wait to ... = Ich kann es kaum erwarten, ..."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-33",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "nature"],
+      "front": "rainforest",
+      "back": "Regenwald",
+      "explanation": "Lautschrift: ['reɪnfɒrɪst]. Tropischer Wald mit viel Regen."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-34",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "nature"],
+      "front": "forest",
+      "back": "Wald",
+      "explanation": "Lautschrift: ['fɒrɪst]. Ursprung: Französisch 'la forêt'."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-35",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "rain (noun)",
+      "back": "Regen",
+      "explanation": "Lautschrift: [reɪn]. Substantiv. Verb: (to) rain = regnen."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-36",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "front": "rain (verb)",
+      "back": "regnen",
+      "explanation": "Lautschrift: [reɪn]. Beispiel: It's raining. Substantiv: rain = Regen."
+    },
+    {
+      "id": "vokabeln-unit-2-multiple-choice-3",
+      "type": "multiple-choice",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "weather"],
+      "question": "Wie sagt man 'Es regnet' auf Englisch?",
+      "options": [
+        "It's raining.",
+        "It rains.",
+        "It is rain.",
+        "There is rain."
+      ],
+      "correctAnswer": 0,
+      "explanation": "Für aktuelles Wetter verwendet man die -ing Form: It's raining."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-37",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "nature"],
+      "front": "plant",
+      "back": "Pflanze",
+      "explanation": "Lautschrift: [plɑ:nt]. Ursprung: Französisch 'la plante'."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-38",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "message",
+      "back": "Nachricht",
+      "explanation": "Lautschrift: ['mesɪdʒ]. Ursprung: Französisch 'le message'."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-39",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "phone call",
+      "back": "Anruf, Telefongespräch",
+      "explanation": "Lautschrift: ['fəʊn kɔ:l]. Kann auch kurz 'call' sein."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-40",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "phone sb.",
+      "back": "jemanden anrufen",
+      "explanation": "Lautschrift: [fəʊn]. Verb. Beispiel: Can I phone Ryan?"
+    },
+    {
+      "id": "vokabeln-unit-2-matching-2",
+      "type": "matching",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "question": "Ordne die Telefon-Vokabeln zu:",
+      "pairs": [
+        {"left": "phone call", "right": "Anruf"},
+        {"left": "phone sb.", "right": "jemanden anrufen"},
+        {"left": "answer the phone", "right": "ans Telefon gehen"},
+        {"left": "leave a message", "right": "Nachricht hinterlassen"}
+      ],
+      "explanation": "Wichtige Ausdrücke zum Thema Telefonieren."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-41",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "answer the phone",
+      "back": "ans Telefon gehen",
+      "explanation": "Den Anruf annehmen. Beispiel: Can you answer the phone, please?"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-42",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "be in",
+      "back": "zu Hause sein",
+      "explanation": "Erreichbar/anwesend sein. Gegenteil: be out (nicht da sein)."
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-43",
+      "type": "flashcard",
+      "difficulty": "easy",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "be out",
+      "back": "nicht zu Hause sein, nicht da sein",
+      "explanation": "Nicht erreichbar/abwesend. Beispiel: Sorry, Tim. He's not in. Gegenteil: be in (da sein)."
+    },
+    {
+      "id": "vokabeln-unit-2-true-false-3",
+      "type": "true-false",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "question": "'be in' bedeutet 'hineingehen' und 'be out' bedeutet 'hinausgehen'.",
+      "correctAnswer": false,
+      "explanation": "Falsch! 'be in' = zu Hause/da sein. 'be out' = nicht zu Hause/nicht da sein. Es geht um Anwesenheit, nicht um Bewegung!"
+    },
+    {
+      "id": "vokabeln-unit-2-flashcard-44",
+      "type": "flashcard",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "communication"],
+      "front": "leave a message (simple past: left)",
+      "back": "eine Nachricht hinterlassen",
+      "explanation": "Lautschrift: [li:v ə 'mesɪdʒ], past: [left]. Beispiel: Do you want to leave a message?"
+    },
+    {
+      "id": "vokabeln-unit-2-text-input-5",
+      "type": "text-input",
+      "difficulty": "medium",
+      "tags": ["vocabulary", "unit-2", "holidays", "translation"],
+      "question": "Fülle die Lücke: 'Do you want to _____ a message?' (hinterlassen)",
+      "correctAnswer": "leave",
+      "alternatives": [],
+      "explanation": "leave a message = eine Nachricht hinterlassen"
+    }
+  ]
+}
