@@ -39,3 +39,6 @@ playwright/.cache
 .env
 .env.local
 .env.*.local
+
+# Input files (training data, scans, etc.)
+input/

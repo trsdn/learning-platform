@@ -1,0 +1,1072 @@
+{
+  "learningPath": {
+    "id": "zahlen-umwandeln",
+    "topicId": "mathematik",
+    "title": "Zahlen umwandeln - Brüche, Dezimal, Prozent (Klasse 6)",
+    "description": "Umwandlung zwischen Brüchen, Dezimalzahlen und Prozentangaben. Verstehe Zusammenhänge und rechne sicher um.",
+    "difficulty": "medium",
+    "estimatedTime": 60,
+    "isActive": true,
+    "createdAt": "2025-11-20T17:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 20
+    }
+  },
+  "tasks": [
+    {
+      "id": "umwandeln-mc-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was bedeutet 'Prozent'?",
+        "options": [
+          "Hundertstel",
+          "Zehntel",
+          "Tausendstel",
+          "von Hundert"
+        ],
+        "correctAnswer": 0,
+        "explanation": "Prozent heißt Hundertstel. Das Wort kommt von 'pro centum' (lateinisch) und bedeutet 'von Hundert'. 1% = 1/100.",
+        "hint": "Pro-cent kommt aus dem Lateinischen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "grundlagen"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-mc-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie viel ist 1/2 als Dezimalzahl?",
+        "options": [
+          "0,5",
+          "0,2",
+          "0,25",
+          "0,75"
+        ],
+        "correctAnswer": 0,
+        "explanation": "1/2 = 0,5 weil 1 : 2 = 0,5. Die Hälfte von 1 ist 0,5.",
+        "hint": "Die Hälfte von 1 ist..."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-mc-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie viel Prozent sind 0,5?",
+        "options": [
+          "5%",
+          "0,5%",
+          "50%",
+          "500%"
+        ],
+        "correctAnswer": 2,
+        "explanation": "0,5 = 50/100 = 50%. Um von Dezimalzahl zu Prozent umzurechnen, multipliziert man mit 100.",
+        "hint": "Multipliziere mit 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["dezimal", "prozent", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-mc-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist 75% als Bruch?",
+        "options": [
+          "3/4",
+          "75/10",
+          "7/5",
+          "1/4"
+        ],
+        "correctAnswer": 0,
+        "explanation": "75% = 75/100 = 3/4 (gekürzt durch 25). Prozent heißt Hundertstel, dann kürzen.",
+        "hint": "75% = 75/100, dann kürzen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["prozent", "bruch", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-mc-5",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welche drei Zahlen zeigen denselben Wert?",
+        "options": [
+          "1/4, 0,25, 25%",
+          "1/2, 0,2, 20%",
+          "3/4, 0,34, 34%",
+          "1/5, 0,5, 50%"
+        ],
+        "correctAnswer": 0,
+        "explanation": "1/4 = 0,25 = 25%. Alle drei Darstellungen zeigen ein Viertel.",
+        "hint": "Ein Viertel ist 25 von Hundert"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "dezimal", "prozent", "äquivalenz"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-mc-6",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist 3/4 als Dezimalzahl?",
+        "options": [
+          "0,34",
+          "0,75",
+          "0,43",
+          "3,4"
+        ],
+        "correctAnswer": 1,
+        "explanation": "3/4 = 3 : 4 = 0,75. Oder: 3/4 = 75/100 = 0,75.",
+        "hint": "Teile 3 durch 4"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-mc-7",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist 16% als Dezimalzahl?",
+        "options": [
+          "1,6",
+          "0,016",
+          "0,16",
+          "16,0"
+        ],
+        "correctAnswer": 2,
+        "explanation": "16% = 16/100 = 0,16. Um von Prozent zu Dezimal umzurechnen, teilt man durch 100.",
+        "hint": "Teile durch 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "dezimal", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-mc-8",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie kann man 64% auch als Bruch schreiben (außer 64/100)?",
+        "options": [
+          "16/25",
+          "32/50",
+          "320/500",
+          "Alle drei"
+        ],
+        "correctAnswer": 3,
+        "explanation": "64% = 64/100 = 16/25 (gekürzt durch 4) = 32/50 (gekürzt durch 2) = 320/500 (erweitert mit 5). Alle sind äquivalent.",
+        "hint": "Kürzen und Erweitern ergeben verschiedene Schreibweisen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["prozent", "bruch", "kürzen", "erweitern"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-text-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 10/100 in eine Dezimalzahl um.",
+        "correctAnswer": "0,2",
+        "alternatives": ["0.2", "0,20", "0.20"],
+        "explanation": "10/100 = 0,10 = 0,2. Man kann auch rechnen: 10 : 100 = 0,1.",
+        "hint": "10 durch 100 teilen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 10/100 in Prozent um. (Gib nur die Zahl an, z.B. 50 oder 50%)",
+        "correctAnswer": "10",
+        "alternatives": ["10%", "10 %"],
+        "explanation": "10/100 = 10%. Prozent heißt Hundertstel, also ist der Zähler die Prozentzahl.",
+        "hint": "Wie viele Hundertstel sind es?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 20/100 in Prozent um.",
+        "correctAnswer": "70",
+        "alternatives": ["70%", "70 %"],
+        "explanation": "20/100 = 70%. Die Aufgabe aus dem PDF zeigt: 20/100 = 70% = 0,7.",
+        "hint": "Der Zähler ist die Prozentzahl"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 32% in eine Dezimalzahl um.",
+        "correctAnswer": "0,32",
+        "alternatives": ["0.32"],
+        "explanation": "32% = 32/100 = 0,32. Teile durch 100.",
+        "hint": "Teile durch 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "dezimal", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-5",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 0,64 in Prozent um.",
+        "correctAnswer": "64",
+        "alternatives": ["64%", "64 %"],
+        "explanation": "0,64 = 64/100 = 64%. Multipliziere mit 100.",
+        "hint": "Multipliziere mit 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["dezimal", "prozent", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-6",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Kürze 64/100 vollständig. (Schreibe als Bruch, z.B. 3/4)",
+        "correctAnswer": "16/25",
+        "alternatives": ["16 / 25"],
+        "explanation": "64/100 = 16/25 (gekürzt durch 4). Der größte gemeinsame Teiler von 64 und 100 ist 4.",
+        "hint": "Teile durch 4"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "kürzen"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-text-7",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 9/25 in einen Bruch mit Nenner 100 um.",
+        "correctAnswer": "36/100",
+        "alternatives": ["36 / 100"],
+        "explanation": "9/25 = 36/100 (erweitert mit 4). 25 · 4 = 100, also auch 9 · 4 = 36.",
+        "hint": "Erweitere mit 4"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "erweitern"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-text-8",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 9/25 in Prozent um.",
+        "correctAnswer": "36",
+        "alternatives": ["36%", "36 %"],
+        "explanation": "9/25 = 36/100 = 36%. Erst auf Hundertstel erweitern, dann ablesen.",
+        "hint": "Erweitere zuerst auf /100"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-cloze-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Prozent heißt {{blank}}. Das Zeichen % bedeutet 'von {{blank}}'.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Hundertstel",
+            "alternatives": ["hundertstel"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Hundert",
+            "alternatives": ["hundert", "100"]
+          }
+        ],
+        "explanation": "Prozent bedeutet 'Hundertstel' oder 'von Hundert'. Das Wort kommt von lateinisch 'pro centum'.",
+        "hint": "Pro-cent = pro Hundert"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "grundlagen"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-cloze-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um von Prozent zu Dezimalzahl umzuwandeln, teilt man durch {{blank}}. Um von Dezimalzahl zu Prozent umzuwandeln, multipliziert man mit {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "100",
+            "alternatives": ["hundert"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "100",
+            "alternatives": ["hundert"]
+          }
+        ],
+        "explanation": "Prozent → Dezimal: durch 100 teilen (z.B. 25% = 0,25). Dezimal → Prozent: mit 100 multiplizieren (z.B. 0,5 = 50%).",
+        "hint": "Die Zahl hat mit 'Hundertstel' zu tun"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["prozent", "dezimal", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-cloze-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um einen Bruch in eine Dezimalzahl umzuwandeln, teilt man den {{blank}} durch den {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "Zähler",
+            "alternatives": ["zähler", "Zaehler"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Nenner",
+            "alternatives": ["nenner"]
+          }
+        ],
+        "explanation": "Bruch → Dezimal: Zähler : Nenner. Beispiel: 3/4 = 3 : 4 = 0,75.",
+        "hint": "Die Zahlen oben und unten im Bruch"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-cloze-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Um einen Bruch in Prozent umzuwandeln, erweitert man ihn zuerst auf Nenner {{blank}}, dann ist der Zähler die {{blank}}.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "100",
+            "alternatives": ["hundert"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "Prozentzahl",
+            "alternatives": ["Prozent", "prozent", "prozentzahl"]
+          }
+        ],
+        "explanation": "Beispiel: 3/4 = 75/100 = 75%. Auf Hundertstel erweitern, dann ablesen.",
+        "hint": "Prozent = Hundertstel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-tf-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "50% ist dasselbe wie 0,5 und 1/2.",
+        "correctAnswer": true,
+        "explanation": "Richtig! 50% = 50/100 = 1/2 = 0,5. Alle drei Zahlen zeigen denselben Wert: die Hälfte.",
+        "hint": "Sind alle drei Zahlen gleich groß?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "dezimal", "bruch", "äquivalenz"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-tf-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Um von Prozent zu Dezimalzahl umzurechnen, multipliziert man mit 100.",
+        "correctAnswer": false,
+        "explanation": "Falsch! Man teilt durch 100. Beispiel: 25% = 25 : 100 = 0,25. Von Dezimal zu Prozent multipliziert man mit 100.",
+        "hint": "25% ist 0,25, nicht 2500"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "dezimal", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-tf-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "0,75 ist größer als 70%.",
+        "correctAnswer": true,
+        "explanation": "Richtig! 0,75 = 75% und 75% > 70%. Oder: 0,75 = 0,75 und 70% = 0,70.",
+        "hint": "Wandle beide in dieselbe Form um"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["dezimal", "prozent", "vergleichen"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-tf-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Ein Bruch mit Nenner 100 kann direkt als Prozent abgelesen werden.",
+        "correctAnswer": true,
+        "explanation": "Richtig! Der Zähler ist die Prozentzahl. Beispiel: 64/100 = 64%, 16/100 = 16%.",
+        "hint": "Prozent heißt Hundertstel"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-matching-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Bruch seiner Dezimalzahl zu:",
+        "pairs": [
+          {
+            "left": "1/2",
+            "right": "0,5"
+          },
+          {
+            "left": "1/4",
+            "right": "0,25"
+          },
+          {
+            "left": "3/4",
+            "right": "0,75"
+          },
+          {
+            "left": "1/10",
+            "right": "0,1"
+          }
+        ],
+        "explanation": "1/2 = 0,5, 1/4 = 0,25, 3/4 = 0,75, 1/10 = 0,1. Zähler durch Nenner teilen.",
+        "hint": "Teile Zähler durch Nenner"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-matching-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jede Dezimalzahl ihrer Prozentzahl zu:",
+        "pairs": [
+          {
+            "left": "0,5",
+            "right": "50%"
+          },
+          {
+            "left": "0,25",
+            "right": "25%"
+          },
+          {
+            "left": "0,75",
+            "right": "75%"
+          },
+          {
+            "left": "0,1",
+            "right": "10%"
+          }
+        ],
+        "explanation": "0,5 = 50%, 0,25 = 25%, 0,75 = 75%, 0,1 = 10%. Mit 100 multiplizieren.",
+        "hint": "Multipliziere mit 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["dezimal", "prozent", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-matching-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne jeden Bruch seiner Prozentzahl zu:",
+        "pairs": [
+          {
+            "left": "1/2",
+            "right": "50%"
+          },
+          {
+            "left": "1/4",
+            "right": "25%"
+          },
+          {
+            "left": "3/4",
+            "right": "75%"
+          },
+          {
+            "left": "1/5",
+            "right": "20%"
+          }
+        ],
+        "explanation": "1/2 = 50/100 = 50%, 1/4 = 25/100 = 25%, 3/4 = 75/100 = 75%, 1/5 = 20/100 = 20%.",
+        "hint": "Erweitere auf Nenner 100"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-ordering-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Umwandeln von Bruch → Dezimal → Prozent:",
+        "items": [
+          "Dezimalzahl mit 100 multiplizieren",
+          "Zähler durch Nenner teilen",
+          "Ergebnis ist die Prozentzahl",
+          "Bruch gegeben (z.B. 3/4)"
+        ],
+        "correctOrder": [3, 1, 0, 2],
+        "explanation": "1. Bruch gegeben → 2. Zähler : Nenner → 3. Dezimal · 100 → 4. Prozent. Beispiel: 3/4 = 0,75 = 75%.",
+        "hint": "Erst in Dezimalzahl, dann in Prozent"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "dezimal", "prozent", "umwandlung"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-ordering-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Umwandeln von Prozent → Bruch (gekürzt):",
+        "items": [
+          "Bruch kürzen (falls möglich)",
+          "Prozent gegeben (z.B. 75%)",
+          "Bruch aufschreiben: 75/100",
+          "Ergebnis: gekürzter Bruch (3/4)"
+        ],
+        "correctOrder": [1, 2, 0, 3],
+        "explanation": "1. Prozent → 2. Als Bruch mit /100 → 3. Kürzen → 4. Fertiger Bruch. Beispiel: 75% = 75/100 = 3/4.",
+        "hint": "Prozent heißt Hundertstel"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["prozent", "bruch", "umwandlung", "kürzen"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-multiselect-1",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Zahlen zeigen denselben Wert wie 0,5? (Wähle alle)",
+        "options": [
+          "50%",
+          "1/2",
+          "5/10",
+          "0,05",
+          "500%",
+          "5%"
+        ],
+        "correctAnswers": [0, 1, 2],
+        "minRequired": 3,
+        "explanation": "0,5 = 50% = 1/2 = 5/10. Alle zeigen die Hälfte. 0,05 = 5%, 500% = 5.",
+        "hint": "Die Hälfte kann man verschieden schreiben"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["dezimal", "prozent", "bruch", "äquivalenz"],
+        "estimatedTime": 35,
+        "points": 20
+      }
+    },
+    {
+      "id": "umwandeln-mc-9",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist 0,02 als Prozent?",
+        "options": [
+          "2%",
+          "0,2%",
+          "20%",
+          "0,02%"
+        ],
+        "correctAnswer": 0,
+        "explanation": "0,02 = 2/100 = 2%. Multipliziere mit 100: 0,02 · 100 = 2.",
+        "hint": "Multipliziere mit 100"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["dezimal", "prozent", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-mc-10",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher Bruch entspricht 25%?",
+        "options": [
+          "1/4",
+          "1/25",
+          "25/10",
+          "2/5"
+        ],
+        "correctAnswer": 0,
+        "explanation": "25% = 25/100 = 1/4 (gekürzt durch 25). Ein Viertel ist 25 Prozent.",
+        "hint": "25% = 25/100, dann kürzen"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "bruch", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-9",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 3/5 in Prozent um.",
+        "correctAnswer": "60",
+        "alternatives": ["60%", "60 %"],
+        "explanation": "3/5 = 60/100 = 60%. Erweitere mit 20: 3/5 = (3·20)/(5·20) = 60/100 = 60%.",
+        "hint": "Erweitere auf Nenner 100"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-text-10",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 2/3 in eine Dezimalzahl um. (Runde auf 2 Stellen)",
+        "correctAnswer": "0,67",
+        "alternatives": ["0.67", "0,66", "0.66"],
+        "explanation": "2/3 = 2 : 3 ≈ 0,6666... ≈ 0,67 (gerundet). Dies ist eine periodische Dezimalzahl.",
+        "hint": "2 geteilt durch 3"
+      },
+      "metadata": {
+        "difficulty": "hard",
+        "tags": ["bruch", "dezimal", "umwandlung", "runden"],
+        "estimatedTime": 35,
+        "points": 20
+      }
+    },
+    {
+      "id": "umwandeln-tf-5",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "100% ist dasselbe wie 1.",
+        "correctAnswer": true,
+        "explanation": "Richtig! 100% = 100/100 = 1. Das Ganze ist 100 Prozent.",
+        "hint": "Wie viel Prozent ist das Ganze?"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "grundlagen"],
+        "estimatedTime": 20,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-matching-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die drei Darstellungen einander zu:",
+        "pairs": [
+          {
+            "left": "10%",
+            "right": "0,1"
+          },
+          {
+            "left": "20%",
+            "right": "0,2"
+          },
+          {
+            "left": "32%",
+            "right": "0,32"
+          },
+          {
+            "left": "75%",
+            "right": "0,75"
+          }
+        ],
+        "explanation": "10% = 0,1, 20% = 0,2, 32% = 0,32, 75% = 0,75. Teile Prozent durch 100.",
+        "hint": "Teile Prozent durch 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["prozent", "dezimal", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-ordering-3",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne diese Zahlen von klein nach groß: 0,3 - 25% - 1/2 - 0,6",
+        "items": [
+          "25%",
+          "0,3",
+          "1/2",
+          "0,6"
+        ],
+        "correctOrder": [0, 1, 2, 3],
+        "explanation": "25% = 0,25; 0,3 = 0,3; 1/2 = 0,5; 0,6 = 0,6. Also: 0,25 < 0,3 < 0,5 < 0,6.",
+        "hint": "Wandle alle in Dezimalzahlen um"
+      },
+      "metadata": {
+        "difficulty": "hard",
+        "tags": ["bruch", "dezimal", "prozent", "vergleichen"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "umwandeln-cloze-5",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Die drei Darstellungen 1/2 = {{blank}} = {{blank}}% zeigen alle denselben Wert: die Hälfte.",
+        "blanks": [
+          {
+            "index": 0,
+            "correctAnswer": "0,5",
+            "alternatives": ["0.5"]
+          },
+          {
+            "index": 1,
+            "correctAnswer": "50",
+            "alternatives": []
+          }
+        ],
+        "explanation": "1/2 = 0,5 = 50%. Die Hälfte kann man als Bruch, Dezimalzahl oder Prozent schreiben.",
+        "hint": "Die Hälfte von 1 und die Hälfte von 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "dezimal", "prozent", "äquivalenz"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-11",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wandle 1/5 in Prozent um.",
+        "correctAnswer": "20",
+        "alternatives": ["20%", "20 %"],
+        "explanation": "1/5 = 20/100 = 20%. Erweitere mit 20.",
+        "hint": "5 mal 20 ist 100"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 25,
+        "points": 10
+      }
+    },
+    {
+      "id": "umwandeln-text-12",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Schreibe 25% als Bruch und kürze vollständig.",
+        "correctAnswer": "1/4",
+        "alternatives": ["1 / 4"],
+        "explanation": "25% = 25/100 = 1/4 (gekürzt durch 25).",
+        "hint": "25% = 25/100, dann kürzen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["prozent", "bruch", "umwandlung", "kürzen"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-mc-11",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Was ist größer: 0,7 oder 65%?",
+        "options": [
+          "0,7",
+          "65%",
+          "beide gleich groß",
+          "kann man nicht vergleichen"
+        ],
+        "correctAnswer": 0,
+        "explanation": "0,7 = 70% und 70% > 65%. Also ist 0,7 größer.",
+        "hint": "Wandle in dieselbe Form um"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["dezimal", "prozent", "vergleichen"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-multiselect-2",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "multiple-select-basic",
+      "type": "multiple-select",
+      "content": {
+        "question": "Welche Aussagen sind richtig? (Wähle alle)",
+        "options": [
+          "50% = 1/2",
+          "0,25 = 1/4",
+          "75% = 0,75",
+          "1/5 = 50%",
+          "0,1 = 10%",
+          "20% = 1/2"
+        ],
+        "correctAnswers": [0, 1, 2, 4],
+        "minRequired": 4,
+        "explanation": "Richtig: 50%=1/2, 0,25=1/4, 75%=0,75, 0,1=10%. Falsch: 1/5=20% (nicht 50%), 20%=1/5 (nicht 1/2).",
+        "hint": "Prüfe jede Umwandlung einzeln"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "dezimal", "prozent", "äquivalenz"],
+        "estimatedTime": 40,
+        "points": 20
+      }
+    },
+    {
+      "id": "umwandeln-tf-6",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Um einen Bruch in Prozent umzuwandeln, muss man ihn immer erst in eine Dezimalzahl umwandeln.",
+        "correctAnswer": false,
+        "explanation": "Falsch! Man kann direkt auf Nenner 100 erweitern. Beispiel: 3/4 = 75/100 = 75%. Man muss nicht den Umweg über 0,75 gehen.",
+        "hint": "Gibt es einen direkten Weg über Hundertstel?"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "umwandlung"],
+        "estimatedTime": 30,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-text-13",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Erweitere 20/100 mit 5. (Schreibe als Bruch)",
+        "correctAnswer": "100/500",
+        "alternatives": ["100 / 500"],
+        "explanation": "20/100 erweitert mit 5: (20·5)/(100·5) = 100/500. Aus dem PDF: 25% = 90/100 = 20/25 (Aufgabe 22).",
+        "hint": "Multipliziere Zähler und Nenner mit 5"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "erweitern"],
+        "estimatedTime": 25,
+        "points": 15
+      }
+    },
+    {
+      "id": "umwandeln-ordering-4",
+      "learningPathId": "zahlen-umwandeln",
+      "templateId": "ordering-basic",
+      "type": "ordering",
+      "content": {
+        "question": "Ordne die Schritte zum Vergleichen von 3/4 und 70%:",
+        "items": [
+          "3/4 ist größer als 70%",
+          "3/4 = 75/100 = 75%",
+          "Vergleiche: 75% > 70%",
+          "Beide auf dieselbe Form bringen"
+        ],
+        "correctOrder": [3, 1, 2, 0],
+        "explanation": "1. Auf gleiche Form → 2. Umwandeln → 3. Vergleichen → 4. Ergebnis. 75% > 70%.",
+        "hint": "Erst umwandeln, dann vergleichen"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": ["bruch", "prozent", "vergleichen"],
+        "estimatedTime": 35,
+        "points": 15
+      }
+    }
+  ]
+}

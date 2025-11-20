@@ -23,7 +23,7 @@ export async function loadLearningPathsFromJSON(): Promise<{
 
   // Learning path files to load (topic -> filenames)
   const learningPathFiles: Record<string, string[]> = {
-    mathematik: ['algebra-basics.json', 'geometry-basics.json', 'advanced-tasks.json', 'brueche-grundlagen.json'],
+    mathematik: ['algebra-basics.json', 'geometry-basics.json', 'advanced-tasks.json', 'brueche-grundlagen.json', 'zahlen-umwandeln.json'],
     biologie: ['zellbiologie.json', 'genetik-basics.json'],
     spanisch: ['spanisch-grundlagen.json', 'begruessung-vorstellung.json', 'familie-persoenliches.json', 'zahlen-farben-tiere.json', 'vokabeltest-karteikarten.json'],
     englisch: ['unregelmaessige-verben.json'],
