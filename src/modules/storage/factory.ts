@@ -1,4 +1,3 @@
-import { db } from './database';
 import {
   TopicRepository,
   LearningPathRepository,
@@ -7,7 +6,7 @@ import {
   UserProgressRepository,
   PracticeSessionRepository,
   SpacedRepetitionRepository,
-} from './adapters/repositories-simple';
+} from './adapters/supabase-repositories';
 import type {
   ITopicRepository,
   ILearningPathRepository,
@@ -35,7 +34,7 @@ export class StorageFactory {
    */
   static getTopicRepository(): any {
     if (!this.topicRepo) {
-      this.topicRepo = new TopicRepository(db.topics) as any;
+      this.topicRepo = new TopicRepository() as any;
     }
     return this.topicRepo;
   }
@@ -45,7 +44,7 @@ export class StorageFactory {
    */
   static getLearningPathRepository(): any {
     if (!this.learningPathRepo) {
-      this.learningPathRepo = new LearningPathRepository(db.learningPaths) as any;
+      this.learningPathRepo = new LearningPathRepository() as any;
     }
     return this.learningPathRepo;
   }
@@ -55,7 +54,7 @@ export class StorageFactory {
    */
   static getTaskRepository(): any {
     if (!this.taskRepo) {
-      this.taskRepo = new TaskRepository(db.tasks) as any;
+      this.taskRepo = new TaskRepository() as any;
     }
     return this.taskRepo;
   }
@@ -65,7 +64,7 @@ export class StorageFactory {
    */
   static getAnswerHistoryRepository(): any {
     if (!this.answerHistoryRepo) {
-      this.answerHistoryRepo = new AnswerHistoryRepository(db.answerHistory) as any;
+      this.answerHistoryRepo = new AnswerHistoryRepository() as any;
     }
     return this.answerHistoryRepo;
   }
@@ -75,7 +74,7 @@ export class StorageFactory {
    */
   static getUserProgressRepository(): any {
     if (!this.userProgressRepo) {
-      this.userProgressRepo = new UserProgressRepository(db.userProgress) as any;
+      this.userProgressRepo = new UserProgressRepository() as any;
     }
     return this.userProgressRepo;
   }
@@ -85,7 +84,7 @@ export class StorageFactory {
    */
   static getPracticeSessionRepository(): any {
     if (!this.practiceSessionRepo) {
-      this.practiceSessionRepo = new PracticeSessionRepository(db.practiceSessions) as any;
+      this.practiceSessionRepo = new PracticeSessionRepository() as any;
     }
     return this.practiceSessionRepo;
   }
@@ -95,7 +94,7 @@ export class StorageFactory {
    */
   static getSpacedRepetitionRepository(): any {
     if (!this.spacedRepetitionRepo) {
-      this.spacedRepetitionRepo = new SpacedRepetitionRepository(db.spacedRepetition) as any;
+      this.spacedRepetitionRepo = new SpacedRepetitionRepository() as any;
     }
     return this.spacedRepetitionRepo;
   }
