@@ -42,3 +42,4 @@ playwright/.cache
 
 # Input files (training data, scans, etc.)
 input/
+.vercel
