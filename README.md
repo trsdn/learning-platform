@@ -241,7 +241,11 @@ Generate TypeScript types from schema:
 npm run supabase:types
 ```
 
-See [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) for detailed database setup.
+### Database Documentation
+
+- [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) - Complete setup and migration guide
+- [docs/DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) - Full schema documentation with ERD
+- [docs/ROW_LEVEL_SECURITY.md](./docs/ROW_LEVEL_SECURITY.md) - RLS policies and security model
 
 ## 🌐 Browser Support
 
@@ -289,9 +293,16 @@ Tasks can be added via:
 
 ## 📚 Documentation
 
-- [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) - Supabase setup guide
+### Setup & Deployment
+- [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) - Supabase setup and configuration guide
 - [DEPLOYMENT_VERCEL.md](./DEPLOYMENT_VERCEL.md) - Vercel deployment guide
 - [SUPABASE_MIGRATION.md](./SUPABASE_MIGRATION.md) - Migration from IndexedDB
+
+### Database
+- [docs/DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) - Complete schema documentation with ERD
+- [docs/ROW_LEVEL_SECURITY.md](./docs/ROW_LEVEL_SECURITY.md) - RLS policies and security model
+
+### Development
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guidelines
 - [AGENTS.md](./AGENTS.md) - AI agent workflows and patterns
 
