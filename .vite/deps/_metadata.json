@@ -1,31 +1,31 @@
 {
-  "hash": "651529cd",
+  "hash": "3112226b",
   "configHash": "ec3f3c14",
-  "lockfileHash": "e4e7547d",
-  "browserHash": "6f64e7e4",
+  "lockfileHash": "debf6c8c",
+  "browserHash": "96269a94",
   "optimized": {
-    "react/jsx-dev-runtime": {
-      "src": "../../node_modules/react/jsx-dev-runtime.js",
-      "file": "react_jsx-dev-runtime.js",
-      "fileHash": "13a26af2",
-      "needsInterop": true
-    },
     "react": {
       "src": "../../node_modules/react/index.js",
       "file": "react.js",
-      "fileHash": "543f345e",
+      "fileHash": "87e53eb0",
       "needsInterop": true
     },
     "react-dom/client": {
       "src": "../../node_modules/react-dom/client.js",
       "file": "react-dom_client.js",
-      "fileHash": "78f3ecc0",
+      "fileHash": "3c58a6a9",
       "needsInterop": true
     },
     "dexie": {
       "src": "../../node_modules/dexie/import-wrapper.mjs",
       "file": "dexie.js",
-      "fileHash": "d5adf6dd",
+      "fileHash": "bc61fcff",
+      "needsInterop": false
+    },
+    "clsx": {
+      "src": "../../node_modules/clsx/dist/clsx.mjs",
+      "file": "clsx.js",
+      "fileHash": "97b94057",
       "needsInterop": false
     }
   },

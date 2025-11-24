@@ -10,12 +10,15 @@ import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCar
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
 import { AdminPage, type AdminTab } from './modules/ui/components/admin/AdminPage';
 import { WebsiteLoginScreen } from './modules/ui/components/website-login-screen';
+import { AuthProvider, useAuth } from './modules/ui/contexts/auth-context';
+import { AuthModal } from './modules/ui/components/auth/auth-modal';
 import { settingsService } from '@core/services/settings-service';
 import { websiteAuthService } from '@core/services/website-auth-service';
 import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
 import './modules/ui/styles/utilities.css';
+import './modules/ui/components/auth/auth-modal.css';
 import './index.css';
 
 /**
@@ -26,11 +29,15 @@ if (typeof window !== 'undefined') {
   settingsService.load();
 }
 
-function App() {
+function AppContent() {
   // Website authentication state
   const [isWebsiteAuthenticated, setIsWebsiteAuthenticated] = useState(false);
   const [websiteAuthError, setWebsiteAuthError] = useState<string>('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  // Supabase authentication
+  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [topics, setTopics] = useState<Topic[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
@@ -281,6 +288,57 @@ function App() {
         setWebsiteAuthError('Ein Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
       }
     }
+  }
+
+  // Show Supabase login if not authenticated (required for all users)
+  if (!authLoading && !isAuthenticated) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        padding: '2rem',
+        textAlign: 'center'
+      }}>
+        <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧠 MindForge Academy</h1>
+        <p style={{ fontSize: '1.2rem', marginBottom: '2rem', maxWidth: '500px' }}>
+          Erweitere dein Wissen, eine Frage nach der anderen
+        </p>
+        <p style={{ marginBottom: '2rem', opacity: 0.9 }}>
+          Bitte melden Sie sich an, um fortzufahren
+        </p>
+        <button
+          onClick={() => setShowAuthModal(true)}
+          style={{
+            padding: '1rem 2rem',
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+            background: 'white',
+            color: '#667eea',
+            border: 'none',
+            borderRadius: '12px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            transition: 'transform 0.2s, box-shadow 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+          }}
+        >
+          🔑 Anmelden
+        </button>
+        {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      </div>
+    );
   }
 
   // Show website login screen if not authenticated AND password protection is enabled
@@ -597,8 +655,19 @@ function App() {
 
   const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content') || 'unknown';
 
+  // Show auth modal if not authenticated (and not in loading state)
+  if (!authLoading && !isAuthenticated && showAuthModal) {
+    return (
+      <div>
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h1>🧠 MindForge Academy</h1>
@@ -607,9 +676,52 @@ function App() {
           </p>
           <p style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary, #999)', marginTop: '0.25rem' }}>
             v{deploymentVersion}
+            {isAuthenticated && user && (
+              <span style={{ marginLeft: '0.5rem' }}>| 👤 {user.email}</span>
+            )}
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {!isAuthenticated && (
+            <button
+              onClick={() => setShowAuthModal(true)}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: 'var(--color-success)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+              }}
+            >
+              🔑 Anmelden
+            </button>
+          )}
+          {isAuthenticated && (
+            <button
+              onClick={() => signOut()}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: 'var(--color-secondary)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+              }}
+            >
+              👋 Abmelden
+            </button>
+          )}
           <button
             onClick={cycleThemeMode}
             title={`Theme wechseln (aktuell: ${themeLabel})`}
@@ -708,6 +820,14 @@ function App() {
         ))}
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 

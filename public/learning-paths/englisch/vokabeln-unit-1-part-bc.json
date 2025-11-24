@@ -1,20 +1,27 @@
 {
-  "id": "vokabeln-unit-1-part-bc",
-  "title": "Englisch Vokabeln Unit 1 - Part B/C & USA Logbook",
-  "description": "Erweitere deinen Wortschatz mit Vokabeln aus Unit 1 Part B/C und dem USA Logbook: Familie, Telefonate, amerikanisches vs. britisches Englisch, Camping und mehr.",
-  "topicId": "englisch",
-  "difficulty": "easy",
-  "estimatedTime": 55,
-  "requirements": {
-    "minimumAccuracy": 70,
-    "requiredTasks": 25
+  "learningPath": {
+    "id": "vokabeln-unit-1-part-bc",
+    "title": "Englisch Vokabeln Unit 1 - Part B/C & USA Logbook",
+    "description": "Erweitere deinen Wortschatz mit Vokabeln aus Unit 1 Part B/C und dem USA Logbook: Familie, Telefonate, amerikanisches vs. britisches Englisch, Camping und mehr.",
+    "topicId": "englisch",
+    "difficulty": "easy",
+    "estimatedTime": 55,
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 25
+    }
   },
   "tasks": [
     {
       "id": "vokabeln-unit-1-bc-flashcard-1",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "for example",
       "back": "zum Beispiel",
       "explanation": "Lautschrift: [fər ɪg'zɑ:mpl]. Ursprung: Französisch 'exemple' (m), Latein 'exemplum'."
@@ -23,7 +30,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-2",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "feelings"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "feelings"
+      ],
       "front": "surprise",
       "back": "Überraschung",
       "explanation": "Lautschrift: [sə'praɪz]. Beispiel: A present for me? That's a nice surprise! Französisch: 'la surprise'."
@@ -32,7 +44,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-3",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "time"
+      ],
       "front": "still",
       "back": "trotzdem, (immer) noch",
       "explanation": "Lautschrift: [stɪl]. Zwei Bedeutungen: 1. (immer) noch, 2. trotzdem. Beispiel: It wasn't very warm, but we still went swimming."
@@ -41,7 +58,12 @@
       "id": "vokabeln-unit-1-bc-multiple-choice-1",
       "type": "multiple-choice",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "translation"
+      ],
       "question": "Was bedeutet 'still' im Satz: 'It wasn't very warm, but we still went swimming.'?",
       "options": [
         "trotzdem",
@@ -56,7 +78,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-4",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "time"
+      ],
       "front": "this afternoon",
       "back": "heute Nachmittag",
       "explanation": "Zeitangabe. Auch: this evening (heute Abend), this morning (heute Morgen)."
@@ -65,7 +92,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-5",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "actions"
+      ],
       "front": "move (to)",
       "back": "umziehen (nach)",
       "explanation": "Lautschrift: [mu:v]. Beispiel: The Bennetts moved to Plymouth last year. Französisch: 'movere'."
@@ -74,7 +106,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-6",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "family"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "family"
+      ],
       "front": "son",
       "back": "Sohn",
       "explanation": "Lautschrift: [sʌn]. Gegenteil: daughter (Tochter)."
@@ -83,7 +120,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-7",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "family"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "family"
+      ],
       "front": "daughter",
       "back": "Tochter",
       "explanation": "Lautschrift: ['dɔ:tə]. Gegenteil: son (Sohn)."
@@ -92,13 +134,30 @@
       "id": "vokabeln-unit-1-bc-matching-1",
       "type": "matching",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "family"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "family"
+      ],
       "question": "Ordne die Familienmitglieder zu:",
       "pairs": [
-        {"left": "son", "right": "Sohn"},
-        {"left": "daughter", "right": "Tochter"},
-        {"left": "neighbour", "right": "Nachbar/in"},
-        {"left": "host family", "right": "Gastfamilie"}
+        {
+          "left": "son",
+          "right": "Sohn"
+        },
+        {
+          "left": "daughter",
+          "right": "Tochter"
+        },
+        {
+          "left": "neighbour",
+          "right": "Nachbar/in"
+        },
+        {
+          "left": "host family",
+          "right": "Gastfamilie"
+        }
       ],
       "explanation": "Wichtige Vokabeln zum Thema Familie und soziale Beziehungen."
     },
@@ -106,7 +165,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-8",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "time"
+      ],
       "front": "already",
       "back": "schon, bereits",
       "explanation": "Lautschrift: [ɔ:l'redi]. Beispiel: Are you going already? Can't you stay?"
@@ -115,7 +179,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-9",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "sure",
       "back": "sicher, ja klar",
       "explanation": "Lautschrift: [ʃʊə], [ʃɔ:]. Beispiele: I'm sure she knows the answer. / Can I have your pen? - Yes, sure."
@@ -124,7 +193,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-10",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "actions"
+      ],
       "front": "invite sb. (to)",
       "back": "jemanden einladen (zu)",
       "explanation": "Lautschrift: [ɪn'vaɪt]. Beispiel: Can I invite all my friends to my birthday party? Ursprung: Französisch 'inviter', Latein 'invitare'."
@@ -133,17 +207,31 @@
       "id": "vokabeln-unit-1-bc-text-input-1",
       "type": "text-input",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "translation"
+      ],
       "question": "Übersetze ins Englische: 'jemanden einladen'",
       "correctAnswer": "invite somebody",
-      "alternatives": ["invite someone", "to invite sb.", "to invite someone"],
+      "alternatives": [
+        "invite someone",
+        "to invite sb.",
+        "to invite someone"
+      ],
       "explanation": "invite sb. (to) = jemanden einladen (zu)"
     },
     {
       "id": "vokabeln-unit-1-bc-flashcard-11",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "time"
+      ],
       "front": "ever",
       "back": "jemals",
       "explanation": "Lautschrift: ['evə]. Beispiel: Do you ever go to museums? - Yes, sometimes."
@@ -152,7 +240,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-12",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "Lucky you!",
       "back": "Du Glückspilz!",
       "explanation": "Lautschrift: ['lʌki]. Ausruf, wenn jemand Glück hat."
@@ -161,7 +254,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-13",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "be lucky",
       "back": "Glück haben",
       "explanation": "Unterschied: She was lucky (Sie hatte Glück) vs. She was happy (Sie war glücklich)."
@@ -170,7 +268,12 @@
       "id": "vokabeln-unit-1-bc-true-false-1",
       "type": "true-false",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "grammar"
+      ],
       "question": "'She was lucky' und 'She was happy' bedeuten dasselbe.",
       "correctAnswer": false,
       "explanation": "Falsch! 'She was lucky' = Sie hatte Glück. 'She was happy' = Sie war glücklich. Das sind unterschiedliche Bedeutungen!"
@@ -179,7 +282,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-14",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "actions"
+      ],
       "front": "look after sb.",
       "back": "auf jemanden aufpassen, sich um jemanden kümmern",
       "explanation": "Phrasal verb. Beispiel: Sam often has to look after his little sister after school."
@@ -188,7 +296,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-15",
       "type": "flashcard",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-b", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "grammar"
+      ],
       "front": "be allowed to do sth.",
       "back": "etwas tun dürfen",
       "explanation": "Lautschrift: [ə'laʊd]. Beispiele: Are you allowed to watch TV on Sunday mornings? / I wasn't allowed to go to Sue's party."
@@ -197,7 +310,12 @@
       "id": "vokabeln-unit-1-bc-text-input-2",
       "type": "text-input",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-b", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "translation"
+      ],
       "question": "Fülle die Lücke: 'Are you _____ to watch TV?' (dürfen)",
       "correctAnswer": "allowed",
       "alternatives": [],
@@ -207,7 +325,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-16",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "actions"
+      ],
       "front": "hit (simple past: hit)",
       "back": "schlagen",
       "explanation": "Lautschrift: [hɪt]. Beispiel: A big boy hit me on the nose. Unregelmäßiges Verb: hit-hit-hit."
@@ -216,7 +339,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-17",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "actions"
+      ],
       "front": "roll",
       "back": "rollen",
       "explanation": "Lautschrift: [rəʊl]. Beispiel: The ball rolled down the hill."
@@ -225,7 +353,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-18",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "directions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "directions"
+      ],
       "front": "out",
       "back": "heraus, hinaus, nach draußen",
       "explanation": "Lautschrift: [aʊt]. Beispiel: The weather is nice. Let's go out and play football."
@@ -234,7 +367,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-19",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "objects"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "objects"
+      ],
       "front": "prize",
       "back": "Preis, Gewinn",
       "explanation": "Lautschrift: [praɪz]. NICHT verwechseln mit 'price' [praɪs] = (Kauf-)Preis! Ursprung: Französisch 'le prix'."
@@ -243,7 +381,12 @@
       "id": "vokabeln-unit-1-bc-multiple-choice-2",
       "type": "multiple-choice",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-b", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "translation"
+      ],
       "question": "Was ist der Unterschied zwischen 'prize' und 'price'?",
       "options": [
         "'prize' = Preis (den man gewinnt), 'price' = (Kauf-)Preis (den man bezahlt)",
@@ -258,7 +401,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-20",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "Here you are.",
       "back": "Bitte sehr. / Hier bitte.",
       "explanation": "Höfliche Redewendung beim Übergeben von etwas. Beispiel: Can you give me that pen? - Here you are."
@@ -267,7 +415,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-21",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "expressions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "expressions"
+      ],
       "front": "..., right?",
       "back": "..., nicht wahr?",
       "explanation": "Frage am Satzende zur Bestätigung. Beispiel: You're Amy, right?"
@@ -276,7 +429,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-22",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "language"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "language"
+      ],
       "front": "mean (simple past: meant)",
       "back": "bedeuten",
       "explanation": "Lautschrift: [mi:n], past: [mɛnt]. Beispiel: I don't know this word. What does it mean?"
@@ -285,7 +443,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-23",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "grammar"
+      ],
       "front": "subject",
       "back": "Subjekt",
       "explanation": "Lautschrift: ['sʌbdʒekt]. Beispiel: In 'Lucy phoned her mum', 'Lucy' is the subject. Ursprung: Französisch 'le sujet'."
@@ -294,7 +457,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-24",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "grammar"
+      ],
       "front": "object",
       "back": "Objekt",
       "explanation": "Lautschrift: ['ɒbdʒekt]. Beispiel: In 'Lucy phoned her mum', 'her mum' is the object. Ursprung: Französisch 'l'objet' (m)."
@@ -303,7 +471,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-25",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "communication"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "communication"
+      ],
       "front": "get in touch (with sb.)",
       "back": "(mit jm.) Kontakt aufnehmen, sich in Verbindung setzen",
       "explanation": "Phrasal verb. Beispiel: If you come to Plymouth, get in touch with me."
@@ -312,7 +485,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-26",
       "type": "flashcard",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "housing"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "housing"
+      ],
       "front": "apartment (AE)",
       "back": "Wohnung",
       "explanation": "Lautschrift: [ə'pɑ:tmənt]. American English! In GB: flat und apartment. Ursprung: Französisch 'appartement' (m)."
@@ -321,7 +500,12 @@
       "id": "vokabeln-unit-1-bc-true-false-2",
       "type": "true-false",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "american-british"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "american-british"
+      ],
       "question": "In den USA verwendet man nur 'apartment', in Großbritannien nur 'flat'.",
       "correctAnswer": false,
       "explanation": "Nicht ganz richtig! In den USA verwendet man nur 'apartment'. In GB werden sowohl 'flat' als auch 'apartment' benutzt."
@@ -330,7 +514,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-27",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "technology"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "technology"
+      ],
       "front": "screen",
       "back": "Bildschirm",
       "explanation": "Lautschrift: [skri:n]. Für Computer, Telefon, TV."
@@ -339,7 +529,14 @@
       "id": "vokabeln-unit-1-bc-flashcard-28",
       "type": "flashcard",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "food", "american-british"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "food",
+        "american-british"
+      ],
       "front": "fries (AE)",
       "back": "Pommes frites",
       "explanation": "Lautschrift: [fraɪz]. American English (AE): fries. British English (BE): chips [tʃɪps]."
@@ -348,7 +545,12 @@
       "id": "vokabeln-unit-1-bc-multiple-choice-3",
       "type": "multiple-choice",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "american-british"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "american-british"
+      ],
       "question": "Wie sagt man 'Pommes frites' in British English?",
       "options": [
         "chips",
@@ -363,7 +565,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-29",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "household"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "household"
+      ],
       "front": "wash the dishes",
       "back": "das Geschirr abwaschen, spülen",
       "explanation": "Lautschrift: [wɒʃ ðə 'dɪʃɪz]. Beispiel: They're washing the dishes."
@@ -372,7 +580,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-30",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "grammar"
+      ],
       "front": "to",
       "back": "um zu",
       "explanation": "Lautschrift: [tu:], [tə]. Beispiel: We went out to play football. Infinitiv mit 'to'."
@@ -381,7 +595,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-31",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "travel"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "travel"
+      ],
       "front": "land",
       "back": "landen, an Land gehen (Verb); Land (Substantiv)",
       "explanation": "Lautschrift: [lænd]. Zwei Bedeutungen: Verb und Substantiv."
@@ -390,7 +610,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-32",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "time"
+      ],
       "front": "right now",
       "back": "jetzt gerade",
       "explanation": "Lautschrift: [raɪt 'naʊ]. Beispiel: I can't help you right now, I have to wash the dishes."
@@ -399,7 +625,12 @@
       "id": "vokabeln-unit-1-bc-text-input-3",
       "type": "text-input",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "translation"
+      ],
       "question": "Übersetze ins Englische: 'jetzt gerade' (2 Wörter)",
       "correctAnswer": "right now",
       "alternatives": [],
@@ -409,7 +640,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-33",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "actions"
+      ],
       "front": "order",
       "back": "bestellen",
       "explanation": "Lautschrift: ['ɔ:də]. Beispiel: We went into the café and ordered sandwiches."
@@ -418,7 +655,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-34",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "food"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "food"
+      ],
       "front": "pancake",
       "back": "Pfannkuchen, Eierkuchen",
       "explanation": "Lautschrift: ['pænkeɪk]. Amerikanisches Frühstücksgericht."
@@ -427,7 +670,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-35",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "usa-logbook", "places"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "usa-logbook",
+        "places"
+      ],
       "front": "outside",
       "back": "1. draußen, nach draußen; 2. vor..., außerhalb von",
       "explanation": "Lautschrift: [aʊt'saɪd]. Zwei Bedeutungen! Beispiel: outside Rosie's Diner (vor/außerhalb von Rosie's Diner)."
@@ -436,7 +685,12 @@
       "id": "vokabeln-unit-1-bc-multiple-choice-4",
       "type": "multiple-choice",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "translation"
+      ],
       "question": "Was bedeutet 'outside' in 'outside Rosie's Diner'?",
       "options": [
         "vor/außerhalb von Rosie's Diner",
@@ -451,7 +705,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-36",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "campsite",
       "back": "Zeltplatz",
       "explanation": "Lautschrift: ['kæmpsaɪt]. Platz zum Zelten."
@@ -460,7 +719,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-37",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "next to",
       "back": "neben",
       "explanation": "Lautschrift: ['nɛkst tu:]. Präposition. Beispiel: a campsite right next to a river."
@@ -469,7 +733,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-38",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "tent",
       "back": "Zelt",
       "explanation": "Lautschrift: [tɛnt]. Zum Campen."
@@ -478,13 +747,30 @@
       "id": "vokabeln-unit-1-bc-matching-2",
       "type": "matching",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "question": "Ordne die Camping-Vokabeln zu:",
       "pairs": [
-        {"left": "campsite", "right": "Zeltplatz"},
-        {"left": "tent", "right": "Zelt"},
-        {"left": "torch", "right": "Taschenlampe"},
-        {"left": "fire", "right": "Feuer"}
+        {
+          "left": "campsite",
+          "right": "Zeltplatz"
+        },
+        {
+          "left": "tent",
+          "right": "Zelt"
+        },
+        {
+          "left": "torch",
+          "right": "Taschenlampe"
+        },
+        {
+          "left": "fire",
+          "right": "Feuer"
+        }
       ],
       "explanation": "Wichtige Vokabeln zum Thema Camping."
     },
@@ -492,7 +778,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-39",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "rocky",
       "back": "felsig, steinig",
       "explanation": "Lautschrift: ['rɒki]. Adjektiv. Von 'rock' (Fels, Stein)."
@@ -501,7 +792,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-40",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "shadow",
       "back": "Schatten",
       "explanation": "Lautschrift: ['ʃædəʊ]. Dunkler Bereich ohne Sonnenlicht."
@@ -510,7 +806,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-41",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "fire",
       "back": "Feuer",
       "explanation": "Lautschrift: ['faɪə]. Wichtig beim Camping."
@@ -519,7 +820,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-42",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping", "actions"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping",
+        "actions"
+      ],
       "front": "look up",
       "back": "hochsehen, aufschauen",
       "explanation": "Lautschrift: [lʊk 'ʌp]. Phrasal verb. Nach oben schauen."
@@ -528,7 +835,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-43",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "sky",
       "back": "Himmel",
       "explanation": "Lautschrift: [skaɪ]. Der Himmel über uns."
@@ -537,7 +849,13 @@
       "id": "vokabeln-unit-1-bc-flashcard-44",
       "type": "flashcard",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping",
+        "grammar"
+      ],
       "front": "be asleep",
       "back": "schlafen (= nicht wach sein)",
       "explanation": "Lautschrift: [ə'sli:p]. Unterschied: 'be asleep' = nicht wach sein; 'sleep' = schlafen (Verb). Beispiel: Emma was still asleep. / Max sleeps next to my bed."
@@ -546,7 +864,12 @@
       "id": "vokabeln-unit-1-bc-true-false-3",
       "type": "true-false",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "grammar"
+      ],
       "question": "'be asleep' und 'sleep' sind austauschbar und bedeuten immer dasselbe.",
       "correctAnswer": false,
       "explanation": "Falsch! 'be asleep' = nicht wach sein (Zustand). 'sleep' = schlafen (Handlung). Beispiel: Emma was asleep (Zustand) vs. Max sleeps (Handlung)."
@@ -555,7 +878,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-45",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "torch",
       "back": "Taschenlampe",
       "explanation": "Lautschrift: [tɔ:tʃ]. Wichtig beim Camping in der Nacht."
@@ -564,7 +892,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-46",
       "type": "flashcard",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "grammar"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "grammar"
+      ],
       "front": "so that (oft kurz: so)",
       "back": "sodass, damit",
       "explanation": "Konjunktion. Beispiel: Dad gave me some money so (that) I could go to the cinema."
@@ -573,7 +906,12 @@
       "id": "vokabeln-unit-1-bc-text-input-4",
       "type": "text-input",
       "difficulty": "hard",
-      "tags": ["vocabulary", "unit-1", "part-c", "translation"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "translation"
+      ],
       "question": "Fülle die Lücke: 'Dad gave me money ___ that I could go to the cinema.' (damit)",
       "correctAnswer": "so",
       "alternatives": [],
@@ -583,7 +921,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-47",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "camping"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "camping"
+      ],
       "front": "wild",
       "back": "wild",
       "explanation": "Lautschrift: [waɪld]. ACHTUNG Aussprache! Das 'i' wird wie 'ai' gesprochen."
@@ -592,7 +935,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-48",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-c", "time"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-c",
+        "time"
+      ],
       "front": "again and again",
       "back": "immer wieder",
       "explanation": "Häufige Redewendung für Wiederholung."
@@ -601,7 +949,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-49",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "people"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "people"
+      ],
       "front": "neighbour",
       "back": "Nachbar/in",
       "explanation": "Lautschrift: ['neɪbə]. Person, die nebenan wohnt."
@@ -610,7 +963,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-50",
       "type": "flashcard",
       "difficulty": "medium",
-      "tags": ["vocabulary", "unit-1", "part-b", "food"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "food"
+      ],
       "front": "tea",
       "back": "Tee; leichte Nachmittags- oder Abendmahlzeit",
       "explanation": "Lautschrift: [ti:]. In GB auch eine leichte Mahlzeit (Sandwiches, Kekse, Kuchen und Tee)."
@@ -619,7 +977,12 @@
       "id": "vokabeln-unit-1-bc-flashcard-51",
       "type": "flashcard",
       "difficulty": "easy",
-      "tags": ["vocabulary", "unit-1", "part-b", "communication"],
+      "tags": [
+        "vocabulary",
+        "unit-1",
+        "part-b",
+        "communication"
+      ],
       "front": "Love, ... (Briefschluss)",
       "back": "Alles Liebe, ... / Liebe Grüße, ...",
       "explanation": "Informeller Briefschluss an Freunde und Familie."

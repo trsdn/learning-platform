@@ -82,14 +82,14 @@ define(['./workbox-3ad5617a'], (function (workbox) { 'use strict';
     "revision": "3ca0b8505b4bec776b69afdba2768812"
   }, {
     "url": "index.html",
-    "revision": "0.bh7b6mca00g"
+    "revision": "0.in7rsu32r4k"
   }], {});
   workbox.cleanupOutdatedCaches();
   workbox.registerRoute(new workbox.NavigationRoute(workbox.createHandlerBoundToURL("index.html"), {
     allowlist: [/^\/$/]
   }));
   workbox.registerRoute(/\/api\/.*/i, new workbox.NetworkFirst({
-    "cacheName": "api-cache-v1",
+    "cacheName": "api-cache-v2",
     "networkTimeoutSeconds": 3,
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 50,
@@ -99,7 +99,7 @@ define(['./workbox-3ad5617a'], (function (workbox) { 'use strict';
     })]
   }), 'GET');
   workbox.registerRoute(/^https:\/\/fonts\.googleapis\.com\/.*/i, new workbox.CacheFirst({
-    "cacheName": "google-fonts-stylesheets-v1",
+    "cacheName": "google-fonts-stylesheets-v2",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 10,
       maxAgeSeconds: 31536000
@@ -108,7 +108,7 @@ define(['./workbox-3ad5617a'], (function (workbox) { 'use strict';
     })]
   }), 'GET');
   workbox.registerRoute(/^https:\/\/fonts\.gstatic\.com\/.*/i, new workbox.CacheFirst({
-    "cacheName": "google-fonts-webfonts-v1",
+    "cacheName": "google-fonts-webfonts-v2",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 30,
       maxAgeSeconds: 31536000
@@ -117,14 +117,14 @@ define(['./workbox-3ad5617a'], (function (workbox) { 'use strict';
     })]
   }), 'GET');
   workbox.registerRoute(/\.(?:png|jpg|jpeg|svg|gif|webp|ico)$/, new workbox.CacheFirst({
-    "cacheName": "images-cache-v1",
+    "cacheName": "images-cache-v2",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 60,
       maxAgeSeconds: 2592000
     })]
   }), 'GET');
   workbox.registerRoute(/\.(?:js|css|woff2?)$/, new workbox.StaleWhileRevalidate({
-    "cacheName": "static-resources-v1",
+    "cacheName": "static-resources-v2",
     plugins: [new workbox.ExpirationPlugin({
       maxEntries: 100,
       maxAgeSeconds: 604800
