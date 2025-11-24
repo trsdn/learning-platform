@@ -1,9 +1,19 @@
-# Supabase Deployment Guide
+# Deployment Guide - Supabase + Vercel
 
 **Last Updated:** 2025-11-24
-**Branch:** `feature/supabase-migration`
+**Architecture:** Supabase (PostgreSQL) + Vercel (Hosting)
 
-This guide walks you through deploying the Supabase-enabled MindForge Academy to production.
+This guide walks you through deploying MindForge Academy to production on Vercel with Supabase as the backend.
+
+---
+
+## Architecture Overview
+
+- **Frontend**: React + TypeScript hosted on Vercel
+- **Backend**: Supabase PostgreSQL database
+- **Authentication**: Supabase Auth with Row Level Security (RLS)
+- **Deployment**: Automatic via GitHub Actions → Vercel
+- **CI/CD**: Type checking, linting, tests on every push
 
 ---
 
@@ -14,6 +24,7 @@ This guide walks you through deploying the Supabase-enabled MindForge Academy to
 - [x] Content seeded
 - [x] Local development tested
 - [ ] Supabase redirect URLs configured
+- [ ] Vercel project created and linked
 - [ ] OAuth providers configured (optional)
 - [ ] Production environment variables set
 
@@ -32,9 +43,9 @@ This guide walks you through deploying the Supabase-enabled MindForge Academy to
 
 ### 1.2 Configure Site URL
 
-Set the **Site URL** to your production domain:
+Set the **Site URL** to your Vercel production domain:
 ```
-https://torstenmahr.github.io/learning-platform/
+https://your-app.vercel.app
 ```
 
 ### 1.3 Add Redirect URLs
@@ -49,10 +60,12 @@ http://127.0.0.1:5173/auth/callback
 http://127.0.0.1:5173/
 ```
 
-**Production:**
+**Production (Vercel):**
 ```
-https://torstenmahr.github.io/learning-platform/auth/callback
-https://torstenmahr.github.io/learning-platform/
+https://your-app.vercel.app/auth/callback
+https://your-app.vercel.app/
+https://your-custom-domain.com/auth/callback  # If using custom domain
+https://your-custom-domain.com/
 ```
 
 ### 1.4 Save Configuration
@@ -61,18 +74,55 @@ Click **Save** and wait for the changes to propagate (usually instant).
 
 ---
 
-## Step 2: Test Authentication Locally
+## Step 2: Set Up Vercel Project
 
 **Time Required:** 10 minutes
 **Priority:** HIGH
 
-### 2.1 Start Development Server
+### 2.1 Install Vercel CLI (Optional)
+
+```bash
+npm install -g vercel
+```
+
+### 2.2 Link Project to Vercel
+
+```bash
+vercel link
+```
+
+Or create a new project via Vercel dashboard:
+1. Go to https://vercel.com/new
+2. Import your GitHub repository
+3. Configure project settings
+4. Deploy
+
+### 2.3 Configure Environment Variables
+
+In Vercel Dashboard → Your Project → Settings → Environment Variables, add:
+
+```bash
+# Supabase Configuration
+VITE_SUPABASE_URL=https://knzjdckrtewoigosaxoh.supabase.co
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+```
+
+**Important:** Add these for all environments (Production, Preview, Development)
+
+---
+
+## Step 3: Test Authentication Locally
+
+**Time Required:** 10 minutes
+**Priority:** HIGH
+
+### 3.1 Start Development Server
 
 ```bash
 npm run dev
 ```
 
-### 2.2 Test Email/Password Signup
+### 3.2 Test Email/Password Signup
 
 1. Open http://localhost:5173
 2. Click **🔑 Anmelden**
@@ -86,7 +136,7 @@ npm run dev
 7. Click confirmation link
 8. Return to app and log in
 
-### 2.3 Test Login
+### 3.3 Test Login
 
 1. Click **🔑 Anmelden**
 2. Enter your email and password
@@ -94,29 +144,20 @@ npm run dev
 4. Verify you see **👋 Abmelden** button
 5. Verify your email shows in the header
 
-### 2.4 Test Logout
+### 3.4 Test Logout
 
 1. Click **👋 Abmelden**
 2. Verify you're logged out
 3. Verify **🔑 Anmelden** button returns
 
-### 2.5 Test Magic Link (Optional)
-
-1. Click **🔑 Anmelden**
-2. Enter your email
-3. Click **✨ Magic Link senden**
-4. Check your email
-5. Click the magic link
-6. Verify you're logged in
-
 ---
 
-## Step 3: Configure OAuth Providers (Optional)
+## Step 4: Configure OAuth Providers (Optional)
 
 **Time Required:** 30 minutes each
 **Priority:** MEDIUM (optional feature)
 
-### 3.1 Google OAuth
+### 4.1 Google OAuth
 
 #### Create Google OAuth Credentials
 
@@ -128,7 +169,7 @@ npm run dev
 6. Add **Authorized JavaScript origins**:
    ```
    http://localhost:5173
-   https://torstenmahr.github.io
+   https://your-app.vercel.app
    ```
 7. Add **Authorized redirect URIs**:
    ```
@@ -144,7 +185,7 @@ npm run dev
 4. Paste **Client ID** and **Client Secret**
 5. Click **Save**
 
-### 3.2 GitHub OAuth
+### 4.2 GitHub OAuth
 
 #### Create GitHub OAuth App
 
@@ -152,7 +193,7 @@ npm run dev
 2. Click **New OAuth App**
 3. Fill in:
    - **Application name**: MindForge Academy
-   - **Homepage URL**: https://torstenmahr.github.io/learning-platform/
+   - **Homepage URL**: https://your-app.vercel.app
    - **Authorization callback URL**: https://knzjdckrtewoigosaxoh.supabase.co/auth/v1/callback
 4. Click **Register application**
 5. Copy **Client ID**
@@ -168,80 +209,33 @@ npm run dev
 
 ---
 
-## Step 4: Configure Production Environment
+## Step 5: Deploy to Vercel
 
 **Time Required:** 5 minutes
 **Priority:** HIGH
 
-### 4.1 GitHub Secrets
+### 5.1 Automatic Deployment (Recommended)
 
-Add these secrets to your GitHub repository:
-
-1. Go to GitHub repository settings
-2. Navigate to **Secrets and variables** → **Actions**
-3. Add the following secrets:
-
-```
-VITE_SUPABASE_URL=https://knzjdckrtewoigosaxoh.supabase.co
-VITE_SUPABASE_ANON_KEY=sb_publishable_-IsBAkX_OodrewKfm9Zdkw_S6RGl_rP
-```
-
-⚠️ **NEVER** commit the service role key to Git!
-
-### 4.2 Update GitHub Actions Workflow
-
-If you have a GitHub Actions deployment workflow, ensure it uses the secrets:
-
-```yaml
-# .github/workflows/deploy.yml
-env:
-  VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
-  VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
-```
-
----
-
-## Step 5: Build and Deploy
-
-**Time Required:** 5 minutes
-**Priority:** HIGH
-
-### 5.1 Build Production Bundle
+Every push to `main` branch automatically deploys to production via GitHub Actions.
 
 ```bash
-npm run build
+git add .
+git commit -m "Deploy to production"
+git push origin main
 ```
 
-This will:
-- Compile TypeScript
-- Bundle with Vite
-- Optimize assets
-- Generate service worker
-
-### 5.2 Test Production Build Locally
+### 5.2 Manual Deployment via CLI
 
 ```bash
-npm run preview
+vercel --prod
 ```
 
-Navigate to http://localhost:4173 and test:
-- [ ] App loads
-- [ ] Auth modal opens
-- [ ] Can navigate between pages
-- [ ] No console errors
+### 5.3 Monitor Deployment
 
-### 5.3 Deploy to GitHub Pages
-
-```bash
-npm run deploy
-```
-
-Or manually:
-```bash
-npm run build
-cp dist/index.html dist/404.html
-gh-pages -d dist
-```
+Watch deployment progress:
+- Via Vercel Dashboard
+- Via GitHub Actions tab
+- Via CLI: `vercel logs`
 
 ---
 
@@ -252,7 +246,7 @@ gh-pages -d dist
 
 ### 6.1 Access Production Site
 
-Open https://torstenmahr.github.io/learning-platform/
+Open your Vercel production URL (e.g., https://your-app.vercel.app)
 
 ### 6.2 Test Production Authentication
 
@@ -270,17 +264,37 @@ Open browser DevTools (F12) and check:
 - [ ] Auth events logging correctly
 - [ ] Supabase connection successful
 
-### 6.4 Test on Multiple Devices (Optional)
+### 6.4 Test Data Persistence
 
-1. Open on mobile device
-2. Log in with same account
-3. Verify data syncs (when Phase 9 is complete)
+1. Create a practice session
+2. Complete some tasks
+3. Check dashboard for statistics
+4. Log out and log back in
+5. Verify data persists
 
 ---
 
-## Step 7: Monitor and Maintain
+## Step 7: Seed Production Database
 
-### 7.1 Monitor Supabase Dashboard
+**Time Required:** 5 minutes
+**Priority:** HIGH
+
+Seed the production database with initial content:
+
+```bash
+npm run seed:supabase
+```
+
+This will populate:
+- Topics (Mathematics, Biology, English, Spanish)
+- Learning paths
+- Tasks
+
+---
+
+## Step 8: Monitor and Maintain
+
+### 8.1 Monitor Supabase Dashboard
 
 Regularly check:
 - **Authentication**: User signups, logins
@@ -288,12 +302,27 @@ Regularly check:
 - **API**: Request rates, error rates
 - **Logs**: Auth logs, database logs
 
-### 7.2 Set Up Alerts (Optional)
+### 8.2 Monitor Vercel Dashboard
 
-In Supabase Dashboard → **Settings** → **Billing**:
+Check:
+- **Deployments**: Build status, errors
+- **Analytics**: Page views, performance
+- **Logs**: Runtime errors, API calls
+- **Usage**: Bandwidth, function executions
+
+### 8.3 Set Up Alerts
+
+**Supabase Alerts:**
+In Supabase Dashboard → Settings → Billing:
 - Set usage alerts
 - Monitor API quota
 - Track storage limits
+
+**Vercel Alerts:**
+In Vercel Dashboard → Your Project → Settings → Notifications:
+- Failed deployments
+- High bandwidth usage
+- Performance degradation
 
 ---
 
@@ -309,52 +338,45 @@ AuthRetryableFetchError: Failed to fetch
 
 **Fix:**
 1. Go to Supabase Dashboard → Authentication → URL Configuration
-2. Ensure your domain is in **Redirect URLs**
+2. Ensure your Vercel domain is in **Redirect URLs**
 3. Wait 1-2 minutes for changes to propagate
 4. Clear browser cache and try again
 
-### Issue: Email Confirmation Not Working
+### Issue: Environment Variables Not Working
 
 **Symptoms:**
-- User clicks email link but not confirmed
-- Redirect doesn't work
+- `VITE_SUPABASE_URL is undefined`
+- Authentication fails in production
 
 **Fix:**
-1. Check **Site URL** is set correctly in Supabase
-2. Verify email template redirect URL:
-   - Go to Authentication → Email Templates
-   - Check "Confirm signup" template
-   - Ensure `{{ .SiteURL }}/auth/callback` is correct
+1. Go to Vercel Dashboard → Your Project → Settings → Environment Variables
+2. Verify all `VITE_*` variables are set
+3. Ensure they're enabled for Production, Preview, and Development
+4. Redeploy: `vercel --prod --force`
 
-### Issue: OAuth Redirect Fails
+### Issue: Build Fails on Vercel
 
 **Symptoms:**
-- OAuth window opens but fails
-- Redirect doesn't return to app
+- Deployment fails during build step
+- TypeScript errors in logs
 
 **Fix:**
-1. Verify OAuth redirect URI matches exactly:
-   ```
-   https://[your-project-ref].supabase.co/auth/v1/callback
-   ```
-2. Check OAuth provider settings (Google/GitHub)
-3. Ensure production URL is in authorized origins
+1. Run `npm run build` locally to reproduce
+2. Fix any TypeScript errors
+3. Run `npm run type-check` to verify
+4. Commit and push fixes
 
-### Issue: User Not Staying Logged In
+### Issue: Database Connection Fails
 
 **Symptoms:**
-- User logged out on page refresh
-- Session not persisting
+- "Failed to load topics from Supabase"
+- Database queries return errors
 
 **Fix:**
-1. Check browser local storage is enabled
-2. Verify Supabase client configuration:
-   ```typescript
-   auth: {
-     persistSession: true,
-     storage: window.localStorage,
-   }
-   ```
+1. Verify Supabase project is active
+2. Check environment variables are correct
+3. Test connection with: `curl $VITE_SUPABASE_URL/rest/v1/`
+4. Verify RLS policies allow reads
 
 ---
 
@@ -364,13 +386,13 @@ AuthRetryableFetchError: Failed to fetch
 ```bash
 # Supabase Configuration
 VITE_SUPABASE_URL=https://knzjdckrtewoigosaxoh.supabase.co
-VITE_SUPABASE_ANON_KEY=sb_publishable_-IsBAkX_OodrewKfm9Zdkw_S6RGl_rP
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # Service Role (for seeding only - NEVER expose in frontend!)
-SUPABASE_SERVICE_ROLE_KEY=sb_secret_ZyDbMl6l21TFMhp5w2GwdQ_4fmL0FWv
+SUPABASE_SERVICE_ROLE_KEY=your_service_role_key
 ```
 
-### Production (GitHub Secrets)
+### Production (Vercel Environment Variables)
 ```
 VITE_SUPABASE_URL
 VITE_SUPABASE_ANON_KEY
@@ -390,13 +412,27 @@ Before deploying to production:
 - [ ] Email confirmation is enabled
 - [ ] Password requirements are enforced (6+ characters)
 - [ ] Rate limiting is configured in Supabase
-- [ ] HTTPS is enforced (GitHub Pages does this automatically)
+- [ ] HTTPS is enforced (Vercel does this automatically)
 - [ ] OAuth secrets are stored securely
 - [ ] Redirect URLs are whitelisted
+- [ ] Environment variables are properly scoped
 
 ---
 
 ## Performance Optimization
+
+### Enable Vercel Analytics
+
+1. Go to Vercel Dashboard → Your Project → Analytics
+2. Enable **Web Analytics**
+3. Monitor Core Web Vitals
+
+### Enable Supabase Connection Pooling
+
+For better database performance:
+1. Go to Supabase Dashboard → Settings → Database
+2. Enable **Connection Pooler**
+3. Use pooler connection string in production
 
 ### Enable Edge Functions (Optional)
 
@@ -405,52 +441,38 @@ For faster auth responses in different regions:
 2. Enable **Edge Functions**
 3. Select regions closest to your users
 
-### Enable Connection Pooling
-
-For better database performance:
-1. Go to Supabase Dashboard → Settings → Database
-2. Enable **Connection Pooler**
-3. Use pooler connection string in production
-
 ---
 
-## Rollback Plan
+## CI/CD Pipeline
 
-If you need to rollback to IndexedDB:
+### GitHub Actions Workflows
 
-### Quick Rollback
-```bash
-git checkout main
-npm run deploy
+- **`.github/workflows/ci.yml`**: Type check, lint, tests
+- **`.github/workflows/deploy-test.yml`**: Deploy to test environment on PR
+- **Vercel Integration**: Automatic production deployment on merge to main
+
+### Deployment Flow
+
+```
+Push to main → GitHub Actions (CI) → Vercel Build → Deploy → Verify
 ```
 
-### Gradual Rollback
-1. Keep Supabase authentication
-2. Revert to Dexie repositories
-3. Update factory.ts to use old adapters
-
 ---
 
-## Next Steps After Deployment
+## Custom Domain Setup (Optional)
 
-1. **Complete Phase 9:**
-   - Update UI components to use Supabase repositories
-   - Enable multi-device sync
-   - Test with real users
+### Add Custom Domain to Vercel
 
-2. **Phase 7: Settings Migration**
-   - Migrate user settings to Supabase
-   - Sync preferences across devices
+1. Go to Vercel Dashboard → Your Project → Settings → Domains
+2. Add your custom domain
+3. Configure DNS records as shown
+4. Wait for DNS propagation (up to 48 hours)
 
-3. **Monitor Usage:**
-   - Track signup rates
-   - Monitor database growth
-   - Optimize queries if needed
+### Update Supabase Redirect URLs
 
-4. **Gather Feedback:**
-   - Test with beta users
-   - Fix any authentication issues
-   - Improve UX based on feedback
+After custom domain is active:
+1. Add custom domain URLs to Supabase redirect URLs
+2. Update Site URL if using custom domain as primary
 
 ---
 
@@ -458,9 +480,10 @@ npm run deploy
 
 For issues or questions:
 
-1. **Supabase Documentation:** https://supabase.com/docs
-2. **Supabase Community:** https://github.com/supabase/supabase/discussions
-3. **Project Issues:** https://github.com/torstenmahr/learning-platform/issues
+1. **Vercel Documentation:** https://vercel.com/docs
+2. **Supabase Documentation:** https://supabase.com/docs
+3. **Supabase Community:** https://github.com/supabase/supabase/discussions
+4. **Project Issues:** https://github.com/torstenmahr/learning-platform/issues
 
 ---
 
@@ -471,13 +494,15 @@ For issues or questions:
 - [x] Content seeded to Supabase
 - [x] Authentication system tested locally
 - [ ] Supabase URLs configured
+- [ ] Vercel project created
 - [ ] Environment variables set
 
 ### Deployment
 - [ ] Production build successful
-- [ ] Deployed to GitHub Pages
+- [ ] Deployed to Vercel
 - [ ] Authentication works in production
 - [ ] No console errors
+- [ ] Database queries work
 
 ### Post-Deployment
 - [ ] Test signup flow
@@ -485,6 +510,7 @@ For issues or questions:
 - [ ] Test logout flow
 - [ ] Monitor for errors
 - [ ] Verify RLS working
+- [ ] Seed production database
 
 ---
 
@@ -494,30 +520,35 @@ For issues or questions:
 - Users can sign up and receive confirmation email
 - Users can log in with email/password
 - Users stay logged in across page refreshes
+- Data persists across sessions
 - No console errors in production
 - RLS prevents unauthorized access
 - OAuth providers work (if configured)
+- Performance metrics are good (Core Web Vitals)
 
 ---
 
 ## Maintenance Schedule
 
 ### Daily
-- Check error logs in Supabase Dashboard
-- Monitor API usage
+- Check error logs in Vercel Dashboard
+- Monitor Supabase error logs
+- Check deployment status
 
 ### Weekly
 - Review user signup trends
 - Check database storage usage
+- Monitor API usage
 - Update dependencies if needed
 
 ### Monthly
 - Review and optimize RLS policies
 - Analyze authentication patterns
+- Review performance metrics
 - Update documentation
 
 ---
 
 **Deployment Complete! 🎉**
 
-Your Supabase-powered learning platform is now ready for production use.
+Your Supabase + Vercel powered learning platform is now ready for production use.
