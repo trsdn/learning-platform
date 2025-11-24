@@ -166,7 +166,6 @@ export default defineConfig(({ mode }) => {
         manualChunks: {
           react: ['react', 'react-dom', 'react-router-dom'],
           i18n: ['react-i18next', 'i18next'],
-          storage: ['dexie', 'dexie-react-hooks'],
           utils: ['date-fns', 'zustand'],
         },
       },
