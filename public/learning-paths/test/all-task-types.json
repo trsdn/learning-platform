@@ -3,7 +3,7 @@
     "id": "all-task-types-demo",
     "topicId": "test",
     "title": "🎯 Alle Aufgabentypen - Demo",
-    "description": "Demonstriert alle 8 verschiedenen Aufgabentypen der Plattform",
+    "description": "Demonstriert alle 8 verschiedenen Aufgabentypen der Plattform mit automatischer Synchronisierung",
     "difficulty": "easy",
     "estimatedTime": 30,
     "isActive": true,
