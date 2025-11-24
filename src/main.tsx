@@ -290,6 +290,57 @@ function AppContent() {
     }
   }
 
+  // Show Supabase login if not authenticated (required for all users)
+  if (!authLoading && !isAuthenticated) {
+    return (
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        minHeight: '100vh',
+        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+        color: 'white',
+        padding: '2rem',
+        textAlign: 'center'
+      }}>
+        <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧠 MindForge Academy</h1>
+        <p style={{ fontSize: '1.2rem', marginBottom: '2rem', maxWidth: '500px' }}>
+          Erweitere dein Wissen, eine Frage nach der anderen
+        </p>
+        <p style={{ marginBottom: '2rem', opacity: 0.9 }}>
+          Bitte melden Sie sich an, um fortzufahren
+        </p>
+        <button
+          onClick={() => setShowAuthModal(true)}
+          style={{
+            padding: '1rem 2rem',
+            fontSize: '1.1rem',
+            fontWeight: 'bold',
+            background: 'white',
+            color: '#667eea',
+            border: 'none',
+            borderRadius: '12px',
+            cursor: 'pointer',
+            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
+            transition: 'transform 0.2s, box-shadow 0.2s'
+          }}
+          onMouseOver={(e) => {
+            e.currentTarget.style.transform = 'translateY(-2px)';
+            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
+          }}
+          onMouseOut={(e) => {
+            e.currentTarget.style.transform = 'translateY(0)';
+            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
+          }}
+        >
+          🔑 Anmelden
+        </button>
+        {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+      </div>
+    );
+  }
+
   // Show website login screen if not authenticated AND password protection is enabled
   const passwordHashConfigured = import.meta.env.VITE_APP_PASSWORD_HASH;
   if (passwordHashConfigured && !isWebsiteAuthenticated) {
