@@ -368,9 +368,6 @@ VITE_SUPABASE_ANON_KEY=sb_publishable_-IsBAkX_OodrewKfm9Zdkw_S6RGl_rP
 
 # Service Role (for seeding only - NEVER expose in frontend!)
 SUPABASE_SERVICE_ROLE_KEY=sb_secret_ZyDbMl6l21TFMhp5w2GwdQ_4fmL0FWv
-
-# Optional: Website password protection (legacy)
-VITE_APP_PASSWORD_HASH=your-hash-here
 ```
 
 ### Production (GitHub Secrets)

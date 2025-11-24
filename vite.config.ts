@@ -24,7 +24,6 @@ export default defineConfig(({ mode }) => {
   define: {
     'import.meta.env.VITE_DB_NAME': JSON.stringify(env.VITE_DB_NAME || 'mindforge-academy'),
     'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),
-    'import.meta.env.VITE_APP_PASSWORD_HASH': JSON.stringify(env.VITE_APP_PASSWORD_HASH || ''),
   },
   plugins: [
     tsconfigPaths(),
