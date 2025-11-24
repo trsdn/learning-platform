@@ -78,11 +78,62 @@ See [SETUP_SUPABASE.md](./SETUP_SUPABASE.md) for detailed setup instructions.
 
 ## 🚀 Deployment
 
+### Pre-deployment Checklist
+
+Before deploying, run the pre-deployment check to catch common issues:
+
+```bash
+npm run pre-deploy
+```
+
+This validates:
+- Environment variables are configured
+- Dependencies are installed
+- TypeScript compiles without errors
+- Linting passes
+- Production build succeeds
+- Vercel configuration is valid
+
 ### Vercel Production Deployment
 
 The platform is deployed on Vercel with automatic deployments from the `main` branch.
 
 **Production URL**: Check your Vercel project dashboard
+
+#### Initial Setup
+
+1. Install Vercel CLI:
+```bash
+npm i -g vercel
+```
+
+2. Set up environment variables in Vercel Dashboard:
+   - Go to Project Settings → Environment Variables
+   - Add `VITE_SUPABASE_URL`
+   - Add `VITE_SUPABASE_ANON_KEY`
+   - Set for Production, Preview, and Development environments
+
+#### Deploy
+
+```bash
+# Deploy to preview
+vercel
+
+# Deploy to production
+vercel --prod
+```
+
+#### Automatic Deployments
+
+- **Production**: Pushes to `main` branch trigger production deployments
+- **Preview**: Pull requests trigger preview deployments
+
+#### Troubleshooting
+
+If you encounter deployment issues, see [Vercel Troubleshooting Guide](docs/deployment/VERCEL_TROUBLESHOOTING.md) for common solutions:
+- Missing environment variables
+- Build timeouts
+- Configuration errors
 
 See [DEPLOYMENT_VERCEL.md](./DEPLOYMENT_VERCEL.md) for:
 - Complete deployment guide

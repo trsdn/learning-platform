@@ -13,9 +13,27 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 // Validate configuration
-if (!supabaseUrl || !supabaseAnonKey) {
+if (!supabaseUrl) {
   throw new Error(
-    'Missing Supabase configuration. Please set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY in your .env.local file.'
+    'Missing VITE_SUPABASE_URL environment variable. ' +
+    'Please check your .env.local file or Vercel environment variables.'
+  );
+}
+
+if (!supabaseAnonKey) {
+  throw new Error(
+    'Missing VITE_SUPABASE_ANON_KEY environment variable. ' +
+    'Please check your .env.local file or Vercel environment variables.'
+  );
+}
+
+// Validate URL format
+try {
+  new URL(supabaseUrl);
+} catch (error) {
+  throw new Error(
+    `Invalid VITE_SUPABASE_URL: ${supabaseUrl}. ` +
+    'Must be a valid URL (e.g., https://your-project.supabase.co)'
   );
 }
 
