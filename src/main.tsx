@@ -10,12 +10,15 @@ import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCar
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
 import { AdminPage, type AdminTab } from './modules/ui/components/admin/AdminPage';
 import { WebsiteLoginScreen } from './modules/ui/components/website-login-screen';
+import { AuthProvider, useAuth } from './modules/ui/contexts/auth-context';
+import { AuthModal } from './modules/ui/components/auth/auth-modal';
 import { settingsService } from '@core/services/settings-service';
 import { websiteAuthService } from '@core/services/website-auth-service';
 import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
 import './modules/ui/styles/utilities.css';
+import './modules/ui/components/auth/auth-modal.css';
 import './index.css';
 
 /**
@@ -26,11 +29,15 @@ if (typeof window !== 'undefined') {
   settingsService.load();
 }
 
-function App() {
+function AppContent() {
   // Website authentication state
   const [isWebsiteAuthenticated, setIsWebsiteAuthenticated] = useState(false);
   const [websiteAuthError, setWebsiteAuthError] = useState<string>('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+
+  // Supabase authentication
+  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [topics, setTopics] = useState<Topic[]>([]);
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
@@ -597,8 +604,19 @@ function App() {
 
   const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content') || 'unknown';
 
+  // Show auth modal if not authenticated (and not in loading state)
+  if (!authLoading && !isAuthenticated && showAuthModal) {
+    return (
+      <div>
+        <AuthModal onClose={() => setShowAuthModal(false)} />
+      </div>
+    );
+  }
+
   return (
     <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+      {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
+
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
         <div>
           <h1>🧠 MindForge Academy</h1>
@@ -607,9 +625,52 @@ function App() {
           </p>
           <p style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary, #999)', marginTop: '0.25rem' }}>
             v{deploymentVersion}
+            {isAuthenticated && user && (
+              <span style={{ marginLeft: '0.5rem' }}>| 👤 {user.email}</span>
+            )}
           </p>
         </div>
         <div style={{ display: 'flex', gap: '0.5rem' }}>
+          {!isAuthenticated && (
+            <button
+              onClick={() => setShowAuthModal(true)}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: 'var(--color-success)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+              }}
+            >
+              🔑 Anmelden
+            </button>
+          )}
+          {isAuthenticated && (
+            <button
+              onClick={() => signOut()}
+              style={{
+                padding: '0.75rem 1.5rem',
+                background: 'var(--color-secondary)',
+                color: '#ffffff',
+                border: 'none',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '1rem',
+                fontWeight: '500',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+              }}
+            >
+              👋 Abmelden
+            </button>
+          )}
           <button
             onClick={cycleThemeMode}
             title={`Theme wechseln (aktuell: ${themeLabel})`}
@@ -708,6 +769,14 @@ function App() {
         ))}
       </div>
     </div>
+  );
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 }
 
