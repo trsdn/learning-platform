@@ -388,6 +388,19 @@ User Request
 - **Architecture**: See `AGENT_ARCHITECTURE.md` for design details
 - **Individual Agents**: See agent-specific `.md` files
 - **Commands**: See `.claude/commands/` for slash command integration
+- **Testing & Artifacts**: See `AGENTS.md` section "🧪 Testing & Artifacts" for screenshot storage rules
+
+### Domain-Specific Guides
+
+For agents working in specific domains, consult these specialized guides:
+
+| Domain | Guide | Relevant Agents |
+|--------|-------|-----------------|
+| **Testing** | [../../tests/AGENTS.md](../../tests/AGENTS.md) | unit-tester, integration-tester, e2e-tester, performance-tester, implementation-tester |
+| **Templates** | [../../templates/AGENTS.md](../../templates/AGENTS.md) | component-library-architect, issue-implementer |
+| **Database** | [../../supabase/AGENTS.md](../../supabase/AGENTS.md) | business-analyst, issue-implementer, issue-planner |
+| **Documentation** | [../../docs/AGENTS.md](../../docs/AGENTS.md) | docs-architect, docs-validator, docs-publisher |
+| **Content** | [../../public/AGENTS.md](../../public/AGENTS.md) | content-designer, content-creator, content-reviewer, content-publisher |
 
 ---
 

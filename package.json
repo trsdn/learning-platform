@@ -18,10 +18,11 @@
     "format:check": "prettier --check \"src/**/*.{ts,tsx,json,css,md}\"",
     "type-check": "tsc --noEmit",
     "prepare": "husky",
-    "generate-audio": "source .venv/bin/activate && python3 scripts/generate-spanish-audio.py",
+    "generate-audio": "source .venv/bin/activate && python3 scripts/generation/generate-audio.py",
     "supabase:types": "supabase gen types typescript --project-id knzjdckrtewoigosaxoh > src/modules/storage/database.types.ts",
     "supabase:schema": "./scripts/apply-schema.sh",
-    "seed:supabase": "tsx scripts/seed-supabase.ts"
+    "seed:supabase": "tsx scripts/seed-supabase.ts",
+    "cleanup:artifacts": "./scripts/cleanup-test-artifacts.sh"
   },
   "dependencies": {
     "@supabase/auth-ui-react": "^0.4.7",

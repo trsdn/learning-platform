@@ -227,12 +227,12 @@ Execution steps:
 
 10. **Educational Review** (RECOMMENDED):
 
-    Ask user: "Would you like the learning-design-expert to review this learning path for pedagogical effectiveness? (yes/no)"
+    Ask user: "Would you like the content-designer to review this learning path for pedagogical effectiveness? (yes/no)"
 
     If yes:
-    - Launch learning-design-expert agent via Task tool
+    - Launch content-designer agent via Task tool
     - Provide: learning path JSON, topic context
-    - learning-design-expert will analyze:
+    - content-designer will analyze:
       * Task type distribution
       * Difficulty progression
       * Cognitive load appropriateness

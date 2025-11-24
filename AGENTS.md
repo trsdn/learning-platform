@@ -143,6 +143,104 @@ Each type has unique content interface:
 
 ---
 
+## 🧪 Testing & Artifacts
+
+### Test Structure
+```
+tests/
+├── unit/           # Jest unit tests
+├── e2e/            # Playwright E2E tests
+├── visual/         # Visual regression tests
+└── artifacts/      # Test outputs (gitignored)
+    ├── screenshots/
+    │   ├── debug/      # Temporary debug screenshots
+    │   ├── reports/    # Test report screenshots
+    │   └── validation/ # Validation screenshots
+    ├── logs/           # Test execution logs
+    └── reports/        # Test reports
+```
+
+### Screenshot Storage Rules
+
+**For Agents & Automated Testing**:
+- ✅ **DO**: Save screenshots to `tests/artifacts/screenshots/{category}/`
+- ✅ **DO**: Use naming: `{purpose}-{timestamp}.png` (e.g., `debug-homepage-2025-11-24T16-04-20.png`)
+- ❌ **DON'T**: Save to project root (causes clutter)
+- ❌ **DON'T**: Save to `.playwright-mcp/` (deprecated)
+
+**Categories**:
+- `debug/` - Debug screenshots during development
+- `reports/` - Visual test reports
+- `validation/` - UI validation screenshots
+
+**For Documentation**:
+- Save important screenshots to `docs/` with descriptive names
+- These ARE committed to git
+
+**For Test Snapshots**:
+- Save to `tests/{test-type}/snapshots/`
+- These ARE committed to git for visual regression
+
+### Playwright MCP Usage
+
+When using Playwright MCP tools from agents:
+```typescript
+// Take screenshot
+await mcp__playwright__browser_take_screenshot({
+  filename: "tests/artifacts/screenshots/debug/page-state-2025-11-24.png"
+})
+
+// Navigate and capture
+await mcp__playwright__browser_navigate({ url: "http://localhost:5173" })
+await mcp__playwright__browser_snapshot() // For a11y tree
+await mcp__playwright__browser_take_screenshot({
+  filename: "tests/artifacts/screenshots/validation/homepage.png"
+})
+```
+
+### Cleanup Commands
+
+```bash
+# Clean all temporary test artifacts
+rm -rf tests/artifacts/screenshots/debug/*
+rm -rf tests/artifacts/screenshots/reports/*
+rm -rf tests/artifacts/logs/*
+
+# Clean root-level misplaced screenshots
+rm -f page-*.png test-*.png screenshot-*.png
+
+# Clean playwright MCP artifacts
+rm -rf .playwright-mcp/*.png
+```
+
+### Test Artifacts in CI/CD
+
+- Test artifacts are **automatically cleaned** in CI
+- GitHub Actions uploads only essential reports
+- Local artifacts help debugging but aren't committed
+
+---
+
+## 📚 Domain-Specific Agent Guides
+
+For specialized work in specific areas, consult these domain-specific guides:
+
+| Domain | Guide | Purpose |
+|--------|-------|---------|
+| **Testing** | [tests/AGENTS.md](./tests/AGENTS.md) | Unit, E2E, visual testing, test artifacts |
+| **Templates** | [templates/AGENTS.md](./templates/AGENTS.md) | Component templates, code scaffolding |
+| **Database** | [supabase/AGENTS.md](./supabase/AGENTS.md) | Migrations, schema, RLS, seeding |
+| **Documentation** | [docs/AGENTS.md](./docs/AGENTS.md) | Technical docs, screenshots, guides |
+| **Content** | [public/AGENTS.md](./public/AGENTS.md) | Learning paths, tasks, audio |
+
+**When to use domain guides**:
+- ✅ Working extensively in that domain
+- ✅ Need detailed rules for that area
+- ✅ Creating new content/tests/docs
+- ✅ Following domain-specific conventions
+
+---
+
 ## 📚 Deep Dive References
 
 **Styling**: `docs/css-modules.md` (comprehensive CSS Modules guide)

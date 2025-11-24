@@ -15,60 +15,18 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 
 | Command | Primary Agent | Purpose | Arguments |
 |---------|--------------|---------|-----------|
-| `/analyze-requirements` | business-analyst | Enhance GitHub issues with user stories and acceptance criteria | `[issue-number]` |
 | `/prioritize-backlog` | product-owner | Analyze and rank GitHub issues by priority | None |
-| `/plan` | issue-planner | Create implementation plan from GitHub issue | `[issue-number]` |
-| `/implement` | issue-implementer | Execute implementation plan using TDD | `[plan-file]` |
 | `/validate-implementation` | implementation-tester | Run comprehensive tests and validation | `[issue-number]` |
-| `/review-learning-path` | learning-design-expert | Pedagogical review of learning paths | `[filepath]` or `[topic-id/learning-path-id]` |
+| `/review-learning-path` | content-designer | Pedagogical review of learning paths | `[filepath]` or `[topic-id/learning-path-id]` |
 | `/create-release` | release-engineer | Create production release with versioning | `[major\|minor\|patch]` |
 | `/new-learning-path` | General | Interactive creation of new learning path | `[topic-id] [learning-path-id]` |
 | `/new-task-type` | General | Interactive implementation of new task type | `[task-type-name]` |
-| `/deploy` | General | Deploy to production (GitHub Pages) | `--force`, `--skip-test` |
+| `/deploy` | General | Deploy to production (Vercel/GitHub Pages) | `--force`, `--skip-test` |
 | `/deploy-test` | General | Deploy to test environment | None |
-| `/specify` | General | Create/update feature specification | None |
-| `/tasks` | General | Generate actionable tasks.md | None |
-| `/clarify` | General | Ask clarification questions for spec | None |
-| `/analyze` | General | Cross-artifact consistency analysis | None |
-| `/constitution` | General | Create/update project constitution | None |
 
 ---
 
 ## Agent-Specific Commands
-
-### Business Analyst Agent
-
-#### `/analyze-requirements [issue-number]`
-
-**Purpose**: Transform technical GitHub issues into comprehensive requirements with user stories.
-
-**Usage**:
-```bash
-/analyze-requirements 42
-```
-
-**What it does**:
-1. Fetches GitHub issue
-2. Creates user stories ("As a [user], I want...")
-3. Defines acceptance criteria (Given-When-Then)
-4. Adds functional & non-functional requirements
-5. Defines edge cases and error handling
-6. Estimates complexity (story points)
-7. Updates GitHub issue
-
-**Output**:
-- Enhanced GitHub issue
-- Story point estimation
-- Acceptance criteria checklist
-- Dependencies identified
-
-**When to use**:
-- New feature request needs clarification
-- Issue lacks user perspective
-- Before implementation planning
-- When requirements are vague
-
----
 
 ### Product Owner Agent
 
@@ -109,81 +67,6 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 
 ---
 
-### Issue Planner Agent
-
-#### `/plan [issue-number]`
-
-**Purpose**: Create detailed implementation plan from GitHub issue.
-
-**Usage**:
-```bash
-/plan 42
-```
-
-**What it does**:
-1. Analyzes issue and acceptance criteria
-2. Researches codebase architecture
-3. Creates implementation strategy
-4. Lists files to create/modify
-5. Provides code examples
-6. Defines testing approach
-7. Creates rollback plan
-
-**Output**:
-- `PLAN-ISSUE-[number].md` file
-- Architecture overview
-- Step-by-step implementation phases
-- Technical approach details
-- Security considerations
-
-**When to use**:
-- After requirements analysis complete
-- Before starting implementation
-- For complex features (5+ story points)
-- When architecture impact unclear
-
----
-
-### Issue Implementer Agent
-
-#### `/implement [plan-file]`
-
-**Purpose**: Execute implementation plan using Test-Driven Development.
-
-**Usage**:
-```bash
-/implement PLAN-ISSUE-42.md
-```
-
-**What it does**:
-1. Reads implementation plan
-2. Follows TDD: RED → GREEN → REFACTOR
-3. Writes tests first (failing)
-4. Implements minimal code (passing)
-5. Refactors for quality
-6. Ensures >80% test coverage
-
-**TDD Workflow**:
-```
-1. RED: Write failing test
-2. GREEN: Minimal code to pass
-3. REFACTOR: Improve code quality
-4. Repeat for each feature
-```
-
-**Output**:
-- Implemented feature code
-- Comprehensive test suite
-- Updated documentation
-- Git commits (granular)
-
-**When to use**:
-- Implementation plan exists
-- Ready to write code
-- Tests need to be created
-
----
-
 ### Implementation Tester Agent
 
 #### `/validate-implementation [issue-number]`
@@ -221,31 +104,7 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 
 ---
 
-### Code Reviewer Agent
-
-**Note**: Code reviewer uses standard `gh pr review` commands, not a custom slash command.
-
-**Usage**:
-```bash
-# In your conversation with code-reviewer agent:
-"Review PR #42"
-```
-
-**What it does**:
-1. Analyzes code changes
-2. Checks for security issues
-3. Reviews test quality
-4. Verifies best practices
-5. Posts review comments via `gh pr review`
-
-**Output**:
-- GitHub PR review comments
-- Severity-categorized feedback
-- Approve / Request Changes / Comment
-
----
-
-### Learning Design Expert Agent
+### Content Designer Agent
 
 #### `/review-learning-path [filepath or topic-id/learning-path-id]`
 
@@ -353,7 +212,7 @@ These commands are available to all agents and general use.
 4. Generates JSON structure
 5. Creates file: `public/learning-paths/{topic}/{id}.json`
 6. Updates `json-loader.ts`
-7. **Optional**: Consults learning-design-expert for review
+7. **Optional**: Consults content-designer for pedagogical review
 
 **When to use**:
 - Creating new educational content
@@ -376,7 +235,7 @@ These commands are available to all agents and general use.
 ```
 
 **What it does**:
-1. **Optional**: Consults learning-design-expert on pedagogical value
+1. **Optional**: Consults content-designer on pedagogical value
 2. Gathers requirements (fields, interaction, validation)
 3. Updates type definitions (`services.ts`)
 4. Updates practice session component
@@ -465,31 +324,28 @@ Create or update project constitution with principles.
 
 ## Command Workflows
 
-### New Feature Development (Full Pipeline)
+### New Feature Development (Simplified Pipeline)
 
 ```bash
-# 1. Analyze requirements
-/analyze-requirements 42
+# 1. Prioritize backlog to select next issue
+/prioritize-backlog
 
-# 2. Create implementation plan
-/plan 42
+# 2. Develop feature
+# (Code implementation via agents or manual)
 
-# 3. Implement with TDD
-/implement PLAN-ISSUE-42.md
-
-# 4. Validate implementation
+# 3. Validate implementation
 /validate-implementation 42
 
-# 5. Create PR and review
-# (code-reviewer agent reviews PR)
+# 4. Create PR and review
+# (code-reviewer agent reviews PR via platform-orchestrator)
 
-# 6. Merge to main
+# 5. Merge to main
 git merge feature-branch
 
-# 7. Create release
+# 6. Create release
 /create-release minor
 
-# 8. Deploy to production
+# 7. Deploy to production
 /deploy
 ```
 
@@ -525,14 +381,11 @@ git merge feature-branch
 # 1. Prioritize backlog
 /prioritize-backlog
 
-# 2. Select highest-priority issue
-# (review report)
+# 2. Select highest-priority issue from report
+# (review priority report)
 
-# 3. Analyze requirements
-/analyze-requirements 45
-
-# 4. Start implementation
-/plan 45
+# 3. Start development
+# (Use platform-orchestrator for complex features)
 ```
 
 ---
@@ -542,7 +395,7 @@ git merge feature-branch
 ```bash
 # 1. Consult educational expert
 /new-task-type drag-and-drop
-# (chooses "yes" to consult learning-design-expert)
+# (chooses "yes" to consult content-designer)
 
 # 2. Implement based on guidance
 # (interactive Q&A)
@@ -642,25 +495,10 @@ git pull
 
 | Agent | Can Use | Primary Command |
 |-------|---------|-----------------|
-| **business-analyst** | `/analyze-requirements` | ✅ Primary |
-| | `/prioritize-backlog` | ❌ |
-| | `/plan` | ❌ |
-| **product-owner** | `/analyze-requirements` | ✅ Can use |
-| | `/prioritize-backlog` | ✅ Primary |
-| | `/plan` | ✅ Can use |
-| | `/implement` | ❌ |
-| | `/validate-implementation` | ❌ |
+| **product-owner** | `/prioritize-backlog` | ✅ Primary |
 | | `/create-release` | ✅ Can use |
-| **issue-planner** | `/analyze-requirements` | ❌ |
-| | `/plan` | ✅ Primary |
-| | `/implement` | ❌ |
-| **issue-implementer** | `/plan` | ❌ |
-| | `/implement` | ✅ Primary |
-| | `/validate-implementation` | ✅ Can use (self-check) |
 | **implementation-tester** | `/validate-implementation` | ✅ Primary |
-| | `/implement` | ❌ |
-| **code-reviewer** | N/A | Uses `gh pr review` |
-| **learning-design-expert** | `/review-learning-path` | ✅ Primary |
+| **content-designer** | `/review-learning-path` | ✅ Primary |
 | | `/new-learning-path` | ✅ Can consult |
 | | `/new-task-type` | ✅ Can consult |
 | **release-engineer** | `/create-release` | ✅ Primary |
@@ -670,11 +508,6 @@ git pull
 | | `/new-task-type` | ✅ Shared |
 | | `/deploy` | ✅ Shared |
 | | `/deploy-test` | ✅ Shared |
-| | `/specify` | ✅ Shared |
-| | `/tasks` | ✅ Shared |
-| | `/clarify` | ✅ Shared |
-| | `/analyze` | ✅ Shared |
-| | `/constitution` | ✅ Shared |
 
 ---
 
@@ -682,33 +515,12 @@ git pull
 
 ### When to use each command
 
-**Use `/analyze-requirements`**:
-- ✅ Issue is vague or lacks user perspective
-- ✅ Before planning implementation
-- ✅ New feature requests
-- ❌ Issue already has detailed acceptance criteria
-- ❌ Trivial bug fixes
-
 **Use `/prioritize-backlog`**:
 - ✅ Multiple issues open, unsure what's next
 - ✅ Starting new sprint
 - ✅ Quarterly planning
 - ❌ Only 1-2 issues open
 - ❌ Priority already obvious
-
-**Use `/plan`**:
-- ✅ Complex features (5+ story points)
-- ✅ Architecture impact unclear
-- ✅ Before writing code
-- ❌ Trivial changes (1-2 story points)
-- ❌ Well-understood implementations
-
-**Use `/implement`**:
-- ✅ Plan exists and approved
-- ✅ Ready to write code
-- ✅ Tests need creation
-- ❌ No plan exists
-- ❌ Requirements unclear
 
 **Use `/validate-implementation`**:
 - ✅ Implementation complete
@@ -820,5 +632,13 @@ To create a new command:
 
 ---
 
-**Last Updated**: 2025-10-04
+**Last Updated**: 2025-11-24
 **Maintained By**: Product Owner Agent
+
+## Changelog
+
+**2025-11-24**:
+- Removed spec kit commands: `/analyze-requirements`, `/plan`, `/implement`, `/specify`, `/tasks`, `/clarify`, `/analyze`, `/constitution`
+- Updated agent references: `learning-design-expert` → `content-designer`
+- Simplified command matrix to reflect current learning platform commands
+- Updated deployment targets: Now using Vercel/GitHub Pages

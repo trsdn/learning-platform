@@ -1,6 +1,6 @@
 ---
 description: Review a learning path for pedagogical effectiveness and provide detailed feedback. Arguments: [filepath] or [topic-id/learning-path-id]
-agent: learning-design-expert
+agent: content-designer
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
@@ -11,7 +11,7 @@ $ARGUMENTS
 
 Goal: Conduct comprehensive pedagogical review of a learning path and provide evidence-based feedback for improvement.
 
-**Primary Agent**: learning-design-expert (but can be invoked by other agents)
+**Primary Agent**: content-designer (but can be invoked by other agents)
 
 Execution steps:
 
@@ -97,7 +97,7 @@ Execution steps:
    ```markdown
    # 📊 Learning Design Review: [Learning Path Title]
 
-   **Reviewer**: learning-design-expert
+   **Reviewer**: content-designer
    **Date**: [timestamp]
    **Learning Path**: [topic]/[id]
    **Total Tasks**: [count]

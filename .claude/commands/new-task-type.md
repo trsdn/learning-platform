@@ -32,12 +32,12 @@ Execution steps:
       ```
       - If build fails: Ask user to fix errors first
 
-3. **Consult learning-design-expert** (RECOMMENDED):
+3. **Consult content-designer** (RECOMMENDED):
 
-   Ask user: "Would you like to consult the learning-design-expert about this task type? (yes/no)"
+   Ask user: "Would you like to consult the content-designer about this task type? (yes/no)"
 
    If yes:
-   - Launch learning-design-expert agent via Task tool
+   - Launch content-designer agent via Task tool
    - Ask expert:
      * When should this task type be used?
      * What learning benefits does it provide?

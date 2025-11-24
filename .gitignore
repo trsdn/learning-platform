@@ -29,17 +29,48 @@ coverage
 
 # Playwright
 playwright-report
-test-results
+test-results/
 playwright/.cache
+
+# Test Artifacts & Screenshots
+# Ignore all temporary test artifacts
+.playwright-mcp/
+tests/artifacts/temp/
+tests/screenshots/debug/
+
+# Ignore root-level debug/test screenshots (these accumulate from MCP/agent testing)
+/page-*.png
+/test-*.png
+/screenshot-*.png
+/debug-*.png
+/*-test.png
+/*-error.png
+
+# Allow committed test snapshots and documentation screenshots
+!tests/**/snapshots/**/*.png
+!tests/**/fixtures/**/*.png
+!docs/**/*.png
 
 # Build artifacts
 *.tsbuildinfo
+dev-dist/
 
 # Environment variables
 .env
 .env.local
 .env.*.local
+.env.production
 
 # Input files (training data, scans, etc.)
 input/
 .vercel
+
+# Python virtual environments
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+
+# Backup files
+*.bak
+*.bak*
