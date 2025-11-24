@@ -71,7 +71,6 @@ uated all 9 task types and 17 components
 | PracticeSession | practice-session.tsx | page | - |
 | SessionResults | session-results.tsx | page | - |
 | SettingsPage | settings/SettingsPage.tsx | page | - |
-| WebsiteLoginScreen | website-login-screen.tsx | page | - |
 
 **Focus for Component Library**: Forms, Layout, Feedback, Media (exclude full pages)
 
