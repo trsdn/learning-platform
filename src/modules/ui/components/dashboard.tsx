@@ -10,6 +10,8 @@ import { Card } from './common/Card';
 import { Button } from './common/Button';
 import { MasteryBar } from './common/MasteryBar';
 import { colors } from '@ui/design-tokens';
+import { ErrorMessage } from './error';
+import { handleComponentError, type StructuredError } from '@core/utils/error-handler';
 import styles from './dashboard.module.css';
 
 interface DashboardStats {
@@ -44,6 +46,7 @@ interface DashboardProps {
 export function Dashboard({ onClose }: DashboardProps) {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<StructuredError | null>(null);
 
   useEffect(() => {
     loadDashboardStats();
@@ -165,9 +168,9 @@ export function Dashboard({ onClose }: DashboardProps) {
           new: newItems,
         },
       });
-    } catch (error) {
-      console.error('Failed to load dashboard stats:', error);
-    } finally {
+    } catch (err) {
+      const structuredError = handleComponentError(err, 'loadDashboardStats');
+      setError(structuredError);
       setIsLoading(false);
     }
   }
@@ -191,6 +194,26 @@ export function Dashboard({ onClose }: DashboardProps) {
       <div className={styles['dashboard__empty']} style={{ textAlign: 'center' }}>
         <h1>📊 Dashboard</h1>
         <p>Lade Statistiken...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={styles['dashboard__empty']}>
+        <Button variant="secondary" onClick={onClose} className={styles['dashboard__back-button']}>
+          ← Zurück
+        </Button>
+        <h1>📊 Dashboard</h1>
+        <ErrorMessage
+          error={error}
+          onRetry={() => {
+            setError(null);
+            setIsLoading(true);
+            loadDashboardStats();
+          }}
+          showDetails={true}
+        />
       </div>
     );
   }

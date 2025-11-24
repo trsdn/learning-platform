@@ -17,6 +17,9 @@ import { AuthProvider, useAuth } from './modules/ui/contexts/auth-context';
 import { AuthModal } from './modules/ui/components/auth/auth-modal';
 import { settingsService } from '@core/services/settings-service';
 import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
+import { ErrorBoundary, ConnectionStatusIndicator, ErrorMessage } from './modules/ui/components/error';
+import { handleComponentError, type StructuredError } from './modules/core/utils/error-handler';
+import { checkSupabaseConnection, ConnectionStatus } from './modules/core/utils/connection-health';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
 import './modules/ui/styles/utilities.css';
@@ -51,6 +54,7 @@ function AppContent() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('components');
   const [themeMode, setThemeMode] = useState<ThemeMode>('system');
+  const [initError, setInitError] = useState<StructuredError | null>(null);
   const initStarted = useRef(false);
 
   useEffect(() => {
@@ -136,12 +140,28 @@ function AppContent() {
 
   async function initializeApp() {
     try {
+      setInitError(null);
+
       // Log deployment version
       const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content');
       const buildTime = document.querySelector('meta[name="deployment-version"]')?.getAttribute('data-build-time');
       console.log('🚀 Deployment Version:', deploymentVersion, 'Build Time:', buildTime);
 
-      // Load topics from Supabase
+      // Check connection before loading data
+      console.log('Checking Supabase connection...');
+      const healthCheck = await checkSupabaseConnection();
+
+      if (healthCheck.status === ConnectionStatus.DISCONNECTED) {
+        throw healthCheck.error || new Error('Unable to connect to database');
+      }
+
+      if (healthCheck.status === ConnectionStatus.DEGRADED) {
+        console.warn('⚠️ Slow connection detected. Latency:', healthCheck.latency, 'ms');
+      } else {
+        console.log('✅ Connection healthy. Latency:', healthCheck.latency, 'ms');
+      }
+
+      // Load topics from Supabase (with automatic retry via wrapper)
       const topicRepo = getTopicRepository();
       const loadedTopics = await topicRepo.getAll();
       console.log(`Loaded ${loadedTopics.length} topics from Supabase`);
@@ -149,12 +169,8 @@ function AppContent() {
       setTopics(loadedTopics);
       setIsLoading(false);
     } catch (error: any) {
-      console.error('Failed to initialize app:', error);
-      console.error('Error details:', {
-        name: error?.name,
-        message: error?.message,
-        stack: error?.stack,
-      });
+      const structuredError = handleComponentError(error, 'initializeApp');
+      setInitError(structuredError);
       setIsLoading(false);
     }
   }
@@ -285,6 +301,24 @@ function AppContent() {
       <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
         <h1>🧠 MindForge Academy</h1>
         <p>Wird geladen...</p>
+      </div>
+    );
+  }
+
+  // Show error if initialization failed
+  if (initError) {
+    return (
+      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+        <h1>🧠 MindForge Academy</h1>
+        <ErrorMessage
+          error={initError}
+          onRetry={() => {
+            setInitError(null);
+            setIsLoading(true);
+            initializeApp();
+          }}
+          showDetails={true}
+        />
       </div>
     );
   }
@@ -751,9 +785,12 @@ function AppContent() {
 
 function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <ErrorBoundary showDetails={true}>
+      <AuthProvider>
+        <AppContent />
+        <ConnectionStatusIndicator position="top-right" showWhenConnected={false} />
+      </AuthProvider>
+    </ErrorBoundary>
   );
 }
 

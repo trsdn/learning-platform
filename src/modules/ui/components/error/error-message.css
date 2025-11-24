@@ -1,0 +1,328 @@
+/* Error Message Component Styles */
+
+.error-message {
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid;
+  margin-bottom: 1rem;
+  background-color: var(--error-bg, #fff5f5);
+  border-color: var(--error-border, #feb2b2);
+}
+
+.error-message__header {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+}
+
+.error-message__icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.error-message__content {
+  flex: 1;
+}
+
+.error-message__text {
+  margin: 0;
+  color: var(--error-text, #742a2a);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.error-message__details {
+  margin-top: 0.75rem;
+}
+
+.error-message__details summary {
+  cursor: pointer;
+  color: var(--error-text-muted, #9b2c2c);
+  font-size: 0.875rem;
+  user-select: none;
+}
+
+.error-message__details summary:hover {
+  text-decoration: underline;
+}
+
+.error-message__technical {
+  margin-top: 0.5rem;
+  padding: 0.75rem;
+  background-color: var(--error-technical-bg, #fff);
+  border: 1px solid var(--error-border, #feb2b2);
+  border-radius: 0.25rem;
+  font-size: 0.8rem;
+  overflow-x: auto;
+  color: var(--error-technical-text, #742a2a);
+}
+
+.error-message__technical div {
+  margin-bottom: 0.25rem;
+}
+
+.error-message__actions {
+  margin-top: 1rem;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.error-message__retry-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--error-button-bg, #742a2a);
+  color: white;
+  border: none;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.error-message__retry-button:hover {
+  background-color: var(--error-button-hover, #9b2c2c);
+}
+
+.error-message__retry-button:active {
+  background-color: var(--error-button-active, #63171b);
+}
+
+/* Color variants for different error categories */
+.error-network {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+}
+
+.error-network .error-message__text {
+  color: #1e3a8a;
+}
+
+.error-network .error-message__retry-button {
+  background-color: #1e40af;
+}
+
+.error-network .error-message__retry-button:hover {
+  background-color: #1e3a8a;
+}
+
+.error-auth {
+  background-color: #fef3c7;
+  border-color: #fcd34d;
+}
+
+.error-auth .error-message__text {
+  color: #92400e;
+}
+
+.error-auth .error-message__retry-button {
+  background-color: #b45309;
+}
+
+.error-auth .error-message__retry-button:hover {
+  background-color: #92400e;
+}
+
+.error-validation {
+  background-color: #fff7ed;
+  border-color: #fdba74;
+}
+
+.error-validation .error-message__text {
+  color: #9a3412;
+}
+
+.error-timeout {
+  background-color: #f3e8ff;
+  border-color: #d8b4fe;
+}
+
+.error-timeout .error-message__text {
+  color: #6b21a8;
+}
+
+.error-timeout .error-message__retry-button {
+  background-color: #7c3aed;
+}
+
+.error-timeout .error-message__retry-button:hover {
+  background-color: #6b21a8;
+}
+
+/* Inline Error Styles */
+.inline-error {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background-color: #fff5f5;
+  border: 1px solid #feb2b2;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  color: #742a2a;
+}
+
+.inline-error__icon {
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.inline-error__message {
+  line-height: 1.4;
+}
+
+/* Full Page Error Styles */
+.full-page-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+  background-color: var(--bg-color, #f9fafb);
+}
+
+.full-page-error__container {
+  max-width: 32rem;
+  text-align: center;
+}
+
+.full-page-error__icon {
+  font-size: 4rem;
+  margin-bottom: 1.5rem;
+}
+
+.full-page-error__title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: var(--text-color, #111827);
+  margin: 0 0 1rem 0;
+}
+
+.full-page-error__message {
+  font-size: 1.125rem;
+  color: var(--text-muted, #6b7280);
+  margin: 0 0 2rem 0;
+  line-height: 1.6;
+}
+
+.full-page-error__details {
+  margin: 1.5rem 0;
+  text-align: left;
+}
+
+.full-page-error__details summary {
+  cursor: pointer;
+  color: var(--text-muted, #6b7280);
+  font-size: 0.875rem;
+  user-select: none;
+  text-align: center;
+}
+
+.full-page-error__details summary:hover {
+  text-decoration: underline;
+}
+
+.full-page-error__technical {
+  margin-top: 1rem;
+  padding: 1rem;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  overflow-x: auto;
+  text-align: left;
+  color: #374151;
+}
+
+.full-page-error__technical div {
+  margin-bottom: 0.5rem;
+}
+
+.full-page-error__actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.full-page-error__button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.full-page-error__button--primary {
+  background-color: #2563eb;
+  color: white;
+}
+
+.full-page-error__button--primary:hover {
+  background-color: #1d4ed8;
+}
+
+.full-page-error__button--primary:active {
+  background-color: #1e40af;
+}
+
+.full-page-error__button--secondary {
+  background-color: #f3f4f6;
+  color: #374151;
+  border: 1px solid #d1d5db;
+}
+
+.full-page-error__button--secondary:hover {
+  background-color: #e5e7eb;
+}
+
+.full-page-error__button--secondary:active {
+  background-color: #d1d5db;
+}
+
+/* Dark mode support (optional) */
+@media (prefers-color-scheme: dark) {
+  .error-message {
+    background-color: #450a0a;
+    border-color: #991b1b;
+  }
+
+  .error-message__text {
+    color: #fecaca;
+  }
+
+  .error-message__technical {
+    background-color: #1f2937;
+    border-color: #991b1b;
+    color: #fecaca;
+  }
+
+  .full-page-error {
+    background-color: #111827;
+  }
+
+  .full-page-error__title {
+    color: #f9fafb;
+  }
+
+  .full-page-error__message {
+    color: #d1d5db;
+  }
+
+  .full-page-error__technical {
+    background-color: #1f2937;
+    border-color: #374151;
+    color: #e5e7eb;
+  }
+
+  .full-page-error__button--secondary {
+    background-color: #374151;
+    color: #f9fafb;
+    border-color: #4b5563;
+  }
+
+  .full-page-error__button--secondary:hover {
+    background-color: #4b5563;
+  }
+}

@@ -7,6 +7,15 @@ import {
   PracticeSessionRepository,
   SpacedRepetitionRepository,
 } from './adapters/supabase-repositories';
+import {
+  wrapTopicRepository,
+  wrapLearningPathRepository,
+  wrapTaskRepository,
+  wrapAnswerHistoryRepository,
+  wrapUserProgressRepository,
+  wrapPracticeSessionRepository,
+  wrapSpacedRepetitionRepository,
+} from './adapters/repository-with-error-handling';
 import type {
   ITopicRepository,
   ILearningPathRepository,
@@ -30,71 +39,78 @@ export class StorageFactory {
   private static spacedRepetitionRepo: ISpacedRepetitionRepository;
 
   /**
-   * Gets the Topic repository
+   * Gets the Topic repository with error handling
    */
   static getTopicRepository(): any {
     if (!this.topicRepo) {
-      this.topicRepo = new TopicRepository() as any;
+      const baseRepo = new TopicRepository();
+      this.topicRepo = wrapTopicRepository(baseRepo) as any;
     }
     return this.topicRepo;
   }
 
   /**
-   * Gets the LearningPath repository
+   * Gets the LearningPath repository with error handling
    */
   static getLearningPathRepository(): any {
     if (!this.learningPathRepo) {
-      this.learningPathRepo = new LearningPathRepository() as any;
+      const baseRepo = new LearningPathRepository();
+      this.learningPathRepo = wrapLearningPathRepository(baseRepo) as any;
     }
     return this.learningPathRepo;
   }
 
   /**
-   * Gets the Task repository
+   * Gets the Task repository with error handling
    */
   static getTaskRepository(): any {
     if (!this.taskRepo) {
-      this.taskRepo = new TaskRepository() as any;
+      const baseRepo = new TaskRepository();
+      this.taskRepo = wrapTaskRepository(baseRepo) as any;
     }
     return this.taskRepo;
   }
 
   /**
-   * Gets the AnswerHistory repository
+   * Gets the AnswerHistory repository with error handling
    */
   static getAnswerHistoryRepository(): any {
     if (!this.answerHistoryRepo) {
-      this.answerHistoryRepo = new AnswerHistoryRepository() as any;
+      const baseRepo = new AnswerHistoryRepository();
+      this.answerHistoryRepo = wrapAnswerHistoryRepository(baseRepo) as any;
     }
     return this.answerHistoryRepo;
   }
 
   /**
-   * Gets the UserProgress repository
+   * Gets the UserProgress repository with error handling
    */
   static getUserProgressRepository(): any {
     if (!this.userProgressRepo) {
-      this.userProgressRepo = new UserProgressRepository() as any;
+      const baseRepo = new UserProgressRepository();
+      this.userProgressRepo = wrapUserProgressRepository(baseRepo) as any;
     }
     return this.userProgressRepo;
   }
 
   /**
-   * Gets the PracticeSession repository
+   * Gets the PracticeSession repository with error handling
    */
   static getPracticeSessionRepository(): any {
     if (!this.practiceSessionRepo) {
-      this.practiceSessionRepo = new PracticeSessionRepository() as any;
+      const baseRepo = new PracticeSessionRepository();
+      this.practiceSessionRepo = wrapPracticeSessionRepository(baseRepo) as any;
     }
     return this.practiceSessionRepo;
   }
 
   /**
-   * Gets the SpacedRepetition repository
+   * Gets the SpacedRepetition repository with error handling
    */
   static getSpacedRepetitionRepository(): any {
     if (!this.spacedRepetitionRepo) {
-      this.spacedRepetitionRepo = new SpacedRepetitionRepository() as any;
+      const baseRepo = new SpacedRepetitionRepository();
+      this.spacedRepetitionRepo = wrapSpacedRepetitionRepository(baseRepo) as any;
     }
     return this.spacedRepetitionRepo;
   }
