@@ -50,7 +50,7 @@ export function ComponentDemo({ meta }: ComponentDemoProps) {
           <h3 className={styles.demoTitle}>{meta.name}</h3>
           <p className={styles.demoDescription}>{meta.description}</p>
           <code className={styles.demoImport}>
-            import {'{'} {meta.name} {'}'} from '{meta.importPath}';
+            import {'{'} {meta.name} {'}'} from &apos;{meta.importPath}&apos;;
           </code>
         </div>
         <div className={styles.demoActions}>
@@ -88,7 +88,7 @@ export function ComponentDemo({ meta }: ComponentDemoProps) {
 
 interface VariantDemoProps {
   variant: ComponentVariant;
-  component: React.ComponentType<any>;
+  component: React.ComponentType<Record<string, unknown>>;
   isExpanded: boolean;
   onToggle: () => void;
 }

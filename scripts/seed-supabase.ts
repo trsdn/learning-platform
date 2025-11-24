@@ -13,6 +13,9 @@
  *   - Environment variables set in .env.local
  */
 
+/* eslint-disable no-console */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import { createClient } from '@supabase/supabase-js';
 import { readFileSync, readdirSync } from 'fs';
 import { join, dirname } from 'path';
@@ -233,7 +236,7 @@ function loadLearningPathsFromFiles(): {
           }
 
           // Build metadata from old format if needed
-          let metadata = (taskData as any).metadata || {
+          const metadata = (taskData as any).metadata || {
             difficulty: (taskData as any).difficulty || 'medium',
             tags: (taskData as any).tags || [],
             estimatedTime: 60,

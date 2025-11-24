@@ -150,7 +150,7 @@ export class SupabaseAuthService {
   /**
    * Send password reset email
    */
-  static async resetPassword(email: string): Promise<{ data: {} | null; error: AuthError | null }> {
+  static async resetPassword(email: string): Promise<{ data: Record<string, never> | null; error: AuthError | null }> {
     const response = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/reset-password`,
     });
