@@ -483,6 +483,67 @@ export class TaskRepository {
   }
 
   /**
+   * Get random tasks with filters
+   */
+  async getRandomTasks(
+    count: number,
+    filters?: {
+      learningPathIds?: string[];
+      difficulty?: string;
+      excludeIds?: string[];
+    }
+  ): Promise<Task[]> {
+    console.log(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
+
+    let query = supabase.from('tasks').select('*');
+
+    // Apply learning path filter
+    if (filters?.learningPathIds && filters.learningPathIds.length > 0) {
+      query = query.in('learning_path_id', filters.learningPathIds);
+    }
+
+    // Apply difficulty filter
+    if (filters?.difficulty) {
+      query = query.eq('metadata->>difficulty', filters.difficulty);
+    }
+
+    // Apply exclude IDs filter
+    if (filters?.excludeIds && filters.excludeIds.length > 0) {
+      query = query.not('id', 'in', `(${filters.excludeIds.join(',')})`);
+    }
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error('Error fetching random tasks:', error);
+      throw error;
+    }
+
+    const tasks = (data || []).map(this.mapFromDb);
+    console.log(`[TaskRepository] Found ${tasks.length} tasks`);
+
+    // Shuffle tasks
+    const shuffled = tasks.sort(() => Math.random() - 0.5);
+
+    // Return up to count tasks (with repetition if needed)
+    const result: Task[] = [];
+    if (shuffled.length === 0) {
+      console.log(`[TaskRepository] No tasks available!`);
+      return result;
+    }
+
+    for (let i = 0; i < count; i++) {
+      const task = shuffled[i % shuffled.length];
+      if (task) {
+        result.push(task);
+      }
+    }
+
+    console.log(`[TaskRepository] Returning ${result.length} random tasks`);
+    return result;
+  }
+
+  /**
    * Map database row to domain model
    */
   private mapFromDb(row: DbTask): Task {
