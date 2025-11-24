@@ -142,9 +142,9 @@ export class TopicRepository {
       id: row.id,
       title: row.title,
       description: row.description,
-      learningPathIds: row.learning_path_ids,
+      learningPathIds: row.learning_path_ids ?? [],
       metadata: row.metadata as any,
-      isActive: row.is_active,
+      isActive: row.is_active ?? true,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
@@ -293,10 +293,10 @@ export class LearningPathRepository {
       title: row.title,
       description: row.description,
       difficulty: row.difficulty as 'easy' | 'medium' | 'hard',
-      taskIds: row.task_ids,
+      taskIds: row.task_ids ?? [],
       estimatedTime: row.estimated_time,
       requirements: row.requirements as any,
-      isActive: row.is_active,
+      isActive: row.is_active ?? true,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
@@ -486,20 +486,23 @@ export class TaskRepository {
    * Map database row to domain model
    */
   private mapFromDb(row: DbTask): Task {
-    return {
+    const result: Task = {
       id: row.id,
       learningPathId: row.learning_path_id,
-      templateId: row.template_id || undefined,
+      templateId: row.template_id ?? '',
       type: row.type as any,
       content: row.content as any,
       metadata: row.metadata as any,
-      hasAudio: row.has_audio,
-      audioUrl: row.audio_url || undefined,
-      language: row.language || undefined,
-      ipa: row.ipa || undefined,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
+
+    if (row.has_audio !== null) result.hasAudio = row.has_audio;
+    if (row.audio_url !== null) result.audioUrl = row.audio_url;
+    if (row.language !== null) result.language = row.language;
+    if (row.ipa !== null) result.ipa = row.ipa;
+
+    return result;
   }
 }
 
@@ -584,8 +587,8 @@ export class UserProgressRepository {
       .from('user_progress')
       .upsert({
         user_id: userId,
-        topic_id: progress.topicId,
-        learning_path_id: progress.learningPathId,
+        topic_id: progress.topicId ?? '',
+        learning_path_id: progress.learningPathId ?? '',
         statistics: progress.statistics as any,
         milestones: progress.milestones as any,
       }, {
@@ -631,6 +634,15 @@ export class UserProgressRepository {
       learningPathId: row.learning_path_id,
       statistics: row.statistics as any,
       milestones: row.milestones as any,
+      preferences: {
+        preferredDifficulty: 'medium',
+        preferredSessionLength: 20,
+        reminderSettings: {
+          enabled: false,
+          frequency: 'daily',
+          time: '09:00',
+        },
+      },
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
@@ -743,10 +755,10 @@ export class PracticeSessionRepository {
       .from('practice_sessions')
       .insert({
         user_id: userId,
-        learning_path_id: session.learningPathId,
-        task_ids: session.taskIds,
+        learning_path_id: session.configuration.learningPathIds[0] ?? '',
+        task_ids: session.execution.taskIds,
         execution: session.execution as any,
-        progress: session.progress as any,
+        progress: null,
         configuration: session.configuration as any,
       })
       .select()
@@ -769,9 +781,16 @@ export class PracticeSessionRepository {
 
     const dbUpdates: any = {};
 
-    if (updates.execution !== undefined) dbUpdates.execution = updates.execution;
-    if (updates.progress !== undefined) dbUpdates.progress = updates.progress;
-    if (updates.configuration !== undefined) dbUpdates.configuration = updates.configuration;
+    if (updates.execution !== undefined) {
+      dbUpdates.execution = updates.execution;
+      dbUpdates.task_ids = updates.execution.taskIds;
+    }
+    if (updates.configuration !== undefined) {
+      dbUpdates.configuration = updates.configuration;
+      if (updates.configuration.learningPathIds && updates.configuration.learningPathIds.length > 0) {
+        dbUpdates.learning_path_id = updates.configuration.learningPathIds[0];
+      }
+    }
 
     const { data, error } = await supabase
       .from('practice_sessions')
@@ -812,13 +831,31 @@ export class PracticeSessionRepository {
    * Map database row to domain model
    */
   private mapFromDb(row: DbPracticeSession): PracticeSession {
+    const execution = (row.execution as any) || {
+      taskIds: row.task_ids,
+      completedCount: 0,
+      correctCount: 0,
+      status: 'planned',
+      totalTimeSpent: 0,
+    };
+    const configuration = (row.configuration as any) || {
+      topicId: '',
+      learningPathIds: [row.learning_path_id],
+      targetCount: row.task_ids.length,
+      includeReview: false,
+    };
+    const results = {
+      accuracy: 0,
+      averageTime: 0,
+      difficultyDistribution: {},
+      improvementAreas: [],
+    };
+
     return {
       id: row.id,
-      learningPathId: row.learning_path_id,
-      taskIds: row.task_ids,
-      execution: row.execution as any,
-      progress: row.progress as any,
-      configuration: row.configuration as any,
+      execution,
+      configuration,
+      results,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
@@ -898,7 +935,7 @@ export class AnswerHistoryRepository {
   /**
    * Create new answer record
    */
-  async create(answer: Omit<AnswerHistory, 'id' | 'createdAt'>): Promise<AnswerHistory> {
+  async create(answer: Omit<AnswerHistory, 'id'>): Promise<AnswerHistory> {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
@@ -911,8 +948,8 @@ export class AnswerHistoryRepository {
         timestamp: answer.timestamp.toISOString(),
         is_correct: answer.isCorrect,
         user_answer: answer.userAnswer as any,
-        correct_answer: answer.correctAnswer as any,
-        time_taken_ms: answer.timeTakenMs || null,
+        correct_answer: null,
+        time_taken_ms: answer.timeSpent || null,
       })
       .select()
       .single();
@@ -928,7 +965,7 @@ export class AnswerHistoryRepository {
   /**
    * Bulk create answers
    */
-  async createMany(answers: Omit<AnswerHistory, 'id' | 'createdAt'>[]): Promise<AnswerHistory[]> {
+  async createMany(answers: Omit<AnswerHistory, 'id'>[]): Promise<AnswerHistory[]> {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
@@ -939,8 +976,8 @@ export class AnswerHistoryRepository {
       timestamp: answer.timestamp.toISOString(),
       is_correct: answer.isCorrect,
       user_answer: answer.userAnswer as any,
-      correct_answer: answer.correctAnswer as any,
-      time_taken_ms: answer.timeTakenMs || null,
+      correct_answer: null,
+      time_taken_ms: answer.timeSpent || null,
     }));
 
     const { data, error } = await supabase
@@ -979,16 +1016,32 @@ export class AnswerHistoryRepository {
    * Map database row to domain model
    */
   private mapFromDb(row: DbAnswerHistory): AnswerHistory {
+    let userAnswer: string | string[] = '';
+
+    if (row.user_answer !== null) {
+      if (typeof row.user_answer === 'string') {
+        userAnswer = row.user_answer;
+      } else if (Array.isArray(row.user_answer)) {
+        // Convert Json[] to string[]
+        userAnswer = row.user_answer.map(item => String(item));
+      }
+    }
+
     return {
       id: row.id,
       taskId: row.task_id,
-      sessionId: row.session_id || undefined,
+      sessionId: row.session_id ?? '',
       timestamp: new Date(row.timestamp),
       isCorrect: row.is_correct,
-      userAnswer: row.user_answer,
-      correctAnswer: row.correct_answer,
-      timeTakenMs: row.time_taken_ms || undefined,
-      createdAt: new Date(row.created_at),
+      userAnswer,
+      timeSpent: row.time_taken_ms ?? 0,
+      confidence: 0.5,
+      metadata: {
+        attemptNumber: 1,
+        hintsUsed: 0,
+        deviceType: 'desktop',
+        browserInfo: '',
+      },
     };
   }
 }
@@ -1127,6 +1180,11 @@ export class SpacedRepetitionRepository {
       schedule: row.schedule as any,
       algorithm: row.algorithm as any,
       performance: row.performance as any,
+      metadata: {
+        introduced: new Date(),
+        graduated: false,
+        lapseCount: 0,
+      },
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };

@@ -150,7 +150,7 @@ export class SupabaseAuthService {
   /**
    * Send password reset email
    */
-  static async resetPassword(email: string): Promise<AuthResponse> {
+  static async resetPassword(email: string): Promise<{ data: {} | null; error: AuthError | null }> {
     const response = await supabase.auth.resetPasswordForEmail(email, {
       redirectTo: `${window.location.origin}/auth/reset-password`,
     });
@@ -174,7 +174,10 @@ export class SupabaseAuthService {
       console.error('Update password error:', response.error);
     }
 
-    return response;
+    return {
+      data: response.data.user,
+      error: response.error,
+    };
   }
 
   /**
@@ -199,7 +202,10 @@ export class SupabaseAuthService {
       console.error('Update profile error:', response.error);
     }
 
-    return response;
+    return {
+      data: response.data.user,
+      error: response.error,
+    };
   }
 
   /**

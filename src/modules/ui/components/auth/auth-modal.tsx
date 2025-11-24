@@ -51,7 +51,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     const { error } = await signIn({ email, password });
 
     if (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error as any));
       setLoading(false);
     } else {
       // Success - context will handle state update
@@ -65,12 +65,12 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     setError(null);
     setSuccess(null);
 
-    const { error } = await signUp({ email, password, displayName: displayName || undefined });
+    const { error } = await signUp({ email, password, ...(displayName && { displayName }) });
 
     setLoading(false);
 
     if (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error as any));
     } else {
       setSuccess('Registrierung erfolgreich! Bitte bestätigen Sie Ihre E-Mail-Adresse.');
       resetForm();
@@ -92,7 +92,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     setLoading(false);
 
     if (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error as any));
     } else {
       setSuccess('Magic Link wurde an Ihre E-Mail-Adresse gesendet. Bitte prüfen Sie Ihr Postfach.');
     }
@@ -105,7 +105,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     const { error } = await signInWithOAuth(provider);
 
     if (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error as any));
       setLoading(false);
     }
     // OAuth will redirect, so we don't stop loading here
@@ -122,7 +122,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     setLoading(false);
 
     if (error) {
-      setError(getAuthErrorMessage(error));
+      setError(getAuthErrorMessage(error as any));
     } else {
       setSuccess('Passwort-Reset-Link wurde an Ihre E-Mail-Adresse gesendet.');
       setEmail('');
