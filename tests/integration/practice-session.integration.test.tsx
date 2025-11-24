@@ -1,0 +1,328 @@
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
+import PracticeSession from '../../src/modules/ui/components/practice-session.tsx';
+import { createMockQuestions, createMockQuestion } from '../factories/practice-question-factory';
+
+// Helper to render with router
+const renderWithRouter = (ui: React.ReactElement) => {
+  return render(<BrowserRouter>{ui}</BrowserRouter>);
+};
+
+// Mock the practice session hook
+const mockGoToNextQuestion = vi.fn();
+const mockGoToPreviousQuestion = vi.fn();
+const mockSubmitAnswer = vi.fn();
+
+vi.mock('../../src/hooks/use-practice-session', () => ({
+  usePracticeSession: vi.fn(() => ({
+    questions: createMockQuestions(3),
+    loading: false,
+    error: null,
+    currentQuestionIndex: 0,
+    goToNextQuestion: mockGoToNextQuestion,
+    goToPreviousQuestion: mockGoToPreviousQuestion,
+    submitAnswer: mockSubmitAnswer,
+    sessionId: 'session-123',
+  })),
+}));
+
+// Mock toast
+vi.mock('../../src/hooks/use-toast', () => ({
+  useToast: () => ({
+    toast: vi.fn(),
+  }),
+}));
+
+describe('PracticeSession Integration Tests', () => {
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.useFakeTimers();
+  });
+
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
+  describe('Loading State', () => {
+    it('should render loading state initially', () => {
+      const { usePracticeSession } = require('../../src/hooks/use-practice-session');
+      usePracticeSession.mockReturnValue({
+        questions: [],
+        loading: true,
+        error: null,
+        currentQuestionIndex: 0,
+        goToNextQuestion: mockGoToNextQuestion,
+        goToPreviousQuestion: mockGoToPreviousQuestion,
+        submitAnswer: mockSubmitAnswer,
+        sessionId: null,
+      });
+
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/loading practice session/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('Error State', () => {
+    it('should render error state when error occurs', () => {
+      const { usePracticeSession } = require('../../src/hooks/use-practice-session');
+      usePracticeSession.mockReturnValue({
+        questions: [],
+        loading: false,
+        error: 'Failed to load questions',
+        currentQuestionIndex: 0,
+        goToNextQuestion: mockGoToNextQuestion,
+        goToPreviousQuestion: mockGoToPreviousQuestion,
+        submitAnswer: mockSubmitAnswer,
+        sessionId: null,
+      });
+
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/failed to load questions/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('Question Display', () => {
+    it('should display first question after loading', () => {
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText('Question 1?')).toBeInTheDocument();
+    });
+
+    it('should display question progress', () => {
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/question 1 of 3/i)).toBeInTheDocument();
+    });
+
+    it('should display difficulty badge', () => {
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/intermediate/i)).toBeInTheDocument();
+    });
+
+    it('should display category badge', () => {
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/react/i)).toBeInTheDocument();
+    });
+  });
+
+  describe('Multiple Choice Answer', () => {
+    it('should allow selecting an answer', async () => {
+      const user = userEvent.setup({ delay: null });
+      renderWithRouter(<PracticeSession />);
+
+      const option = screen.getByLabelText(/option a 1/i);
+      await user.click(option);
+
+      expect(option).toBeChecked();
+    });
+
+    it('should enable submit button after selecting answer', async () => {
+      const user = userEvent.setup({ delay: null });
+      renderWithRouter(<PracticeSession />);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      expect(submitButton).toBeDisabled();
+
+      const option = screen.getByLabelText(/option a 1/i);
+      await user.click(option);
+
+      expect(submitButton).not.toBeDisabled();
+    });
+
+    it('should submit answer and show feedback', async () => {
+      const user = userEvent.setup({ delay: null });
+      mockSubmitAnswer.mockResolvedValue({ correct: true, pointsEarned: 20 });
+
+      renderWithRouter(<PracticeSession />);
+
+      const option = screen.getByLabelText(/option a 1/i);
+      await user.click(option);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      await user.click(submitButton);
+
+      await waitFor(() => {
+        expect(mockSubmitAnswer).toHaveBeenCalledWith('q1', 'Option A 1', expect.any(Number));
+      });
+
+      await waitFor(() => {
+        expect(screen.getByText(/correct/i)).toBeInTheDocument();
+      });
+    });
+
+    it('should show incorrect feedback for wrong answer', async () => {
+      const user = userEvent.setup({ delay: null });
+      mockSubmitAnswer.mockResolvedValue({ correct: false, pointsEarned: 0 });
+
+      renderWithRouter(<PracticeSession />);
+
+      // Select wrong answer
+      const wrongOption = screen.getByLabelText(/option b 1/i);
+      await user.click(wrongOption);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      await user.click(submitButton);
+
+      await waitFor(() => {
+        expect(screen.getByText(/incorrect/i)).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Navigation', () => {
+    it('should disable previous button on first question', () => {
+      renderWithRouter(<PracticeSession />);
+      const previousButton = screen.getByRole('button', { name: /previous/i });
+      expect(previousButton).toBeDisabled();
+    });
+
+    it('should navigate to next question after submitting answer', async () => {
+      const user = userEvent.setup({ delay: null });
+      mockSubmitAnswer.mockResolvedValue({ correct: true, pointsEarned: 20 });
+
+      renderWithRouter(<PracticeSession />);
+
+      // Answer question
+      const option = screen.getByLabelText(/option a 1/i);
+      await user.click(option);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      await user.click(submitButton);
+
+      // Wait for feedback
+      await waitFor(() => {
+        expect(screen.getByText(/correct/i)).toBeInTheDocument();
+      });
+
+      // Click next
+      const nextButton = screen.getByRole('button', { name: /next question/i });
+      await user.click(nextButton);
+
+      expect(mockGoToNextQuestion).toHaveBeenCalled();
+    });
+
+    it('should show "View Results" button on last question', async () => {
+      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
+      usePracticeSession.mockReturnValue({
+        questions: createMockQuestions(3),
+        loading: false,
+        error: null,
+        currentQuestionIndex: 2, // Last question
+        goToNextQuestion: mockGoToNextQuestion,
+        goToPreviousQuestion: mockGoToPreviousQuestion,
+        submitAnswer: mockSubmitAnswer,
+        sessionId: 'session-123',
+      });
+
+      const user = userEvent.setup({ delay: null });
+      mockSubmitAnswer.mockResolvedValue({ correct: true, pointsEarned: 20 });
+
+      renderWithRouter(<PracticeSession />);
+
+      // Answer question
+      const option = screen.getByLabelText(/option a 3/i);
+      await user.click(option);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      await user.click(submitButton);
+
+      // Wait for feedback
+      await waitFor(() => {
+        expect(screen.getByRole('button', { name: /view results/i })).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Timer Functionality', () => {
+    it('should display timer when question has time limit', () => {
+      renderWithRouter(<PracticeSession />);
+      // Timer should show 60 seconds formatted as 1:00
+      expect(screen.getByText(/1:00/)).toBeInTheDocument();
+    });
+
+    it('should countdown timer every second', async () => {
+      renderWithRouter(<PracticeSession />);
+
+      expect(screen.getByText(/1:00/)).toBeInTheDocument();
+
+      // Advance timer by 1 second
+      vi.advanceTimersByTime(1000);
+
+      await waitFor(() => {
+        expect(screen.getByText(/0:59/)).toBeInTheDocument();
+      });
+    });
+  });
+
+  describe('Progress Display', () => {
+    it('should show correct progress percentage', () => {
+      renderWithRouter(<PracticeSession />);
+      // First question of 3 = 33%
+      expect(screen.getByText(/33%/)).toBeInTheDocument();
+    });
+
+    it('should update progress bar', async () => {
+      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
+
+      // Start at question 2 of 3 = 67%
+      usePracticeSession.mockReturnValue({
+        questions: createMockQuestions(3),
+        loading: false,
+        error: null,
+        currentQuestionIndex: 1,
+        goToNextQuestion: mockGoToNextQuestion,
+        goToPreviousQuestion: mockGoToPreviousQuestion,
+        submitAnswer: mockSubmitAnswer,
+        sessionId: 'session-123',
+      });
+
+      renderWithRouter(<PracticeSession />);
+      expect(screen.getByText(/67%/)).toBeInTheDocument();
+    });
+  });
+
+  describe('Session Completion', () => {
+    it('should call onComplete when session finishes', async () => {
+      const onComplete = vi.fn();
+      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
+
+      usePracticeSession.mockReturnValue({
+        questions: createMockQuestions(1),
+        loading: false,
+        error: null,
+        currentQuestionIndex: 0,
+        goToNextQuestion: mockGoToNextQuestion,
+        goToPreviousQuestion: mockGoToPreviousQuestion,
+        submitAnswer: mockSubmitAnswer,
+        sessionId: 'session-123',
+      });
+
+      const user = userEvent.setup({ delay: null });
+      mockSubmitAnswer.mockResolvedValue({ correct: true, pointsEarned: 20 });
+
+      renderWithRouter(<PracticeSession onComplete={onComplete} />);
+
+      // Answer the only question
+      const option = screen.getByLabelText(/option a 1/i);
+      await user.click(option);
+
+      const submitButton = screen.getByRole('button', { name: /submit answer/i });
+      await user.click(submitButton);
+
+      // Wait for feedback
+      await waitFor(() => {
+        expect(screen.getByText(/correct/i)).toBeInTheDocument();
+      });
+
+      // Click View Results
+      const viewResultsButton = screen.getByRole('button', { name: /view results/i });
+      await user.click(viewResultsButton);
+
+      // Should show results and call onComplete
+      await waitFor(() => {
+        expect(screen.getByText(/session complete/i)).toBeInTheDocument();
+        expect(onComplete).toHaveBeenCalled();
+      });
+    });
+  });
+});
