@@ -1426,11 +1426,11 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (nextTaskIndex < session.execution.taskIds.length) {
       const nextTaskId = session.execution.taskIds[nextTaskIndex];
       if (nextTaskId) {
-        taskRepo.getById(nextTaskId).then((nextTask) => {
+        taskRepo.getById(nextTaskId).then((nextTask: Task | null) => {
           if (nextTask && nextTask.audioUrl) {
             preloadNext(nextTask);
           }
-        }).catch((error) => {
+        }).catch((error: Error) => {
           console.warn('Failed to preload next task audio:', error);
         });
       }

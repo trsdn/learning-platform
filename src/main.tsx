@@ -6,7 +6,7 @@ import {
   getTaskRepository,
   getPracticeSessionRepository,
 } from './modules/storage/factory';
-import type { Topic, LearningPath, PracticeSession as IPracticeSession } from './modules/core/types/services';
+import type { Topic, LearningPath, Task, PracticeSession as IPracticeSession } from './modules/core/types/services';
 import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
@@ -183,7 +183,7 @@ function AppContent() {
     console.log(`Loading learning paths for topic ${topic.id}:`, paths);
 
     // Sort by createdAt (latest first)
-    paths.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    paths.sort((a: LearningPath, b: LearningPath) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
 
     // Get actual task counts from database
     const taskCounts: Record<string, number> = {};
@@ -191,7 +191,7 @@ function AppContent() {
       const tasks = await taskRepo.getByLearningPathId(path.id);
       taskCounts[path.id] = tasks.length;
       console.log(`Learning path "${path.title}" (${path.id}): ${tasks.length} tasks in DB, taskIds array length: ${path.taskIds?.length || 0}`);
-      console.log('Task IDs:', tasks.map(t => t.id));
+      console.log('Task IDs:', tasks.map((t: Task) => t.id));
     }
 
     setLearningPathTaskCounts(taskCounts);

@@ -4,7 +4,7 @@ import {
   getTopicRepository,
   getSpacedRepetitionRepository,
 } from '@storage/factory';
-import type { PracticeSession } from '@core/types/services';
+import type { PracticeSession, Topic, SpacedRepetitionItem } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Card } from './common/Card';
 import { Button } from './common/Button';
@@ -54,12 +54,12 @@ export function Dashboard({ onClose }: DashboardProps) {
       // Load all sessions
       const sessionRepo = getPracticeSessionRepository();
       const allSessions = await sessionRepo.getAll();
-      const completedSessions = allSessions.filter((s) => s.execution.status === 'completed');
+      const completedSessions = allSessions.filter((s: PracticeSession) => s.execution.status === 'completed');
 
       // Load topics for names
       const topicRepo = getTopicRepository();
       const topics = await topicRepo.getAll();
-      const topicMap = new Map(topics.map((t) => [t.id, t]));
+      const topicMap = new Map<string, Topic>(topics.map((t: Topic) => [t.id, t]));
 
       // Load spaced repetition items for mastery levels
       const spacedRepRepo = getSpacedRepetitionRepository();
@@ -67,16 +67,16 @@ export function Dashboard({ onClose }: DashboardProps) {
 
       // Calculate overall stats
       const totalQuestions = completedSessions.reduce(
-        (sum, s) => sum + (s.execution?.completedCount || 0),
+        (sum: number, s: PracticeSession) => sum + (s.execution?.completedCount || 0),
         0
       );
       const correctAnswers = completedSessions.reduce(
-        (sum, s) => sum + (s.execution?.correctCount || 0),
+        (sum: number, s: PracticeSession) => sum + (s.execution?.correctCount || 0),
         0
       );
       const accuracyRate = totalQuestions > 0 ? (correctAnswers / totalQuestions) * 100 : 0;
 
-      const totalStudyTime = completedSessions.reduce((sum, s) => {
+      const totalStudyTime = completedSessions.reduce((sum: number, s: PracticeSession) => {
         if (s.execution.startedAt && s.execution.completedAt) {
           return (
             sum +
@@ -109,31 +109,34 @@ export function Dashboard({ onClose }: DashboardProps) {
       }
 
       const topicProgress = Array.from(topicStatsMap.entries()).map(
-        ([topicId, data]) => ({
-          topicId,
-          topicName: topicMap.get(topicId)?.title || topicId,
-          sessionsCompleted: data.sessions,
-          accuracy: data.total > 0 ? (data.correct / data.total) * 100 : 0,
-          tasksReviewed: data.total,
-        })
+        ([topicId, data]) => {
+          const topic = topicMap.get(topicId);
+          return {
+            topicId,
+            topicName: topic?.title || topicId,
+            sessionsCompleted: data.sessions,
+            accuracy: data.total > 0 ? (data.correct / data.total) * 100 : 0,
+            tasksReviewed: data.total,
+          };
+        }
       );
 
       // Calculate mastery levels
       const now = new Date();
-      const mastered = srItems.filter((item) => item.algorithm.efactor >= 2.5).length;
+      const mastered = srItems.filter((item: SpacedRepetitionItem) => item.algorithm.efactor >= 2.5).length;
       const learning = srItems.filter(
-        (item) => item.algorithm.efactor < 2.5 && item.algorithm.repetition > 0
+        (item: SpacedRepetitionItem) => item.algorithm.efactor < 2.5 && item.algorithm.repetition > 0
       ).length;
-      const newItems = srItems.filter((item) => item.algorithm.repetition === 0).length;
+      const newItems = srItems.filter((item: SpacedRepetitionItem) => item.algorithm.repetition === 0).length;
 
       // Upcoming reviews
       const upcomingReviews = srItems.filter(
-        (item) => new Date(item.schedule.nextReview) <= now
+        (item: SpacedRepetitionItem) => new Date(item.schedule.nextReview) <= now
       ).length;
 
       // Recent sessions (last 5)
       const recentSessions = completedSessions
-        .sort((a, b) => {
+        .sort((a: PracticeSession, b: PracticeSession) => {
           const aTime = a.execution.completedAt
             ? new Date(a.execution.completedAt).getTime()
             : 0;
