@@ -141,19 +141,13 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
           )}
         </div>
 
-        {/* Tabs */}
+        {/* Tabs - Registration disabled, login only */}
         <div className="auth-tabs">
           <button
             className={`auth-tab ${activeTab === 'login' ? 'active' : ''}`}
             onClick={() => handleTabChange('login')}
           >
             Anmelden
-          </button>
-          <button
-            className={`auth-tab ${activeTab === 'signup' ? 'active' : ''}`}
-            onClick={() => handleTabChange('signup')}
-          >
-            Registrieren
           </button>
         </div>
 
