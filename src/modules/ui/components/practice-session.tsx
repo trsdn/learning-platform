@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import type { Task, PracticeSession, ClozeDeletionContent, TrueFalseContent, OrderingContent, MatchingContent, MultipleSelectContent, SliderContent, WordScrambleContent, FlashcardContent, TextInputContent } from '@core/types/services';
-import { db } from '@storage/database';
 import { PracticeSessionService } from '@core/services/practice-session-service';
 import { SpacedRepetitionService } from '@core/services/spaced-repetition-service';
 import {
@@ -222,7 +221,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     await spacedRepService.recordAnswer(currentTask.id, correct, grade);
 
     // Update session state
-    const updatedSession = await db.practiceSessions.get(session.id);
+    const sessionRepo = getPracticeSessionRepository();
+    const updatedSession = await sessionRepo.getById(session.id);
     if (updatedSession) {
       setSession(updatedSession);
     }
@@ -1407,7 +1407,8 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     const taskId = session.execution.taskIds[currentTaskIndex];
     if (!taskId) return;
 
-    const task = await db.tasks.get(taskId);
+    const taskRepo = getTaskRepository();
+    const task = await taskRepo.getById(taskId);
     if (!task) return;
 
     setCurrentTask(task);
@@ -1425,7 +1426,7 @@ export function PracticeSession({ topicId, learningPathIds, targetCount = 10, in
     if (nextTaskIndex < session.execution.taskIds.length) {
       const nextTaskId = session.execution.taskIds[nextTaskIndex];
       if (nextTaskId) {
-        db.tasks.get(nextTaskId).then((nextTask) => {
+        taskRepo.getById(nextTaskId).then((nextTask) => {
           if (nextTask && nextTask.audioUrl) {
             preloadNext(nextTask);
           }
