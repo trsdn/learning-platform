@@ -25,6 +25,7 @@ dist-ssr
 
 # Test coverage
 coverage
+tests/coverage/
 *.lcov
 
 # Playwright
@@ -35,8 +36,21 @@ playwright/.cache
 # Test Artifacts & Screenshots
 # Ignore all temporary test artifacts
 .playwright-mcp/
+tests/artifacts/*.png
+tests/artifacts/*.jpg
+tests/artifacts/*.webm
+tests/artifacts/**/*.png
+tests/artifacts/**/*.jpg
+tests/artifacts/**/*.webm
 tests/artifacts/temp/
 tests/screenshots/debug/
+tests/reports/*.html
+tests/reports/*.json
+
+# Keep directory structure
+!tests/artifacts/.gitkeep
+!tests/coverage/.gitkeep
+!tests/reports/.gitkeep
 
 # Ignore root-level debug/test screenshots (these accumulate from MCP/agent testing)
 /page-*.png
