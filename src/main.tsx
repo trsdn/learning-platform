@@ -1,7 +1,11 @@
 import React, { useEffect, useState, useRef } from 'react';
 import ReactDOM from 'react-dom/client';
-import { db } from './modules/storage/database';
-import { seedDatabase } from './modules/storage/seed-data';
+import {
+  getTopicRepository,
+  getLearningPathRepository,
+  getTaskRepository,
+  getPracticeSessionRepository,
+} from './modules/storage/factory';
 import type { Topic, LearningPath, PracticeSession as IPracticeSession } from './modules/core/types/services';
 import { PracticeSession } from './modules/ui/components/practice-session';
 import { SessionResults } from './modules/ui/components/session-results';
@@ -150,31 +154,11 @@ function AppContent() {
       const buildTime = document.querySelector('meta[name="deployment-version"]')?.getAttribute('data-build-time');
       console.log('🚀 Deployment Version:', deploymentVersion, 'Build Time:', buildTime);
 
-      // Database version for forced re-seeding when data schema changes
-      const DB_VERSION = '2'; // Bumped to force re-seed with language: 'Spanish'
-      const currentVersion = localStorage.getItem('dbVersion');
+      // Load topics from Supabase
+      const topicRepo = getTopicRepository();
+      const loadedTopics = await topicRepo.getAll();
+      console.log(`Loaded ${loadedTopics.length} topics from Supabase`);
 
-      // Check if database has data
-      const topicCount = await db.topics.count();
-      const taskCount = await db.tasks.count();
-
-      console.log(`Database status: ${topicCount} topics, ${taskCount} tasks, version: ${currentVersion}`);
-
-      // Force re-seed if version changed or DB is empty
-      if (topicCount === 0 || taskCount === 0 || currentVersion !== DB_VERSION) {
-        if (currentVersion !== DB_VERSION) {
-          console.log(`Database version mismatch (${currentVersion} -> ${DB_VERSION}), re-seeding...`);
-        } else {
-          console.log('Database empty or incomplete, seeding...');
-        }
-        await seedDatabase(db);
-        localStorage.setItem('dbVersion', DB_VERSION);
-      } else {
-        console.log('Database already seeded, skipping seed');
-      }
-
-      // Load topics
-      const loadedTopics = await db.topics.toArray();
       setTopics(loadedTopics);
       setIsLoading(false);
     } catch (error: any) {
@@ -182,7 +166,6 @@ function AppContent() {
       console.error('Error details:', {
         name: error?.name,
         message: error?.message,
-        failures: error?.failures,
         stack: error?.stack,
       });
       setIsLoading(false);
@@ -191,7 +174,12 @@ function AppContent() {
 
   async function selectTopic(topic: Topic) {
     setSelectedTopic(topic);
-    const paths = await db.learningPaths.where('topicId').equals(topic.id).toArray();
+
+    // Load learning paths for this topic
+    const learningPathRepo = getLearningPathRepository();
+    const taskRepo = getTaskRepository();
+
+    const paths = await learningPathRepo.getByTopicId(topic.id);
     console.log(`Loading learning paths for topic ${topic.id}:`, paths);
 
     // Sort by createdAt (latest first)
@@ -200,7 +188,7 @@ function AppContent() {
     // Get actual task counts from database
     const taskCounts: Record<string, number> = {};
     for (const path of paths) {
-      const tasks = await db.tasks.where('learningPathId').equals(path.id).toArray();
+      const tasks = await taskRepo.getByLearningPathId(path.id);
       taskCounts[path.id] = tasks.length;
       console.log(`Learning path "${path.title}" (${path.id}): ${tasks.length} tasks in DB, taskIds array length: ${path.taskIds?.length || 0}`);
       console.log('Task IDs:', tasks.map(t => t.id));
@@ -229,12 +217,8 @@ function AppContent() {
     setInSession(false);
     if (selectedLearningPath && selectedTopic) {
       // Get the completed session
-      const sessions = await db.practiceSessions
-        .where('execution.status')
-        .equals('completed')
-        .reverse()
-        .limit(1)
-        .toArray();
+      const sessionRepo = getPracticeSessionRepository();
+      const sessions = await sessionRepo.getCompleted(1);
 
       if (sessions.length > 0 && sessions[0]) {
         setCompletedSession(sessions[0]);
@@ -595,47 +579,46 @@ function AppContent() {
 
   async function reseedDatabase(showNotification = true) {
     try {
-      await db.topics.clear();
-      await db.learningPaths.clear();
-      await db.tasks.clear();
-      await seedDatabase(db);
-      const loadedTopics = await db.topics.toArray();
+      // With Supabase, data is managed in the cloud by admins
+      // This function is kept for compatibility with event handlers
+      console.log('Reseed not needed with Supabase - data is managed in the cloud');
+
+      // Reload topics from Supabase
+      const topicRepo = getTopicRepository();
+      const loadedTopics = await topicRepo.getAll();
       setTopics(loadedTopics);
-      let storageUsageBytes: number | undefined;
-      if (navigator.storage?.estimate) {
-        try {
-          const estimate = await navigator.storage.estimate();
-          storageUsageBytes = estimate.usage ?? undefined;
-        } catch (error) {
-          console.warn('Storage estimate failed', error);
-        }
-      }
+
       const detail = {
         lastUpdatedAt: new Date().toISOString(),
-        storageUsageBytes,
       };
       window.dispatchEvent(new CustomEvent('app:database:updated', { detail }));
+
       if (showNotification) {
-        alert('✅ Datenbank erfolgreich aktualisiert!');
+        alert('✅ Daten erfolgreich aktualisiert!');
       }
     } catch (error) {
-      console.error('Reseed failed:', error);
+      console.error('Reload failed:', error);
       if (showNotification) {
-        alert('❌ Fehler beim Aktualisieren der Datenbank');
+        alert('❌ Fehler beim Aktualisieren der Daten');
       }
     }
   }
 
   async function handleFullReset() {
     try {
-      await db.delete();
-      localStorage.removeItem('dbVersion');
+      // With Supabase, we only clear local settings
       localStorage.removeItem('mindforge.app-settings.v1');
       localStorage.removeItem('audioSettings');
-      window.location.reload();
+
+      // Sign out the user (this will trigger re-authentication)
+      await signOut();
+
+      if (window.confirm('App-Einstellungen wurden zurückgesetzt. Seite neu laden?')) {
+        window.location.reload();
+      }
     } catch (error) {
       console.error('Reset failed:', error);
-      alert('❌ Fehler beim Löschen der Daten');
+      alert('❌ Fehler beim Zurücksetzen der Einstellungen');
     }
   }
 

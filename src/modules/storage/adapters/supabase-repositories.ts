@@ -135,6 +135,23 @@ export class TopicRepository {
   }
 
   /**
+   * Count all active topics
+   */
+  async count(): Promise<number> {
+    const { count, error } = await supabase
+      .from('topics')
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
+
+    if (error) {
+      console.error('Error counting topics:', error);
+      throw error;
+    }
+
+    return count ?? 0;
+  }
+
+  /**
    * Map database row to domain model
    */
   private mapFromDb(row: DbTopic): Topic {
@@ -541,6 +558,22 @@ export class TaskRepository {
 
     console.log(`[TaskRepository] Returning ${result.length} random tasks`);
     return result;
+  }
+
+  /**
+   * Count all tasks
+   */
+  async count(): Promise<number> {
+    const { count, error } = await supabase
+      .from('tasks')
+      .select('*', { count: 'exact', head: true });
+
+    if (error) {
+      console.error('Error counting tasks:', error);
+      throw error;
+    }
+
+    return count ?? 0;
   }
 
   /**
