@@ -1,5 +1,9 @@
 import { useEffect, useState } from 'react';
-import { db } from '@storage/database';
+import {
+  getPracticeSessionRepository,
+  getTopicRepository,
+  getSpacedRepetitionRepository,
+} from '@storage/factory';
 import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Card } from './common/Card';
@@ -48,15 +52,18 @@ export function Dashboard({ onClose }: DashboardProps) {
   async function loadDashboardStats() {
     try {
       // Load all sessions
-      const allSessions = await db.practiceSessions.toArray();
+      const sessionRepo = getPracticeSessionRepository();
+      const allSessions = await sessionRepo.getAll();
       const completedSessions = allSessions.filter((s) => s.execution.status === 'completed');
 
       // Load topics for names
-      const topics = await db.topics.toArray();
+      const topicRepo = getTopicRepository();
+      const topics = await topicRepo.getAll();
       const topicMap = new Map(topics.map((t) => [t.id, t]));
 
       // Load spaced repetition items for mastery levels
-      const srItems = await db.spacedRepetition.toArray();
+      const spacedRepRepo = getSpacedRepetitionRepository();
+      const srItems = await spacedRepRepo.getAll();
 
       // Calculate overall stats
       const totalQuestions = completedSessions.reduce(
