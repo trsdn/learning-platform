@@ -1123,6 +1123,28 @@ export class SpacedRepetitionRepository {
   }
 
   /**
+   * Get due items by date (alias for getDueItems for compatibility)
+   */
+  async getDue(date: Date): Promise<SpacedRepetitionItem[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .select('*')
+      .eq('user_id', userId)
+      .lte('schedule->>nextReview', date.toISOString())
+      .order('schedule->>nextReview');
+
+    if (error) {
+      console.error('Error fetching due SRS items:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
    * Create or update SRS item (upsert)
    */
   async upsert(item: Omit<SpacedRepetitionItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<SpacedRepetitionItem> {
