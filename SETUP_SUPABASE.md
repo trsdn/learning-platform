@@ -109,7 +109,13 @@ Check that all tables were created:
 
 ### 6. Seed Initial Data
 
-Seed the database with topics, learning paths, and tasks:
+#### For Production Setup (Recommended)
+
+After pushing to `main` branch, seeding happens automatically via GitHub Actions. See [Automated Seeding Setup](#automated-seeding-setup) below.
+
+#### For Local Development
+
+Seed the database manually:
 
 ```bash
 npm run seed:supabase
@@ -119,6 +125,8 @@ This creates:
 - 4 topics (Math, Biology, English, Spanish)
 - Multiple learning paths per topic
 - Sample tasks for each learning path
+
+**Note**: Once automated seeding is configured, manual seeding is only needed for local development.
 
 ### 7. Test Authentication
 
@@ -487,6 +495,50 @@ Upgrade to Pro when approaching limits.
 
 ---
 
+## Automated Seeding Setup
+
+### Overview
+
+The platform automatically syncs learning path data to Supabase when JSON files are modified and pushed to `main` branch. This eliminates the need for manual seeding in production.
+
+### Setup GitHub Secrets
+
+To enable automated seeding, add these secrets to your GitHub repository:
+
+1. Go to **Settings** → **Secrets and variables** → **Actions**
+2. Add two secrets:
+
+**SUPABASE_URL**
+```
+https://xxxxx.supabase.co
+```
+
+**SUPABASE_SERVICE_ROLE_KEY**
+```
+eyJhbGc...
+```
+
+Find these values in Supabase Dashboard → Settings → API.
+
+### How It Works
+
+- ✅ Triggers automatically on push to `main` when learning paths change
+- ✅ Runs in GitHub Actions (visible in Actions tab)
+- ✅ Syncs topics, learning paths, and tasks
+- ✅ Never modifies user data
+
+### Manual Trigger
+
+To manually trigger seeding:
+
+1. Go to **Actions** tab in GitHub
+2. Select **Sync to Supabase** workflow
+3. Click **Run workflow**
+
+See [docs/guides/AUTOMATED_SEEDING.md](./docs/guides/AUTOMATED_SEEDING.md) for complete documentation.
+
+---
+
 ## Production Checklist
 
 Before going live:
@@ -494,7 +546,8 @@ Before going live:
 - [ ] ✅ Create production Supabase project
 - [ ] ✅ Apply schema to production database
 - [ ] ✅ Configure RLS policies (verified in docs/ROW_LEVEL_SECURITY.md)
-- [ ] ✅ Seed initial data (topics, learning paths, tasks)
+- [ ] ✅ Set up GitHub secrets for automated seeding (SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+- [ ] ✅ Test automated seeding workflow
 - [ ] ✅ Set up environment variables in Vercel
 - [ ] ✅ Enable email confirmations (Authentication → Settings)
 - [ ] ✅ Configure email templates with branding
@@ -527,6 +580,7 @@ Before going live:
 ### Documentation
 - [DATABASE_SCHEMA.md](./docs/DATABASE_SCHEMA.md) - Complete schema documentation
 - [ROW_LEVEL_SECURITY.md](./docs/ROW_LEVEL_SECURITY.md) - RLS policies and security
+- [AUTOMATED_SEEDING.md](./docs/guides/AUTOMATED_SEEDING.md) - Automated database seeding
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Development guidelines
 
 ### Supabase Documentation
