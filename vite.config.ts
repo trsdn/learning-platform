@@ -12,15 +12,10 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
 
-  // Auto-detect deployment platform
-  // - Vercel sets VERCEL=1 environment variable
-  // - Use root path (/) for Vercel
-  // - Use /learning-platform/ for GitHub Pages
-  const isVercel = process.env.VERCEL === '1';
-  const defaultBasePath = isVercel ? '/' : '/learning-platform/';
-
+  // Deployment: Vercel only
+  // Always use root path (/)
   return {
-  base: env.VITE_BASE_PATH || (mode === 'production' ? defaultBasePath : '/'),
+  base: env.VITE_BASE_PATH || '/',
   define: {
     'import.meta.env.VITE_DB_NAME': JSON.stringify(env.VITE_DB_NAME || 'mindforge-academy'),
     'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),

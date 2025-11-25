@@ -1,5 +1,5 @@
 ---
-description: Deploy the learning platform to production environment (requires confirmation). Arguments: --force (skip checks), --skip-test (skip test env verification)
+description: Deploy the learning platform to Vercel production (requires confirmation). Arguments: --force (skip checks)
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
@@ -8,17 +8,14 @@ User input:
 
 $ARGUMENTS
 
-Goal: Deploy to production environment at `/learning-platform/` with full safety checks and user confirmation.
+Goal: Deploy to Vercel production environment with full safety checks and user confirmation.
 
-**⚠️ CRITICAL**: This deploys to PRODUCTION. Requires explicit user confirmation.
-
-**📚 Documentation**: See [docs/DEPLOYMENT.md](../../../docs/DEPLOYMENT.md) for detailed deployment guide and troubleshooting.
+**⚠️ CRITICAL**: This deploys to PRODUCTION on Vercel. Requires explicit user confirmation.
 
 Execution steps:
 
 1. **Parse user input** from `$ARGUMENTS`:
    - If contains `--force` or `force`: Skip pre-deployment checks (DANGEROUS, not recommended)
-   - If contains `--skip-test` or `skip-test`: Skip test environment verification
    - Otherwise: Run full safety checks
 
 2. **Pre-deployment safety checks**:
@@ -34,35 +31,28 @@ Execution steps:
       ```
       - If not main: Ask user to switch to main branch
 
-   c. Verify tests pass:
+   c. Verify build succeeds:
       ```bash
       npm run build
       ```
       - If build fails: ABORT deployment and show errors
-
-   d. Check if test environment was deployed recently (recommended):
-      ```bash
-      gh run list --workflow=deploy-test.yml --limit=1 --json conclusion,updatedAt
-      ```
-      - If not deployed recently: Suggest running `/deploy-test` first
 
 3. **Request explicit confirmation**:
    Ask user:
    ```
    ⚠️  PRODUCTION DEPLOYMENT CONFIRMATION
 
-   You are about to deploy to: https://trsdn.github.io/learning-platform/
+   You are about to deploy to: Vercel Production
 
    Pre-deployment checks:
    - [x] Git status: Clean
    - [x] Branch: main
    - [x] Build: Successful
-   - [x] Test environment: Verified (optional)
 
    This will:
    - Update production site immediately
    - Affect all users
-   - Use database: mindforge-academy
+   - Use database: mindforge-academy (production)
 
    Type "deploy to production" to confirm:
    ```
@@ -77,40 +67,35 @@ Execution steps:
       git push --tags
       ```
 
-   b. **Deployment via GitHub Actions** (REQUIRED - see docs/DEPLOYMENT.md):
+   b. **Deploy to Vercel**:
       ```bash
-      gh workflow run deploy.yml -f confirm=deploy-production
-      ```
-
-      Monitor deployment:
-      ```bash
-      gh run watch
+      npx vercel --prod
       ```
 
       **IMPORTANT**:
-      - This uses `actions/deploy-pages@v4` (modern method)
-      - DO NOT use `npm run deploy` or push to gh-pages branch
-      - GitHub Pages is configured with `build_type: workflow`
-      - See docs/DEPLOYMENT.md for troubleshooting if deployment succeeds but site doesn't update
+      - Uses Vercel CLI for deployment
+      - Automatically builds and deploys
+      - Vercel project must be linked (run `vercel link` if not)
+      - Uses production environment variables from Vercel dashboard
 
    c. Monitor deployment output for errors
 
-   d. Verify deployment command completed successfully
+   d. Capture and display the production URL from Vercel output
 
 5. **Post-deployment verification**:
-   a. Provide production URL: https://trsdn.github.io/learning-platform/
+   a. Display the Vercel production URL provided in deployment output
 
    b. Remind user to:
-      - Wait 2-3 minutes for GitHub Pages to update
-      - CDN cache may take 10-15 minutes to fully clear
+      - Wait 1-2 minutes for deployment to propagate
       - Clear browser cache (Ctrl+Shift+Delete)
       - Test in incognito/private window
 
    c. Verification checklist:
       - [ ] Production site loads
-      - [ ] Open DevTools → Application → IndexedDB
-      - [ ] Verify database name: `mindforge-academy` (not `-test`)
+      - [ ] Open DevTools → Application → Supabase connection works
+      - [ ] Verify database: `mindforge-academy` (not `-test`)
       - [ ] Test critical user flows:
+        * Authentication
         * Select topic
         * Start practice session
         * Answer questions
@@ -121,22 +106,22 @@ Execution steps:
 
 6. **Rollback instructions** (if issues found):
    ```bash
-   # Option 1: Deploy previous commit
-   git checkout HEAD~1
-   npm run deploy
-   git checkout main
+   # Rollback to previous deployment via Vercel CLI
+   vercel rollback
 
-   # Option 2: Deploy specific tag
-   git checkout v20241003-120000  # Replace with tag
-   npm run deploy
-   git checkout main
+   # Or via Vercel Dashboard:
+   # 1. Go to https://vercel.com/dashboard
+   # 2. Select project
+   # 3. Go to Deployments
+   # 4. Find previous working deployment
+   # 5. Click "..." → "Promote to Production"
    ```
 
 7. **Post-deployment actions**:
    - Update CHANGELOG.md with deployment notes
    - Notify stakeholders (if applicable)
-   - Monitor for user reports/issues
-   - Check analytics/metrics (if available)
+   - Monitor Vercel analytics
+   - Check for runtime errors in Vercel logs
 
 Behavior rules:
 - ALWAYS require explicit confirmation ("deploy to production")
@@ -144,21 +129,27 @@ Behavior rules:
 - NEVER deploy if build fails
 - ALWAYS verify git status and branch
 - ALWAYS provide rollback instructions
-- RECOMMEND testing in test environment first
-- RECOMMEND using GitHub Actions (triggered by release) over local deployment
-- ASK user if they want to create a git tag for this deployment
+- ALWAYS display the deployed URL
 
 Safety guardrails:
 - Git must be clean (no uncommitted changes)
 - Must be on main branch
 - Build must succeed
 - User must type exact confirmation phrase
-- Provide clear rollback path
+- Vercel project must be linked
 
 Environment configuration:
-- Base path: `/learning-platform/`
-- Database: `mindforge-academy`
-- Service worker scope: `/`
+- Platform: Vercel
+- Database: `mindforge-academy` (Supabase production)
+- Build command: `npm run build`
+- Output directory: `dist`
+- Framework: React + Vite
 - Target: Production (live users)
+
+Vercel setup requirements:
+- Vercel CLI installed: `npm i -g vercel`
+- Project linked: `vercel link`
+- Environment variables configured in Vercel dashboard
+- Production domain configured (if custom domain used)
 
 Context: $ARGUMENTS
