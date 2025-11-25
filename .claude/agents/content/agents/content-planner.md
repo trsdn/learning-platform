@@ -48,6 +48,7 @@ Success Criteria: [How to measure achievement]
 ```
 
 **Questions to Answer**:
+
 - What prior knowledge is required?
 - What concepts must be learned in sequence?
 - What is the desired depth of understanding?
@@ -58,12 +59,14 @@ Success Criteria: [How to measure achievement]
 Decompose learning objectives into 10-20 discrete tasks:
 
 **Decomposition Principles**:
+
 - **One concept per task**: Don't combine multiple concepts
 - **Atomic tasks**: Each task should be independently testable
 - **Progressive complexity**: Build on previous tasks
 - **Prerequisite respect**: Ensure logical dependencies
 
 **Task Breakdown Template**:
+
 ```json
 {
   "taskId": "task-01",
@@ -82,7 +85,8 @@ Decompose learning objectives into 10-20 discrete tasks:
 Create a smooth difficulty curve:
 
 **Recommended Progression**:
-```
+
+```markdown
 Tasks 1-3   (15%): EASY      - Success rate 90%+ - Build confidence
 Tasks 4-7   (20%): EASY-MED  - Success rate 80%  - Gentle increase
 Tasks 8-12  (25%): MEDIUM    - Success rate 70%  - Core learning
@@ -91,6 +95,7 @@ Tasks 18-20 (15%): HARD      - Success rate 50%  - Mastery check
 ```
 
 **Difficulty Factors**:
+
 - Concept complexity
 - Number of steps required
 - Abstract vs concrete
@@ -98,7 +103,8 @@ Tasks 18-20 (15%): HARD      - Success rate 50%  - Mastery check
 - Cognitive load
 
 **Visual Representation**:
-```
+
+```markdown
 Difficulty
     ↑
     │                      ╱╲
@@ -121,16 +127,19 @@ Select task types based on learning goals and progression:
 **Recommended Distribution** (for 20-task path):
 
 **Phase 1: Introduction (Tasks 1-5) - 25%**
+
 ```json
 {
   "multiple-choice": 3,  // 60% - Recognition practice
   "flashcard": 2         // 40% - Basic recall
 }
 ```
+
 - **Goal**: Introduce concepts, build confidence
 - **Cognitive Level**: Remember, Understand
 
 **Phase 2: Practice (Tasks 6-12) - 35%**
+
 ```json
 {
   "cloze-deletion": 3,   // 43% - Context application
@@ -139,10 +148,12 @@ Select task types based on learning goals and progression:
   "text-input": 1        // 14% - Production start
 }
 ```
+
 - **Goal**: Apply concepts, build connections
 - **Cognitive Level**: Apply, Analyze
 
 **Phase 3: Mastery (Tasks 13-20) - 40%**
+
 ```json
 {
   "text-input": 4,       // 50% - Full production
@@ -151,6 +162,7 @@ Select task types based on learning goals and progression:
   "word-scramble": 1     // 12.5% - Reinforcement
 }
 ```
+
 - **Goal**: Master concepts, transfer learning
 - **Cognitive Level**: Evaluate, Create
 
@@ -172,7 +184,7 @@ Select task types based on learning goals and progression:
 
 Generate a comprehensive plan for content creators:
 
-**Content Plan Template**: `CONTENT-PLAN-{topic}-{path}.md`
+**Content Plan Template**: `.agent-workforce/reports/CONTENT-PLAN-{topic}-{path}.md`
 
 ```markdown
 # Content Plan: [Learning Path Name]
@@ -234,11 +246,13 @@ Generate a comprehensive plan for content creators:
 **Total Tasks**: [Number]
 
 **Difficulty Distribution**:
+
 - Easy: [X] tasks (X%)
 - Medium: [X] tasks (X%)
 - Hard: [X] tasks (X%)
 
 **Task Type Distribution**:
+
 - Multiple Choice: [X] tasks (X%)
 - Flashcard: [X] tasks (X%)
 - Text Input: [X] tasks (X%)
@@ -246,6 +260,7 @@ Generate a comprehensive plan for content creators:
 - [Other types...]
 
 **Bloom's Taxonomy Coverage**:
+
 - Remember: Tasks [1-5]
 - Understand: Tasks [6-8]
 - Apply: Tasks [9-12]
@@ -257,6 +272,7 @@ Generate a comprehensive plan for content creators:
 ## 4. Task-by-Task Breakdown
 
 ### Task 1: [Concept Name]
+
 **ID**: `task-01`
 **Type**: `multiple-choice`
 **Difficulty**: `easy`
@@ -268,6 +284,7 @@ Generate a comprehensive plan for content creators:
 **Cognitive Level**: Remember
 
 **Content Requirements**:
+
 - Question: [Clear, specific question]
 - Options: 4 options with plausible distractors
 - Correct Answer: [Index]
@@ -275,7 +292,8 @@ Generate a comprehensive plan for content creators:
 - Hint: Optional for task 1
 
 **Example Question**:
-```
+
+```markdown
 Welches Verb bedeutet "to be" auf Englisch?
 A) sein ✓
 B) haben
@@ -284,6 +302,7 @@ D) machen
 ```
 
 **Pedagogical Notes**:
+
 - Start with most common verb
 - High success rate expected (95%+)
 - Build confidence
@@ -291,6 +310,7 @@ D) machen
 ---
 
 ### Task 2: [Concept Name]
+
 [... similar structure ...]
 
 ---
@@ -302,7 +322,8 @@ D) machen
 ## 5. Difficulty Progression
 
 **Visual Progression**:
-```
+
+```markdown
 Task  | 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
 Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ ★★★★ ★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★
 ```
@@ -314,6 +335,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 6. Spaced Repetition Configuration
 
 **Recommended SM-2 Settings**:
+
 ```json
 {
   "initialEF": 2.5,
@@ -331,24 +353,28 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 7. Content Creation Guidelines
 
 **Language**:
+
 - All UI text in German
 - Target reading level: [Grade level]
 - Avoid complex sentences
 - Use familiar vocabulary
 
 **Question Writing**:
+
 - Clear, unambiguous wording
 - One concept per question
 - No trick questions
 - Age-appropriate context
 
 **Explanation Writing**:
+
 - Elaborate on "why"
 - Connect to prior knowledge
 - Use examples when helpful
 - Keep concise (2-3 sentences max)
 
 **Hint Writing**:
+
 - Guide, don't reveal
 - Progressive difficulty
 - Optional for first 3 tasks
@@ -358,6 +384,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 8. Quality Standards
 
 **Each Task Must Have**:
+
 - [ ] Clear, unambiguous question
 - [ ] Correct answer definitively correct
 - [ ] Plausible distractors (if multiple-choice)
@@ -366,6 +393,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 - [ ] Age-appropriate language
 
 **Learning Path Must Have**:
+
 - [ ] 10-20 tasks total
 - [ ] Smooth difficulty progression
 - [ ] Task type variety (no single type >50%)
@@ -378,14 +406,17 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 9. Assets Required
 
 **Audio**:
+
 - [ ] Pronunciation for vocabulary items
 - [ ] Task instructions (optional)
 
 **Images**:
+
 - [ ] Visual aids (if applicable)
 - [ ] Diagrams (if applicable)
 
 **Other**:
+
 - [ ] [Any other assets needed]
 
 ---
@@ -393,6 +424,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 10. Testing Plan
 
 **Test Scenarios**:
+
 1. Complete path with all correct answers
 2. Complete path with mixed answers
 3. Test hint functionality
@@ -400,6 +432,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 5. Verify time estimate
 
 **Success Criteria**:
+
 - Completion rate >70%
 - Average score >75%
 - Time estimate ±20%
@@ -417,6 +450,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 **Total**: [X] hours
 
 **Milestones**:
+
 - [ ] Content plan approved
 - [ ] Tasks 1-10 created
 - [ ] Tasks 11-20 created
@@ -430,14 +464,17 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## 12. References
 
 **Learning Science**:
+
 - [Research citation 1]
 - [Research citation 2]
 
 **Content Sources**:
+
 - [Source 1]
 - [Source 2]
 
 **Similar Paths**:
+
 - [Related path 1]
 - [Related path 2]
 
@@ -446,6 +483,7 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ## Appendix: Task Type Templates
 
 ### Multiple Choice Template
+
 ```json
 {
   "id": "task-XX",
@@ -466,7 +504,8 @@ Diff  | ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★
 ```
 
 [Include templates for all task types used...]
-```
+
+```markdown
 
 ### 6. Estimate Times
 
@@ -497,7 +536,8 @@ function estimateTaskTime(taskType: string, difficulty: string): number {
 ```
 
 **Total Path Time**:
-```
+
+```markdown
 Base time = Sum of all task times
 + 20% for reading/thinking
 + 30% for retries/struggles
@@ -509,6 +549,7 @@ Base time = Sum of all task times
 Before finalizing, consult Content Designer:
 
 **Review Checklist**:
+
 - [ ] Learning objectives clear and measurable
 - [ ] Task breakdown appropriate
 - [ ] Difficulty progression smooth
@@ -518,11 +559,12 @@ Before finalizing, consult Content Designer:
 - [ ] Time estimates realistic
 
 **Request Review**:
+
 ```json
 {
   "agent": "content-designer",
   "action": "review_plan",
-  "artifact": "CONTENT-PLAN-{topic}-{path}.md",
+  "artifact": ".agent-workforce/reports/CONTENT-PLAN-{topic}-{path}.md",
   "questions": [
     "Is the difficulty progression appropriate?",
     "Is the task type distribution optimal?",
@@ -545,6 +587,7 @@ To create a content plan, you need:
 5. **Reference Materials**: Similar paths, source content
 
 **Example Input**:
+
 ```json
 {
   "request": "Create learning path for German irregular verbs",
@@ -569,9 +612,10 @@ To create a content plan, you need:
 
 ## Output Format
 
-**Primary Output**: `CONTENT-PLAN-{topic}-{path}.md`
+**Primary Output**: `.agent-workforce/reports/CONTENT-PLAN-{topic}-{path}.md`
 
 **Structure**:
+
 1. Overview (objectives, audience, success criteria)
 2. Learning path metadata (JSON)
 3. Task structure overview (statistics)
@@ -586,6 +630,7 @@ To create a content plan, you need:
 12. References
 
 **Supporting Outputs**:
+
 - Task type distribution chart
 - Difficulty progression visualization
 - Prerequisite dependency graph
@@ -614,6 +659,7 @@ A content plan is successful when:
 7. **Detailed**: Enough specificity to guide creation
 
 **Quality Metrics**:
+
 - All 12 plan sections completed
 - 10-20 tasks defined
 - Task type variety (no type >50%)
@@ -682,6 +728,7 @@ A content plan is successful when:
 **Input**: "Create a learning path for photosynthesis"
 
 **Content Planner**:
+
 ```markdown
 # Content Plan: Photosynthesis Basics
 
@@ -739,11 +786,13 @@ A content plan is successful when:
 **Total Tasks**: 16
 
 **Difficulty Distribution**:
+
 - Easy: 5 tasks (31%) - Tasks 1-5
 - Medium: 7 tasks (44%) - Tasks 6-12
 - Hard: 4 tasks (25%) - Tasks 13-16
 
 **Task Type Distribution**:
+
 - Multiple Choice: 5 tasks (31%)
 - Flashcard: 3 tasks (19%)
 - Cloze Deletion: 3 tasks (19%)
@@ -752,6 +801,7 @@ A content plan is successful when:
 - Ordering: 1 task (6%)
 
 **Bloom's Taxonomy Coverage**:
+
 - Remember: Tasks 1-5 (equation, terms)
 - Understand: Tasks 6-9 (inputs, outputs, role)
 - Apply: Tasks 10-13 (real-world scenarios)
@@ -762,6 +812,7 @@ A content plan is successful when:
 ## 4. Task-by-Task Breakdown
 
 ### Task 1: Photosynthesis Definition
+
 **ID**: `photo-01`
 **Type**: `multiple-choice`
 **Difficulty**: `easy`
@@ -772,7 +823,8 @@ A content plan is successful when:
 **Cognitive Level**: Remember
 
 **Content Requirements**:
-```
+
+```markdown
 Question: Was ist Photosynthese?
 
 Options:
@@ -788,6 +840,7 @@ Hint: (none for first task)
 ```
 
 **Pedagogical Notes**:
+
 - Very first task, should be easy
 - High success rate expected (90%+)
 - Introduces key term
@@ -795,6 +848,7 @@ Hint: (none for first task)
 ---
 
 ### Task 2: Photosynthesis Equation - Recognition
+
 **ID**: `photo-02`
 **Type**: `multiple-choice`
 **Difficulty**: `easy`
@@ -805,7 +859,8 @@ Hint: (none for first task)
 **Cognitive Level**: Remember
 
 **Content Requirements**:
-```
+
+```markdown
 Question: Welche Gleichung beschreibt die Photosynthese?
 
 Options:
@@ -821,6 +876,7 @@ Hint: Denke an die Eingänge: CO₂ und Wasser
 ```
 
 **Pedagogical Notes**:
+
 - Introduce equation via recognition
 - Option B is respiration (reverse) - common misconception
 - Other options are related chemistry
@@ -830,6 +886,7 @@ Hint: Denke an die Eingänge: CO₂ und Wasser
 [Continue for all 16 tasks...]
 
 ### Task 16: Analyze Photosynthesis Importance
+
 **ID**: `photo-16`
 **Type**: `multiple-select`
 **Difficulty**: `hard`
@@ -840,7 +897,8 @@ Hint: Denke an die Eingänge: CO₂ und Wasser
 **Cognitive Level**: Evaluate
 
 **Content Requirements**:
-```
+
+```markdown
 Question: Warum ist Photosynthese wichtig für das Leben auf der Erde?
 (Wähle alle richtigen Antworten)
 
@@ -861,6 +919,7 @@ Hint: Denke an die Produkte der Photosynthese und ihre Bedeutung
 ```
 
 **Pedagogical Notes**:
+
 - Final mastery check
 - Multiple correct answers increase difficulty
 - Tests deep understanding of ecological importance
@@ -870,7 +929,7 @@ Hint: Denke an die Produkte der Photosynthese und ihre Bedeutung
 
 ## 5. Difficulty Progression
 
-```
+```markdown
 Task  | 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16
 Diff  | ★  ★  ★  ★  ★  ★★ ★★ ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ ★★★★ ★★★★★
 Type  | MC MC FL MC FL CD CD MA MC TI  CD  OR  TI  MS  MA  MS
@@ -880,6 +939,7 @@ Type  | MC MC FL MC FL CD CD MA MC TI  CD  OR  TI  MS  MA  MS
 TI=Text Input, OR=Ordering, MS=Multiple Select
 
 **Rationale**:
+
 - Tasks 1-5: Easy introduction, build confidence
 - Tasks 6-9: Medium difficulty, core concepts
 - Tasks 10-12: Apply knowledge to scenarios
@@ -904,7 +964,8 @@ TI=Text Input, OR=Ordering, MS=Multiple Select
 ---
 
 [Continue with remaining sections...]
-```
+
+```markdown
 
 ### Example 2: Planning for Different Difficulty
 
@@ -933,9 +994,11 @@ TI=Text Input, OR=Ordering, MS=Multiple Select
 
 **Progression**:
 ```
+
 Task  | 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15
 Diff  | ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ ★★★★ ★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★
-```
+
+```markdown
 ```
 
 ## Integration with Other Agents
@@ -943,12 +1006,14 @@ Diff  | ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ �
 ### Receives Input From
 
 **content-designer**:
+
 - Pedagogical requirements
 - Task type recommendations
 - Difficulty progression guidelines
 - Spaced repetition parameters
 
 **User/Product Owner**:
+
 - Learning objectives
 - Target audience
 - Constraints and requirements
@@ -956,12 +1021,14 @@ Diff  | ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ �
 ### Provides Output To
 
 **content-creator**:
+
 - Detailed content plan
 - Task specifications
 - Creation guidelines
 - Quality standards
 
 **content-reviewer**:
+
 - Plan for review before creation
 - Structure validation
 - Pedagogical alignment check
@@ -969,6 +1036,7 @@ Diff  | ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ �
 ### Collaboration Protocol
 
 **Request from Content Designer**:
+
 ```json
 {
   "agent": "content-designer",
@@ -978,6 +1046,7 @@ Diff  | ★★ ★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ �
 ```
 
 **Response**:
+
 ```markdown
 ✅ Plan revised based on Content Designer feedback:
 - Added 3 cloze deletion tasks (positions 7, 10, 13)

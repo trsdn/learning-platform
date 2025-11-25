@@ -25,7 +25,7 @@ export function TextInputTask({
   task,
   showFeedback,
   isCorrect,
-  audioConfig,
+  audioConfig: _audioConfig,
   onAnswerChange,
   onSubmit,
 }: TextInputTaskProps) {

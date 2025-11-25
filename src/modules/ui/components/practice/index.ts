@@ -5,6 +5,7 @@
  */
 
 export { PracticeSessionContainer } from './PracticeSessionContainer';
+export { PracticeSessionWrapper } from './PracticeSessionWrapper';
 export { TaskRenderer } from './TaskRenderer';
 
 // Re-export session components

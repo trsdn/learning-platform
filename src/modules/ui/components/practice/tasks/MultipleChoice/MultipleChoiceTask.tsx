@@ -24,7 +24,7 @@ export function MultipleChoiceTask({
   task,
   showFeedback,
   isCorrect,
-  audioConfig,
+  audioConfig: _audioConfig,
   onAnswerChange,
 }: MultipleChoiceTaskProps) {
   const {

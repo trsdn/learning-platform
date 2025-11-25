@@ -22,7 +22,7 @@ export function TrueFalseTask({
   task,
   showFeedback,
   isCorrect,
-  audioConfig,
+  audioConfig: _audioConfig,
   onAnswerChange,
 }: TrueFalseTaskProps) {
   const { answer, setAnswer, canSubmit } = useTrueFalse(task, showFeedback);

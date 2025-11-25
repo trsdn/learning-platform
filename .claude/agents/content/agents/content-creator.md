@@ -49,6 +49,7 @@ Before creating any content:
 ```
 
 **Key Questions**:
+
 - What is the core learning objective?
 - What prior knowledge can I assume?
 - What reading level should I target?
@@ -85,6 +86,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Question**: Clear, unambiguous, one concept
 - **Options**: Exactly 4, similar length, grammatically parallel
 - **Distractors**: Represent common errors or misconceptions
@@ -93,6 +95,7 @@ Each task type has specific requirements:
 - **Hint**: Guide thinking, don't reveal answer
 
 **Common Mistakes to Avoid**:
+
 - ❌ Obvious wrong answers ("pizza" as distractor for math question)
 - ❌ "All of the above" or "None of the above"
 - ❌ Trick questions or gotchas
@@ -120,6 +123,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Front**: One clear question, avoid ambiguity
 - **Back**: Concise answer (1-2 sentences max)
 - **Explanation**: Elaborate, provide context, give examples
@@ -153,6 +157,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Answer matching**: Be lenient, accept variations
 - **Alternative answers**: Include common acceptable variants
 - **Capitalization**: Usually case-insensitive
@@ -160,6 +165,7 @@ Each task type has specific requirements:
 - **Spelling**: Consider common acceptable spellings
 
 **Alternative Answer Examples**:
+
 ```json
 {
   "correctAnswer": "Photosynthese",
@@ -200,6 +206,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Context**: Provide sufficient context to answer
 - **Blank count**: 1-3 blanks per sentence (max 30% of words)
 - **Key terms**: Delete meaningful words, not articles
@@ -231,6 +238,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Count**: 4-6 pairs (not more, not less)
 - **One-to-one**: Each left matches exactly one right
 - **Similar difficulty**: All pairs roughly same difficulty
@@ -263,6 +271,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Count**: 4-6 items optimal
 - **Distinct items**: Each step clearly different
 - **Logical flow**: Order should be logical, not arbitrary
@@ -289,6 +298,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Clear statement**: No ambiguity
 - **Non-trivial**: Don't test obvious facts
 - **Educational**: Both true and false should teach
@@ -322,6 +332,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Indicate count**: Tell users how many OR "select all"
 - **2-3 correct**: Not too many correct answers
 - **Clear wrong**: Incorrect options should be clearly wrong
@@ -352,6 +363,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Reasonable range**: Min/max should make sense
 - **Tolerance**: ±5-10% is reasonable
 - **Units**: Always specify
@@ -378,6 +390,7 @@ Each task type has specific requirements:
 ```
 
 **Best Practices**:
+
 - **Length**: 5-8 letters optimal
 - **Scramble well**: Don't make too obvious
 - **Provide hint**: Definition or context
@@ -388,19 +401,23 @@ Each task type has specific requirements:
 #### Question Writing Guidelines
 
 **Clarity**:
+
 - ✅ "Welches Verb bedeutet 'to be'?"
 - ❌ "Was könnte vielleicht das Verb für 'to be' sein?"
 
 **Specificity**:
+
 - ✅ "Berechne: 5 × 8 = ?"
 - ❌ "Was ergibt diese Rechnung?"
 
 **Appropriate Difficulty**:
+
 - ✅ Task 1 (easy): "Was ist 2 + 2?"
 - ✅ Task 15 (hard): "Wenn x² - 5x + 6 = 0, was sind die Lösungen?"
 - ❌ Task 1 (too hard): "Löse die quadratische Gleichung..."
 
 **Age-Appropriate**:
+
 - ✅ Grade 5: "Der Apfel fällt vom..."
 - ✅ Grade 10: "Die Gravitation bewirkt..."
 - ❌ Grade 5: "Die gravitative Akzeleration beträgt..."
@@ -408,16 +425,19 @@ Each task type has specific requirements:
 #### Explanation Writing Guidelines
 
 **Add Value** (don't just repeat):
+
 - ✅ "Photosynthese ist der Prozess, bei dem Pflanzen Lichtenergie in chemische Energie umwandeln. Dies geschieht in den Chloroplasten und ist die Grundlage fast aller Nahrungsketten."
 - ❌ "Die Antwort ist Photosynthese."
 
 **Elaborate**:
+
 - Include WHY, not just WHAT
 - Connect to prior knowledge
 - Provide context or examples
 - Keep concise (2-4 sentences)
 
 **Examples of Good Explanations**:
+
 ```json
 {
   "explanation": "Newton's Zweites Gesetz (F = ma) beschreibt, wie Kraft, Masse und Beschleunigung zusammenhängen. Je größer die Kraft, desto größer die Beschleunigung. Je größer die Masse, desto kleiner die Beschleunigung bei gleicher Kraft. Beispiel: Ein Auto braucht mehr Kraft zum Beschleunigen als ein Fahrrad."
@@ -427,15 +447,18 @@ Each task type has specific requirements:
 #### Hint Writing Guidelines
 
 **Guide, Don't Reveal**:
+
 - ✅ "Überlege: Was sind die Eingänge der Photosynthese?"
 - ❌ "Die Antwort ist CO₂ und Wasser"
 
 **Progressive Difficulty**:
+
 - Easy task: No hint needed
 - Medium task: General direction
 - Hard task: Specific strategy
 
 **Examples**:
+
 ```json
 {
   "hint": "Isoliere zuerst die Variable auf einer Seite der Gleichung"
@@ -459,6 +482,7 @@ For pronunciation tasks (especially language learning):
 ```
 
 **Audio Script Guidelines**:
+
 - Clear pronunciation guide
 - Note any special emphasis
 - Indicate language and dialect
@@ -518,6 +542,7 @@ Final output should be structured JSON ready for database:
 Before submitting content, verify:
 
 **Content Checklist**:
+
 - [ ] All questions clear and unambiguous
 - [ ] Correct answers definitively correct
 - [ ] Explanations add value (not just repeat)
@@ -528,6 +553,7 @@ Before submitting content, verify:
 - [ ] All required fields filled
 
 **Technical Checklist**:
+
 - [ ] Valid JSON format
 - [ ] Correct task type structure
 - [ ] All IDs unique
@@ -536,6 +562,7 @@ Before submitting content, verify:
 - [ ] Tags appropriate
 
 **Pedagogical Checklist**:
+
 - [ ] Matches content plan specifications
 - [ ] Appropriate difficulty for position
 - [ ] Aligns with learning objectives
@@ -546,13 +573,14 @@ Before submitting content, verify:
 
 To create content, you need:
 
-1. **Content Plan**: `CONTENT-PLAN-{topic}-{path}.md`
+1. **Content Plan**: `.agent-workforce/reports/CONTENT-PLAN-{topic}-{path}.md`
 2. **Task Specifications**: Detailed requirements for each task
 3. **Style Guidelines**: Language, tone, reading level
 4. **Reference Materials**: Source content, examples
 5. **Task Type Templates**: Structures to follow
 
 **Example Input** (from Content Planner):
+
 ```markdown
 ### Task 5: Verb Conjugation Practice
 **Type**: cloze-deletion
@@ -676,6 +704,7 @@ Content is successful when:
 8. **Aligned**: Matches content plan specifications
 
 **Quality Metrics**:
+
 - 100% of planned tasks created
 - 0 spelling/grammar errors
 - All JSON validates
@@ -735,6 +764,7 @@ To create accurate content for [topic], I need:
 ### Example 1: Creating Multiple Choice Task
 
 **Input** (from plan):
+
 ```markdown
 ### Task 1: Photosynthesis Definition
 **Type**: multiple-choice
@@ -744,6 +774,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Content Creator Output**:
+
 ```json
 {
   "id": "photo-01",
@@ -772,6 +803,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Rationale**:
+
 - Question is clear and specific
 - Option A: Correct, comprehensive definition
 - Option B: Plausible misconception (confusing with respiration)
@@ -783,6 +815,7 @@ To create accurate content for [topic], I need:
 ### Example 2: Creating Text Input with Alternatives
 
 **Input** (from plan):
+
 ```markdown
 ### Task 8: Recall Photosynthesis Equation
 **Type**: text-input
@@ -792,6 +825,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Content Creator Output**:
+
 ```json
 {
   "id": "photo-08",
@@ -822,6 +856,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Rationale**:
+
 - Question clear, provides formula references
 - Correct answer shows standard format
 - Alternative answers accept:
@@ -837,6 +872,7 @@ To create accurate content for [topic], I need:
 ### Example 3: Creating Cloze Deletion
 
 **Input** (from plan):
+
 ```markdown
 ### Task 10: Context-Based Application
 **Type**: cloze-deletion
@@ -846,6 +882,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Content Creator Output**:
+
 ```json
 {
   "id": "photo-10",
@@ -888,6 +925,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Rationale**:
+
 - Sentence provides good context
 - Two blanks test related concepts
 - Not too many blanks (<30% of words)
@@ -903,6 +941,7 @@ To create accurate content for [topic], I need:
 **Scenario**: Creating 20 tasks for photosynthesis path
 
 **Content Creator Output** (progress update):
+
 ```markdown
 # Content Creation Progress: Photosynthesis Basics
 
@@ -949,12 +988,14 @@ To create accurate content for [topic], I need:
 ### Receives Input From
 
 **content-planner**:
+
 - Content plan document
 - Task specifications
 - Quality standards
 - Creation guidelines
 
 **content-designer** (via planner):
+
 - Pedagogical requirements
 - Task type recommendations
 - Language guidelines
@@ -962,17 +1003,20 @@ To create accurate content for [topic], I need:
 ### Provides Output To
 
 **content-reviewer**:
+
 - Complete learning path JSON
 - Audio scripts
 - Content report
 
 **content-tester**:
+
 - Draft content for testing
 - Test scenarios
 
 ### Collaboration Protocol
 
 **Request for Clarification**:
+
 ```json
 {
   "agent": "content-planner",
@@ -983,6 +1027,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Feedback Implementation**:
+
 ```json
 {
   "agent": "content-designer",
@@ -993,6 +1038,7 @@ To create accurate content for [topic], I need:
 ```
 
 **Response**:
+
 ```markdown
 ✅ Task 3 revised:
 - Replaced distractor "pizza" with "respiration" (related misconception)

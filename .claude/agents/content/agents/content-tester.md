@@ -74,6 +74,7 @@ Before testing, create a comprehensive test plan:
 #### Test Each Task Type
 
 **Multiple Choice Testing**:
+
 ```markdown
 **Task [ID]: Multiple Choice**
 
@@ -89,6 +90,7 @@ Issues Found: [None/List]
 ```
 
 **Flashcard Testing**:
+
 ```markdown
 **Task [ID]: Flashcard**
 
@@ -104,6 +106,7 @@ Issues Found: [None/List]
 ```
 
 **Text Input Testing**:
+
 ```markdown
 **Task [ID]: Text Input**
 
@@ -122,6 +125,7 @@ Issues Found:
 ```
 
 **Cloze Deletion Testing**:
+
 ```markdown
 **Task [ID]: Cloze Deletion**
 
@@ -138,6 +142,7 @@ Issues Found: [None/List]
 ```
 
 **Matching Testing**:
+
 ```markdown
 **Task [ID]: Matching**
 
@@ -154,6 +159,7 @@ Issues Found: [None/List]
 ```
 
 **Ordering Testing**:
+
 ```markdown
 **Task [ID]: Ordering**
 
@@ -169,6 +175,7 @@ Issues Found: [None/List]
 ```
 
 **True/False Testing**:
+
 ```markdown
 **Task [ID]: True/False**
 
@@ -184,6 +191,7 @@ Issues Found: [None/List]
 ```
 
 **Multiple Select Testing**:
+
 ```markdown
 **Task [ID]: Multiple Select**
 
@@ -200,6 +208,7 @@ Issues Found: [None/List]
 ```
 
 **Slider Testing**:
+
 ```markdown
 **Task [ID]: Slider**
 
@@ -216,6 +225,7 @@ Issues Found: [None/List]
 ```
 
 **Word Scramble Testing**:
+
 ```markdown
 **Task [ID]: Word Scramble**
 
@@ -719,14 +729,15 @@ To test content, you need:
 
 ## Output Format
 
-**Primary Output**: `TEST-REPORT-{pathId}.md`
+**Primary Output**: `.agent-workforce/reports/TEST-REPORT-{pathId}.md`
 
 **Supporting Outputs**:
-- Screenshots of issues
-- Screen recordings of flows
-- Performance reports (Lighthouse)
-- Accessibility reports (axe)
-- Console logs if errors found
+
+- Screenshots of issues → `.agent-workforce/screenshots/validation/`
+- Screen recordings of flows → `.agent-workforce/screenshots/reports/`
+- Performance reports (Lighthouse) → `.agent-workforce/reports/`
+- Accessibility reports (axe) → `.agent-workforce/reports/`
+- Console logs if errors found → `.agent-workforce/logs/`
 
 ## Tools Available
 
@@ -784,16 +795,19 @@ Testing is successful when:
 ### Receives Input From
 
 **content-reviewer**:
+
 - Approved content ready for testing
 - Areas of concern to watch
 
 ### Provides Output To
 
 **content-publisher**:
+
 - Tested and approved content
 - Any caveats or notes
 
 **content-creator** (if issues found):
+
 - Bug reports
 - Fix requests
 

@@ -7,7 +7,7 @@ import {
   getPracticeSessionRepository,
 } from './modules/storage/factory';
 import type { Topic, LearningPath, Task, PracticeSession as IPracticeSession } from './modules/core/types/services';
-import { PracticeSession } from './modules/ui/components/practice-session';
+import { PracticeSessionWrapper } from './modules/ui/components/practice/PracticeSessionWrapper';
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
@@ -458,7 +458,7 @@ function AppContent() {
   if (inSession && selectedLearningPath && selectedTopic) {
     return (
       <div style={{ fontFamily: 'system-ui, sans-serif' }}>
-        <PracticeSession
+        <PracticeSessionWrapper
           topicId={selectedTopic.id}
           learningPathIds={[selectedLearningPath.id]}
           targetCount={sessionConfig.targetCount}

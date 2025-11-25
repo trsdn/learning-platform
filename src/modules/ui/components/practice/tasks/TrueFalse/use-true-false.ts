@@ -23,7 +23,7 @@ export type UseTrueFalseReturn = TrueFalseState & TrueFalseActions;
  */
 export function useTrueFalse(
   task: Task | null,
-  showFeedback: boolean
+  _showFeedback: boolean
 ): UseTrueFalseReturn {
   const [answer, setAnswer] = useState<boolean | null>(null);
 

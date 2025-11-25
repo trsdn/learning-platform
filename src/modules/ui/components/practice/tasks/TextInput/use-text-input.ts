@@ -23,7 +23,7 @@ export type UseTextInputReturn = TextInputState & TextInputActions;
  */
 export function useTextInput(
   task: Task | null,
-  showFeedback: boolean
+  _showFeedback: boolean
 ): UseTextInputReturn {
   const [answer, setAnswer] = useState<string>('');
 

@@ -91,13 +91,15 @@ Always backup before deployment:
 
 **Backup Contents**:
 ```
+
 backups/content/2025-11-24-14-30-00/
 ├── learning_paths_backup.json
 ├── tasks_backup.json
 ├── topics_backup.json
 ├── deployment_manifest.json
 └── rollback_script.sql
-```
+
+```markdown
 
 **Backup Verification**:
 - [ ] Files created successfully
@@ -282,66 +284,81 @@ After seeding, verify data integrity:
 ```sql
 SELECT * FROM learning_paths WHERE id = 'biology-photosynthesis-basic';
 ```
+
 Expected: 1 row returned ✅
 
 2. **All Tasks Inserted**:
+
 ```sql
 SELECT COUNT(*) FROM tasks WHERE learning_path_id = 'biology-photosynthesis-basic';
 ```
+
 Expected: 20 tasks ✅
 
 3. **Tasks Sequential**:
+
 ```sql
 SELECT position FROM tasks
 WHERE learning_path_id = 'biology-photosynthesis-basic'
 ORDER BY position;
 ```
+
 Expected: 1, 2, 3, ..., 20 (no gaps) ✅
 
 4. **Content Valid**:
+
 ```sql
 SELECT id, type, content->>'question' as question
 FROM tasks
 WHERE learning_path_id = 'biology-photosynthesis-basic'
 LIMIT 3;
 ```
+
 Expected: Questions display correctly ✅
 
 5. **Metadata Updated**:
+
 ```sql
 SELECT path_count FROM topics WHERE id = 'biology';
 ```
+
 Expected: Incremented by 1 ✅
 
 6. **No Orphaned Tasks**:
+
 ```sql
 SELECT COUNT(*) FROM tasks t
 LEFT JOIN learning_paths lp ON t.learning_path_id = lp.id
 WHERE lp.id IS NULL;
 ```
+
 Expected: 0 ✅
 
 **Functional Checks**:
 
 7. **Path Visible in UI**:
+
 - [ ] Path appears in topic list
 - [ ] Metadata displays correctly
 - [ ] Estimated time shown
 - [ ] Prerequisites checked
 
 8. **Tasks Loadable**:
+
 - [ ] First task loads
 - [ ] All tasks loadable in sequence
 - [ ] Task content renders correctly
 - [ ] No missing fields
 
 9. **User Can Start**:
+
 - [ ] "Start" button works
 - [ ] Progress tracking initializes
 - [ ] First task displays
 
 **Verification Result**: ✅ Pass | ❌ Fail
-```
+
+```markdown
 
 ### 6. Update Content Status
 
@@ -494,7 +511,8 @@ npm run rollback -- --deployment=deploy-2025-11-24-143000
 
 **Deployed By**: content-publisher
 **Report Generated**: 2025-11-24T14:33:42Z
-```
+
+```markdown
 
 ### 8. Handle Rollback (if needed)
 
@@ -519,27 +537,32 @@ WHERE id = 'biology-photosynthesis-basic';
 ```
 
 2. **Execute Rollback Script**:
+
 ```bash
 psql $DATABASE_URL < backups/content/2025-11-24-143000/rollback_script.sql
 ```
 
 3. **Verify Rollback**:
+
 - [ ] Path removed from database
 - [ ] Tasks deleted
 - [ ] Topic metadata reverted
 - [ ] No orphaned data
 
 4. **Restore from Backup** (if needed):
+
 ```bash
 npm run restore-backup -- --backup=2025-11-24-143000
 ```
 
 5. **Verify System Stable**:
+
 - [ ] No errors in logs
 - [ ] Other paths unaffected
 - [ ] System functioning normally
 
 6. **Document Incident**:
+
 ```markdown
 # Rollback Incident Report
 
@@ -555,7 +578,8 @@ npm run restore-backup -- --backup=2025-11-24-143000
 ```
 
 **Rollback Result**: ✅ Success | ❌ Failed
-```
+
+```markdown
 
 ### 9. Incremental Publishing (for large deployments)
 
@@ -622,12 +646,14 @@ Manage content versions:
 ```
 
 **Update Process**:
+
 1. Create new version
 2. Deploy alongside old (if non-breaking)
 3. Migrate user progress (if needed)
 4. Deprecate old version (after transition period)
 5. Archive old version (for rollback)
-```
+
+```markdown
 
 ## Input Requirements
 
@@ -643,7 +669,7 @@ To publish content, you need:
 ```json
 {
   "contentFile": "public/learning-paths/biology/photosynthesis-basic.json",
-  "testReport": "TEST-REPORT-biology-photosynthesis-basic.md",
+  "testReport": ".agent-workforce/reports/TEST-REPORT-biology-photosynthesis-basic.md",
   "approvals": {
     "designer": true,
     "reviewer": true,
@@ -657,9 +683,10 @@ To publish content, you need:
 
 ## Output Format
 
-**Primary Output**: `DEPLOYMENT-REPORT-{deploymentId}.md`
+**Primary Output**: `.agent-workforce/reports/DEPLOYMENT-REPORT-{deploymentId}.md`
 
 **Supporting Outputs**:
+
 - Backup files
 - Rollback scripts
 - Deployment manifest
@@ -675,6 +702,7 @@ To publish content, you need:
 - **Glob**: Find all files for batch operations
 
 **Required External Tools**:
+
 - Supabase CLI
 - PostgreSQL client (psql)
 - JSON validators
@@ -693,6 +721,7 @@ Deployment is successful when:
 8. **Stable**: No errors in first hour
 
 **Quality Metrics**:
+
 - Deployment success rate: 100%
 - Verification pass rate: 100%
 - Rollback tested: Yes
@@ -954,30 +983,36 @@ All 3 paths are live and being monitored for:
 ### Receives Input From
 
 **content-tester**:
+
 - Test reports confirming readiness
 - Areas to monitor post-deploy
 
 **product-owner**:
+
 - Deployment authorization
 - Prioritization for batch deploys
 
 ### Provides Output To
 
 **content-orchestrator**:
+
 - Deployment confirmation
 - Success/failure status
 
 **product-owner**:
+
 - Deployment reports
 - Incident reports (if rollback)
 
 **monitoring-systems**:
+
 - Alert configurations
 - Metrics to track
 
 ### Collaboration Protocol
 
 **Escalation for Issues**:
+
 ```json
 {
   "agent": "product-owner",

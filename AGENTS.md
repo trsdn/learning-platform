@@ -9,6 +9,7 @@
 **Core Features**: 8 task types, spaced repetition (SM-2), offline PWA, German UI
 
 ### Essential Commands
+
 ```bash
 npm run dev      # Development server
 npm run build    # Production build (validates TypeScript)
@@ -20,7 +21,7 @@ npm run deploy   # Deploy to GitHub Pages
 
 ## 📐 Architecture at a Glance
 
-```
+```txt
 src/modules/
 ├── core/        # Domain logic, entities, services, types
 ├── storage/     # IndexedDB adapters, repositories, seed data
@@ -30,6 +31,7 @@ src/modules/
 **Patterns**: Repository pattern, service layer, strict TypeScript, offline-first
 
 **Key Files**:
+
 - Types: `src/modules/core/types/services.ts`
 - Main UI: `src/modules/ui/components/practice-session.tsx` (1000+ lines)
 - Database: `src/modules/storage/database.ts`
@@ -53,6 +55,7 @@ src/modules/
 ## ♿ Accessibility (WCAG 2.1 AA)
 
 **Required**:
+
 - Semantic HTML (`<button>` not `<div>`)
 - Keyboard navigation
 - Focus indicators (`:focus-visible`)
@@ -87,12 +90,14 @@ Each type has unique content interface:
 
 1. **Create JSON**: `public/learning-paths/{topic}/{name}.json`
 2. **Structure**:
+
    ```json
    {
      "learningPath": { "id": "...", "topicId": "...", "title": "..." },
      "tasks": [{ "id": "...", "type": "multiple-choice", "content": {...} }]
    }
    ```
+
 3. **Register**: Add to `src/modules/storage/json-loader.ts` → `learningPathFiles` map
 4. **Test**: Use "🔄 DB Aktualisieren" button in UI
 
@@ -129,12 +134,14 @@ Each type has unique content interface:
 ## 🚨 Critical Rules
 
 ### Don't Break
+
 - TypeScript strict mode
 - Existing task type interfaces
 - Database schema (causes data loss)
 - Service worker precache
 
 ### Always Do
+
 - Use design tokens from `variables.css`
 - Test all 8 task types after changes
 - Check `npm run build` before commit
@@ -146,76 +153,90 @@ Each type has unique content interface:
 ## 🧪 Testing & Artifacts
 
 ### Test Structure
-```
+
+```text
 tests/
 ├── unit/           # Jest unit tests
 ├── e2e/            # Playwright E2E tests
 ├── visual/         # Visual regression tests
 └── artifacts/      # Test outputs (gitignored)
-    ├── screenshots/
-    │   ├── debug/      # Temporary debug screenshots
-    │   ├── reports/    # Test report screenshots
-    │   └── validation/ # Validation screenshots
-    ├── logs/           # Test execution logs
-    └── reports/        # Test reports
+
+.agent-workforce/   # Agent-generated artifacts (gitignored)
+├── screenshots/
+│   ├── debug/      # Temporary debug screenshots
+│   ├── reports/    # Test report screenshots
+│   └── validation/ # Validation screenshots
+├── logs/           # Agent execution logs
+└── reports/        # Agent-generated reports
 ```
 
 ### Screenshot Storage Rules
 
 **For Agents & Automated Testing**:
-- ✅ **DO**: Save screenshots to `tests/artifacts/screenshots/{category}/`
+
+- ✅ **DO**: Save screenshots to `.agent-workforce/screenshots/{category}/`
 - ✅ **DO**: Use naming: `{purpose}-{timestamp}.png` (e.g., `debug-homepage-2025-11-24T16-04-20.png`)
 - ❌ **DON'T**: Save to project root (causes clutter)
 - ❌ **DON'T**: Save to `.playwright-mcp/` (deprecated)
+- ❌ **DON'T**: Save to `tests/artifacts/` (reserved for test runners)
 
 **Categories**:
+
 - `debug/` - Debug screenshots during development
 - `reports/` - Visual test reports
 - `validation/` - UI validation screenshots
 
 **For Documentation**:
+
 - Save important screenshots to `docs/` with descriptive names
 - These ARE committed to git
 
 **For Test Snapshots**:
+
 - Save to `tests/{test-type}/snapshots/`
 - These ARE committed to git for visual regression
 
 ### Playwright MCP Usage
 
 When using Playwright MCP tools from agents:
+
 ```typescript
 // Take screenshot
 await mcp__playwright__browser_take_screenshot({
-  filename: "tests/artifacts/screenshots/debug/page-state-2025-11-24.png"
+  filename: ".agent-workforce/screenshots/debug/page-state-2025-11-24.png"
 })
 
 // Navigate and capture
 await mcp__playwright__browser_navigate({ url: "http://localhost:5173" })
 await mcp__playwright__browser_snapshot() // For a11y tree
 await mcp__playwright__browser_take_screenshot({
-  filename: "tests/artifacts/screenshots/validation/homepage.png"
+  filename: ".agent-workforce/screenshots/validation/homepage.png"
 })
 ```
 
 ### Cleanup Commands
 
 ```bash
-# Clean all temporary test artifacts
-rm -rf tests/artifacts/screenshots/debug/*
-rm -rf tests/artifacts/screenshots/reports/*
-rm -rf tests/artifacts/logs/*
+# Clean all agent-generated artifacts
+rm -rf .agent-workforce/screenshots/debug/*
+rm -rf .agent-workforce/screenshots/reports/*
+rm -rf .agent-workforce/logs/*
 
 # Clean root-level misplaced screenshots
 rm -f page-*.png test-*.png screenshot-*.png
 
-# Clean playwright MCP artifacts
+# Clean deprecated playwright MCP artifacts
 rm -rf .playwright-mcp/*.png
+
+# Clean test artifacts (managed by test runners)
+rm -rf tests/artifacts/screenshots/debug/*
+rm -rf tests/artifacts/logs/*
 ```
 
 ### Test Artifacts in CI/CD
 
-- Test artifacts are **automatically cleaned** in CI
+- Test artifacts in `tests/artifacts/` are **automatically cleaned** in CI
+- Agent artifacts in `.agent-workforce/` are **gitignored** (never committed)
 - GitHub Actions uploads only essential reports
 - Local artifacts help debugging but aren't committed
 
@@ -234,6 +255,7 @@ For specialized work in specific areas, consult these domain-specific guides:
 | **Content** | [public/AGENTS.md](./public/AGENTS.md) | Learning paths, tasks, audio |
 
 **When to use domain guides**:
+
 - ✅ Working extensively in that domain
 - ✅ Need detailed rules for that area
 - ✅ Creating new content/tests/docs
@@ -261,5 +283,6 @@ For specialized work in specific areas, consult these domain-specific guides:
 ---
 
 **For exhaustive details, consult**:
+
 - `docs/css-modules.md` (complete styling guide)
 - `src/modules/core/types/services.ts` (authoritative type definitions)

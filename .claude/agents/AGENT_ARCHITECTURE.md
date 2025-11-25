@@ -10,11 +10,13 @@ This document defines the complete agent architecture for both content creation 
 ## Naming Convention
 
 ### Prefixes
+
 - `content-*` - Content/learning path creation agents
 - `platform-*` - Platform development agents
 - `*-orchestrator` - Workflow orchestration agents
 
 ### Suffixes
+
 - `*-planner` - Planning and design agents
 - `*-creator` - Creation and implementation agents
 - `*-reviewer` - Review and quality assurance agents
@@ -26,10 +28,12 @@ This document defines the complete agent architecture for both content creation 
 ## 1. Content Orchestrator System
 
 ### `content-orchestrator`
+
 **Role**: Master orchestrator for learning content creation
 **Coordinates**: content-planner → content-creator → content-reviewer → content-tester → content-publisher
 
 **Workflow**:
+
 1. **Ideation**: Gather learning objectives and requirements
 2. **Planning**: Structure learning path, define tasks
 3. **Creation**: Generate tasks, questions, content
@@ -42,8 +46,10 @@ This document defines the complete agent architecture for both content creation 
 ### Content Stream Agents
 
 #### `content-designer` (renamed from `learning-design-expert`)
+
 **Purpose**: Expert in learning science and pedagogy
 **Responsibilities**:
+
 - Design learning paths based on cognitive psychology
 - Define spaced repetition schedules
 - Ensure pedagogical effectiveness
@@ -55,8 +61,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `content-planner` (new)
+
 **Purpose**: Plans structure of learning paths and task sequences
 **Responsibilities**:
+
 - Break down learning objectives into tasks
 - Define difficulty progression
 - Plan task type distribution
@@ -66,15 +74,18 @@ This document defines the complete agent architecture for both content creation 
 **When to Use**: After requirements gathering, before content creation
 
 **Output**:
-- `CONTENT-PLAN-{topic}-{path}.md`
+
+- `.agent-workforce/reports/CONTENT-PLAN-{topic}-{path}.md`
 - Learning path structure JSON
 - Task type distribution plan
 
 ---
 
 #### `content-creator` (new)
+
 **Purpose**: Creates actual tasks, questions, and content
 **Responsibilities**:
+
 - Generate task content from plan
 - Create questions, answers, hints
 - Add audio/visual assets
@@ -84,6 +95,7 @@ This document defines the complete agent architecture for both content creation 
 **When to Use**: After planning phase
 
 **Output**:
+
 - Task JSON files
 - Audio script files
 - Content ready for review
@@ -91,8 +103,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `content-reviewer` (new)
+
 **Purpose**: Reviews content for pedagogical quality
 **Responsibilities**:
+
 - Verify learning objectives met
 - Check difficulty calibration
 - Ensure clear instructions
@@ -103,6 +117,7 @@ This document defines the complete agent architecture for both content creation 
 **When to Use**: After content creation, before testing
 
 **Output**:
+
 - Review report with scores
 - List of required changes
 - GitHub issues for improvements
@@ -110,8 +125,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `content-tester` (new)
+
 **Purpose**: Tests content with sample learners
 **Responsibilities**:
+
 - Simulate student interactions
 - Test task clarity
 - Verify spaced repetition works
@@ -122,6 +139,7 @@ This document defines the complete agent architecture for both content creation 
 **When to Use**: After review, before publishing
 
 **Output**:
+
 - Test results report
 - UX feedback
 - Bug reports
@@ -129,8 +147,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `content-publisher` (new)
+
 **Purpose**: Publishes content to production
 **Responsibilities**:
+
 - Seed content to Supabase
 - Verify data integrity
 - Update topic/path metadata
@@ -141,6 +161,7 @@ This document defines the complete agent architecture for both content creation 
 **When to Use**: Final step after all approvals
 
 **Output**:
+
 - Deployment confirmation
 - Content manifest
 - Rollback instructions
@@ -150,10 +171,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2. Platform Orchestrator System
 
 ### `platform-orchestrator`
+
 **Role**: Master orchestrator for platform development
 **Coordinates**: All platform sub-orchestrators
 
 **Sub-Orchestrators**:
+
 1. `platform-docs-orchestrator`
 2. `platform-planning-orchestrator`
 3. `platform-dev-orchestrator`
@@ -166,10 +189,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.1 Documentation Flow
 
 ### `platform-docs-orchestrator`
+
 **Role**: Manages all documentation workflows
 **Coordinates**: docs-architect → docs-validator → docs-publisher
 
 **Workflow**:
+
 1. **Analysis**: Analyze codebase for documentation needs
 2. **Creation**: Generate documentation
 3. **Validation**: Validate accuracy and completeness
@@ -178,8 +203,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `docs-architect` (existing)
+
 **Purpose**: Creates comprehensive technical documentation
 **Responsibilities**:
+
 - Analyze architecture and code
 - Write technical documentation
 - Create API documentation
@@ -191,8 +218,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `docs-validator` (new)
+
 **Purpose**: Validates documentation accuracy
 **Responsibilities**:
+
 - Verify code examples work
 - Check documentation matches code
 - Find outdated documentation
@@ -204,8 +233,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `docs-publisher` (new)
+
 **Purpose**: Publishes documentation
 **Responsibilities**:
+
 - Deploy to GitHub Wiki or docs site
 - Update README files
 - Generate changelog
@@ -219,10 +250,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.2 Planning & Issue Flow
 
 ### `platform-planning-orchestrator`
+
 **Role**: Manages requirements, planning, and issue creation
 **Coordinates**: business-analyst → issue-planner → issue-prioritizer → product-owner
 
 **Workflow**:
+
 1. **Requirements**: Gather and clarify requirements
 2. **Planning**: Create detailed implementation plans
 3. **Prioritization**: Prioritize backlog
@@ -231,8 +264,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `business-analyst` (existing)
+
 **Purpose**: Analyzes requirements from user perspective
 **Responsibilities**:
+
 - Enhance GitHub issues
 - Add user stories
 - Define acceptance criteria
@@ -243,8 +278,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `issue-planner` (existing)
+
 **Purpose**: Creates detailed implementation plans
 **Responsibilities**:
+
 - Research solutions
 - Create plan.md files
 - Break down into tasks
@@ -255,8 +292,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `issue-prioritizer` (new)
+
 **Purpose**: Prioritizes backlog based on value/effort
 **Responsibilities**:
+
 - Score issues on value/effort matrix
 - Recommend priority order
 - Balance technical debt vs features
@@ -268,8 +307,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `product-owner` (existing)
+
 **Purpose**: Final decision maker on priorities
 **Responsibilities**:
+
 - Approve plans
 - Make priority calls
 - Coordinate all workflows
@@ -282,10 +323,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.3 Development Flow
 
 ### `platform-dev-orchestrator`
+
 **Role**: Manages code implementation
 **Coordinates**: issue-implementer → implementation-tester
 
 **Workflow**:
+
 1. **Implementation**: Write code following TDD
 2. **Testing**: Validate implementation
 3. **Iteration**: Fix issues until green
@@ -293,8 +336,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `issue-implementer` (existing)
+
 **Purpose**: Implements features following plans
 **Responsibilities**:
+
 - Write tests first (TDD)
 - Implement features
 - Follow coding standards
@@ -305,8 +350,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `implementation-tester` (existing)
+
 **Purpose**: Validates implementation against plan
 **Responsibilities**:
+
 - Run test suites
 - Verify acceptance criteria
 - Check code quality
@@ -319,10 +366,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.4 Testing Flow
 
 ### `platform-test-orchestrator`
+
 **Role**: Manages all testing activities
 **Coordinates**: unit-tester → integration-tester → e2e-tester → performance-tester → security-tester
 
 **Workflow**:
+
 1. **Unit Tests**: Test individual functions
 2. **Integration Tests**: Test module interactions
 3. **E2E Tests**: Test full user flows
@@ -332,8 +381,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `unit-tester` (new)
+
 **Purpose**: Runs and analyzes unit tests
 **Responsibilities**:
+
 - Execute `npm test`
 - Analyze coverage reports
 - Identify missing tests
@@ -345,8 +396,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `integration-tester` (new)
+
 **Purpose**: Tests module interactions
 **Responsibilities**:
+
 - Test repository contracts
 - Test service integrations
 - Validate API calls
@@ -358,8 +411,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `e2e-tester` (new)
+
 **Purpose**: Runs Playwright E2E tests
 **Responsibilities**:
+
 - Execute full user flows
 - Test across browsers
 - Validate UI interactions
@@ -371,8 +426,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `performance-tester` (new)
+
 **Purpose**: Tests performance and load
 **Responsibilities**:
+
 - Measure page load times
 - Test API response times
 - Check bundle sizes
@@ -384,8 +441,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `security-tester` (renamed from `security-auditor`)
+
 **Purpose**: Security and vulnerability testing
 **Responsibilities**:
+
 - Scan for vulnerabilities
 - Test authentication/authorization
 - Check for XSS, SQL injection
@@ -399,10 +458,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.5 Review Flow
 
 ### `platform-review-orchestrator`
+
 **Role**: Manages code review and quality assurance
 **Coordinates**: code-reviewer → security-auditor → ui-visual-validator → issue-generator
 
 **Workflow**:
+
 1. **Code Review**: Review code quality
 2. **Security Review**: Check for security issues
 3. **UI Review**: Validate visual design
@@ -411,8 +472,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `code-reviewer` (existing)
+
 **Purpose**: Reviews code for quality and best practices
 **Responsibilities**:
+
 - Static code analysis
 - Check coding standards
 - Review architecture decisions
@@ -423,8 +486,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `security-auditor` (existing)
+
 **Purpose**: Security code review
 **Responsibilities**:
+
 - Vulnerability assessment
 - Threat modeling
 - Check authentication/auth
@@ -435,8 +500,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `ui-visual-validator` (existing)
+
 **Purpose**: Visual regression and design system validation
 **Responsibilities**:
+
 - Screenshot comparison
 - Design system compliance
 - Accessibility checks
@@ -447,8 +514,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `issue-generator` (new)
+
 **Purpose**: Creates GitHub issues from review findings
 **Responsibilities**:
+
 - Parse review feedback
 - Create well-formed issues
 - Prioritize findings
@@ -464,10 +533,12 @@ This document defines the complete agent architecture for both content creation 
 ## 2.6 Deployment Flow
 
 ### `platform-deploy-orchestrator`
+
 **Role**: Manages deployment and release process
 **Coordinates**: build-pipeline-engineer → release-engineer → deployment-validator → rollback-manager
 
 **Workflow**:
+
 1. **Build**: Optimize and build
 2. **Release**: Create release, tag, changelog
 3. **Deploy**: Deploy to production
@@ -477,8 +548,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `build-pipeline-engineer` (existing)
+
 **Purpose**: Optimizes build and CI/CD
 **Responsibilities**:
+
 - Configure Vite build
 - Optimize bundle size
 - Set up pre-commit hooks
@@ -489,8 +562,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `release-engineer` (existing)
+
 **Purpose**: Handles release management
 **Responsibilities**:
+
 - Semantic versioning
 - Generate changelog
 - Create git tags
@@ -501,8 +576,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `deployment-validator` (new)
+
 **Purpose**: Validates production deployment
 **Responsibilities**:
+
 - Smoke tests in production
 - Verify critical paths work
 - Check error rates
@@ -514,8 +591,10 @@ This document defines the complete agent architecture for both content creation 
 ---
 
 #### `rollback-manager` (new)
+
 **Purpose**: Handles deployment rollbacks
 **Responsibilities**:
+
 - Detect deployment issues
 - Execute rollback procedures
 - Restore previous version
@@ -528,15 +607,17 @@ This document defines the complete agent architecture for both content creation 
 
 ## Agent Selection Guide
 
-### For Learning Content:
-```
+### For Learning Content
+
+```markdown
 New learning path → content-orchestrator
 Quality review → content-reviewer
 Publishing → content-publisher
 ```
 
-### For Platform Development:
-```
+### For Platform Development
+
+```markdown
 New feature → platform-planning-orchestrator → platform-dev-orchestrator
 Bug fix → platform-dev-orchestrator
 Documentation → platform-docs-orchestrator
@@ -550,6 +631,7 @@ Deployment → platform-deploy-orchestrator
 ## Orchestrator Usage Examples
 
 ### Example 1: Create New Learning Path
+
 ```bash
 # Invoke content orchestrator
 /agent content-orchestrator "Create German irregular verbs learning path"
@@ -564,6 +646,7 @@ Deployment → platform-deploy-orchestrator
 ```
 
 ### Example 2: Implement Feature
+
 ```bash
 # Invoke platform orchestrator for full cycle
 /agent platform-orchestrator "Implement issue #123"
@@ -581,6 +664,7 @@ Deployment → platform-deploy-orchestrator
 ```
 
 ### Example 3: Review and Improve
+
 ```bash
 # Invoke review orchestrator
 /agent platform-review-orchestrator "Review PR #77"
@@ -597,11 +681,13 @@ Deployment → platform-deploy-orchestrator
 ## Implementation Plan
 
 ### Phase 1: Core Orchestrators (Priority 1)
+
 - [ ] Create `content-orchestrator`
 - [ ] Create `platform-orchestrator`
 - [ ] Define orchestrator protocols
 
 ### Phase 2: Content Stream (Priority 2)
+
 - [ ] Create `content-planner`
 - [ ] Create `content-creator`
 - [ ] Create `content-reviewer`
@@ -610,6 +696,7 @@ Deployment → platform-deploy-orchestrator
 - [ ] Rename `learning-design-expert` → `content-designer`
 
 ### Phase 3: Platform Testing (Priority 3)
+
 - [ ] Create `platform-test-orchestrator`
 - [ ] Create `unit-tester`
 - [ ] Create `integration-tester`
@@ -618,15 +705,18 @@ Deployment → platform-deploy-orchestrator
 - [ ] Rename `security-auditor` → `security-tester`
 
 ### Phase 4: Platform Review (Priority 4)
+
 - [ ] Create `platform-review-orchestrator`
 - [ ] Create `issue-generator`
 
 ### Phase 5: Platform Deployment (Priority 5)
+
 - [ ] Create `platform-deploy-orchestrator`
 - [ ] Create `deployment-validator`
 - [ ] Create `rollback-manager`
 
 ### Phase 6: Platform Docs & Planning (Priority 6)
+
 - [ ] Create `platform-docs-orchestrator`
 - [ ] Create `docs-validator`
 - [ ] Create `docs-publisher`
@@ -638,6 +728,7 @@ Deployment → platform-deploy-orchestrator
 ## Agent Communication Protocol
 
 ### Orchestrator → Agent
+
 ```json
 {
   "workflow_id": "uuid",
@@ -651,6 +742,7 @@ Deployment → platform-deploy-orchestrator
 ```
 
 ### Agent → Orchestrator
+
 ```json
 {
   "status": "completed|failed|blocked",

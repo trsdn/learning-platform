@@ -55,6 +55,7 @@ Review content systematically across multiple dimensions:
 **Assessment Criteria**:
 
 #### Learning Objectives Alignment
+
 ```markdown
 **Check**:
 - [ ] All stated objectives covered
@@ -67,6 +68,7 @@ Review content systematically across multiple dimensions:
 ```
 
 #### Cognitive Load Analysis
+
 ```markdown
 **Intrinsic Load**:
 - [ ] Appropriate for target audience
@@ -90,6 +92,7 @@ Review content systematically across multiple dimensions:
 ```
 
 #### Spaced Repetition Compatibility
+
 ```markdown
 **Check**:
 - [ ] Tasks are atomic (one concept each)
@@ -101,6 +104,7 @@ Review content systematically across multiple dimensions:
 ```
 
 #### Bloom's Taxonomy Coverage
+
 ```markdown
 **Progression**:
 - Remember: Tasks [list]
@@ -134,6 +138,7 @@ Review content systematically across multiple dimensions:
 ```
 
 **Common Accuracy Issues**:
+
 - Outdated scientific facts
 - Simplified to the point of inaccuracy
 - Culturally specific assumptions
@@ -184,10 +189,12 @@ Task 2: Clear ✅ | Unclear ⚠️ | Ambiguous ❌
 ```markdown
 **Difficulty Curve**:
 ```
+
 Task  | 1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20
 Diff  | ★  ★  ★  ★★ ★★ ★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★★ ★★★★ ★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★ ★★★★★
 Actual| ★  ★  ★★★★ ★  ★★ ★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★ ★★★★★
-```
+
+```markdown
 
 **Issues Identified**:
 🔴 Task 3: Too difficult (4-star in position 3)
@@ -656,6 +663,7 @@ To review content, you need:
 5. **Quality Standards**: Criteria to evaluate against
 
 **Example Input**:
+
 ```json
 {
   "learningPath": {...},
@@ -671,9 +679,10 @@ To review content, you need:
 
 ## Output Format
 
-**Primary Output**: `REVIEW-REPORT-{pathId}.md`
+**Primary Output**: `.agent-workforce/reports/REVIEW-REPORT-{pathId}.md`
 
 **Structure**:
+
 1. Executive Summary
 2. Dimension-by-dimension ratings (1-5 stars)
 3. Critical issues (must fix)
@@ -708,6 +717,7 @@ A review is successful when:
 8. **Decisive**: Clear approval/rejection decision
 
 **Quality Metrics**:
+
 - All 10 review dimensions covered
 - All tasks individually reviewed
 - Issues prioritized (Critical/High/Low)
@@ -905,38 +915,45 @@ addressed before this can proceed.
 ### Receives Input From
 
 **content-creator**:
+
 - Complete learning path JSON
 - Content report
 - Any questions or notes
 
 **content-planner** (reference):
+
 - Original content plan
 - Specifications to validate against
 
 ### Provides Output To
 
 **content-creator**:
+
 - Review report with feedback
 - Specific revision requests
 - Approval or rejection
 
 **content-designer** (escalation):
+
 - Complex pedagogical questions
 - Ambiguous situations
 - Second opinion requests
 
 **content-tester**:
+
 - Approved content ready for testing
 - Notes on areas to watch during testing
 
 **product-owner** (if rejection):
+
 - Notification of rejected content
 - Timeline for revisions
 
 ### Collaboration Protocol
 
 **Standard Review Flow**:
-```
+
+```markdown
 content-creator → content-reviewer → review report → content-creator
                                    ↓
                             (if approved)
@@ -945,6 +962,7 @@ content-creator → content-reviewer → review report → content-creator
 ```
 
 **Escalation to Content Designer**:
+
 ```json
 {
   "agent": "content-designer",
