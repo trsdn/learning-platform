@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import { BrowserRouter } from 'react-router-dom';
 import PracticeSession from '../../src/modules/ui/components/practice-session.tsx';
 import { createMockQuestions, createMockQuestion } from '../factories/practice-question-factory';
+import { usePracticeSession } from '../../src/hooks/use-practice-session';
 
 // Helper to render with router
 const renderWithRouter = (ui: React.ReactElement) => {
@@ -47,8 +48,7 @@ describe('PracticeSession Integration Tests', () => {
 
   describe('Loading State', () => {
     it('should render loading state initially', () => {
-      const { usePracticeSession } = require('../../src/hooks/use-practice-session');
-      usePracticeSession.mockReturnValue({
+      vi.mocked(usePracticeSession).mockReturnValue({
         questions: [],
         loading: true,
         error: null,
@@ -66,8 +66,7 @@ describe('PracticeSession Integration Tests', () => {
 
   describe('Error State', () => {
     it('should render error state when error occurs', () => {
-      const { usePracticeSession } = require('../../src/hooks/use-practice-session');
-      usePracticeSession.mockReturnValue({
+      vi.mocked(usePracticeSession).mockReturnValue({
         questions: [],
         loading: false,
         error: 'Failed to load questions',
@@ -202,8 +201,7 @@ describe('PracticeSession Integration Tests', () => {
     });
 
     it('should show "View Results" button on last question', async () => {
-      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
-      usePracticeSession.mockReturnValue({
+      vi.mocked(usePracticeSession).mockReturnValue({
         questions: createMockQuestions(3),
         loading: false,
         error: null,
@@ -262,10 +260,8 @@ describe('PracticeSession Integration Tests', () => {
     });
 
     it('should update progress bar', async () => {
-      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
-
       // Start at question 2 of 3 = 67%
-      usePracticeSession.mockReturnValue({
+      vi.mocked(usePracticeSession).mockReturnValue({
         questions: createMockQuestions(3),
         loading: false,
         error: null,
@@ -284,9 +280,8 @@ describe('PracticeSession Integration Tests', () => {
   describe('Session Completion', () => {
     it('should call onComplete when session finishes', async () => {
       const onComplete = vi.fn();
-      const { usePracticeSession } = require("../../src/hooks/use-practice-session");
 
-      usePracticeSession.mockReturnValue({
+      vi.mocked(usePracticeSession).mockReturnValue({
         questions: createMockQuestions(1),
         loading: false,
         error: null,
