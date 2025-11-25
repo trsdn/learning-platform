@@ -168,6 +168,7 @@ export function Dashboard({ onClose }: DashboardProps) {
           new: newItems,
         },
       });
+      setIsLoading(false);
     } catch (err) {
       const structuredError = handleComponentError(err, 'loadDashboardStats');
       setError(structuredError);
