@@ -607,7 +607,7 @@ function AppContent() {
     return {
       id: topic.id,
       name: topic.title,
-      description: `${topic.learningPathIds.length} Lernpfade`,
+      description: `${topic.learningPathIds?.length || 0} Lernpfade`,
       icon,
       color,
     };
