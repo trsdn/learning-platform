@@ -5,6 +5,10 @@
  * refactored components.
  */
 
+// Import Task type from core
+import type { Task } from '@core/types/services';
+import type { AudioConfig } from '@storage/template-loader';
+
 // Re-export core types
 export type {
   Task,
@@ -20,7 +24,7 @@ export type {
   TextInputContent,
 } from '@core/types/services';
 
-export type { AudioConfig } from '@storage/template-loader';
+export type { AudioConfig };
 
 /**
  * Props for the main PracticeSession container
@@ -92,6 +96,3 @@ export interface AudioPlaybackState {
   error: string | null;
   autoPlayUnlocked: boolean;
 }
-
-// Import Task type from core
-import type { Task } from '@core/types/services';
