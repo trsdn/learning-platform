@@ -42,7 +42,7 @@ export function NavigationControls({
   onNext,
   onComplete,
 }: NavigationControlsProps) {
-  const isLastTask = currentTaskIndex >= session.execution.taskIds.length - 1;
+  const isLastTask = currentTaskIndex >= (session.execution.taskIds?.length || 0) - 1;
 
   return (
     <div className={styles['practice-session__actions']}>

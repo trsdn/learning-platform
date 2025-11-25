@@ -332,7 +332,7 @@ export function PracticeSessionContainer({
       {/* Header */}
       <SessionHeader
         currentTaskIndex={currentTaskIndex}
-        totalTasks={session.execution.taskIds.length}
+        totalTasks={session.execution.taskIds?.length || 0}
         currentTask={currentTask}
         progress={progress}
         onCancel={onCancel}

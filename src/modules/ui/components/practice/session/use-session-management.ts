@@ -98,7 +98,7 @@ export function useSessionManagement({
    * Load the task at the current index
    */
   const loadCurrentTask = useCallback(async () => {
-    if (!session || session.execution.taskIds.length === 0) {
+    if (!session || !session.execution.taskIds || session.execution.taskIds.length === 0) {
       return;
     }
 
@@ -177,7 +177,7 @@ export function useSessionManagement({
   const nextTask = useCallback(() => {
     setShowFeedback(false);
 
-    if (session && currentTaskIndex < session.execution.taskIds.length - 1) {
+    if (session && session.execution.taskIds && currentTaskIndex < session.execution.taskIds.length - 1) {
       setCurrentTaskIndex(currentTaskIndex + 1);
     } else {
       completeSession();
@@ -217,7 +217,7 @@ export function useSessionManagement({
    * Calculate progress percentage
    */
   const progress =
-    session && session.execution.taskIds.length > 0
+    session && session.execution.taskIds && session.execution.taskIds.length > 0
       ? Math.round(
           ((currentTaskIndex + 1) / session.execution.taskIds.length) * 100
         )
@@ -230,14 +230,14 @@ export function useSessionManagement({
 
   // Load current task when session is first loaded
   useEffect(() => {
-    if (session && session.execution.taskIds.length > 0 && currentTaskIndex === 0) {
+    if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex === 0) {
       loadCurrentTask();
     }
   }, [session, loadCurrentTask]);
 
   // Load current task when index changes
   useEffect(() => {
-    if (session && session.execution.taskIds.length > 0 && currentTaskIndex > 0) {
+    if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex > 0) {
       loadCurrentTask();
     }
   }, [currentTaskIndex, loadCurrentTask]);
