@@ -31,35 +31,6 @@ function formatDateTime(value: string | null): string {
   }
 }
 
-const PRESETS = [
-  {
-    id: 'performance',
-    label: '⚡ Performance-Modus',
-    apply: (settings: AppSettings): AppSettings => ({
-      ...settings,
-      theme: { ...settings.theme, animationsEnabled: false, mode: 'dark' },
-      audio: { ...settings.audio, autoPlayEnabled: false },
-    }),
-  },
-  {
-    id: 'accessibility',
-    label: '♿ Barrierefreiheit',
-    apply: (settings: AppSettings): AppSettings => ({
-      ...settings,
-      theme: { ...settings.theme, fontScale: 'x-large', reducedMotion: true, animationsEnabled: false, mode: 'light' },
-    }),
-  },
-  {
-    id: 'power-saver',
-    label: '🔋 Energiesparen',
-    apply: (settings: AppSettings): AppSettings => ({
-      ...settings,
-      audio: { ...settings.audio, autoPlayEnabled: false },
-      theme: { ...settings.theme, animationsEnabled: false },
-    }),
-  },
-];
-
 export function SettingsPage({ onClose }: SettingsPageProps) {
   const {
     settings,
@@ -136,12 +107,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       </div>
     );
   }
-
-  const handlePreset = (presetId: string) => {
-    const preset = PRESETS.find((item) => item.id === presetId);
-    if (!preset) return;
-    updateSettings(() => preset.apply(settings));
-  };
 
   const handleExport = () => {
     const data = exportSettings();
@@ -404,19 +369,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
-      </div>
-
-      <div className={styles.presets}>
-        {PRESETS.map((preset) => (
-          <button
-            key={preset.id}
-            type="button"
-            className={styles.presetButton}
-            onClick={() => handlePreset(preset.id)}
-          >
-            {preset.label}
-          </button>
-        ))}
       </div>
 
       <div className={styles.sections}>
