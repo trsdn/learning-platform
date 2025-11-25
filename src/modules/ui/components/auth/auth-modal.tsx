@@ -10,7 +10,6 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/modules/ui/contexts/auth-context';
 import { getAuthErrorMessage } from '@/modules/core/services/supabase-auth-service';
-import type { AuthProvider } from '@/modules/core/services/supabase-auth-service';
 
 type AuthTab = 'login' | 'signup' | 'reset';
 
@@ -20,7 +19,7 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
-  const { signIn, signUp, signInWithMagicLink, signInWithOAuth, resetPassword } = useAuth();
+  const { signIn, signUp, resetPassword } = useAuth();
 
   const [activeTab, setActiveTab] = useState<AuthTab>(defaultTab);
   const [email, setEmail] = useState('');
@@ -77,39 +76,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     }
   };
 
-  const handleMagicLink = async () => {
-    if (!email) {
-      setError('Bitte geben Sie eine E-Mail-Adresse ein');
-      return;
-    }
 
-    setLoading(true);
-    setError(null);
-    setSuccess(null);
-
-    const { error } = await signInWithMagicLink(email);
-
-    setLoading(false);
-
-    if (error) {
-      setError(getAuthErrorMessage(error as any));
-    } else {
-      setSuccess('Magic Link wurde an Ihre E-Mail-Adresse gesendet. Bitte prüfen Sie Ihr Postfach.');
-    }
-  };
-
-  const handleOAuth = async (provider: AuthProvider) => {
-    setLoading(true);
-    setError(null);
-
-    const { error } = await signInWithOAuth(provider);
-
-    if (error) {
-      setError(getAuthErrorMessage(error as any));
-      setLoading(false);
-    }
-    // OAuth will redirect, so we don't stop loading here
-  };
 
   const handlePasswordReset = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -198,42 +165,6 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
               </button>
             </form>
 
-            <div className="auth-divider">
-              <span>oder</span>
-            </div>
-
-            <button
-              type="button"
-              className="btn-secondary"
-              onClick={handleMagicLink}
-              disabled={loading || !email}
-            >
-              ✨ Magic Link senden
-            </button>
-
-            <div className="auth-divider">
-              <span>oder mit</span>
-            </div>
-
-            <div className="oauth-buttons">
-              <button
-                type="button"
-                className="btn-oauth btn-google"
-                onClick={() => handleOAuth('google')}
-                disabled={loading}
-              >
-                <span className="oauth-icon">🔴</span> Google
-              </button>
-              <button
-                type="button"
-                className="btn-oauth btn-github"
-                onClick={() => handleOAuth('github')}
-                disabled={loading}
-              >
-                <span className="oauth-icon">⚫</span> GitHub
-              </button>
-            </div>
-
             <button
               type="button"
               className="link-button"
@@ -291,29 +222,6 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
                 {loading ? '⏳ Registrieren...' : '✨ Konto erstellen'}
               </button>
             </form>
-
-            <div className="auth-divider">
-              <span>oder mit</span>
-            </div>
-
-            <div className="oauth-buttons">
-              <button
-                type="button"
-                className="btn-oauth btn-google"
-                onClick={() => handleOAuth('google')}
-                disabled={loading}
-              >
-                <span className="oauth-icon">🔴</span> Google
-              </button>
-              <button
-                type="button"
-                className="btn-oauth btn-github"
-                onClick={() => handleOAuth('github')}
-                disabled={loading}
-              >
-                <span className="oauth-icon">⚫</span> GitHub
-              </button>
-            </div>
 
             <p className="auth-note">
               Mit der Registrierung akzeptierst du unsere Nutzungsbedingungen.

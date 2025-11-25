@@ -18,15 +18,6 @@ interface SectionDefinition {
   content: JSX.Element;
 }
 
-function formatBytes(bytes: number | null): string {
-  if (bytes == null) return '–';
-  if (bytes === 0) return '0 B';
-  const units = ['B', 'KB', 'MB', 'GB'];
-  const index = Math.floor(Math.log(bytes) / Math.log(1024));
-  const value = bytes / Math.pow(1024, index);
-  return `${value.toFixed(1)} ${units[index]}`;
-}
-
 function formatDateTime(value: string | null): string {
   if (!value) return 'Nie';
   try {
@@ -78,8 +69,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
     resetSettings,
     exportSettings,
     importSettingsFromText,
-    storageEstimate,
-    refreshStorageEstimate,
   } = useAppSettings();
   const { settings: audioSettings, updateSettings: updateAudioSettings } = useAudioSettings();
   const [searchQuery, setSearchQuery] = useState('');
@@ -132,14 +121,13 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       if (typeof detail?.storageUsageBytes === 'number') {
         handleDatabaseMetadataUpdate({ storageUsageBytes: detail.storageUsageBytes });
       }
-      void refreshStorageEstimate();
     };
 
     window.addEventListener('app:database:updated', listener);
     return () => {
       window.removeEventListener('app:database:updated', listener);
     };
-  }, [handleDatabaseMetadataUpdate, refreshStorageEstimate]);
+  }, [handleDatabaseMetadataUpdate]);
 
   if (loading || !settings) {
     return (
@@ -241,20 +229,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               {showImportError}
             </div>
           )}
-          <div className={styles.infoCard}>
-            <div className={styles.infoGrid}>
-              <div>💾 Speichernutzung: {formatBytes(storageEstimate?.usage ?? null)} / {formatBytes(storageEstimate?.quota ?? null)}</div>
-              <div>📅 Letztes Update: {formatDateTime(settings.database.lastUpdatedAt)}</div>
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                void refreshStorageEstimate();
-              }}
-            >
-              Speichernutzung aktualisieren
-            </button>
-          </div>
         </div>
       ),
     };
