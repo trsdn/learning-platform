@@ -34,8 +34,8 @@ function createRepositoryProxy<T extends object>(
   repositoryName: string
 ): T {
   return new Proxy(repository, {
-    get(target, prop, receiver) {
-      const originalMethod = Reflect.get(target, prop, receiver);
+    get(target, prop) {
+      const originalMethod = Reflect.get(target, prop, target);
 
       // Only wrap async methods (functions)
       if (typeof originalMethod !== 'function') {
@@ -60,7 +60,7 @@ function createRepositoryProxy<T extends object>(
 
         // Wrap the method call with retry logic
         return withRetry(
-          () => originalMethod.apply(this, args),
+          () => originalMethod.apply(target, args),
           operationName,
           retryOptions
         );

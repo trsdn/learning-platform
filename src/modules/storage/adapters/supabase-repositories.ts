@@ -34,7 +34,7 @@ export class TopicRepository {
    * Get all active topics
    */
   async getAll(): Promise<Topic[]> {
-    const { data, error } = await supabase
+    const { data, error} = await supabase
       .from('topics')
       .select('*')
       .eq('is_active', true)
@@ -45,7 +45,7 @@ export class TopicRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -187,7 +187,7 @@ export class LearningPathRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -225,7 +225,7 @@ export class LearningPathRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -338,7 +338,7 @@ export class TaskRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -375,7 +375,7 @@ export class TaskRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -394,7 +394,7 @@ export class TaskRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -453,7 +453,7 @@ export class TaskRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -536,7 +536,7 @@ export class TaskRepository {
       throw error;
     }
 
-    const tasks = (data || []).map(this.mapFromDb);
+    const tasks = (data || []).map(row => this.mapFromDb(row));
     console.log(`[TaskRepository] Found ${tasks.length} tasks`);
 
     // Shuffle tasks
@@ -622,7 +622,7 @@ export class UserProgressRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -667,7 +667,7 @@ export class UserProgressRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -765,7 +765,7 @@ export class PracticeSessionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -810,7 +810,7 @@ export class PracticeSessionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -979,7 +979,7 @@ export class AnswerHistoryRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1001,7 +1001,7 @@ export class AnswerHistoryRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1023,7 +1023,7 @@ export class AnswerHistoryRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1084,7 +1084,7 @@ export class AnswerHistoryRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1162,7 +1162,7 @@ export class SpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1213,7 +1213,7 @@ export class SpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1235,7 +1235,7 @@ export class SpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
