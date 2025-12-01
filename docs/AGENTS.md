@@ -1,9 +1,11 @@
 # Documentation Agent Guidelines
 
-**Last Updated**: 2025-11-24
+**Last Updated**: 2025-12-01
 **Parent Guide**: [../AGENTS.md](../AGENTS.md)
 
 > **For AI Agents**: This guide contains specific instructions for working with project documentation.
+
+**Related Guides**: [tests/AGENTS.md](../tests/AGENTS.md) for test documentation, [templates/AGENTS.md](../templates/AGENTS.md) for code examples
 
 ---
 

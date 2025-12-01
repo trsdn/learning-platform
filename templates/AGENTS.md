@@ -1,9 +1,11 @@
 # Template Management Agent Guidelines
 
-**Last Updated**: 2025-11-24
+**Last Updated**: 2025-12-01
 **Parent Guide**: [../AGENTS.md](../AGENTS.md)
 
 > **For AI Agents**: This guide contains specific instructions for working with code templates and scaffolding.
+
+**Related Guides**: [src/AGENTS.md](../src/AGENTS.md) for source organization, [docs/css-modules.md](../docs/architecture/css-modules.md) for styling details
 
 ---
 

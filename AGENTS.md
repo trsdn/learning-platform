@@ -1,6 +1,6 @@
 # AI Agent Development Guide
 
-**Last Updated**: 2025-10-05 | **Platform**: MindForge Academy Learning Platform
+**Last Updated**: 2025-12-01 | **Platform**: MindForge Academy Learning Platform
 
 ## 🎯 Quick Start
 
@@ -16,6 +16,33 @@ npm run build    # Production build (validates TypeScript)
 npm test         # Run tests
 npm run deploy   # Deploy to GitHub Pages
 ```
+
+---
+
+## 📍 Agent Guide Navigation
+
+**Choose your path based on your task**:
+
+| I need to... | Read this guide | Priority |
+|--------------|----------------|----------|
+| Understand agent architecture | [.claude/AGENTS.md](./.claude/AGENTS.md) | 🔴 Critical |
+| Create/modify components | [templates/AGENTS.md](./templates/AGENTS.md) | 🟡 High |
+| Add/modify learning content | [public/AGENTS.md](./public/AGENTS.md) | 🟡 High |
+| Run/create tests | [tests/AGENTS.md](./tests/AGENTS.md) | 🟡 High |
+| Work with database | [infrastructure/supabase/AGENTS.md](./infrastructure/supabase/AGENTS.md) | 🟡 High |
+| Run/create scripts | [scripts/AGENTS.md](./scripts/AGENTS.md) | 🟢 Medium |
+| Update documentation | [docs/AGENTS.md](./docs/AGENTS.md) | 🟢 Medium |
+| Understand source code | [src/AGENTS.md](./src/AGENTS.md) | 🔵 Reference |
+| Work with data templates | [data/AGENTS.md](./data/AGENTS.md) | 🔵 Reference |
+
+**Quick Decision Tree**:
+
+- 🤖 Working with AI agents? → `.claude/AGENTS.md`
+- 📚 Creating learning content? → `public/AGENTS.md`
+- 🧪 Running tests? → `tests/AGENTS.md`
+- 🗄️ Database operations? → `infrastructure/supabase/AGENTS.md`
+- 📝 Writing docs? → `docs/AGENTS.md`
+- 🎨 Building UI? → `templates/AGENTS.md`
 
 ---
 
@@ -152,93 +179,17 @@ Each type has unique content interface:
 
 ## 🧪 Testing & Artifacts
 
-### Test Structure
+For comprehensive testing guidelines, see domain-specific guides:
 
-```text
-tests/
-├── unit/           # Jest unit tests
-├── e2e/            # Playwright E2E tests
-├── visual/         # Visual regression tests
-└── artifacts/      # Test outputs (gitignored)
+- **Testing**: [tests/AGENTS.md](./tests/AGENTS.md) - Unit, E2E, visual testing, test artifacts
+- **Artifacts**: Test artifacts managed in `tests/artifacts/` (gitignored)
+- **Screenshots**: Agent screenshots in `.agent-workforce/screenshots/` (gitignored)
 
-.agent-workforce/   # Agent-generated artifacts (gitignored)
-├── screenshots/
-│   ├── debug/      # Temporary debug screenshots
-│   ├── reports/    # Test report screenshots
-│   └── validation/ # Validation screenshots
-├── logs/           # Agent execution logs
-└── reports/        # Agent-generated reports
-```
+**Quick Rules**:
 
-### Screenshot Storage Rules
-
-**For Agents & Automated Testing**:
-
-- ✅ **DO**: Save screenshots to `.agent-workforce/screenshots/{category}/`
-- ✅ **DO**: Use naming: `{purpose}-{timestamp}.png` (e.g., `debug-homepage-2025-11-24T16-04-20.png`)
-- ❌ **DON'T**: Save to project root (causes clutter)
-- ❌ **DON'T**: Save to `.playwright-mcp/` (deprecated)
-- ❌ **DON'T**: Save to `tests/artifacts/` (reserved for test runners)
-
-**Categories**:
-
-- `debug/` - Debug screenshots during development
-- `reports/` - Visual test reports
-- `validation/` - UI validation screenshots
-
-**For Documentation**:
-
-- Save important screenshots to `docs/` with descriptive names
-- These ARE committed to git
-
-**For Test Snapshots**:
-
-- Save to `tests/{test-type}/snapshots/`
-- These ARE committed to git for visual regression
-
-### Playwright MCP Usage
-
-When using Playwright MCP tools from agents:
-
-```typescript
-// Take screenshot
-await mcp__playwright__browser_take_screenshot({
-  filename: ".agent-workforce/screenshots/debug/page-state-2025-11-24.png"
-})
-
-// Navigate and capture
-await mcp__playwright__browser_navigate({ url: "http://localhost:5173" })
-await mcp__playwright__browser_snapshot() // For a11y tree
-await mcp__playwright__browser_take_screenshot({
-  filename: ".agent-workforce/screenshots/validation/homepage.png"
-})
-```
-
-### Cleanup Commands
-
-```bash
-# Clean all agent-generated artifacts
-rm -rf .agent-workforce/screenshots/debug/*
-rm -rf .agent-workforce/screenshots/reports/*
-rm -rf .agent-workforce/logs/*
-
-# Clean root-level misplaced screenshots
-rm -f page-*.png test-*.png screenshot-*.png
-
-# Clean deprecated playwright MCP artifacts
-rm -rf .playwright-mcp/*.png
-
-# Clean test artifacts (managed by test runners)
-rm -rf tests/artifacts/screenshots/debug/*
-rm -rf tests/artifacts/logs/*
-```
-
-### Test Artifacts in CI/CD
-
-- Test artifacts in `tests/artifacts/` are **automatically cleaned** in CI
-- Agent artifacts in `.agent-workforce/` are **gitignored** (never committed)
-- GitHub Actions uploads only essential reports
-- Local artifacts help debugging but aren't committed
+- ✅ Save screenshots to `.agent-workforce/screenshots/{category}/`
+- ✅ Run `npm test` before committing
+- ✅ Check `tests/AGENTS.md` for detailed testing procedures
 
 ---
 
@@ -265,10 +216,10 @@ For specialized work in specific areas, consult these domain-specific guides:
 
 ## 📚 Deep Dive References
 
-**Styling**: `docs/css-modules.md` (comprehensive CSS Modules guide)
-**Types**: `src/modules/core/types/services.ts` (all task type interfaces)
-**SM-2 Algorithm**: https://www.supermemo.com/en/archives1990-2015/english/ol/sm2
-**Dexie.js**: https://dexie.org/
+- **Styling**: `docs/css-modules.md` (comprehensive CSS Modules guide)
+- **Types**: `src/modules/core/types/services.ts` (all task type interfaces)
+- **SM-2 Algorithm**: <https://www.supermemo.com/en/archives1990-2015/english/ol/sm2>
+- **Dexie.js**: <https://dexie.org/>
 
 ---
 

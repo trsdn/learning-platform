@@ -1,9 +1,12 @@
 # Supabase Database Agent Guidelines
 
-**Last Updated**: 2025-11-24
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
+**Last Updated**: 2025-12-01
+**Parent Guide**: [../../AGENTS.md](../../AGENTS.md)
+**Status**: 🏆 **Authoritative Source** for database operations and migrations
 
 > **For AI Agents**: This guide contains specific instructions for working with Supabase database operations, migrations, and data management.
+
+**Related Guides**: [scripts/AGENTS.md](../../scripts/AGENTS.md) for seeding scripts, [public/AGENTS.md](../../public/AGENTS.md) for content structure
 
 ---
 

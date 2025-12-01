@@ -1,9 +1,10 @@
 # Learning Content Agent Guidelines
 
-**Last Updated**: 2025-11-24
+**Last Updated**: 2025-12-01
 **Parent Guide**: [../AGENTS.md](../AGENTS.md)
+**Status**: 🏆 **Authoritative Source** for learning content and task types
 
-> **For AI Agents**: This guide contains specific instructions for working with learning paths, tasks, and educational content.
+> **For AI Agents**: This guide contains specific instructions for working with learning paths, tasks, and educational content. This is the **authoritative source** for task type definitions.
 
 ---
 
@@ -79,6 +80,8 @@ Examples:
 ---
 
 ## 🎓 Task Types Reference
+
+**Note**: For a quick summary, see [../AGENTS.md](../AGENTS.md). This section provides the **authoritative, detailed specifications**.
 
 The platform supports 8 task types. Each has unique content structure:
 
