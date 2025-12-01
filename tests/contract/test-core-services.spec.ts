@@ -28,7 +28,7 @@ describe('ILearningContentService Contract', () => {
 
     // This will fail until implementation exists
     expect(() => {
-      const service: ILearningContentService = null as any;
+      const service = null as unknown as ILearningContentService;
       requiredMethods.forEach((method) => {
         expect(service).toHaveProperty(method);
       });
@@ -48,7 +48,7 @@ describe('ISpacedRepetitionService Contract', () => {
     ];
 
     expect(() => {
-      const service: ISpacedRepetitionService = null as any;
+      const service = null as unknown as ISpacedRepetitionService;
       requiredMethods.forEach((method) => {
         expect(service).toHaveProperty(method);
       });
@@ -56,7 +56,7 @@ describe('ISpacedRepetitionService Contract', () => {
   });
 
   it('should handle SM-2 algorithm parameters correctly', async () => {
-    const service: ISpacedRepetitionService = null as any;
+    const service = null as unknown as ISpacedRepetitionService;
 
     // Should accept grade 0-5
     expect(async () => {
@@ -89,7 +89,7 @@ describe('IPracticeSessionService Contract', () => {
     ];
 
     expect(() => {
-      const service: IPracticeSessionService = null as any;
+      const service = null as unknown as IPracticeSessionService;
       requiredMethods.forEach((method) => {
         expect(service).toHaveProperty(method);
       });
@@ -97,7 +97,7 @@ describe('IPracticeSessionService Contract', () => {
   });
 
   it('should validate session configuration', async () => {
-    const service: IPracticeSessionService = null as any;
+    const service = null as unknown as IPracticeSessionService;
 
     expect(async () => {
       const session = await service.createSession({
@@ -126,7 +126,7 @@ describe('IProgressTrackingService Contract', () => {
     ];
 
     expect(() => {
-      const service: IProgressTrackingService = null as any;
+      const service = null as unknown as IProgressTrackingService;
       requiredMethods.forEach((method) => {
         expect(service).toHaveProperty(method);
       });
@@ -134,7 +134,7 @@ describe('IProgressTrackingService Contract', () => {
   });
 
   it('should calculate accuracy correctly', async () => {
-    const service: IProgressTrackingService = null as any;
+    const service = null as unknown as IProgressTrackingService;
 
     expect(async () => {
       const summary = await service.getProgressSummary('user-1');
@@ -157,7 +157,7 @@ describe('IAnswerHistoryService Contract', () => {
     ];
 
     expect(() => {
-      const service: IAnswerHistoryService = null as any;
+      const service = null as unknown as IAnswerHistoryService;
       requiredMethods.forEach((method) => {
         expect(service).toHaveProperty(method);
       });
@@ -165,7 +165,7 @@ describe('IAnswerHistoryService Contract', () => {
   });
 
   it('should validate answer data structure', async () => {
-    const service: IAnswerHistoryService = null as any;
+    const service = null as unknown as IAnswerHistoryService;
 
     expect(async () => {
       const answer = await service.recordAnswer({

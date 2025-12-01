@@ -17,7 +17,7 @@ const indexedDB = {
   }),
 };
 
-(global as any).indexedDB = indexedDB;
+(global as unknown as { indexedDB: typeof indexedDB }).indexedDB = indexedDB as unknown as IDBFactory;
 
 // Mock localStorage
 const localStorageMock = (() => {
@@ -37,4 +37,4 @@ const localStorageMock = (() => {
   };
 })();
 
-(global as any).localStorage = localStorageMock;
+(global as unknown as { localStorage: Storage }).localStorage = localStorageMock as Storage;

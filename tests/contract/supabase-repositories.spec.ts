@@ -33,8 +33,8 @@ import { supabase } from '@/modules/storage/supabase-client';
 /**
  * Helper to create chainable Supabase query mock
  */
-function createSupabaseMock(resolveWith: any) {
-  const chain: any = {
+function createSupabaseMock(resolveWith: unknown) {
+  const chain = {
     select: vi.fn().mockReturnThis(),
     insert: vi.fn().mockReturnThis(),
     update: vi.fn().mockReturnThis(),
@@ -90,7 +90,7 @@ describe('TopicRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockTopics, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const topics = await repository.getAll();
 
@@ -113,7 +113,7 @@ describe('TopicRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockTopic, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const topic = await repository.getById('math');
 
@@ -126,7 +126,7 @@ describe('TopicRepository Implementation', () => {
       data: null,
       error: { code: 'PGRST116' },
     });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const topic = await repository.getById('non-existent');
 
@@ -156,7 +156,7 @@ describe('TopicRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockCreatedTopic, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const created = await repository.create(newTopic);
 
@@ -177,7 +177,7 @@ describe('TopicRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockUpdatedTopic, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const updated = await repository.update('math', { title: 'Updated Math' });
 
@@ -186,7 +186,7 @@ describe('TopicRepository Implementation', () => {
 
   it('should implement delete method', async () => {
     const mockChain = createSupabaseMock({ error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     await expect(repository.delete('math')).resolves.not.toThrow();
   });
@@ -218,7 +218,7 @@ describe('LearningPathRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockPaths, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const paths = await repository.getAll();
 
@@ -244,7 +244,7 @@ describe('LearningPathRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockPaths, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const paths = await repository.getByTopicId('math');
 
@@ -280,7 +280,7 @@ describe('TaskRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockTasks, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const tasks = await repository.getByLearningPathId('path1');
 
@@ -307,7 +307,7 @@ describe('TaskRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockTasks, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const tasks = await repository.getAll();
 
@@ -343,7 +343,7 @@ describe('UserProgressRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockProgress, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const progress = await repository.getByLearningPathId('path1');
 
@@ -382,7 +382,7 @@ describe('UserProgressRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockUpserted, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const upserted = await repository.upsert(progressUpdate);
 
@@ -423,7 +423,7 @@ describe('PracticeSessionRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockSession, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const session = await repository.getById('session1');
 
@@ -459,7 +459,7 @@ describe('PracticeSessionRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockUpdated, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const updated = await repository.update('session1', updates);
 
@@ -493,7 +493,7 @@ describe('AnswerHistoryRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockAnswers, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const answers = await repository.getByTaskId('user1', 'task1');
 
@@ -518,7 +518,7 @@ describe('AnswerHistoryRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockAnswers, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const answers = await repository.getBySessionId('user1', 'session1');
 
@@ -558,7 +558,7 @@ describe('SpacedRepetitionRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockItem, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const item = await repository.getByTaskId('task1');
 
@@ -599,7 +599,7 @@ describe('SpacedRepetitionRepository Implementation', () => {
     };
 
     const mockChain = createSupabaseMock({ data: mockUpserted, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const upserted = await repository.upsert(item);
 
@@ -633,7 +633,7 @@ describe('SpacedRepetitionRepository Implementation', () => {
     ];
 
     const mockChain = createSupabaseMock({ data: mockItems, error: null });
-    (supabase.from as any).mockReturnValue(mockChain);
+    (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
 
     const dueItems = await repository.getDue(now);
 

@@ -38,7 +38,7 @@ describe('AudioSettingsStorage (Contract Tests)', () => {
       }),
       length: 0,
       key: vi.fn(),
-    } as any;
+    } as Storage;
 
     // Create storage instance (will fail until implementation exists)
     storage = createAudioSettingsStorage();

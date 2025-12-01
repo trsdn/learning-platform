@@ -8,7 +8,7 @@
  * Phase: 3.4 - Storage Layer
  */
 
-import type { AudioSettings } from '../../core/entities/audio-settings';
+import type { AudioSettings, LanguageFilter } from '../../core/entities/audio-settings';
 import { DEFAULT_AUDIO_SETTINGS, validateAudioSettings } from '../../core/entities/audio-settings';
 
 const STORAGE_KEY = 'audioSettings';
@@ -34,7 +34,7 @@ export interface IAudioSettingsStorage {
   exists(): boolean;
 
   /** Migrate old settings schema to current version */
-  migrate(oldSettings: any): AudioSettings;
+  migrate(oldSettings: unknown): AudioSettings;
 }
 
 /**
@@ -77,8 +77,9 @@ class AudioSettingsStorage implements IAudioSettingsStorage {
 
       // In test environment, save immediately (no debounce)
       // Detect test environment by checking for vitest or jest globals
-      const isTestEnv = typeof (globalThis as any).describe === 'function' &&
-                       typeof (globalThis as any).it === 'function';
+      const globalThisWithTests = globalThis as { describe?: unknown; it?: unknown };
+      const isTestEnv = typeof globalThisWithTests.describe === 'function' &&
+                       typeof globalThisWithTests.it === 'function';
 
       if (isTestEnv) {
         // Immediate save for tests
@@ -122,17 +123,20 @@ class AudioSettingsStorage implements IAudioSettingsStorage {
     return localStorage.getItem(STORAGE_KEY) !== null;
   }
 
-  migrate(oldSettings: any): AudioSettings {
+  migrate(oldSettings: unknown): AudioSettings {
     // Migration from v1 to v2: Enable auto-play by default
     // This ensures all users get the new auto-play feature enabled
+
+    // Type guard for old settings structure
+    const old = oldSettings as Record<string, unknown>;
 
     const migrated: AudioSettings = {
       version: 2,
       // Force enable auto-play for v1 -> v2 migration
-      autoPlayEnabled: oldSettings.version === 1 ? true : (oldSettings.autoPlayEnabled ?? DEFAULT_AUDIO_SETTINGS.autoPlayEnabled),
-      languageFilter: oldSettings.languageFilter ?? DEFAULT_AUDIO_SETTINGS.languageFilter,
-      perTopicOverrides: oldSettings.perTopicOverrides ?? {},
-      accessibilityMode: oldSettings.accessibilityMode ?? DEFAULT_AUDIO_SETTINGS.accessibilityMode,
+      autoPlayEnabled: old.version === 1 ? true : (old.autoPlayEnabled as boolean | undefined ?? DEFAULT_AUDIO_SETTINGS.autoPlayEnabled),
+      languageFilter: (old.languageFilter as LanguageFilter | undefined) ?? DEFAULT_AUDIO_SETTINGS.languageFilter,
+      perTopicOverrides: (old.perTopicOverrides as Record<string, Partial<Omit<AudioSettings, 'version' | 'perTopicOverrides'>>> | undefined) ?? {},
+      accessibilityMode: (old.accessibilityMode as boolean | undefined) ?? DEFAULT_AUDIO_SETTINGS.accessibilityMode,
     };
 
     try {

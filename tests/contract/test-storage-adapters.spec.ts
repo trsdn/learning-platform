@@ -35,7 +35,7 @@ describe('IRepository Base Contract', () => {
     ];
 
     expect(() => {
-      const repo: IRepository<any> = null as any;
+      const repo = null as unknown as IRepository<unknown>;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -43,7 +43,7 @@ describe('IRepository Base Contract', () => {
   });
 
   it('should handle entity creation with auto-generated fields', async () => {
-    const repo: IRepository<any> = null as any;
+    const repo = null as unknown as IRepository<unknown>;
 
     expect(async () => {
       const entity = await repo.create({
@@ -61,7 +61,7 @@ describe('ITopicRepository Contract', () => {
     const requiredMethods = ['getByTitle', 'getActive', 'search'];
 
     expect(() => {
-      const repo: ITopicRepository = null as any;
+      const repo = null as unknown as ITopicRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -69,7 +69,7 @@ describe('ITopicRepository Contract', () => {
   });
 
   it('should retrieve topics by title uniquely', async () => {
-    const repo: ITopicRepository = null as any;
+    const repo = null as unknown as ITopicRepository;
 
     expect(async () => {
       const topic = await repo.getByTitle('Mathematik');
@@ -89,7 +89,7 @@ describe('ILearningPathRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: ILearningPathRepository = null as any;
+      const repo = null as unknown as ILearningPathRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -97,7 +97,7 @@ describe('ILearningPathRepository Contract', () => {
   });
 
   it('should filter by difficulty level', async () => {
-    const repo: ILearningPathRepository = null as any;
+    const repo = null as unknown as ILearningPathRepository;
 
     expect(async () => {
       const paths = await repo.getByDifficulty('easy');
@@ -121,7 +121,7 @@ describe('ITaskRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: ITaskRepository = null as any;
+      const repo = null as unknown as ITaskRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -129,7 +129,7 @@ describe('ITaskRepository Contract', () => {
   });
 
   it('should return random tasks with filters', async () => {
-    const repo: ITaskRepository = null as any;
+    const repo = null as unknown as ITaskRepository;
 
     expect(async () => {
       const tasks = await repo.getRandomTasks(10, {
@@ -144,7 +144,7 @@ describe('ITaskRepository Contract', () => {
   });
 
   it('should support tag-based search', async () => {
-    const repo: ITaskRepository = null as any;
+    const repo = null as unknown as ITaskRepository;
 
     expect(async () => {
       const tasks = await repo.getByTags(['algebra', 'equations']);
@@ -171,7 +171,7 @@ describe('IAnswerHistoryRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: IAnswerHistoryRepository = null as any;
+      const repo = null as unknown as IAnswerHistoryRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -179,7 +179,7 @@ describe('IAnswerHistoryRepository Contract', () => {
   });
 
   it('should calculate accuracy for date period', async () => {
-    const repo: IAnswerHistoryRepository = null as any;
+    const repo = null as unknown as IAnswerHistoryRepository;
 
     expect(async () => {
       const accuracy = await repo.getAccuracyForPeriod(
@@ -205,7 +205,7 @@ describe('IUserProgressRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: IUserProgressRepository = null as any;
+      const repo = null as unknown as IUserProgressRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -226,7 +226,7 @@ describe('IPracticeSessionRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: IPracticeSessionRepository = null as any;
+      const repo = null as unknown as IPracticeSessionRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -247,7 +247,7 @@ describe('ISpacedRepetitionRepository Contract', () => {
     ];
 
     expect(() => {
-      const repo: ISpacedRepetitionRepository = null as any;
+      const repo = null as unknown as ISpacedRepetitionRepository;
       requiredMethods.forEach((method) => {
         expect(repo).toHaveProperty(method);
       });
@@ -255,7 +255,7 @@ describe('ISpacedRepetitionRepository Contract', () => {
   });
 
   it('should retrieve tasks due for review', async () => {
-    const repo: ISpacedRepetitionRepository = null as any;
+    const repo = null as unknown as ISpacedRepetitionRepository;
 
     expect(async () => {
       const dueItems = await repo.getDue(new Date());
@@ -279,7 +279,7 @@ describe('IStorageAdapter Contract', () => {
     ];
 
     expect(() => {
-      const adapter: IStorageAdapter = null as any;
+      const adapter = null as unknown as IStorageAdapter;
       requiredRepos.forEach((repo) => {
         expect(adapter).toHaveProperty(repo);
       });
@@ -287,7 +287,7 @@ describe('IStorageAdapter Contract', () => {
   });
 
   it('should support transaction management', async () => {
-    const adapter: IStorageAdapter = null as any;
+    const adapter = null as unknown as IStorageAdapter;
 
     expect(async () => {
       await adapter.transaction(async (txAdapter) => {
@@ -310,7 +310,7 @@ describe('IStorageAdapter Contract', () => {
     ];
 
     expect(() => {
-      const adapter: IStorageAdapter = null as any;
+      const adapter = null as unknown as IStorageAdapter;
       requiredMethods.forEach((method) => {
         expect(adapter).toHaveProperty(method);
       });
@@ -331,7 +331,7 @@ describe('IIndexedDBAdapter Contract', () => {
     ];
 
     expect(() => {
-      const adapter: IIndexedDBAdapter = null as any;
+      const adapter = null as unknown as IIndexedDBAdapter;
       requiredMethods.forEach((method) => {
         expect(adapter).toHaveProperty(method);
       });
@@ -339,7 +339,7 @@ describe('IIndexedDBAdapter Contract', () => {
   });
 
   it('should handle bulk import operations', async () => {
-    const adapter: IIndexedDBAdapter = null as any;
+    const adapter = null as unknown as IIndexedDBAdapter;
 
     expect(async () => {
       await adapter.bulkImport('tasks', [
@@ -357,7 +357,7 @@ describe('IInMemoryAdapter Contract', () => {
     const requiredMethods = ['reset', 'seed', 'getState', 'setState'];
 
     expect(() => {
-      const adapter: IInMemoryAdapter = null as any;
+      const adapter = null as unknown as IInMemoryAdapter;
       requiredMethods.forEach((method) => {
         expect(adapter).toHaveProperty(method);
       });
@@ -365,7 +365,7 @@ describe('IInMemoryAdapter Contract', () => {
   });
 
   it('should support test data seeding', async () => {
-    const adapter: IInMemoryAdapter = null as any;
+    const adapter = null as unknown as IInMemoryAdapter;
 
     expect(async () => {
       await adapter.seed({

@@ -45,7 +45,7 @@ export function MultipleChoiceTask({
 
   if (task.type !== 'multiple-choice') return null;
 
-  const content = task.content as any;
+  const content = task.content as unknown as Record<string, unknown>;
 
   const handleOptionClick = (index: number) => {
     if (showFeedback) return;
@@ -75,11 +75,12 @@ export function MultipleChoiceTask({
         // Get the audio URL for this option if available
         // Use the original index from shuffledIndices to get the correct audio
         const originalIndex = shuffledIndices[index];
+        const optionsAudio = content.optionsAudio as string[] | undefined;
         const optionAudioUrl =
-          content.optionsAudio &&
+          optionsAudio &&
           originalIndex !== undefined &&
-          content.optionsAudio[originalIndex]
-            ? `${import.meta.env.BASE_URL}audio/${content.optionsAudio[originalIndex]}`
+          optionsAudio[originalIndex]
+            ? `${import.meta.env.BASE_URL}audio/${optionsAudio[originalIndex]}`
             : null;
 
         return (
@@ -104,4 +105,5 @@ export function MultipleChoiceTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useMultipleChoice } from './use-multiple-choice';

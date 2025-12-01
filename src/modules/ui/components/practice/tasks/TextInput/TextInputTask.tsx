@@ -40,8 +40,8 @@ export function TextInputTask({
 
   const content = task.content as TextInputContent;
 
-  const correctAnswerAudioUrl = (content as any).correctAnswerAudio
-    ? `${import.meta.env.BASE_URL}audio/${(content as any).correctAnswerAudio}`
+  const correctAnswerAudioUrl = (content as unknown as Record<string, unknown>).correctAnswerAudio
+    ? `${import.meta.env.BASE_URL}audio/${(content as unknown as Record<string, unknown>).correctAnswerAudio}`
     : task.audioUrl;
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -86,4 +86,5 @@ export function TextInputTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useTextInput } from './use-text-input';

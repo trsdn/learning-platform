@@ -109,4 +109,5 @@ export function MatchingTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useMatching } from './use-matching';

@@ -16,35 +16,26 @@ import {
   wrapPracticeSessionRepository,
   wrapSpacedRepetitionRepository,
 } from './adapters/repository-with-error-handling';
-import type {
-  ITopicRepository,
-  ILearningPathRepository,
-  ITaskRepository,
-  IAnswerHistoryRepository,
-  IUserProgressRepository,
-  IPracticeSessionRepository,
-  ISpacedRepetitionRepository,
-} from './types/adapters';
 
 /**
  * Storage factory for creating repository instances
  */
 export class StorageFactory {
-  private static topicRepo: ITopicRepository;
-  private static learningPathRepo: ILearningPathRepository;
-  private static taskRepo: ITaskRepository;
-  private static answerHistoryRepo: IAnswerHistoryRepository;
-  private static userProgressRepo: IUserProgressRepository;
-  private static practiceSessionRepo: IPracticeSessionRepository;
-  private static spacedRepetitionRepo: ISpacedRepetitionRepository;
+  private static topicRepo: TopicRepository | null = null;
+  private static learningPathRepo: LearningPathRepository | null = null;
+  private static taskRepo: TaskRepository | null = null;
+  private static answerHistoryRepo: AnswerHistoryRepository | null = null;
+  private static userProgressRepo: UserProgressRepository | null = null;
+  private static practiceSessionRepo: PracticeSessionRepository | null = null;
+  private static spacedRepetitionRepo: SpacedRepetitionRepository | null = null;
 
   /**
    * Gets the Topic repository with error handling
    */
-  static getTopicRepository(): any {
+  static getTopicRepository(): TopicRepository {
     if (!this.topicRepo) {
       const baseRepo = new TopicRepository();
-      this.topicRepo = wrapTopicRepository(baseRepo) as any;
+      this.topicRepo = wrapTopicRepository(baseRepo);
     }
     return this.topicRepo;
   }
@@ -52,10 +43,10 @@ export class StorageFactory {
   /**
    * Gets the LearningPath repository with error handling
    */
-  static getLearningPathRepository(): any {
+  static getLearningPathRepository(): LearningPathRepository {
     if (!this.learningPathRepo) {
       const baseRepo = new LearningPathRepository();
-      this.learningPathRepo = wrapLearningPathRepository(baseRepo) as any;
+      this.learningPathRepo = wrapLearningPathRepository(baseRepo);
     }
     return this.learningPathRepo;
   }
@@ -63,10 +54,10 @@ export class StorageFactory {
   /**
    * Gets the Task repository with error handling
    */
-  static getTaskRepository(): any {
+  static getTaskRepository(): TaskRepository {
     if (!this.taskRepo) {
       const baseRepo = new TaskRepository();
-      this.taskRepo = wrapTaskRepository(baseRepo) as any;
+      this.taskRepo = wrapTaskRepository(baseRepo);
     }
     return this.taskRepo;
   }
@@ -74,10 +65,10 @@ export class StorageFactory {
   /**
    * Gets the AnswerHistory repository with error handling
    */
-  static getAnswerHistoryRepository(): any {
+  static getAnswerHistoryRepository(): AnswerHistoryRepository {
     if (!this.answerHistoryRepo) {
       const baseRepo = new AnswerHistoryRepository();
-      this.answerHistoryRepo = wrapAnswerHistoryRepository(baseRepo) as any;
+      this.answerHistoryRepo = wrapAnswerHistoryRepository(baseRepo);
     }
     return this.answerHistoryRepo;
   }
@@ -85,10 +76,10 @@ export class StorageFactory {
   /**
    * Gets the UserProgress repository with error handling
    */
-  static getUserProgressRepository(): any {
+  static getUserProgressRepository(): UserProgressRepository {
     if (!this.userProgressRepo) {
       const baseRepo = new UserProgressRepository();
-      this.userProgressRepo = wrapUserProgressRepository(baseRepo) as any;
+      this.userProgressRepo = wrapUserProgressRepository(baseRepo);
     }
     return this.userProgressRepo;
   }
@@ -96,10 +87,10 @@ export class StorageFactory {
   /**
    * Gets the PracticeSession repository with error handling
    */
-  static getPracticeSessionRepository(): any {
+  static getPracticeSessionRepository(): PracticeSessionRepository {
     if (!this.practiceSessionRepo) {
       const baseRepo = new PracticeSessionRepository();
-      this.practiceSessionRepo = wrapPracticeSessionRepository(baseRepo) as any;
+      this.practiceSessionRepo = wrapPracticeSessionRepository(baseRepo);
     }
     return this.practiceSessionRepo;
   }
@@ -107,10 +98,10 @@ export class StorageFactory {
   /**
    * Gets the SpacedRepetition repository with error handling
    */
-  static getSpacedRepetitionRepository(): any {
+  static getSpacedRepetitionRepository(): SpacedRepetitionRepository {
     if (!this.spacedRepetitionRepo) {
       const baseRepo = new SpacedRepetitionRepository();
-      this.spacedRepetitionRepo = wrapSpacedRepetitionRepository(baseRepo) as any;
+      this.spacedRepetitionRepo = wrapSpacedRepetitionRepository(baseRepo);
     }
     return this.spacedRepetitionRepo;
   }
@@ -119,13 +110,13 @@ export class StorageFactory {
    * Resets all repository instances (useful for testing)
    */
   static reset(): void {
-    this.topicRepo = null as any;
-    this.learningPathRepo = null as any;
-    this.taskRepo = null as any;
-    this.answerHistoryRepo = null as any;
-    this.userProgressRepo = null as any;
-    this.practiceSessionRepo = null as any;
-    this.spacedRepetitionRepo = null as any;
+    this.topicRepo = null;
+    this.learningPathRepo = null;
+    this.taskRepo = null;
+    this.answerHistoryRepo = null;
+    this.userProgressRepo = null;
+    this.practiceSessionRepo = null;
+    this.spacedRepetitionRepo = null;
   }
 }
 

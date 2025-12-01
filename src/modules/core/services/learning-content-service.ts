@@ -53,7 +53,14 @@ export class LearningContentService implements ILearningContentService {
   }
 
   async searchTasks(query: string, filters: TaskSearchFilters): Promise<Task[]> {
-    const searchQuery: any = { text: query };
+    const searchQuery: {
+      text: string;
+      topicId?: string;
+      learningPathId?: string;
+      difficulty?: 'easy' | 'medium' | 'hard';
+      type?: string;
+      tags?: string[];
+    } = { text: query };
 
     if (filters.topicId) searchQuery.topicId = filters.topicId;
     if (filters.learningPathId) searchQuery.learningPathId = filters.learningPathId;

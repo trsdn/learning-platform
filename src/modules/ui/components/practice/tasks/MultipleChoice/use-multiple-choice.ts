@@ -52,8 +52,8 @@ export function useMultipleChoice(
       return;
     }
 
-    const content = task.content as any;
-    const originalOptions = [...content.options];
+    const content = task.content as unknown as Record<string, unknown>;
+    const originalOptions = [...(content.options as unknown[])];
     const originalCorrectAnswer = content.correctAnswer;
 
     // Create array of indices to track original positions
@@ -66,10 +66,10 @@ export function useMultipleChoice(
     }
 
     // Create shuffled options array based on shuffled indices
-    const shuffled = indices.map((i) => originalOptions[i]!);
+    const shuffled = indices.map((i) => originalOptions[i]!) as string[];
 
     // Find where the correct answer ended up
-    const correctIndex = shuffled.indexOf(originalCorrectAnswer);
+    const correctIndex = shuffled.indexOf(originalCorrectAnswer as string);
 
     setShuffledOptions(shuffled);
     setShuffledIndices(indices);

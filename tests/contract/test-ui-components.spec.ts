@@ -37,7 +37,7 @@ describe('Topic Components Contract', () => {
 
   it('should define TopicCardProps with required fields', () => {
     const props: Partial<TopicCardProps> = {
-      topic: undefined as any,
+      topic: undefined,
       onClick: () => {},
     };
 
@@ -74,7 +74,7 @@ describe('Learning Path Components Contract', () => {
 
   it('should define LearningPathCardProps with optional display flags', () => {
     const props: LearningPathCardProps = {
-      path: null as any,
+      path: null,
       onClick: () => {},
       showDifficulty: true,
       showEstimatedTime: true,
@@ -88,7 +88,7 @@ describe('Learning Path Components Contract', () => {
 describe('Practice Session Components Contract', () => {
   it('should define PracticeSessionSetupProps correctly', () => {
     const props: PracticeSessionSetupProps = {
-      topic: null as any,
+      topic: null,
       learningPaths: [],
       defaultConfig: {
         topicId: 'math',
@@ -107,7 +107,7 @@ describe('Practice Session Components Contract', () => {
 
   it('should define PracticeSessionProps with control handlers', () => {
     const props: PracticeSessionProps = {
-      session: null as any,
+      session: null,
       currentTask: null,
       onAnswer: () => {},
       onHint: () => {},
@@ -127,7 +127,7 @@ describe('Practice Session Components Contract', () => {
 
   it('should define TaskDisplayProps with feedback support', () => {
     const props: TaskDisplayProps = {
-      task: null as any,
+      task: null,
       onAnswer: () => {},
       showFeedback: true,
       feedback: {
@@ -202,7 +202,7 @@ describe('Dashboard Components Contract', () => {
 
   it('should define SessionReviewProps with answer review data', () => {
     const props: SessionReviewProps = {
-      session: null as any,
+      session: null,
       answers: [],
       onReviewTask: () => {},
       onStartNewSession: () => {},

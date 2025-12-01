@@ -159,46 +159,6 @@ export const ConnectionBadge: React.FC<{ className?: string }> = ({ className = 
   );
 };
 
-/**
- * Hook to use connection status in components
- */
-export function useConnectionStatus(): {
-  status: ConnectionStatus;
-  latency: number | undefined;
-  error: any;
-  isConnected: boolean;
-} {
-  const [healthResult, setHealthResult] = useState<HealthCheckResult | null>(null);
-
-  useEffect(() => {
-    const monitor = getConnectionMonitor();
-    monitor.start();
-
-    const unsubscribe = monitor.subscribe((result) => {
-      setHealthResult(result);
-    });
-
-    return () => {
-      unsubscribe();
-      monitor.stop();
-    };
-  }, []);
-
-  if (!healthResult) {
-    return {
-      status: ConnectionStatus.CHECKING,
-      latency: undefined,
-      error: undefined,
-      isConnected: false,
-    };
-  }
-
-  return {
-    status: healthResult.status,
-    latency: healthResult.latency,
-    error: healthResult.error,
-    isConnected:
-      healthResult.status === ConnectionStatus.CONNECTED ||
-      healthResult.status === ConnectionStatus.DEGRADED,
-  };
-}
+// Export the hook from its own file
+// eslint-disable-next-line react-refresh/only-export-components
+export { useConnectionStatus } from './use-connection-status';

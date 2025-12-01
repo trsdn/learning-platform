@@ -13,6 +13,7 @@ import {
   getSpacedRepetitionRepository,
 } from '@storage/factory';
 import { PracticeSessionContainer } from './PracticeSessionContainer';
+import styles from './PracticeSessionWrapper.module.css';
 
 interface PracticeSessionWrapperProps {
   /** The topic ID */
@@ -78,7 +79,7 @@ export function PracticeSessionWrapper({
   // Show loading state
   if (isCreating) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <div className={styles.loading}>
         <p>Sitzung wird erstellt...</p>
       </div>
     );
@@ -87,21 +88,13 @@ export function PracticeSessionWrapper({
   // Show error state
   if (error || !sessionId) {
     return (
-      <div style={{ padding: '2rem', textAlign: 'center' }}>
-        <p style={{ color: 'var(--color-error, #ef4444)' }}>
+      <div className={styles.error}>
+        <p className={styles.error__message}>
           {error || 'Fehler beim Erstellen der Sitzung'}
         </p>
         <button
           onClick={onCancel}
-          style={{
-            marginTop: '1rem',
-            padding: '0.5rem 1rem',
-            background: 'var(--color-primary)',
-            color: 'var(--color-text-inverse)',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-          }}
+          className={styles.error__button}
         >
           Zurück
         </button>

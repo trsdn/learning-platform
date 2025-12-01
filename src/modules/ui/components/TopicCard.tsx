@@ -1,4 +1,6 @@
 import React from 'react';
+import clsx from 'clsx';
+import styles from './TopicCard.module.css';
 
 /**
  * Topic data for display in card
@@ -26,21 +28,6 @@ export const TopicCard: React.FC<TopicCardProps> = ({
   disabled = false,
   'data-testid': dataTestId
 }) => {
-  const [isHovered, setIsHovered] = React.useState(false);
-
-  const cardStyle: React.CSSProperties = {
-    padding: '2rem',
-    background: 'var(--color-bg-secondary)',
-    borderRadius: '12px',
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    transition: 'transform 0.2s, box-shadow 0.2s',
-    border: '2px solid transparent',
-    borderColor: isHovered ? 'var(--color-primary)' : 'transparent',
-    transform: isHovered && !disabled ? 'translateY(-4px)' : 'translateY(0)',
-    boxShadow: isHovered && !disabled ? 'var(--shadow-lg)' : 'none',
-    opacity: disabled ? 0.5 : 1,
-  };
-
   // Generate accessible label following German pattern
   const ariaLabel = `Thema ${topic.name} öffnen - ${topic.description}`;
 
@@ -48,23 +35,20 @@ export const TopicCard: React.FC<TopicCardProps> = ({
     <button
       type="button"
       onClick={() => onSelect(topic.id)}
-      className={className}
+      className={clsx(styles.card, className)}
       data-testid={dataTestId}
-      style={cardStyle}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
       disabled={disabled}
       aria-label={ariaLabel}
     >
       {topic.icon && (
-        <span aria-hidden="true" style={{ fontSize: '48px', display: 'block', marginBottom: '16px' }}>
+        <span aria-hidden="true" className={styles.icon}>
           {topic.icon}
         </span>
       )}
-      <h3 style={{ fontSize: '20px', fontWeight: 600, marginBottom: '8px', color: 'var(--color-text-primary)' }}>
+      <h3 className={styles.title}>
         {topic.name}
       </h3>
-      <p style={{ fontSize: '14px', color: 'var(--color-text-secondary)', lineHeight: 1.5, margin: 0 }}>
+      <p className={styles.description}>
         {topic.description}
       </p>
     </button>

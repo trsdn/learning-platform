@@ -207,7 +207,7 @@ describe('useMultipleChoice', () => {
 
     it('should reset state when task type is not multiple-choice', () => {
       const wrongTypeTask = createMultipleChoiceTask();
-      wrongTypeTask.type = 'text-input' as any;
+      wrongTypeTask.type = 'text-input' as 'multiple-choice';
 
       const { result } = renderHook(() => useMultipleChoice(wrongTypeTask, false));
 

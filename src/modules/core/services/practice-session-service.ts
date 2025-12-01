@@ -10,6 +10,7 @@ import type {
 } from '@storage/types/adapters';
 import { PracticeSessionEntity } from '../entities/practice-session';
 import { NotFoundError } from '../types/entities';
+import { logger } from '@/utils/logger';
 
 /**
  * Practice Session Service for managing learning sessions
@@ -179,7 +180,7 @@ export class PracticeSessionService implements IPracticeSessionService {
     const selectedTaskIds: string[] = [];
     let remainingCount = config.targetCount;
 
-    console.log(`Selecting tasks: targetCount=${config.targetCount}, learningPaths=${config.learningPathIds.join(',')}`);
+    logger.debug(`Selecting tasks: targetCount=${config.targetCount}, learningPaths=${config.learningPathIds.join(',')}`);
 
     // Get review tasks if requested
     if (config.includeReview && remainingCount > 0) {
@@ -188,14 +189,18 @@ export class PracticeSessionService implements IPracticeSessionService {
         .slice(0, Math.min(dueItems.length, Math.ceil(config.targetCount * 0.3))) // 30% review
         .map((item) => item.taskId);
 
-      console.log(`Review tasks found: ${reviewTaskIds.length}`);
+      logger.debug(`Review tasks found: ${reviewTaskIds.length}`);
       selectedTaskIds.push(...reviewTaskIds);
       remainingCount -= reviewTaskIds.length;
     }
 
     // Get new tasks from learning paths
     if (remainingCount > 0) {
-      const filters: any = {
+      const filters: {
+        learningPathIds: string[];
+        excludeIds: string[];
+        difficulty?: 'easy' | 'medium' | 'hard';
+      } = {
         learningPathIds: config.learningPathIds,
         excludeIds: selectedTaskIds,
       };
@@ -203,14 +208,14 @@ export class PracticeSessionService implements IPracticeSessionService {
         filters.difficulty = config.difficultyFilter;
       }
 
-      console.log(`Requesting ${remainingCount} new tasks with filters:`, filters);
+      logger.debug(`Requesting ${remainingCount} new tasks with filters:`, filters);
       const newTasks = await this.taskRepository.getRandomTasks(remainingCount, filters);
-      console.log(`Got ${newTasks.length} tasks:`, newTasks.map(t => t.id));
+      logger.debug(`Got ${newTasks.length} tasks:`, newTasks.map(t => t.id));
 
       selectedTaskIds.push(...newTasks.map((task) => task.id));
     }
 
-    console.log(`Total selected tasks: ${selectedTaskIds.length}`);
+    logger.debug(`Total selected tasks: ${selectedTaskIds.length}`);
     return selectedTaskIds;
   }
 }

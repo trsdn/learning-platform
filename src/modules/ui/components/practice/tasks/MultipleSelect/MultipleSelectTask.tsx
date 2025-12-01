@@ -99,6 +99,7 @@ export function MultipleSelectTask({
                 }
                 error={showFeedback && isSelected && !isCorrectAnswer}
                 success={showFeedback && isCorrectAnswer && isSelected}
+                // eslint-disable-next-line no-restricted-syntax -- Checkbox needs flex to fill space
                 style={{ flex: 1 }}
               />
               {showFeedback && statusIcon && (
@@ -117,4 +118,5 @@ export function MultipleSelectTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useMultipleSelect } from './use-multiple-select';

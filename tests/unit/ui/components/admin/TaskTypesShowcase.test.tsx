@@ -4,7 +4,7 @@ import { TaskTypesShowcase } from '@ui/components/admin/TaskTypesShowcase';
 
 // Mock TaskDemo to simplify testing
 vi.mock('@ui/components/admin/TaskDemo', () => ({
-  TaskDemo: ({ meta }: any) => (
+  TaskDemo: ({ meta }: { meta: { id: string; name: string } }) => (
     <div data-testid={`task-demo-${meta.id}`}>
       {meta.name}
     </div>

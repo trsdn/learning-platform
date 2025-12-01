@@ -27,28 +27,18 @@ export function FeedbackDisplay({ isCorrect, currentTask }: FeedbackDisplayProps
         title={isCorrect ? 'Richtig!' : 'Nicht ganz richtig'}
       >
         {currentTask.content.explanation && (
-          <p style={{ margin: 0 }}>{currentTask.content.explanation}</p>
+          <p className={styles['practice-session__feedback-explanation']}>
+            {currentTask.content.explanation}
+          </p>
         )}
         {/* Audio button in feedback for language learning */}
         {currentTask.audioUrl && currentTask.type === 'multiple-choice' && (
-          <div
-            style={{
-              marginTop: '0.75rem',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
-          >
-            <span
-              style={{
-                fontSize: '0.875rem',
-                color: 'var(--color-text-secondary)',
-              }}
-            >
+          <div className={styles['practice-session__feedback-audio']}>
+            <span className={styles['practice-session__feedback-audio-label']}>
               Aussprache:
             </span>
             <AudioButton
-              text={(currentTask.content as any).options[(currentTask.content as any).correctAnswer]}
+              text={((currentTask.content as unknown as Record<string, unknown>).options as string[])[(currentTask.content as unknown as Record<string, unknown>).correctAnswer as number] ?? ''}
               audioUrl={currentTask.audioUrl}
               size="small"
             />

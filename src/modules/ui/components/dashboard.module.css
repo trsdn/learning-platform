@@ -12,6 +12,7 @@
 .dashboard__empty {
   padding: var(--spacing-2xl);
   font-family: var(--font-family-base);
+  text-align: center;
 }
 
 .dashboard__back-button {

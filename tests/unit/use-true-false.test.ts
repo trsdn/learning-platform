@@ -168,7 +168,7 @@ describe('useTrueFalse', () => {
 
     it('should reset state when task type is not true-false', () => {
       const wrongTypeTask = createTrueFalseTask();
-      wrongTypeTask.type = 'multiple-choice' as any;
+      wrongTypeTask.type = 'multiple-choice' as 'true-false';
 
       const { result } = renderHook(() => useTrueFalse(wrongTypeTask, false));
 

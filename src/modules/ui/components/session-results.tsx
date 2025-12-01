@@ -49,6 +49,7 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
         <h1 className={styles['session-results__title']}>Sitzung abgeschlossen!</h1>
         <p
           className={styles['session-results__rating']}
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic color based on performance
           style={{ color: performanceColor }}
         >
           {performanceRating}

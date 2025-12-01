@@ -81,7 +81,7 @@ export interface TaskRendererProps {
   /** Callback when answer state changes */
   onAnswerChange?: (canSubmit: boolean) => void;
   /** Additional props passed to specific task types */
-  [key: string]: any;
+  [key: string]: unknown;
 }
 
 /**

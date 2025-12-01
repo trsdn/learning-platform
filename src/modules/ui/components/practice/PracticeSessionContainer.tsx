@@ -183,7 +183,7 @@ export function PracticeSessionContainer({
   // Repeat question audio
   const repeatQuestionAudio = useCallback(() => {
     if (!currentTask) return;
-    const content: any = currentTask.content;
+    const content = currentTask.content as unknown as Record<string, unknown>;
     const questionField = audioConfig?.buttons?.question?.field;
     const hasAudio = Boolean(
       currentTask.audioUrl || (questionField && content?.[questionField])
@@ -278,7 +278,7 @@ export function PracticeSessionContainer({
       // Handle 'h' - toggle hint
       if ((key === 'h' || key === 'H') && !isTyping) {
         event.preventDefault();
-        const hint = (currentTask.content as any)?.hint;
+        const hint = (currentTask.content as unknown as Record<string, unknown>)?.hint;
         if (hint) {
           setHintVisible((prev) => !prev);
         }
@@ -325,7 +325,7 @@ export function PracticeSessionContainer({
     return <div className={styles['practice-session']}>Laden...</div>;
   }
 
-  const questionHint = (currentTask.content as any)?.hint;
+  const questionHint = (currentTask.content as unknown as Record<string, unknown>)?.hint as string | undefined;
 
   return (
     <div className={styles['practice-session']}>
@@ -350,18 +350,18 @@ export function PracticeSessionContainer({
           currentTask.type === 'text-input') && (
           <div className={styles['practice-session__question-header']}>
             <h3 className={styles['practice-session__question-text']}>
-              {(currentTask.content as any).question}
+              {(currentTask.content as unknown as Record<string, unknown>).question as string}
             </h3>
             {audioConfig?.buttons?.question?.show &&
-              (currentTask.content as any)[
+              (currentTask.content as unknown as Record<string, unknown>)[
                 audioConfig.buttons.question.field
-              ] && (
+              ] as string && (
                 <AudioButton
-                  text={(currentTask.content as any).question}
+                  text={(currentTask.content as unknown as Record<string, unknown>).question as string}
                   audioUrl={`${import.meta.env.BASE_URL}audio/${
-                    (currentTask.content as any)[
+                    (currentTask.content as unknown as Record<string, unknown>)[
                       audioConfig.buttons.question.field
-                    ]
+                    ] as string
                   }`}
                   size="small"
                 />

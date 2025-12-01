@@ -154,7 +154,7 @@ export interface SyncItem {
   operation: 'create' | 'update' | 'delete';
   tableName: string;
   recordId: string;
-  data?: any;
+  data?: Record<string, unknown>;
   timestamp: Date;
   retryCount: number;
 }
@@ -171,7 +171,7 @@ export interface IIndexedDBAdapter extends IStorageAdapter {
   migrate(oldVersion: number, newVersion: number): Promise<void>;
 
   // Performance optimizations
-  bulkImport(tableName: string, data: any[]): Promise<void>;
+  bulkImport(tableName: string, data: unknown[]): Promise<void>;
   createIndexes(tableName: string, indexes: IndexDefinition[]): Promise<void>;
   optimize(): Promise<void>;
   getStats(): Promise<DatabaseStats>;
@@ -303,7 +303,7 @@ export class StorageError extends Error {
   constructor(
     message: string,
     public code: string,
-    public context?: Record<string, any>
+    public context?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'StorageError';
@@ -311,14 +311,14 @@ export class StorageError extends Error {
 }
 
 export class ConnectionError extends StorageError {
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, 'CONNECTION_ERROR', context);
     this.name = 'ConnectionError';
   }
 }
 
 export class TransactionError extends StorageError {
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, 'TRANSACTION_ERROR', context);
     this.name = 'TransactionError';
   }

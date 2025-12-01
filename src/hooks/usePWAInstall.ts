@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { logger } from '@/utils/logger';
 
 interface BeforeInstallPromptEvent extends Event {
   readonly platforms: string[];
@@ -43,7 +44,8 @@ export const usePWAInstall = (): PWAInstallHook => {
         return true;
       }
       // iOS-specific check
-      if ((navigator as any).standalone === true) {
+      const nav = navigator as { standalone?: boolean };
+      if (nav.standalone === true) {
         return true;
       }
       return false;
@@ -63,7 +65,7 @@ export const usePWAInstall = (): PWAInstallHook => {
       setCanInstall(true);
 
       // Log for analytics (optional)
-      console.log('PWA install prompt available');
+      logger.debug('PWA install prompt available');
     };
 
     // Listen for app installed event
@@ -73,7 +75,7 @@ export const usePWAInstall = (): PWAInstallHook => {
       setInstallPrompt(null);
 
       // Log for analytics (optional)
-      console.log('PWA successfully installed');
+      logger.debug('PWA successfully installed');
     };
 
     // Check for existing prompt on mount
@@ -96,12 +98,12 @@ export const usePWAInstall = (): PWAInstallHook => {
    */
   const install = useCallback(async (): Promise<boolean> => {
     if (!installPrompt) {
-      console.warn('No install prompt available');
+      logger.warn('No install prompt available');
       return false;
     }
 
     if (!isSupported) {
-      console.warn('PWA installation not supported in this browser');
+      logger.warn('PWA installation not supported in this browser');
       return false;
     }
 
@@ -113,16 +115,16 @@ export const usePWAInstall = (): PWAInstallHook => {
       const { outcome } = await installPrompt.userChoice;
 
       if (outcome === 'accepted') {
-        console.log('User accepted PWA installation');
+        logger.debug('User accepted PWA installation');
         setInstallPrompt(null);
         setCanInstall(false);
         return true;
       } else {
-        console.log('User dismissed PWA installation');
+        logger.debug('User dismissed PWA installation');
         return false;
       }
     } catch (error) {
-      console.error('Error during PWA installation:', error);
+      logger.error('Error during PWA installation:', error);
       // Reset state on error
       setInstallPrompt(null);
       setCanInstall(false);

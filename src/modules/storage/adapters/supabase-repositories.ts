@@ -6,7 +6,7 @@
  */
 
 import { supabase, getCurrentUserId } from '@/modules/storage/supabase-client';
-import type { Database } from '@/modules/storage/database.types';
+import type { Database, Json } from '@/modules/storage/database.types';
 import type {
   Topic,
   LearningPath,
@@ -16,6 +16,13 @@ import type {
   AnswerHistory,
   SpacedRepetitionItem,
 } from '@/modules/core/types/services';
+import type {
+  IPracticeSessionRepository,
+  ISpacedRepetitionRepository,
+  ITaskRepository,
+  TaskSearchQuery,
+} from '@/modules/storage/types/adapters';
+import { logger } from '@/utils/logger';
 
 // Type aliases for Supabase table types
 type DbTopic = Database['public']['Tables']['topics']['Row'];
@@ -25,6 +32,19 @@ type DbUserProgress = Database['public']['Tables']['user_progress']['Row'];
 type DbPracticeSession = Database['public']['Tables']['practice_sessions']['Row'];
 type DbAnswerHistory = Database['public']['Tables']['answer_history']['Row'];
 type DbSpacedRepetition = Database['public']['Tables']['spaced_repetition']['Row'];
+
+// Type definitions for JSON fields stored in the database
+type TopicMetadata = Topic['metadata'];
+type LearningPathRequirements = LearningPath['requirements'];
+type TaskContent = Task['content'];
+type TaskMetadata = Task['metadata'];
+type UserProgressStatistics = UserProgress['statistics'];
+type UserProgressMilestones = UserProgress['milestones'];
+type PracticeSessionExecution = PracticeSession['execution'];
+type PracticeSessionConfiguration = PracticeSession['configuration'];
+type SpacedRepetitionSchedule = SpacedRepetitionItem['schedule'];
+type SpacedRepetitionAlgorithm = SpacedRepetitionItem['algorithm'];
+type SpacedRepetitionPerformance = SpacedRepetitionItem['performance'];
 
 /**
  * Topic Repository - Manages learning topics
@@ -78,7 +98,7 @@ export class TopicRepository {
         title: topic.title,
         description: topic.description,
         learning_path_ids: topic.learningPathIds,
-        metadata: topic.metadata as any,
+        metadata: topic.metadata,
         is_active: topic.isActive,
       })
       .select()
@@ -96,7 +116,13 @@ export class TopicRepository {
    * Update topic
    */
   async update(id: string, updates: Partial<Topic>): Promise<Topic> {
-    const dbUpdates: any = {};
+    const dbUpdates: Partial<{
+      title: string;
+      description: string;
+      learning_path_ids: string[];
+      metadata: TopicMetadata;
+      is_active: boolean;
+    }> = {};
 
     if (updates.title !== undefined) dbUpdates.title = updates.title;
     if (updates.description !== undefined) dbUpdates.description = updates.description;
@@ -160,7 +186,7 @@ export class TopicRepository {
       title: row.title,
       description: row.description,
       learningPathIds: row.learning_path_ids ?? [],
-      metadata: row.metadata as any,
+      metadata: row.metadata as TopicMetadata,
       isActive: row.is_active ?? true,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
@@ -242,7 +268,7 @@ export class LearningPathRepository {
         difficulty: learningPath.difficulty,
         task_ids: learningPath.taskIds,
         estimated_time: learningPath.estimatedTime,
-        requirements: learningPath.requirements as any,
+        requirements: learningPath.requirements,
         is_active: learningPath.isActive,
       })
       .select()
@@ -260,7 +286,15 @@ export class LearningPathRepository {
    * Update learning path
    */
   async update(id: string, updates: Partial<LearningPath>): Promise<LearningPath> {
-    const dbUpdates: any = {};
+    const dbUpdates: Partial<{
+      title: string;
+      description: string;
+      difficulty: string;
+      task_ids: string[];
+      estimated_time: number;
+      requirements: LearningPathRequirements;
+      is_active: boolean;
+    }> = {};
 
     if (updates.title !== undefined) dbUpdates.title = updates.title;
     if (updates.description !== undefined) dbUpdates.description = updates.description;
@@ -312,7 +346,7 @@ export class LearningPathRepository {
       difficulty: row.difficulty as 'easy' | 'medium' | 'hard',
       taskIds: row.task_ids ?? [],
       estimatedTime: row.estimated_time,
-      requirements: row.requirements as any,
+      requirements: row.requirements as LearningPathRequirements,
       isActive: row.is_active ?? true,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
@@ -323,7 +357,7 @@ export class LearningPathRepository {
 /**
  * Task Repository - Manages learning tasks
  */
-export class TaskRepository {
+export class TaskRepository implements ITaskRepository {
   /**
    * Get all tasks
    */
@@ -408,8 +442,8 @@ export class TaskRepository {
         learning_path_id: task.learningPathId,
         template_id: task.templateId || null,
         type: task.type,
-        content: task.content as any,
-        metadata: task.metadata as any,
+        content: task.content as unknown as Json,
+        metadata: task.metadata as unknown as Json,
         has_audio: task.hasAudio || false,
         audio_url: task.audioUrl || null,
         language: task.language || null,
@@ -435,8 +469,8 @@ export class TaskRepository {
       learning_path_id: task.learningPathId,
       template_id: task.templateId || null,
       type: task.type,
-      content: task.content as any,
-      metadata: task.metadata as any,
+      content: task.content as unknown as Json,
+      metadata: task.metadata as unknown as Json,
       has_audio: task.hasAudio || false,
       audio_url: task.audioUrl || null,
       language: task.language || null,
@@ -460,10 +494,17 @@ export class TaskRepository {
    * Update task
    */
   async update(id: string, updates: Partial<Task>): Promise<Task> {
-    const dbUpdates: any = {};
+    const dbUpdates: Partial<{
+      content: Json;
+      metadata: Json;
+      has_audio: boolean;
+      audio_url: string | null;
+      language: string | null;
+      ipa: string | null;
+    }> = {};
 
-    if (updates.content !== undefined) dbUpdates.content = updates.content;
-    if (updates.metadata !== undefined) dbUpdates.metadata = updates.metadata;
+    if (updates.content !== undefined) dbUpdates.content = updates.content as unknown as Json;
+    if (updates.metadata !== undefined) dbUpdates.metadata = updates.metadata as unknown as Json;
     if (updates.hasAudio !== undefined) dbUpdates.has_audio = updates.hasAudio;
     if (updates.audioUrl !== undefined) dbUpdates.audio_url = updates.audioUrl;
     if (updates.language !== undefined) dbUpdates.language = updates.language;
@@ -510,7 +551,7 @@ export class TaskRepository {
       excludeIds?: string[];
     }
   ): Promise<Task[]> {
-    console.log(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
+    logger.debug(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
 
     let query = supabase.from('tasks').select('*');
 
@@ -537,7 +578,7 @@ export class TaskRepository {
     }
 
     const tasks = (data || []).map(row => this.mapFromDb(row));
-    console.log(`[TaskRepository] Found ${tasks.length} tasks`);
+    logger.debug(`[TaskRepository] Found ${tasks.length} tasks`);
 
     // Shuffle tasks
     const shuffled = tasks.sort(() => Math.random() - 0.5);
@@ -545,7 +586,7 @@ export class TaskRepository {
     // Return up to count tasks (with repetition if needed)
     const result: Task[] = [];
     if (shuffled.length === 0) {
-      console.log(`[TaskRepository] No tasks available!`);
+      logger.debug(`[TaskRepository] No tasks available!`);
       return result;
     }
 
@@ -556,7 +597,7 @@ export class TaskRepository {
       }
     }
 
-    console.log(`[TaskRepository] Returning ${result.length} random tasks`);
+    logger.debug(`[TaskRepository] Returning ${result.length} random tasks`);
     return result;
   }
 
@@ -577,6 +618,160 @@ export class TaskRepository {
   }
 
   /**
+   * Get tasks by multiple learning path IDs
+   */
+  async getByLearningPathIds(learningPathIds: string[]): Promise<Task[]> {
+    if (learningPathIds.length === 0) return [];
+
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .in('learning_path_id', learningPathIds)
+      .order('created_at');
+
+    if (error) {
+      console.error('Error fetching tasks by learning path IDs:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get tasks by type
+   */
+  async getByType(type: string): Promise<Task[]> {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('type', type)
+      .order('created_at');
+
+    if (error) {
+      console.error('Error fetching tasks by type:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get tasks by difficulty
+   */
+  async getByDifficulty(difficulty: 'easy' | 'medium' | 'hard'): Promise<Task[]> {
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .eq('metadata->>difficulty', difficulty)
+      .order('created_at');
+
+    if (error) {
+      console.error('Error fetching tasks by difficulty:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get tasks by tags
+   */
+  async getByTags(tags: string[]): Promise<Task[]> {
+    if (tags.length === 0) return [];
+
+    // Note: This assumes tags are stored as a JSON array in metadata
+    const { data, error } = await supabase
+      .from('tasks')
+      .select('*')
+      .contains('metadata->tags', tags)
+      .order('created_at');
+
+    if (error) {
+      console.error('Error fetching tasks by tags:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Search tasks
+   */
+  async search(query: TaskSearchQuery): Promise<Task[]> {
+    let supabaseQuery = supabase.from('tasks').select('*');
+
+    if (query.learningPathId) {
+      supabaseQuery = supabaseQuery.eq('learning_path_id', query.learningPathId);
+    }
+
+    if (query.type) {
+      supabaseQuery = supabaseQuery.eq('type', query.type);
+    }
+
+    if (query.difficulty) {
+      supabaseQuery = supabaseQuery.eq('metadata->>difficulty', query.difficulty);
+    }
+
+    if (query.tags && query.tags.length > 0) {
+      supabaseQuery = supabaseQuery.contains('metadata->tags', query.tags);
+    }
+
+    supabaseQuery = supabaseQuery.order('created_at');
+
+    if (query.limit) {
+      supabaseQuery = supabaseQuery.limit(query.limit);
+    }
+
+    if (query.offset) {
+      supabaseQuery = supabaseQuery.range(query.offset, query.offset + (query.limit || 100) - 1);
+    }
+
+    const { data, error } = await supabaseQuery;
+
+    if (error) {
+      console.error('Error searching tasks:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Update many tasks
+   */
+  async updateMany(updates: Array<{ id: string; data: Partial<Task> }>): Promise<void> {
+    // Execute updates sequentially
+    for (const { id, data } of updates) {
+      await this.update(id, data);
+    }
+  }
+
+  /**
+   * Delete many tasks
+   */
+  async deleteMany(ids: string[]): Promise<void> {
+    if (ids.length === 0) return;
+
+    const { error } = await supabase
+      .from('tasks')
+      .delete()
+      .in('id', ids);
+
+    if (error) {
+      console.error('Error deleting tasks:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Check if task exists
+   */
+  async exists(id: string): Promise<boolean> {
+    const task = await this.getById(id);
+    return task !== null;
+  }
+
+  /**
    * Map database row to domain model
    */
   private mapFromDb(row: DbTask): Task {
@@ -584,9 +779,9 @@ export class TaskRepository {
       id: row.id,
       learningPathId: row.learning_path_id,
       templateId: row.template_id ?? '',
-      type: row.type as any,
-      content: row.content as any,
-      metadata: row.metadata as any,
+      type: row.type as Task['type'],
+      content: row.content as unknown as TaskContent,
+      metadata: row.metadata as unknown as TaskMetadata,
       createdAt: new Date(row.created_at),
       updatedAt: new Date(row.updated_at),
     };
@@ -683,8 +878,8 @@ export class UserProgressRepository {
         user_id: userId,
         topic_id: progress.topicId ?? '',
         learning_path_id: progress.learningPathId ?? '',
-        statistics: progress.statistics as any,
-        milestones: progress.milestones as any,
+        statistics: progress.statistics as unknown as Json,
+        milestones: progress.milestones as unknown as Json,
       }, {
         onConflict: 'user_id,learning_path_id',
       })
@@ -726,8 +921,8 @@ export class UserProgressRepository {
       id: row.id,
       topicId: row.topic_id,
       learningPathId: row.learning_path_id,
-      statistics: row.statistics as any,
-      milestones: row.milestones as any,
+      statistics: row.statistics as unknown as UserProgressStatistics,
+      milestones: row.milestones as unknown as UserProgressMilestones,
       preferences: {
         preferredDifficulty: 'medium',
         preferredSessionLength: 20,
@@ -746,7 +941,7 @@ export class UserProgressRepository {
 /**
  * Practice Session Repository - Manages practice sessions
  */
-export class PracticeSessionRepository {
+export class PracticeSessionRepository implements IPracticeSessionRepository {
   /**
    * Get all sessions for current user
    */
@@ -845,15 +1040,22 @@ export class PracticeSessionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
+    // Serialize execution dates to ISO strings for Json compatibility
+    const executionData = {
+      ...session.execution,
+      startedAt: session.execution.startedAt?.toISOString(),
+      completedAt: session.execution.completedAt?.toISOString(),
+    };
+
     const { data, error } = await supabase
       .from('practice_sessions')
       .insert({
         user_id: userId,
         learning_path_id: session.configuration.learningPathIds[0] ?? '',
         task_ids: session.execution.taskIds,
-        execution: session.execution as any,
+        execution: executionData as unknown as Json,
         progress: null,
-        configuration: session.configuration as any,
+        configuration: session.configuration as unknown as Json,
       })
       .select()
       .single();
@@ -873,16 +1075,28 @@ export class PracticeSessionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    const dbUpdates: any = {};
+    const dbUpdates: Partial<{
+      execution: Json;
+      configuration: Json;
+      task_ids: string[];
+      learning_path_id: string;
+    }> = {};
 
     if (updates.execution !== undefined) {
-      dbUpdates.execution = updates.execution;
+      // Serialize execution dates to ISO strings for Json compatibility
+      const executionData = {
+        ...updates.execution,
+        startedAt: updates.execution.startedAt?.toISOString(),
+        completedAt: updates.execution.completedAt?.toISOString(),
+      };
+      dbUpdates.execution = executionData as unknown as Json;
       dbUpdates.task_ids = updates.execution.taskIds;
     }
     if (updates.configuration !== undefined) {
-      dbUpdates.configuration = updates.configuration;
-      if (updates.configuration.learningPathIds && updates.configuration.learningPathIds.length > 0) {
-        dbUpdates.learning_path_id = updates.configuration.learningPathIds[0];
+      dbUpdates.configuration = updates.configuration as unknown as Json;
+      const firstLearningPathId = updates.configuration.learningPathIds?.[0];
+      if (firstLearningPathId !== undefined) {
+        dbUpdates.learning_path_id = firstLearningPathId;
       }
     }
 
@@ -922,17 +1136,301 @@ export class PracticeSessionRepository {
   }
 
   /**
+   * Get sessions by status
+   */
+  async getByStatus(status: PracticeSession['execution']['status']): Promise<PracticeSession[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('execution->>status', status)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching sessions by status:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get sessions by user ID
+   */
+  async getByUserId(userId: string): Promise<PracticeSession[]> {
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching sessions by user:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get active sessions for user
+   */
+  async getActive(userId: string): Promise<PracticeSession[]> {
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .in('execution->>status', ['planned', 'active', 'paused'])
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching active sessions:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get recent sessions for user
+   */
+  async getRecent(userId: string, limit: number): Promise<PracticeSession[]> {
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching recent sessions:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Get sessions by date range
+   */
+  async getByDateRange(startDate: Date, endDate: Date): Promise<PracticeSession[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .gte('created_at', startDate.toISOString())
+      .lte('created_at', endDate.toISOString())
+      .order('created_at', { ascending: false });
+
+    if (error) {
+      console.error('Error fetching sessions by date range:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Update session status
+   */
+  async updateStatus(id: string, status: PracticeSession['execution']['status']): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // First get the current execution data
+    const session = await this.getById(id);
+    if (!session) throw new Error('Session not found');
+
+    const updatedExecution = {
+      ...session.execution,
+      status,
+      ...(status === 'completed' && { completedAt: new Date().toISOString() }),
+      startedAt: session.execution.startedAt?.toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('practice_sessions')
+      .update({ execution: updatedExecution as unknown as Json })
+      .eq('id', id)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error updating session status:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Increment progress
+   */
+  async incrementProgress(id: string, correct: boolean, timeSpent: number): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // First get the current execution data
+    const session = await this.getById(id);
+    if (!session) throw new Error('Session not found');
+
+    const updatedExecution = {
+      ...session.execution,
+      completedCount: session.execution.completedCount + 1,
+      correctCount: session.execution.correctCount + (correct ? 1 : 0),
+      totalTimeSpent: session.execution.totalTimeSpent + timeSpent,
+      startedAt: session.execution.startedAt?.toISOString(),
+      completedAt: session.execution.completedAt?.toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('practice_sessions')
+      .update({ execution: updatedExecution as unknown as Json })
+      .eq('id', id)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error incrementing session progress:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get completed sessions (recent completed sessions)
+   */
+  async getCompleted(limit: number): Promise<PracticeSession[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('execution->>status', 'completed')
+      .order('created_at', { ascending: false })
+      .limit(limit);
+
+    if (error) {
+      console.error('Error fetching completed sessions:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Create many sessions
+   */
+  async createMany(sessions: Omit<PracticeSession, 'id' | 'createdAt' | 'updatedAt'>[]): Promise<PracticeSession[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const inserts = sessions.map(session => {
+      // Serialize execution dates to ISO strings for Json compatibility
+      const executionData = {
+        ...session.execution,
+        startedAt: session.execution.startedAt?.toISOString(),
+        completedAt: session.execution.completedAt?.toISOString(),
+      };
+
+      return {
+        user_id: userId,
+        learning_path_id: session.configuration.learningPathIds[0] ?? '',
+        task_ids: session.execution.taskIds,
+        execution: executionData as unknown as Json,
+        progress: null,
+        configuration: session.configuration as unknown as Json,
+      };
+    });
+
+    const { data, error } = await supabase
+      .from('practice_sessions')
+      .insert(inserts)
+      .select();
+
+    if (error) {
+      console.error('Error creating practice sessions:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Update many sessions
+   */
+  async updateMany(updates: Array<{ id: string; data: Partial<PracticeSession> }>): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // Execute updates sequentially (Supabase doesn't support bulk updates easily)
+    for (const { id, data } of updates) {
+      await this.update(id, data);
+    }
+  }
+
+  /**
+   * Delete many sessions
+   */
+  async deleteMany(ids: string[]): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { error } = await supabase
+      .from('practice_sessions')
+      .delete()
+      .in('id', ids)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error deleting practice sessions:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Count sessions
+   */
+  async count(): Promise<number> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { count, error } = await supabase
+      .from('practice_sessions')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error counting practice sessions:', error);
+      throw error;
+    }
+
+    return count || 0;
+  }
+
+  /**
+   * Check if session exists
+   */
+  async exists(id: string): Promise<boolean> {
+    const session = await this.getById(id);
+    return session !== null;
+  }
+
+  /**
    * Map database row to domain model
    */
   private mapFromDb(row: DbPracticeSession): PracticeSession {
-    const execution = (row.execution as any) || {
+    const execution = (row.execution as unknown as PracticeSessionExecution) || {
       taskIds: row.task_ids,
       completedCount: 0,
       correctCount: 0,
-      status: 'planned',
+      status: 'planned' as const,
       totalTimeSpent: 0,
     };
-    const configuration = (row.configuration as any) || {
+    const configuration = (row.configuration as unknown as PracticeSessionConfiguration) || {
       topicId: '',
       learningPathIds: [row.learning_path_id],
       targetCount: row.task_ids.length,
@@ -1041,7 +1539,7 @@ export class AnswerHistoryRepository {
         session_id: answer.sessionId || null,
         timestamp: answer.timestamp.toISOString(),
         is_correct: answer.isCorrect,
-        user_answer: answer.userAnswer as any,
+        user_answer: answer.userAnswer,
         correct_answer: null,
         time_taken_ms: answer.timeSpent || null,
       })
@@ -1069,7 +1567,7 @@ export class AnswerHistoryRepository {
       session_id: answer.sessionId || null,
       timestamp: answer.timestamp.toISOString(),
       is_correct: answer.isCorrect,
-      user_answer: answer.userAnswer as any,
+      user_answer: answer.userAnswer,
       correct_answer: null,
       time_taken_ms: answer.timeSpent || null,
     }));
@@ -1143,7 +1641,7 @@ export class AnswerHistoryRepository {
 /**
  * Spaced Repetition Repository - Manages SRS data
  */
-export class SpacedRepetitionRepository {
+export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
   /**
    * Get all SRS items for current user
    */
@@ -1245,14 +1743,21 @@ export class SpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
+    // Serialize schedule dates to ISO strings for Json compatibility
+    const scheduleData = {
+      ...item.schedule,
+      nextReview: item.schedule.nextReview.toISOString(),
+      lastReviewed: item.schedule.lastReviewed?.toISOString(),
+    };
+
     const { data, error } = await supabase
       .from('spaced_repetition')
       .upsert({
         user_id: userId,
         task_id: item.taskId,
-        schedule: item.schedule as any,
-        algorithm: item.algorithm as any,
-        performance: item.performance as any,
+        schedule: scheduleData as unknown as Json,
+        algorithm: item.algorithm as unknown as Json,
+        performance: item.performance as unknown as Json,
       }, {
         onConflict: 'user_id,task_id',
       })
@@ -1287,15 +1792,348 @@ export class SpacedRepetitionRepository {
   }
 
   /**
+   * Get by ID (required by IRepository)
+   */
+  async getById(id: string): Promise<SpacedRepetitionItem | null> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('id', id)
+      .single();
+
+    if (error) {
+      if (error.code === 'PGRST116') return null;
+      console.error('Error fetching SRS item by ID:', error);
+      throw error;
+    }
+
+    return this.mapFromDb(data);
+  }
+
+  /**
+   * Create new SRS item
+   */
+  async create(item: Omit<SpacedRepetitionItem, 'id' | 'createdAt' | 'updatedAt'>): Promise<SpacedRepetitionItem> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // Serialize schedule dates to ISO strings for Json compatibility
+    const scheduleData = {
+      ...item.schedule,
+      nextReview: item.schedule.nextReview.toISOString(),
+      lastReviewed: item.schedule.lastReviewed?.toISOString(),
+    };
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .insert({
+        user_id: userId,
+        task_id: item.taskId,
+        schedule: scheduleData as unknown as Json,
+        algorithm: item.algorithm as unknown as Json,
+        performance: item.performance as unknown as Json,
+      })
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error creating SRS item:', error);
+      throw error;
+    }
+
+    return this.mapFromDb(data);
+  }
+
+  /**
+   * Update SRS item
+   */
+  async update(id: string, updates: Partial<SpacedRepetitionItem>): Promise<SpacedRepetitionItem> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const dbUpdates: Partial<{
+      schedule: Json;
+      algorithm: Json;
+      performance: Json;
+    }> = {};
+
+    if (updates.schedule !== undefined) {
+      // Serialize schedule dates to ISO strings for Json compatibility
+      const scheduleData = {
+        ...updates.schedule,
+        nextReview: updates.schedule.nextReview.toISOString(),
+        lastReviewed: updates.schedule.lastReviewed?.toISOString(),
+      };
+      dbUpdates.schedule = scheduleData as unknown as Json;
+    }
+    if (updates.algorithm !== undefined) {
+      dbUpdates.algorithm = updates.algorithm as unknown as Json;
+    }
+    if (updates.performance !== undefined) {
+      dbUpdates.performance = updates.performance as unknown as Json;
+    }
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .update(dbUpdates)
+      .eq('id', id)
+      .eq('user_id', userId)
+      .select()
+      .single();
+
+    if (error) {
+      console.error('Error updating SRS item:', error);
+      throw error;
+    }
+
+    return this.mapFromDb(data);
+  }
+
+  /**
+   * Get items by next review date
+   */
+  async getByNextReviewDate(date: Date): Promise<SpacedRepetitionItem[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const dateString = date.toISOString().split('T')[0];
+    if (!dateString) throw new Error('Invalid date format');
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .select('*')
+      .eq('user_id', userId)
+      .eq('schedule->>nextReview', dateString)
+      .order('schedule->>nextReview');
+
+    if (error) {
+      console.error('Error fetching SRS items by next review date:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Update algorithm data
+   */
+  async updateAlgorithmData(id: string, algorithm: SpacedRepetitionItem['algorithm']): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { error } = await supabase
+      .from('spaced_repetition')
+      .update({ algorithm: algorithm as unknown as Json })
+      .eq('id', id)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error updating algorithm data:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update schedule
+   */
+  async updateSchedule(id: string, schedule: SpacedRepetitionItem['schedule']): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // Serialize schedule dates to ISO strings for Json compatibility
+    const scheduleData = {
+      ...schedule,
+      nextReview: schedule.nextReview.toISOString(),
+      lastReviewed: schedule.lastReviewed?.toISOString(),
+    };
+
+    const { error } = await supabase
+      .from('spaced_repetition')
+      .update({ schedule: scheduleData as unknown as Json })
+      .eq('id', id)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error updating schedule:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Update performance
+   */
+  async updatePerformance(id: string, performance: SpacedRepetitionItem['performance']): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { error } = await supabase
+      .from('spaced_repetition')
+      .update({ performance: performance as unknown as Json })
+      .eq('id', id)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error updating performance:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Get review calendar
+   */
+  async getReviewCalendar(startDate: Date, endDate: Date): Promise<Array<{ date: Date; taskCount: number; estimatedTime: number }>> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .select('*')
+      .eq('user_id', userId)
+      .gte('schedule->>nextReview', startDate.toISOString())
+      .lte('schedule->>nextReview', endDate.toISOString())
+      .order('schedule->>nextReview');
+
+    if (error) {
+      console.error('Error fetching review calendar:', error);
+      throw error;
+    }
+
+    // Group by date
+    const calendar = new Map<string, { date: Date; taskCount: number; estimatedTime: number }>();
+
+    for (const row of data || []) {
+      const item = this.mapFromDb(row);
+      const dateKey = item.schedule.nextReview.toISOString().split('T')[0] ?? '';
+
+      if (!calendar.has(dateKey)) {
+        calendar.set(dateKey, {
+          date: new Date(dateKey),
+          taskCount: 0,
+          estimatedTime: 0,
+        });
+      }
+
+      const entry = calendar.get(dateKey);
+      if (entry) {
+        entry.taskCount++;
+        entry.estimatedTime += 60000; // Assume 1 minute per task
+      }
+    }
+
+    return Array.from(calendar.values());
+  }
+
+  /**
+   * Create many SRS items
+   */
+  async createMany(items: Omit<SpacedRepetitionItem, 'id' | 'createdAt' | 'updatedAt'>[]): Promise<SpacedRepetitionItem[]> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const inserts = items.map(item => {
+      // Serialize schedule dates to ISO strings for Json compatibility
+      const scheduleData = {
+        ...item.schedule,
+        nextReview: item.schedule.nextReview.toISOString(),
+        lastReviewed: item.schedule.lastReviewed?.toISOString(),
+      };
+
+      return {
+        user_id: userId,
+        task_id: item.taskId,
+        schedule: scheduleData as unknown as Json,
+        algorithm: item.algorithm as unknown as Json,
+        performance: item.performance as unknown as Json,
+      };
+    });
+
+    const { data, error } = await supabase
+      .from('spaced_repetition')
+      .insert(inserts)
+      .select();
+
+    if (error) {
+      console.error('Error creating SRS items:', error);
+      throw error;
+    }
+
+    return (data || []).map(this.mapFromDb);
+  }
+
+  /**
+   * Update many SRS items
+   */
+  async updateMany(updates: Array<{ id: string; data: Partial<SpacedRepetitionItem> }>): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    // Execute updates sequentially
+    for (const { id, data } of updates) {
+      await this.update(id, data);
+    }
+  }
+
+  /**
+   * Delete many SRS items
+   */
+  async deleteMany(ids: string[]): Promise<void> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { error } = await supabase
+      .from('spaced_repetition')
+      .delete()
+      .in('id', ids)
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error deleting SRS items:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * Count SRS items
+   */
+  async count(): Promise<number> {
+    const userId = await getCurrentUserId();
+    if (!userId) throw new Error('User not authenticated');
+
+    const { count, error } = await supabase
+      .from('spaced_repetition')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', userId);
+
+    if (error) {
+      console.error('Error counting SRS items:', error);
+      throw error;
+    }
+
+    return count || 0;
+  }
+
+  /**
+   * Check if SRS item exists
+   */
+  async exists(id: string): Promise<boolean> {
+    const item = await this.getById(id);
+    return item !== null;
+  }
+
+  /**
    * Map database row to domain model
    */
   private mapFromDb(row: DbSpacedRepetition): SpacedRepetitionItem {
     return {
       id: row.id,
       taskId: row.task_id,
-      schedule: row.schedule as any,
-      algorithm: row.algorithm as any,
-      performance: row.performance as any,
+      schedule: row.schedule as unknown as SpacedRepetitionSchedule,
+      algorithm: row.algorithm as unknown as SpacedRepetitionAlgorithm,
+      performance: row.performance as unknown as SpacedRepetitionPerformance,
       metadata: {
         introduced: new Date(),
         graduated: false,

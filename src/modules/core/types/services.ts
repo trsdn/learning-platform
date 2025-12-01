@@ -441,7 +441,7 @@ export class LearningPlatformError extends Error {
   constructor(
     message: string,
     public code: string,
-    public context?: Record<string, any>
+    public context?: Record<string, unknown>
   ) {
     super(message);
     this.name = 'LearningPlatformError';
@@ -449,7 +449,7 @@ export class LearningPlatformError extends Error {
 }
 
 export class ValidationError extends LearningPlatformError {
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, 'VALIDATION_ERROR', context);
     this.name = 'ValidationError';
   }
@@ -463,7 +463,7 @@ export class NotFoundError extends LearningPlatformError {
 }
 
 export class BusinessRuleError extends LearningPlatformError {
-  constructor(message: string, context?: Record<string, any>) {
+  constructor(message: string, context?: Record<string, unknown>) {
     super(message, 'BUSINESS_RULE_VIOLATION', context);
     this.name = 'BusinessRuleError';
   }

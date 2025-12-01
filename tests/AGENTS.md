@@ -1,9 +1,12 @@
 # Testing Agent Guidelines
 
-**Last Updated**: 2025-11-24
+**Last Updated**: 2025-12-01
 **Parent Guide**: [../AGENTS.md](../AGENTS.md)
+**Status**: 🏆 **Authoritative Source** for test artifacts and screenshot management
 
 > **For AI Agents**: This guide contains specific instructions for testing operations. Always read this before performing any testing tasks.
+
+**Related Guides**: [scripts/AGENTS.md](../scripts/AGENTS.md) for cleanup scripts, [templates/AGENTS.md](../templates/AGENTS.md) for test templates
 
 ---
 

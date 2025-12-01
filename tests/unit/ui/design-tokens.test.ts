@@ -180,7 +180,7 @@ describe('Design Tokens', () => {
       });
 
       it('should return fallback for invalid color', () => {
-        expect(getColor('invalid' as any, 500)).toBe(colors.neutral[500]);
+        expect(getColor('invalid' as 'primary', 500)).toBe(colors.neutral[500]);
       });
     });
 

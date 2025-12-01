@@ -119,4 +119,5 @@ export function ClozeDeletionTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useClozeDeletion } from './use-cloze-deletion';

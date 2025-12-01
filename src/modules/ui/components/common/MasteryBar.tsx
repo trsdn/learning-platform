@@ -55,6 +55,7 @@ export function MasteryBar({ label, count, color, max }: MasteryBarProps) {
       <div className={styles['mastery-bar__track']}>
         <div
           className={styles['mastery-bar__fill']}
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic color and width based on props
           style={{
             background: color,
             width: `${percentage}%`,

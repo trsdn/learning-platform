@@ -3,6 +3,7 @@ import { render, RenderOptions } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 
 // Wrapper with all necessary providers
+// eslint-disable-next-line react-refresh/only-export-components
 function AllTheProviders({ children }: { children: React.ReactNode }) {
   return <BrowserRouter>{children}</BrowserRouter>;
 }
@@ -14,6 +15,7 @@ const customRender = (
 ) => render(ui, { wrapper: AllTheProviders, ...options });
 
 // Re-export everything from @testing-library/react
+// eslint-disable-next-line react-refresh/only-export-components
 export * from '@testing-library/react';
 
 // Override the render method

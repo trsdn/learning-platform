@@ -56,6 +56,7 @@ export function SessionHeader({
       <div className={styles['practice-session__progress-bar']}>
         <div
           className={styles['practice-session__progress-fill']}
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic width based on progress
           style={{ width: `${progress}%` }}
         />
       </div>

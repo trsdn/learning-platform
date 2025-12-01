@@ -10,6 +10,7 @@
 
 import { supabase } from '@/modules/storage/supabase-client';
 import type { User, Session, AuthError, AuthResponse, OAuthResponse } from '@supabase/supabase-js';
+import { logger } from '@/utils/logger';
 
 export type AuthProvider = 'google' | 'github';
 
@@ -184,7 +185,7 @@ export class SupabaseAuthService {
    * Update user profile data
    */
   static async updateProfile(data: { displayName?: string; avatarUrl?: string }): Promise<{ data: User | null; error: AuthError | null }> {
-    const updateData: Record<string, any> = {};
+    const updateData: Record<string, string> = {};
 
     if (data.displayName !== undefined) {
       updateData.display_name = data.displayName;
@@ -235,7 +236,7 @@ export class SupabaseAuthService {
     callback: (event: string, session: Session | null) => void
   ): { unsubscribe: () => void } {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
-      console.log('Auth state changed:', event, session?.user?.email);
+      logger.debug('Auth state changed:', event, session?.user?.email);
       callback(event, session);
     });
 
@@ -284,7 +285,7 @@ export class SupabaseAuthService {
     // Call the admin API to delete the user
     // Note: This requires service role key, so we'll need a backend function
     // For now, we'll just sign out
-    console.warn('Account deletion requires backend implementation');
+    logger.warn('Account deletion requires backend implementation');
 
     return await this.signOut();
   }

@@ -153,8 +153,8 @@ class AudioService implements IAudioService {
         ...this.state,
         status: 'playing',
       });
-    } catch (error: any) {
-      if (error.name === 'NotAllowedError') {
+    } catch (error: unknown) {
+      if (error instanceof Error && error.name === 'NotAllowedError') {
         this.setState({
           ...this.state,
           status: 'error',
@@ -325,8 +325,12 @@ export function createAudioService(): IAudioService {
  * Legacy singleton export for backward compatibility
  * @deprecated Use createAudioService() instead
  */
-export const audioService = {
+export const audioService: {
+  hasAudio: () => boolean;
+  playSpanish: () => Promise<void>;
+  initialize: () => Promise<void>;
+} = {
   hasAudio: () => false,
   playSpanish: async () => {},
   initialize: async () => {},
-} as any;
+};

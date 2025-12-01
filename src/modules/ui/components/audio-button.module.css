@@ -1,5 +1,10 @@
 /* AudioButton Component - CSS Modules */
 
+/* SVG Icon base styles */
+.audio-button__svg {
+  display: block;
+}
+
 /* Base button styles */
 .audio-button {
   display: inline-flex;

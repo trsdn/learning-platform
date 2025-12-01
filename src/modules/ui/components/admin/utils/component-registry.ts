@@ -48,7 +48,8 @@ export interface ComponentMeta {
   description: string;
   /** Component category */
   category: ComponentCategory;
-  /** React component */
+  /** React component - accepts heterogeneous props for registry flexibility */
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   component: React.ComponentType<any>;
   /** Predefined variants to showcase */
   variants: ComponentVariant[];

@@ -185,11 +185,13 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               ref={fileInputRef}
               type="file"
               accept="application/json"
+              // eslint-disable-next-line no-restricted-syntax -- Hide file input visually
               style={{ display: 'none' }}
               onChange={handleImport}
             />
           </div>
           {showImportError && (
+            // eslint-disable-next-line no-restricted-syntax -- Dynamic error colors
             <div className={styles.infoCard} style={{ borderColor: '#f97316', color: '#b45309' }}>
               {showImportError}
             </div>

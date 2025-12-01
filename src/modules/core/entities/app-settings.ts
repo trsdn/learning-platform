@@ -228,110 +228,117 @@ function isDateFormat(value: unknown): value is DateFormat {
   return value === 'DD.MM.YYYY' || value === 'MM/DD/YYYY' || value === 'YYYY-MM-DD';
 }
 
-function sanitizeThemeSettings(raw: any): ThemeSettings {
+function sanitizeThemeSettings(raw: unknown): ThemeSettings {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
   return {
-    mode: isThemeMode(raw?.mode) ? raw.mode : DEFAULT_APP_SETTINGS.theme.mode,
-    fontScale: isFontScale(raw?.fontScale) ? raw.fontScale : DEFAULT_APP_SETTINGS.theme.fontScale,
-    animationsEnabled: Boolean(raw?.animationsEnabled ?? DEFAULT_APP_SETTINGS.theme.animationsEnabled),
-    reducedMotion: Boolean(raw?.reducedMotion ?? DEFAULT_APP_SETTINGS.theme.reducedMotion),
+    mode: isThemeMode(rawObj?.mode) ? (rawObj.mode as ThemeMode) : DEFAULT_APP_SETTINGS.theme.mode,
+    fontScale: isFontScale(rawObj?.fontScale) ? (rawObj.fontScale as FontScale) : DEFAULT_APP_SETTINGS.theme.fontScale,
+    animationsEnabled: Boolean(rawObj?.animationsEnabled ?? DEFAULT_APP_SETTINGS.theme.animationsEnabled),
+    reducedMotion: Boolean(rawObj?.reducedMotion ?? DEFAULT_APP_SETTINGS.theme.reducedMotion),
   };
 }
 
-function sanitizeAudioPreferences(raw: any): AudioPreferences {
-  const repeats = raw?.autoPlayRepeats;
+function sanitizeAudioPreferences(raw: unknown): AudioPreferences {
+  const repeats = (raw as Record<string, unknown> | null | undefined)?.autoPlayRepeats;
   const repeatsValue: 1 | 2 | 3 = repeats === 2 || repeats === 3 ? repeats : 1;
-  const delay = clamp(Number(raw?.autoPlayDelayMs ?? DEFAULT_APP_SETTINGS.audio.autoPlayDelayMs), 0, 5000);
-  const volume = clamp(Number(raw?.soundEffectsVolume ?? DEFAULT_APP_SETTINGS.audio.soundEffectsVolume), 0, 1);
+  const delay = clamp(Number((raw as Record<string, unknown> | null | undefined)?.autoPlayDelayMs ?? DEFAULT_APP_SETTINGS.audio.autoPlayDelayMs), 0, 5000);
+  const volume = clamp(Number((raw as Record<string, unknown> | null | undefined)?.soundEffectsVolume ?? DEFAULT_APP_SETTINGS.audio.soundEffectsVolume), 0, 1);
   return {
-    autoPlayEnabled: Boolean(raw?.autoPlayEnabled ?? DEFAULT_APP_SETTINGS.audio.autoPlayEnabled),
+    autoPlayEnabled: Boolean((raw as Record<string, unknown> | null | undefined)?.autoPlayEnabled ?? DEFAULT_APP_SETTINGS.audio.autoPlayEnabled),
     autoPlayRepeats: repeatsValue,
     autoPlayDelayMs: delay,
-    soundEffectsEnabled: Boolean(raw?.soundEffectsEnabled ?? DEFAULT_APP_SETTINGS.audio.soundEffectsEnabled),
+    soundEffectsEnabled: Boolean((raw as Record<string, unknown> | null | undefined)?.soundEffectsEnabled ?? DEFAULT_APP_SETTINGS.audio.soundEffectsEnabled),
     soundEffectsVolume: volume,
-    successChimeEnabled: Boolean(raw?.successChimeEnabled ?? DEFAULT_APP_SETTINGS.audio.successChimeEnabled),
-    playbackRate: isPlaybackRate(raw?.playbackRate) ? raw.playbackRate : DEFAULT_APP_SETTINGS.audio.playbackRate,
+    successChimeEnabled: Boolean((raw as Record<string, unknown> | null | undefined)?.successChimeEnabled ?? DEFAULT_APP_SETTINGS.audio.successChimeEnabled),
+    playbackRate: isPlaybackRate((raw as Record<string, unknown> | null | undefined)?.playbackRate) ? (raw as Record<string, unknown>).playbackRate as AudioPreferences['playbackRate'] : DEFAULT_APP_SETTINGS.audio.playbackRate,
   };
 }
 
-function sanitizeLearningPreferences(raw: any): LearningPreferences {
-  const dailyGoal = clamp(Number(raw?.dailyGoal ?? DEFAULT_APP_SETTINGS.learning.dailyGoal), 1, 200);
-  const sessionSize = clamp(Number(raw?.sessionSize ?? DEFAULT_APP_SETTINGS.learning.sessionSize), 1, 100);
+function sanitizeLearningPreferences(raw: unknown): LearningPreferences {
+  const dailyGoal = clamp(Number((raw as Record<string, unknown> | null | undefined)?.dailyGoal ?? DEFAULT_APP_SETTINGS.learning.dailyGoal), 1, 200);
+  const sessionSize = clamp(Number((raw as Record<string, unknown> | null | undefined)?.sessionSize ?? DEFAULT_APP_SETTINGS.learning.sessionSize), 1, 100);
   return {
-    algorithm: isLearningAlgorithm(raw?.algorithm) ? raw.algorithm : DEFAULT_APP_SETTINGS.learning.algorithm,
+    algorithm: isLearningAlgorithm((raw as Record<string, unknown> | null | undefined)?.algorithm) ? (raw as Record<string, unknown>).algorithm as LearningAlgorithm : DEFAULT_APP_SETTINGS.learning.algorithm,
     dailyGoal,
     sessionSize,
-    repeatDifficultTasks: Boolean(raw?.repeatDifficultTasks ?? DEFAULT_APP_SETTINGS.learning.repeatDifficultTasks),
-    randomizeOrder: Boolean(raw?.randomizeOrder ?? DEFAULT_APP_SETTINGS.learning.randomizeOrder),
+    repeatDifficultTasks: Boolean((raw as Record<string, unknown> | null | undefined)?.repeatDifficultTasks ?? DEFAULT_APP_SETTINGS.learning.repeatDifficultTasks),
+    randomizeOrder: Boolean((raw as Record<string, unknown> | null | undefined)?.randomizeOrder ?? DEFAULT_APP_SETTINGS.learning.randomizeOrder),
   };
 }
 
-function sanitizeNotificationPreferences(raw: any): NotificationPreferences {
-  const time = typeof raw?.dailyReminderTime === 'string' && /^\d{2}:\d{2}$/.test(raw.dailyReminderTime)
-    ? raw.dailyReminderTime
+function sanitizeNotificationPreferences(raw: unknown): NotificationPreferences {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
+  const time = typeof rawObj?.dailyReminderTime === 'string' && /^\d{2}:\d{2}$/.test(rawObj.dailyReminderTime)
+    ? rawObj.dailyReminderTime
     : DEFAULT_APP_SETTINGS.notifications.dailyReminderTime;
-  const message = typeof raw?.dailyReminderMessage === 'string' && raw.dailyReminderMessage.length <= 120
-    ? raw.dailyReminderMessage
+  const message = typeof rawObj?.dailyReminderMessage === 'string' && rawObj.dailyReminderMessage.length <= 120
+    ? rawObj.dailyReminderMessage
     : DEFAULT_APP_SETTINGS.notifications.dailyReminderMessage;
   return {
-    dailyReminderEnabled: Boolean(raw?.dailyReminderEnabled ?? DEFAULT_APP_SETTINGS.notifications.dailyReminderEnabled),
+    dailyReminderEnabled: Boolean(rawObj?.dailyReminderEnabled ?? DEFAULT_APP_SETTINGS.notifications.dailyReminderEnabled),
     dailyReminderTime: time,
     dailyReminderMessage: message,
-    streakWarningEnabled: Boolean(raw?.streakWarningEnabled ?? DEFAULT_APP_SETTINGS.notifications.streakWarningEnabled),
-    weeklyReportEnabled: Boolean(raw?.weeklyReportEnabled ?? DEFAULT_APP_SETTINGS.notifications.weeklyReportEnabled),
+    streakWarningEnabled: Boolean(rawObj?.streakWarningEnabled ?? DEFAULT_APP_SETTINGS.notifications.streakWarningEnabled),
+    weeklyReportEnabled: Boolean(rawObj?.weeklyReportEnabled ?? DEFAULT_APP_SETTINGS.notifications.weeklyReportEnabled),
   };
 }
 
-function sanitizeInteractionPreferences(raw: any): InteractionPreferences {
+function sanitizeInteractionPreferences(raw: unknown): InteractionPreferences {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
   return {
-    vibrationsEnabled: Boolean(raw?.vibrationsEnabled ?? DEFAULT_APP_SETTINGS.interaction.vibrationsEnabled),
-    vibrationOnCorrect: Boolean(raw?.vibrationOnCorrect ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnCorrect),
-    vibrationOnIncorrect: Boolean(raw?.vibrationOnIncorrect ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnIncorrect),
-    vibrationOnSessionComplete: Boolean(raw?.vibrationOnSessionComplete ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnSessionComplete),
-    confettiEnabled: Boolean(raw?.confettiEnabled ?? DEFAULT_APP_SETTINGS.interaction.confettiEnabled),
-    confettiStyle: isConfettiStyle(raw?.confettiStyle) ? raw.confettiStyle : DEFAULT_APP_SETTINGS.interaction.confettiStyle,
-    confettiIntensity: isConfettiIntensity(raw?.confettiIntensity) ? raw.confettiIntensity : DEFAULT_APP_SETTINGS.interaction.confettiIntensity,
-    wakeLockEnabled: Boolean(raw?.wakeLockEnabled ?? DEFAULT_APP_SETTINGS.interaction.wakeLockEnabled),
-    keyboardShortcutsEnabled: Boolean(raw?.keyboardShortcutsEnabled ?? DEFAULT_APP_SETTINGS.interaction.keyboardShortcutsEnabled),
+    vibrationsEnabled: Boolean(rawObj?.vibrationsEnabled ?? DEFAULT_APP_SETTINGS.interaction.vibrationsEnabled),
+    vibrationOnCorrect: Boolean(rawObj?.vibrationOnCorrect ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnCorrect),
+    vibrationOnIncorrect: Boolean(rawObj?.vibrationOnIncorrect ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnIncorrect),
+    vibrationOnSessionComplete: Boolean(rawObj?.vibrationOnSessionComplete ?? DEFAULT_APP_SETTINGS.interaction.vibrationOnSessionComplete),
+    confettiEnabled: Boolean(rawObj?.confettiEnabled ?? DEFAULT_APP_SETTINGS.interaction.confettiEnabled),
+    confettiStyle: isConfettiStyle(rawObj?.confettiStyle) ? (rawObj.confettiStyle as ConfettiStyle) : DEFAULT_APP_SETTINGS.interaction.confettiStyle,
+    confettiIntensity: isConfettiIntensity(rawObj?.confettiIntensity) ? (rawObj.confettiIntensity as ConfettiIntensity) : DEFAULT_APP_SETTINGS.interaction.confettiIntensity,
+    wakeLockEnabled: Boolean(rawObj?.wakeLockEnabled ?? DEFAULT_APP_SETTINGS.interaction.wakeLockEnabled),
+    keyboardShortcutsEnabled: Boolean(rawObj?.keyboardShortcutsEnabled ?? DEFAULT_APP_SETTINGS.interaction.keyboardShortcutsEnabled),
   };
 }
 
-function sanitizeAISettings(raw: any): AISettings {
-  const dailyUsageLimit = clamp(Number(raw?.dailyUsageLimit ?? DEFAULT_APP_SETTINGS.ai.dailyUsageLimit), 0, 9999);
-  const usageToday = clamp(Number(raw?.usageToday ?? DEFAULT_APP_SETTINGS.ai.usageToday), 0, dailyUsageLimit);
+function sanitizeAISettings(raw: unknown): AISettings {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
+  const dailyUsageLimit = clamp(Number(rawObj?.dailyUsageLimit ?? DEFAULT_APP_SETTINGS.ai.dailyUsageLimit), 0, 9999);
+  const usageToday = clamp(Number(rawObj?.usageToday ?? DEFAULT_APP_SETTINGS.ai.usageToday), 0, dailyUsageLimit);
   return {
-    explanationsEnabled: Boolean(raw?.explanationsEnabled ?? DEFAULT_APP_SETTINGS.ai.explanationsEnabled),
-    explanationDepth: isAIDepth(raw?.explanationDepth) ? raw.explanationDepth : DEFAULT_APP_SETTINGS.ai.explanationDepth,
-    includeExamples: Boolean(raw?.includeExamples ?? DEFAULT_APP_SETTINGS.ai.includeExamples),
-    showLearningTips: Boolean(raw?.showLearningTips ?? DEFAULT_APP_SETTINGS.ai.showLearningTips),
-    trainingOptIn: Boolean(raw?.trainingOptIn ?? DEFAULT_APP_SETTINGS.ai.trainingOptIn),
+    explanationsEnabled: Boolean(rawObj?.explanationsEnabled ?? DEFAULT_APP_SETTINGS.ai.explanationsEnabled),
+    explanationDepth: isAIDepth(rawObj?.explanationDepth) ? (rawObj.explanationDepth as AIDepth) : DEFAULT_APP_SETTINGS.ai.explanationDepth,
+    includeExamples: Boolean(rawObj?.includeExamples ?? DEFAULT_APP_SETTINGS.ai.includeExamples),
+    showLearningTips: Boolean(rawObj?.showLearningTips ?? DEFAULT_APP_SETTINGS.ai.showLearningTips),
+    trainingOptIn: Boolean(rawObj?.trainingOptIn ?? DEFAULT_APP_SETTINGS.ai.trainingOptIn),
     dailyUsageLimit,
     usageToday,
   };
 }
 
-function sanitizePrivacySettings(raw: any): PrivacySettings {
+function sanitizePrivacySettings(raw: unknown): PrivacySettings {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
   return {
-    dataStorageMode: isDataStorageMode(raw?.dataStorageMode) ? raw.dataStorageMode : DEFAULT_APP_SETTINGS.privacy.dataStorageMode,
-    analyticsEnabled: Boolean(raw?.analyticsEnabled ?? DEFAULT_APP_SETTINGS.privacy.analyticsEnabled),
-    errorReportsEnabled: Boolean(raw?.errorReportsEnabled ?? DEFAULT_APP_SETTINGS.privacy.errorReportsEnabled),
-    betaFeaturesEnabled: Boolean(raw?.betaFeaturesEnabled ?? DEFAULT_APP_SETTINGS.privacy.betaFeaturesEnabled),
+    dataStorageMode: isDataStorageMode(rawObj?.dataStorageMode) ? (rawObj.dataStorageMode as DataStorageMode) : DEFAULT_APP_SETTINGS.privacy.dataStorageMode,
+    analyticsEnabled: Boolean(rawObj?.analyticsEnabled ?? DEFAULT_APP_SETTINGS.privacy.analyticsEnabled),
+    errorReportsEnabled: Boolean(rawObj?.errorReportsEnabled ?? DEFAULT_APP_SETTINGS.privacy.errorReportsEnabled),
+    betaFeaturesEnabled: Boolean(rawObj?.betaFeaturesEnabled ?? DEFAULT_APP_SETTINGS.privacy.betaFeaturesEnabled),
   };
 }
 
-function sanitizeLanguageSettings(raw: any): LanguageSettings {
+function sanitizeLanguageSettings(raw: unknown): LanguageSettings {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
   return {
-    interfaceLanguage: isInterfaceLanguage(raw?.interfaceLanguage) ? raw.interfaceLanguage : DEFAULT_APP_SETTINGS.language.interfaceLanguage,
-    timezone: typeof raw?.timezone === 'string' && raw.timezone.length > 0 ? raw.timezone : resolveTimezone(),
-    dateFormat: isDateFormat(raw?.dateFormat) ? raw.dateFormat : DEFAULT_APP_SETTINGS.language.dateFormat,
+    interfaceLanguage: isInterfaceLanguage(rawObj?.interfaceLanguage) ? (rawObj.interfaceLanguage as InterfaceLanguage) : DEFAULT_APP_SETTINGS.language.interfaceLanguage,
+    timezone: typeof rawObj?.timezone === 'string' && rawObj.timezone.length > 0 ? rawObj.timezone : resolveTimezone(),
+    dateFormat: isDateFormat(rawObj?.dateFormat) ? (rawObj.dateFormat as DateFormat) : DEFAULT_APP_SETTINGS.language.dateFormat,
   };
 }
 
-function sanitizeDatabaseMetadata(raw: any): DatabaseMetadata {
-  const lastUpdatedAt = typeof raw?.lastUpdatedAt === 'string' || raw?.lastUpdatedAt === null
-    ? raw.lastUpdatedAt
+function sanitizeDatabaseMetadata(raw: unknown): DatabaseMetadata {
+  const rawObj = raw as Record<string, unknown> | null | undefined;
+  const lastUpdatedAt = typeof rawObj?.lastUpdatedAt === 'string' || rawObj?.lastUpdatedAt === null
+    ? (rawObj?.lastUpdatedAt as string | null)
     : DEFAULT_APP_SETTINGS.database.lastUpdatedAt;
-  const storageUsage = typeof raw?.storageUsageBytes === 'number' || raw?.storageUsageBytes === null
-    ? raw.storageUsageBytes
+  const storageUsage = typeof rawObj?.storageUsageBytes === 'number' || rawObj?.storageUsageBytes === null
+    ? (rawObj?.storageUsageBytes as number | null)
     : DEFAULT_APP_SETTINGS.database.storageUsageBytes;
   return {
     lastUpdatedAt,

@@ -20,6 +20,7 @@ describe('IconButton', () => {
     });
 
     it('should apply custom styles', () => {
+      // eslint-disable-next-line no-restricted-syntax -- Testing inline style functionality
       render(<IconButton icon={<TestIcon />} label="Test" style={{ margin: '10px' }} />);
       const button = screen.getByRole('button');
       expect(button.style.margin).toBe('10px');

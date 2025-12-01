@@ -135,4 +135,5 @@ export function OrderingTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useOrdering } from './use-ordering';

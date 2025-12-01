@@ -87,7 +87,7 @@ describe('usePWAInstall', () => {
 
     // Simulate beforeinstallprompt event
     await act(async () => {
-      const event = new Event('beforeinstallprompt') as any;
+      const event = new Event('beforeinstallprompt');
       Object.assign(event, mockDeferredPrompt);
       window.dispatchEvent(event);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -101,7 +101,7 @@ describe('usePWAInstall', () => {
 
     // Setup installable state
     await act(async () => {
-      const event = new Event('beforeinstallprompt') as any;
+      const event = new Event('beforeinstallprompt');
       Object.assign(event, mockDeferredPrompt);
       window.dispatchEvent(event);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -129,7 +129,7 @@ describe('usePWAInstall', () => {
 
     // Setup installable state
     await act(async () => {
-      const event = new Event('beforeinstallprompt') as any;
+      const event = new Event('beforeinstallprompt');
       Object.assign(event, mockDeferredPrompt);
       window.dispatchEvent(event);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -152,7 +152,7 @@ describe('usePWAInstall', () => {
 
     // Setup installable state
     await act(async () => {
-      const event = new Event('beforeinstallprompt') as any;
+      const event = new Event('beforeinstallprompt');
       Object.assign(event, mockDeferredPrompt);
       window.dispatchEvent(event);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -216,7 +216,7 @@ describe('usePWAInstall', () => {
 
     // Setup installable state
     await act(async () => {
-      const event = new Event('beforeinstallprompt') as any;
+      const event = new Event('beforeinstallprompt');
       Object.assign(event, mockDeferredPrompt);
       window.dispatchEvent(event);
       await new Promise(resolve => setTimeout(resolve, 0));
@@ -237,7 +237,7 @@ describe('usePWAInstall', () => {
 
     // Setup installable state first
     await act(async () => {
-      const beforeEvent = new Event('beforeinstallprompt') as any;
+      const beforeEvent = new Event('beforeinstallprompt');
       Object.assign(beforeEvent, mockDeferredPrompt);
       window.dispatchEvent(beforeEvent);
       await new Promise(resolve => setTimeout(resolve, 0));

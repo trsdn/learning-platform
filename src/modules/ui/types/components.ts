@@ -297,8 +297,8 @@ export interface SearchBarProps extends BaseComponentProps {
 
 export interface FilterPanelProps extends BaseComponentProps {
   filters: FilterConfig[];
-  values: Record<string, any>;
-  onChange: (filters: Record<string, any>) => void;
+  values: Record<string, unknown>;
+  onChange: (filters: Record<string, unknown>) => void;
   onReset: () => void;
   onApply?: () => void;
 }
@@ -310,7 +310,7 @@ export interface FilterConfig {
   options?: SelectOption[];
   min?: number;
   max?: number;
-  defaultValue?: any;
+  defaultValue?: unknown;
 }
 
 // Accessibility and Responsive Design
@@ -357,7 +357,7 @@ export interface InteractionProps {
 export interface ComponentState {
   isLoading: boolean;
   error: string | null;
-  data: any;
+  data: unknown;
   lastUpdated: Date;
 }
 
@@ -371,7 +371,7 @@ export interface StateProps {
 export interface ComponentEvents {
   onMount?: () => void;
   onUnmount?: () => void;
-  onUpdate?: (prevProps: any) => void;
+  onUpdate?: (prevProps: Record<string, unknown>) => void;
   onError?: (error: Error) => void;
 }
 
@@ -403,7 +403,7 @@ export interface CompositeComponentProps extends BaseComponentProps {
 export interface ComponentConfig {
   id: string;
   type: string;
-  props: Record<string, any>;
+  props: Record<string, unknown>;
   children?: ComponentConfig[];
   conditions?: ComponentCondition[];
 }
@@ -411,5 +411,5 @@ export interface ComponentConfig {
 export interface ComponentCondition {
   field: string;
   operator: 'equals' | 'not_equals' | 'greater_than' | 'less_than' | 'contains';
-  value: any;
+  value: unknown;
 }

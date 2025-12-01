@@ -43,7 +43,7 @@ function createRepositoryProxy<T extends object>(
       }
 
       // Return wrapped method
-      return function (this: any, ...args: any[]) {
+      return function (this: unknown, ...args: unknown[]) {
         const methodName = String(prop);
         const operationName = `${repositoryName}.${methodName}`;
 

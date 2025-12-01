@@ -37,7 +37,7 @@ describe('AudioService (Contract Tests)', () => {
     mockAudio.src = '';
 
     // Mock global Audio constructor
-    global.Audio = vi.fn().mockImplementation(() => mockAudio) as any;
+    global.Audio = vi.fn().mockImplementation(() => mockAudio) as unknown as typeof Audio;
 
     // Create service instance (will fail until implementation exists)
     audioService = createAudioService();
@@ -94,7 +94,7 @@ describe('AudioService (Contract Tests)', () => {
   });
 
   describe('loadAudio()', () => {
-    const mockTask: Task = {
+    const mockTask: Partial<Task> = {
       id: 'test-task-1',
       type: 'vocabulary',
       question: '¿Cómo estás?',
@@ -103,7 +103,7 @@ describe('AudioService (Contract Tests)', () => {
       hasAudio: true,
       audioUrl: '/audio/spanish/como-estas.mp3',
       language: 'Spanish',
-    } as any;
+    };
 
     const mockSettings: AudioSettings = {
       version: 1,
@@ -119,13 +119,13 @@ describe('AudioService (Contract Tests)', () => {
 
     it('should load audio without auto-play', async () => {
       await expect(
-        audioService.loadAudio(mockTask, mockSettings, false)
+        audioService.loadAudio(mockTask as Task, mockSettings, false)
       ).resolves.not.toThrow();
     });
 
     it('should load audio with auto-play enabled', async () => {
       await expect(
-        audioService.loadAudio(mockTask, mockSettings, true)
+        audioService.loadAudio(mockTask as Task, mockSettings, true)
       ).resolves.not.toThrow();
     });
 
@@ -134,7 +134,7 @@ describe('AudioService (Contract Tests)', () => {
       await audioService.unlockAutoPlay();
 
       const startTime = Date.now();
-      await audioService.loadAudio(mockTask, mockSettings, true);
+      await audioService.loadAudio(mockTask as Task, mockSettings, true);
 
       // Wait for auto-play delay + a bit extra
       await new Promise(resolve => setTimeout(resolve, 600));
@@ -149,14 +149,14 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should NOT auto-play when autoPlay=false', async () => {
-      await audioService.loadAudio(mockTask, mockSettings, false);
+      await audioService.loadAudio(mockTask as Task, mockSettings, false);
 
       const state = audioService.getPlaybackState();
       expect(state.status).not.toBe('playing');
     });
 
     it('should update playback state with correct audioUrl', async () => {
-      await audioService.loadAudio(mockTask, mockSettings, false);
+      await audioService.loadAudio(mockTask as Task, mockSettings, false);
 
       const state = audioService.getPlaybackState();
       expect(state.audioUrl).toBe('/audio/spanish/como-estas.mp3');
@@ -173,19 +173,19 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should play loaded audio', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         id: 'test-task-1',
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
         language: 'Spanish',
-      } as any;
+      };
 
-      const mockSettings: AudioSettings = {
+      const mockSettings: Partial<AudioSettings> = {
         autoPlayEnabled: false,
         languageFilter: 'non-German only',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, mockSettings, false);
+      await audioService.loadAudio(mockTask as Task, mockSettings as AudioSettings, false);
       await audioService.play();
 
       const state = audioService.getPlaybackState();
@@ -193,13 +193,13 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should update playback status to playing', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
         language: 'Spanish',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       expect(audioService.getPlaybackState().status).toBe('playing');
@@ -212,13 +212,13 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should pause playing audio', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
         language: 'Spanish',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
       audioService.pause();
 
@@ -226,12 +226,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should preserve currentTime when paused', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       // Simulate some playback
@@ -250,12 +250,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should stop audio and reset position', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       mockAudio.currentTime = 2.0;
@@ -274,12 +274,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should replay from beginning', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       mockAudio.currentTime = 2.5;
@@ -298,12 +298,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should toggle from playing to paused', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       expect(audioService.getPlaybackState().status).toBe('playing');
@@ -314,12 +314,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it.skip('should toggle from paused to playing', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
       audioService.pause();
 
@@ -343,21 +343,21 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should preload next task audio', () => {
-      const nextTask: Task = {
+      const nextTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/spanish/next.mp3',
-      } as any;
+      };
 
-      expect(() => audioService.preloadNext(nextTask)).not.toThrow();
+      expect(() => audioService.preloadNext(nextTask as Task)).not.toThrow();
     });
 
     it('should update preloadedNextUrl in state', () => {
-      const nextTask: Task = {
+      const nextTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/spanish/next.mp3',
-      } as any;
+      };
 
-      audioService.preloadNext(nextTask);
+      audioService.preloadNext(nextTask as Task);
 
       const state = audioService.getPlaybackState();
       expect(state.preloadedNextUrl).toBe('/audio/spanish/next.mp3');
@@ -448,12 +448,12 @@ describe('AudioService (Contract Tests)', () => {
       const callback = vi.fn();
       audioService.onStateChange(callback);
 
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
 
       expect(callback).toHaveBeenCalled();
     });
@@ -471,12 +471,12 @@ describe('AudioService (Contract Tests)', () => {
 
       unsubscribe();
 
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
 
       expect(callback).not.toHaveBeenCalled();
     });
@@ -492,12 +492,12 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should stop playback when disposed', async () => {
-      const mockTask: Task = {
+      const mockTask: Partial<Task> = {
         hasAudio: true,
         audioUrl: '/audio/test.mp3',
-      } as any;
+      };
 
-      await audioService.loadAudio(mockTask, {} as any, false);
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
       audioService.dispose();

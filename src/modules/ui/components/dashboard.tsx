@@ -192,7 +192,7 @@ export function Dashboard({ onClose }: DashboardProps) {
 
   if (isLoading) {
     return (
-      <div className={styles['dashboard__empty']} style={{ textAlign: 'center' }}>
+      <div className={styles['dashboard__empty']}>
         <h1>📊 Dashboard</h1>
         <p>Lade Statistiken...</p>
       </div>
@@ -308,6 +308,7 @@ export function Dashboard({ onClose }: DashboardProps) {
                 <div className={styles['dashboard__topic-bar-container']}>
                   <div
                     className={styles['dashboard__topic-bar-fill']}
+                    // eslint-disable-next-line no-restricted-syntax -- Dynamic color and width based on accuracy
                     style={{
                       background:
                         topic.accuracy >= 75
@@ -349,6 +350,7 @@ export function Dashboard({ onClose }: DashboardProps) {
                 <div className={styles['dashboard__session-right']}>
                   <div
                     className={styles['dashboard__session-accuracy']}
+                    // eslint-disable-next-line no-restricted-syntax -- Dynamic color based on accuracy
                     style={{
                       color:
                         session.results.accuracy >= 75

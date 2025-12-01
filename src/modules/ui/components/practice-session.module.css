@@ -937,6 +937,22 @@
   flex-shrink: 0;
 }
 
+.practice-session__feedback-explanation {
+  margin: 0;
+}
+
+.practice-session__feedback-audio {
+  margin-top: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.practice-session__feedback-audio-label {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary);
+}
+
 /* ==================== Actions & Controls ==================== */
 
 .practice-session__footer {

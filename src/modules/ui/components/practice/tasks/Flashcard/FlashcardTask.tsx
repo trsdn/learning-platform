@@ -49,7 +49,7 @@ export function FlashcardTask({
     if (audioConfig?.autoPlay?.onReveal) {
       const fieldsToPlay = audioConfig.autoPlay.onReveal;
       for (const field of fieldsToPlay) {
-        const audioFile = (content as any)[field];
+        const audioFile = (content as unknown as Record<string, unknown>)[field];
         if (audioFile) {
           try {
             const audio = new Audio(
@@ -99,14 +99,16 @@ export function FlashcardTask({
         {/* Front side */}
         <div className={styles['practice-session__flashcard-front']}>
           <div>{content.front}</div>
-          {audioConfig?.buttons?.front?.show &&
-            (content as any)[audioConfig.buttons.front.field] && (
+          {audioConfig?.buttons?.front?.show && (() => {
+            const audioFile = (content as unknown as Record<string, unknown>)[audioConfig.buttons.front.field];
+            return audioFile ? (
               <AudioButton
                 text={content.front}
-                audioUrl={`${import.meta.env.BASE_URL}audio/${(content as any)[audioConfig.buttons.front.field]}`}
+                audioUrl={`${import.meta.env.BASE_URL}audio/${String(audioFile)}`}
                 size="large"
               />
-            )}
+            ) : null;
+          })()}
         </div>
 
         {/* Back side or reveal button */}
@@ -130,14 +132,16 @@ export function FlashcardTask({
             {/* Answer */}
             <div className={styles['practice-session__flashcard-back']}>
               <div>{content.back}</div>
-              {audioConfig?.buttons?.back?.show &&
-                (content as any)[audioConfig.buttons.back.field] && (
+              {audioConfig?.buttons?.back?.show && (() => {
+                const audioFile = (content as unknown as Record<string, unknown>)[audioConfig.buttons.back.field];
+                return audioFile ? (
                   <AudioButton
                     text={content.back}
-                    audioUrl={`${import.meta.env.BASE_URL}audio/${(content as any)[audioConfig.buttons.back.field]}`}
+                    audioUrl={`${import.meta.env.BASE_URL}audio/${String(audioFile)}`}
                     size="large"
                   />
-                )}
+                ) : null;
+              })()}
             </div>
           </>
         )}
@@ -172,4 +176,5 @@ export function FlashcardTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useFlashcard } from './use-flashcard';

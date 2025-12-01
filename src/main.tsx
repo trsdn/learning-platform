@@ -20,11 +20,13 @@ import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import { ErrorBoundary, ConnectionStatusIndicator, ErrorMessage } from './modules/ui/components/error';
 import { handleComponentError, type StructuredError } from './modules/core/utils/error-handler';
 import { checkSupabaseConnection, ConnectionStatus } from './modules/core/utils/connection-health';
+import { logger } from '@/utils/logger';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
 import './modules/ui/styles/utilities.css';
 import './modules/ui/components/auth/auth-modal.css';
 import './index.css';
+import styles from './styles/main-fallback.module.css';
 
 /**
  * German Learning Platform with Spaced Repetition
@@ -34,6 +36,7 @@ if (typeof window !== 'undefined') {
   settingsService.load();
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 function AppContent() {
   // Supabase authentication
   const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
@@ -75,7 +78,7 @@ function AppContent() {
     try {
       // With Supabase, data is managed in the cloud by admins
       // This function is kept for compatibility with event handlers
-      console.log('Reseed not needed with Supabase - data is managed in the cloud');
+      logger.debug('Reseed not needed with Supabase - data is managed in the cloud');
 
       // Reload topics from Supabase
       const topicRepo = getTopicRepository();
@@ -120,10 +123,10 @@ function AppContent() {
   // declared as stable callbacks.
   useEffect(() => {
     const handleReseedEvent = (_event: Event) => {
-      reseedDatabase(true).catch((error) => console.error('Reseed event failed', error));
+      reseedDatabase(true).catch((error) => logger.error('Reseed event failed', error));
     };
     const handleResetEvent = (_event: Event) => {
-      handleFullReset().catch((error) => console.error('Reset event failed', error));
+      handleFullReset().catch((error) => logger.error('Reset event failed', error));
     };
 
     window.addEventListener('app:database:reseed', handleReseedEvent);
@@ -199,10 +202,10 @@ function AppContent() {
       // Log deployment version
       const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content');
       const buildTime = document.querySelector('meta[name="deployment-version"]')?.getAttribute('data-build-time');
-      console.log('🚀 Deployment Version:', deploymentVersion, 'Build Time:', buildTime);
+      logger.debug('Deployment Version:', deploymentVersion, 'Build Time:', buildTime);
 
       // Check connection before loading data
-      console.log('Checking Supabase connection...');
+      logger.debug('Checking Supabase connection...');
       const healthCheck = await checkSupabaseConnection();
 
       if (healthCheck.status === ConnectionStatus.DISCONNECTED) {
@@ -210,19 +213,19 @@ function AppContent() {
       }
 
       if (healthCheck.status === ConnectionStatus.DEGRADED) {
-        console.warn('⚠️ Slow connection detected. Latency:', healthCheck.latency, 'ms');
+        logger.warn('Slow connection detected. Latency:', healthCheck.latency, 'ms');
       } else {
-        console.log('✅ Connection healthy. Latency:', healthCheck.latency, 'ms');
+        logger.debug('Connection healthy. Latency:', healthCheck.latency, 'ms');
       }
 
       // Load topics from Supabase (with automatic retry via wrapper)
       const topicRepo = getTopicRepository();
       const loadedTopics = await topicRepo.getAll();
-      console.log(`Loaded ${loadedTopics.length} topics from Supabase`);
+      logger.debug(`Loaded ${loadedTopics.length} topics from Supabase`);
 
       setTopics(loadedTopics);
       setIsLoading(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       const structuredError = handleComponentError(error, 'initializeApp');
       setInitError(structuredError);
       setIsLoading(false);
@@ -237,7 +240,7 @@ function AppContent() {
     const taskRepo = getTaskRepository();
 
     const paths = await learningPathRepo.getByTopicId(topic.id);
-    console.log(`Loading learning paths for topic ${topic.id}:`, paths);
+    logger.debug(`Loading learning paths for topic ${topic.id}:`, paths);
 
     // Sort by createdAt (latest first)
     paths.sort((a: LearningPath, b: LearningPath) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
@@ -247,8 +250,8 @@ function AppContent() {
     for (const path of paths) {
       const tasks = await taskRepo.getByLearningPathId(path.id);
       taskCounts[path.id] = tasks.length;
-      console.log(`Learning path "${path.title}" (${path.id}): ${tasks.length} tasks in DB, taskIds array length: ${path.taskIds?.length || 0}`);
-      console.log('Task IDs:', tasks.map((t: Task) => t.id));
+      logger.debug(`Learning path "${path.title}" (${path.id}): ${tasks.length} tasks in DB, taskIds array length: ${path.taskIds?.length || 0}`);
+      logger.debug('Task IDs:', tasks.map((t: Task) => t.id));
     }
 
     setLearningPathTaskCounts(taskCounts);
@@ -302,46 +305,17 @@ function AppContent() {
   // Show Supabase login if not authenticated (required for all users)
   if (!authLoading && !isAuthenticated) {
     return (
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        minHeight: '100vh',
-        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-        color: 'white',
-        padding: '2rem',
-        textAlign: 'center'
-      }}>
-        <h1 style={{ fontSize: '3rem', marginBottom: '1rem' }}>🧠 MindForge Academy</h1>
-        <p style={{ fontSize: '1.2rem', marginBottom: '2rem', maxWidth: '500px' }}>
+      <div className={styles.authContainer}>
+        <h1 className={styles.authTitle}>🧠 MindForge Academy</h1>
+        <p className={styles.authSubtitle}>
           Erweitere dein Wissen, eine Frage nach der anderen
         </p>
-        <p style={{ marginBottom: '2rem', opacity: 0.9 }}>
+        <p className={styles.authPrompt}>
           Bitte melden Sie sich an, um fortzufahren
         </p>
         <button
           onClick={() => setShowAuthModal(true)}
-          style={{
-            padding: '1rem 2rem',
-            fontSize: '1.1rem',
-            fontWeight: 'bold',
-            background: 'white',
-            color: '#667eea',
-            border: 'none',
-            borderRadius: '12px',
-            cursor: 'pointer',
-            boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-            transition: 'transform 0.2s, box-shadow 0.2s'
-          }}
-          onMouseOver={(e) => {
-            e.currentTarget.style.transform = 'translateY(-2px)';
-            e.currentTarget.style.boxShadow = '0 6px 12px rgba(0,0,0,0.15)';
-          }}
-          onMouseOut={(e) => {
-            e.currentTarget.style.transform = 'translateY(0)';
-            e.currentTarget.style.boxShadow = '0 4px 6px rgba(0,0,0,0.1)';
-          }}
+          className={styles.authButton}
         >
           🔑 Anmelden
         </button>
@@ -352,7 +326,7 @@ function AppContent() {
 
   if (isLoading) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', textAlign: 'center' }}>
+      <div className={styles.loadingContainer}>
         <h1>🧠 MindForge Academy</h1>
         <p>Wird geladen...</p>
       </div>
@@ -362,7 +336,7 @@ function AppContent() {
   // Show error if initialization failed
   if (initError) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.errorContainer}>
         <h1>🧠 MindForge Academy</h1>
         <ErrorMessage
           error={initError}
@@ -380,7 +354,7 @@ function AppContent() {
   // Show dashboard
   if (showDashboard) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.pageWrapper}>
         <Dashboard onClose={() => setShowDashboard(false)} />
       </div>
     );
@@ -388,7 +362,7 @@ function AppContent() {
 
   if (showSettings) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.pageWrapper}>
         <SettingsPage onClose={() => setShowSettings(false)} />
       </div>
     );
@@ -397,7 +371,7 @@ function AppContent() {
   // Show admin panel
   if (showAdmin) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.pageWrapper}>
         <AdminPage
           activeTab={adminTab}
           onTabChange={setAdminTab}
@@ -413,7 +387,7 @@ function AppContent() {
   // Show session results
   if (completedSession) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.pageWrapper}>
         <SessionResults
           session={completedSession}
           onClose={handleCloseResults}
@@ -426,46 +400,29 @@ function AppContent() {
   // Show session configuration
   if (showSessionConfig && selectedLearningPath && selectedTopic) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', maxWidth: '600px', margin: '0 auto' }}>
+      <div className={styles.sessionConfigContainer}>
         <button
           onClick={cancelSessionConfig}
-          style={{
-            padding: '0.5rem 1rem',
-            background: 'var(--color-bg-tertiary)',
-            color: 'var(--color-text-primary)',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginBottom: '1rem',
-          }}
+          className={styles.backButton}
         >
           ← Zurück
         </button>
 
-        <h1 style={{ marginBottom: '0.5rem' }}>Sitzung konfigurieren</h1>
-        <p style={{ color: 'var(--color-text-secondary)', marginBottom: '2rem' }}>
+        <h1 className={styles.sessionConfigTitle}>Sitzung konfigurieren</h1>
+        <p className={styles.sessionConfigSubtitle}>
           {selectedLearningPath.title}
         </p>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <label style={{ display: 'block', fontWeight: '500', marginBottom: '0.5rem' }}>
+        <div className={styles.sessionConfigSection}>
+          <label className={styles.sessionConfigLabel}>
             Anzahl der Fragen
           </label>
-          <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+          <div className={styles.sessionConfigButtonGroup}>
             {[5, 10, 15, 20].map((count) => (
               <button
                 key={count}
                 onClick={() => setSessionConfig({ ...sessionConfig, targetCount: count })}
-                style={{
-                  padding: '0.75rem 1.5rem',
-                  background: sessionConfig.targetCount === count ? 'var(--color-primary)' : 'var(--color-bg-secondary)',
-                  color: sessionConfig.targetCount === count ? 'var(--color-text-inverse)' : 'var(--color-text-primary)',
-                  border: 'none',
-                  borderRadius: '6px',
-                  cursor: 'pointer',
-                  fontSize: '1rem',
-                  fontWeight: '500',
-                }}
+                className={`${styles.sessionConfigCountButton} ${sessionConfig.targetCount === count ? styles.active : ''}`}
               >
                 {count}
               </button>
@@ -473,34 +430,24 @@ function AppContent() {
           </div>
         </div>
 
-        <div style={{ marginBottom: '2rem' }}>
-          <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+        <div className={styles.sessionConfigSection}>
+          <label className={styles.sessionConfigCheckboxLabel}>
             <input
               type="checkbox"
               checked={sessionConfig.includeReview}
               onChange={(e) => setSessionConfig({ ...sessionConfig, includeReview: e.target.checked })}
-              style={{ marginRight: '0.5rem', width: '1.25rem', height: '1.25rem', cursor: 'pointer' }}
+              className={styles.sessionConfigCheckbox}
             />
             <span>Wiederholungsfragen einbeziehen</span>
           </label>
-          <p style={{ fontSize: '0.875rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem', marginLeft: '1.75rem' }}>
+          <p className={styles.sessionConfigCheckboxDescription}>
             Fragen, die du bereits beantwortet hast und die zur Wiederholung fällig sind
           </p>
         </div>
 
         <button
           onClick={startPracticeSession}
-          style={{
-            padding: '1rem 2rem',
-            background: 'var(--color-primary)',
-            color: 'var(--color-text-inverse)',
-            border: 'none',
-            borderRadius: '8px',
-            cursor: 'pointer',
-            fontSize: '1.1rem',
-            fontWeight: '500',
-            width: '100%',
-          }}
+          className={styles.sessionStartButton}
         >
           Sitzung starten →
         </button>
@@ -511,7 +458,7 @@ function AppContent() {
   // Show practice session
   if (inSession && selectedLearningPath && selectedTopic) {
     return (
-      <div style={{ fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.pageWrapper}>
         <PracticeSessionWrapper
           topicId={selectedTopic.id}
           learningPathIds={[selectedLearningPath.id]}
@@ -526,58 +473,29 @@ function AppContent() {
 
   if (selectedTopic) {
     return (
-      <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+      <div className={styles.learningPathContainer}>
         <button
           onClick={() => setSelectedTopic(null)}
-          style={{
-            padding: '0.5rem 1rem',
-            background: 'var(--color-bg-tertiary)',
-            color: 'var(--color-text-primary)',
-            border: 'none',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            marginBottom: '1rem',
-          }}
+          className={styles.backButton}
         >
           ← Zurück zu Themen
         </button>
 
         <h1>📚 {selectedTopic.title}</h1>
 
-        <h2 style={{ marginTop: '2rem', marginBottom: '1rem' }}>Lernpfade</h2>
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-            gap: '1rem',
-          }}
-        >
+        <h2 className={styles.learningPathTitle}>Lernpfade</h2>
+        <div className={styles.learningPathGrid}>
           {learningPaths.map((path) => (
             <div
               key={path.id}
-              style={{
-                padding: '1.5rem',
-                background: 'var(--color-bg-primary)',
-                border: '2px solid var(--color-bg-tertiary)',
-                borderRadius: '8px',
-                cursor: 'pointer',
-                transition: 'all 0.2s',
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-primary)';
-                e.currentTarget.style.transform = 'translateY(-2px)';
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.borderColor = 'var(--color-bg-tertiary)';
-                e.currentTarget.style.transform = 'translateY(0)';
-              }}
+              className={styles.learningPathCard}
             >
-              <h3 style={{ marginBottom: '0.5rem' }}>{path.title}</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--color-text-secondary)', marginBottom: '1rem' }}>
+              <h3 className={styles.learningPathCardTitle}>{path.title}</h3>
+              <p className={styles.learningPathCardDescription}>
                 {path.description}
               </p>
-              <div style={{ fontSize: '0.85rem', color: 'var(--color-text-secondary)' }}>
-                <span style={{ marginRight: '1rem' }}>
+              <div className={styles.learningPathCardMeta}>
+                <span className={styles.learningPathCardMetaItem}>
                   {path.difficulty === 'easy'
                     ? '🟢 Leicht'
                     : path.difficulty === 'medium'
@@ -588,16 +506,7 @@ function AppContent() {
               </div>
               <button
                 onClick={() => showConfigScreen(path)}
-                style={{
-                  marginTop: '1rem',
-                  padding: '0.5rem 1rem',
-                  background: 'var(--color-primary)',
-                  color: 'var(--color-text-inverse)',
-                  border: 'none',
-                  borderRadius: '4px',
-                  cursor: 'pointer',
-                  width: '100%',
-                }}
+                className={styles.learningPathStartButton}
               >
                 Lernpfad starten →
               </button>
@@ -636,39 +545,27 @@ function AppContent() {
   }
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
+    <div className={styles.mainContainer}>
       {showAuthModal && <AuthModal onClose={() => setShowAuthModal(false)} />}
 
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
+      <div className={styles.mainHeader}>
         <div>
           <h1>🧠 MindForge Academy</h1>
-          <p style={{ fontSize: '1.1rem', color: 'var(--color-text-secondary)', marginTop: '0.5rem' }}>
+          <p className={styles.mainHeaderTitle}>
             Erweitere dein Wissen, eine Frage nach der anderen
           </p>
-          <p style={{ fontSize: '0.75rem', color: 'var(--color-text-tertiary, #999)', marginTop: '0.25rem' }}>
+          <p className={styles.mainHeaderVersion}>
             v{deploymentVersion}
             {isAuthenticated && user && (
-              <span style={{ marginLeft: '0.5rem' }}>| 👤 {user.email}</span>
+              <span className={styles.mainHeaderUserInfo}>| 👤 {user.email}</span>
             )}
           </p>
         </div>
-        <div style={{ display: 'flex', gap: '0.5rem' }}>
+        <div className={styles.mainHeaderActions}>
           {!isAuthenticated && (
             <button
               onClick={() => setShowAuthModal(true)}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: 'var(--color-success)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-              }}
+              className={`${styles.mainActionButton} ${styles.loginButton}`}
             >
               🔑 Anmelden
             </button>
@@ -676,19 +573,7 @@ function AppContent() {
           {isAuthenticated && (
             <button
               onClick={() => signOut()}
-              style={{
-                padding: '0.75rem 1.5rem',
-                background: 'var(--color-secondary)',
-                color: '#ffffff',
-                border: 'none',
-                borderRadius: '6px',
-                cursor: 'pointer',
-                fontSize: '1rem',
-                fontWeight: '500',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-              }}
+              className={`${styles.mainActionButton} ${styles.logoutButton}`}
             >
               👋 Abmelden
             </button>
@@ -696,73 +581,25 @@ function AppContent() {
           <button
             onClick={cycleThemeMode}
             title={`Theme wechseln (aktuell: ${themeLabel})`}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'var(--color-primary, #667eea)',
-              color: '#ffffff',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
+            className={`${styles.mainActionButton} ${styles.themeButton}`}
           >
             🌓 {themeLabel}
           </button>
           <button
             onClick={() => setShowDashboard(true)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'var(--color-primary)',
-              color: 'var(--color-text-inverse)',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
+            className={`${styles.mainActionButton} ${styles.dashboardButton}`}
           >
             📊 Dashboard
           </button>
           <button
             onClick={() => setShowSettings(true)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'var(--color-info)',
-              color: 'var(--color-text-inverse)',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
+            className={`${styles.mainActionButton} ${styles.settingsButton}`}
           >
             ⚙️ Einstellungen
           </button>
           <button
             onClick={() => setShowAdmin(true)}
-            style={{
-              padding: '0.75rem 1.5rem',
-              background: 'var(--color-secondary)',
-              color: 'var(--color-text-inverse)',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              fontSize: '1rem',
-              fontWeight: '500',
-              display: 'flex',
-              alignItems: 'center',
-              gap: '0.5rem',
-            }}
+            className={`${styles.mainActionButton} ${styles.adminButton}`}
             title="Keyboard shortcut: Ctrl+Shift+A"
           >
             🔧 Admin
@@ -770,14 +607,8 @@ function AppContent() {
         </div>
       </div>
 
-      <h2 style={{ marginTop: 0, marginBottom: '1rem' }}>Themen auswählen</h2>
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-          gap: '1.5rem',
-        }}
-      >
+      <h2 className={styles.topicsHeading}>Themen auswählen</h2>
+      <div className={styles.topicsGrid}>
         {topics.map((topic) => (
           <TopicCard
             key={topic.id}
@@ -794,6 +625,7 @@ function AppContent() {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 function App() {
   return (
     <ErrorBoundary showDetails={true}>

@@ -10,6 +10,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '@/modules/ui/contexts/auth-context';
 import { getAuthErrorMessage } from '@/modules/core/services/supabase-auth-service';
+import type { AuthError } from '@supabase/supabase-js';
 
 type AuthTab = 'login' | 'signup' | 'reset';
 
@@ -50,7 +51,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     const { error } = await signIn({ email, password });
 
     if (error) {
-      setError(getAuthErrorMessage(error as any));
+      setError(getAuthErrorMessage(error as AuthError | null));
       setLoading(false);
     } else {
       // Success - context will handle state update
@@ -69,7 +70,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     setLoading(false);
 
     if (error) {
-      setError(getAuthErrorMessage(error as any));
+      setError(getAuthErrorMessage(error as AuthError | null));
     } else {
       setSuccess('Registrierung erfolgreich! Bitte bestätigen Sie Ihre E-Mail-Adresse.');
       resetForm();
@@ -89,7 +90,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     setLoading(false);
 
     if (error) {
-      setError(getAuthErrorMessage(error as any));
+      setError(getAuthErrorMessage(error as AuthError | null));
     } else {
       setSuccess('Passwort-Reset-Link wurde an Ihre E-Mail-Adresse gesendet.');
       setEmail('');

@@ -93,4 +93,5 @@ export function SliderTask({
 }
 
 // Re-export hook for convenience
+// eslint-disable-next-line react-refresh/only-export-components
 export { useSlider } from './use-slider';

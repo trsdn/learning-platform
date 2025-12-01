@@ -4,7 +4,7 @@ import { ComponentLibrary } from '@ui/components/admin/ComponentLibrary';
 
 // Mock ComponentDemo to simplify testing
 vi.mock('@ui/components/admin/ComponentDemo', () => ({
-  ComponentDemo: ({ meta }: any) => (
+  ComponentDemo: ({ meta }: { meta: { id: string; name: string } }) => (
     <div data-testid={`component-demo-${meta.id}`}>
       {meta.name}
     </div>

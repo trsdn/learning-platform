@@ -10,7 +10,7 @@ describe('Spaced Repetition Integration Tests', () => {
   let spacedRepService: ISpacedRepetitionService;
 
   beforeEach(() => {
-    spacedRepService = null as any;
+    spacedRepService = null as unknown as ISpacedRepetitionService;
   });
 
   it('should initialize new task with interval=1, repetition=0, efactor=2.5', async () => {

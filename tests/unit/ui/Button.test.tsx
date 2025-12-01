@@ -17,6 +17,7 @@ describe('Button', () => {
     });
 
     it('should apply custom styles', () => {
+      // eslint-disable-next-line no-restricted-syntax -- Testing inline style functionality
       render(<Button style={{ margin: '10px' }}>Button</Button>);
       const button = screen.getByRole('button');
       expect(button.style.margin).toBe('10px');

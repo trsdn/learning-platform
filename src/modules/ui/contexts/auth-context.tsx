@@ -8,6 +8,7 @@
 import React, { createContext, useContext, useEffect, useState, useCallback } from 'react';
 import type { User, Session } from '@supabase/supabase-js';
 import { SupabaseAuthService, type SignUpData, type SignInData, type AuthProvider } from '@/modules/core/services/supabase-auth-service';
+import { logger } from '@/utils/logger';
 
 interface AuthContextValue {
   // State
@@ -48,20 +49,20 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     // Listen for auth changes
     const { unsubscribe } = SupabaseAuthService.onAuthStateChange((event, session) => {
-      console.log('Auth event:', event);
+      logger.debug('Auth event:', event);
       setSession(session);
       setUser(session?.user ?? null);
       setLoading(false);
 
       // Handle specific events
       if (event === 'SIGNED_IN') {
-        console.log('✅ User signed in:', session?.user?.email);
+        logger.debug('User signed in:', session?.user?.email);
       } else if (event === 'SIGNED_OUT') {
-        console.log('👋 User signed out');
+        logger.debug('User signed out');
       } else if (event === 'TOKEN_REFRESHED') {
-        console.log('🔄 Token refreshed');
+        logger.debug('Token refreshed');
       } else if (event === 'USER_UPDATED') {
-        console.log('📝 User updated');
+        logger.debug('User updated');
       }
     });
 
@@ -81,7 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Sign up error:', error);
+      logger.error('Sign up error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -97,7 +98,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Sign in error:', error);
+      logger.error('Sign in error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -113,7 +114,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Magic link error:', error);
+      logger.error('Magic link error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -130,7 +131,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       // OAuth redirects, so we won't get here normally
       return { error: null };
     } catch (error) {
-      console.error('OAuth error:', error);
+      logger.error('OAuth error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -140,7 +141,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     try {
       await SupabaseAuthService.signOut();
     } catch (error) {
-      console.error('Sign out error:', error);
+      logger.error('Sign out error:', error);
     }
   }, []);
 
@@ -155,7 +156,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Reset password error:', error);
+      logger.error('Reset password error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -171,7 +172,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Update password error:', error);
+      logger.error('Update password error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -187,7 +188,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
       return { error: null };
     } catch (error) {
-      console.error('Resend confirmation error:', error);
+      logger.error('Resend confirmation error:', error);
       return { error: error as Error };
     }
   }, []);
@@ -228,6 +229,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
  * }
  * ```
  */
+// eslint-disable-next-line react-refresh/only-export-components
 export function useAuth(): AuthContextValue {
   const context = useContext(AuthContext);
 

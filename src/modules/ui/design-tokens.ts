@@ -405,7 +405,7 @@ export function getColor(colorName: keyof typeof colors, shade: keyof typeof col
   if (!colorGroup || typeof colorGroup === 'string') {
     return colors.neutral[500];
   }
-  return (colorGroup as any)[shade] || colors.neutral[500];
+  return (colorGroup as Record<string, string>)[shade] || colors.neutral[500];
 }
 
 /**

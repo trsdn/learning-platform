@@ -21,11 +21,11 @@ describe('Practice Session Integration Tests', () => {
 
   beforeEach(() => {
     // Services will be injected when implemented
-    contentService = null as any;
-    sessionService = null as any;
-    answerService = null as any;
-    progressService = null as any;
-    spacedRepService = null as any;
+    contentService = null as unknown as ILearningContentService;
+    sessionService = null as unknown as IPracticeSessionService;
+    answerService = null as unknown as IAnswerHistoryService;
+    progressService = null as unknown as IProgressTrackingService;
+    spacedRepService = null as unknown as ISpacedRepetitionService;
   });
 
   it('should create a new practice session with specified configuration', async () => {

@@ -71,6 +71,7 @@ export function StatCard({
       padding="medium"
       shadow
       border
+      // eslint-disable-next-line no-restricted-syntax -- Dynamic border color based on prop
       style={{ borderLeft: `4px solid ${color}`, ...style }}
       className={className}
     >
@@ -81,6 +82,7 @@ export function StatCard({
             {title}
           </h3>
           {icon && (
+            // eslint-disable-next-line no-restricted-syntax -- Dynamic icon color based on prop
             <div className={styles['stat-card__icon']} style={{ color }}>
               {icon}
             </div>

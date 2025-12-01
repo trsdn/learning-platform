@@ -109,6 +109,7 @@ export function Slider({
             styles['slider-fill'],
             disabled && styles['slider-fill--disabled']
           )}
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic width based on slider value
           style={{ width: `${percentage}%` }}
         />
         <div
@@ -116,6 +117,7 @@ export function Slider({
             styles['slider-thumb'],
             disabled && styles['slider-thumb--disabled']
           )}
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic position based on slider value
           style={{ left: `calc(${percentage}% - 12px)` }}
         />
         <input

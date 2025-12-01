@@ -1,0 +1,35 @@
+/* PracticeSessionWrapper Component - CSS Modules */
+
+/* Loading state */
+.loading {
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Error state */
+.error {
+  padding: 2rem;
+  text-align: center;
+}
+
+.error__message {
+  color: var(--color-error, #ef4444);
+}
+
+.error__button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.error__button:hover {
+  opacity: 0.9;
+}
+
+.error__button:active {
+  transform: scale(0.98);
+}
