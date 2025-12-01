@@ -111,7 +111,7 @@ describe('Task Entity Validation', () => {
     };
 
     // Basic check: German umlauts present
-    const hasGermanChars = /[äöüßÄÖÜ]/.test(
+    const _hasGermanChars = /[äöüßÄÖÜ]/.test(
       germanContent.question + germanContent.explanation
     );
 

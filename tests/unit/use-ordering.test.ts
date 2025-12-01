@@ -163,8 +163,8 @@ describe('useOrdering', () => {
 
       // Manually arrange items in correct order: ['eins', 'zwei', 'drei', 'vier']
       // The correct order indices are [0, 1, 2, 3]
-      const items = result.current.orderedItems;
-      const correctOrder = ['eins', 'zwei', 'drei', 'vier'];
+      const _items = result.current.orderedItems;
+      const _correctOrder = ['eins', 'zwei', 'drei', 'vier'];
 
       // Find current positions and move to correct positions
       // This is complex due to swapping, so let's just check the logic

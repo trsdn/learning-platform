@@ -3,7 +3,6 @@
  */
 
 import type { PracticeSession } from '@core/types/services';
-import { createMixedTasks } from './task-factory';
 
 /**
  * Create a mock practice session

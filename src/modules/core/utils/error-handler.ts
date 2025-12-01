@@ -28,8 +28,8 @@ export interface StructuredError {
   message: string;
   userMessage: string;
   isRetryable: boolean;
-  originalError?: any;
-  context?: Record<string, any>;
+  originalError?: unknown;
+  context?: Record<string, unknown>;
 }
 
 /**
@@ -102,7 +102,7 @@ const SUPABASE_ERROR_CODES: Record<string, { category: ErrorCategory; userMessag
 /**
  * Categorize and structure a Supabase error
  */
-export function categorizeError(error: any, context?: Record<string, any>): StructuredError {
+export function categorizeError(error: unknown, context?: Record<string, unknown>): StructuredError {
   // Handle network errors
   if (error instanceof TypeError && error.message.includes('fetch')) {
     return {
@@ -116,7 +116,8 @@ export function categorizeError(error: any, context?: Record<string, any>): Stru
   }
 
   // Handle timeout errors
-  if (error.name === 'AbortError' || error.message?.includes('timeout')) {
+  const errorObj = error as { name?: string; message?: string };
+  if (errorObj.name === 'AbortError' || errorObj.message?.includes('timeout')) {
     return {
       category: ErrorCategory.TIMEOUT,
       message: 'Request timeout',
@@ -157,9 +158,10 @@ export function categorizeError(error: any, context?: Record<string, any>): Stru
   }
 
   // Handle generic errors
+  const genericError = error as { message?: string } | null | undefined;
   return {
     category: ErrorCategory.UNKNOWN,
-    message: error?.message || 'Unknown error',
+    message: genericError?.message || 'Unknown error',
     userMessage: 'An unexpected error occurred. Please try again.',
     isRetryable: true,
     originalError: error,
@@ -170,8 +172,8 @@ export function categorizeError(error: any, context?: Record<string, any>): Stru
 /**
  * Type guard for PostgrestError
  */
-function isPostgrestError(error: any): error is PostgrestError {
-  return error && typeof error === 'object' && 'code' in error && 'message' in error && 'details' in error;
+function isPostgrestError(error: unknown): error is PostgrestError {
+  return error !== null && typeof error === 'object' && 'code' in error && 'message' in error && 'details' in error;
 }
 
 /**
@@ -323,7 +325,7 @@ export function requiresReAuthentication(error: StructuredError): boolean {
 /**
  * Handle errors in React components - returns error for state management
  */
-export function handleComponentError(error: any, operation: string): StructuredError {
+export function handleComponentError(error: unknown, operation: string): StructuredError {
   const structuredError = categorizeError(error, { source: 'component', operation });
   logError(structuredError, operation);
   return structuredError;

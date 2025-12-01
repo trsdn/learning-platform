@@ -124,7 +124,7 @@ describe('Spaced Repetition Integration Tests', () => {
 
   it('should return tasks due for review based on nextReview date', async () => {
     expect(async () => {
-      const now = new Date();
+      const _now = new Date();
 
       // Create tasks with different review dates
       const taskDueYesterday = 'task-due-yesterday';

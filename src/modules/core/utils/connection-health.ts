@@ -3,7 +3,7 @@
  */
 
 import { supabase } from '../../storage/supabase-client';
-import { categorizeError, logError, type StructuredError } from './error-handler';
+import { categorizeError, logError, ErrorCategory, type StructuredError } from './error-handler';
 
 /**
  * Connection health status
@@ -96,7 +96,7 @@ export async function waitForConnection(
   return {
     status: ConnectionStatus.DISCONNECTED,
     error: {
-      category: 'TIMEOUT' as any,
+      category: ErrorCategory.TIMEOUT,
       message: 'Connection timeout',
       userMessage: 'Could not connect to the server. Please check your internet connection and try again.',
       isRetryable: true,

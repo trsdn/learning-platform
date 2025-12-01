@@ -185,19 +185,20 @@ export class SupabaseErrorBoundary extends Component<
  */
 interface UseErrorHandlerOptions {
   onError?: (error: Error) => void;
-  resetKeys?: any[];
+  resetKeys?: unknown[];
 }
 
 export function useErrorHandler(options: UseErrorHandlerOptions = {}): {
   error: StructuredError | null;
   resetError: () => void;
-  handleError: (error: any) => void;
+  handleError: (error: unknown) => void;
 } {
   const [error, setError] = React.useState<StructuredError | null>(null);
 
   React.useEffect(() => {
     if (error && options.onError) {
-      options.onError(error.originalError || new Error(error.message));
+      const originalError = error.originalError;
+      options.onError(originalError instanceof Error ? originalError : new Error(error.message));
     }
   }, [error, options.onError]);
 
@@ -208,7 +209,7 @@ export function useErrorHandler(options: UseErrorHandlerOptions = {}): {
     }
   }, options.resetKeys || []);
 
-  const handleError = React.useCallback((err: any) => {
+  const handleError = React.useCallback((err: unknown) => {
     const structuredError = categorizeError(err);
     setError(structuredError);
   }, []);
