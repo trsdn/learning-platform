@@ -195,19 +195,22 @@ export function useErrorHandler(options: UseErrorHandlerOptions = {}): {
 } {
   const [error, setError] = React.useState<StructuredError | null>(null);
 
-  React.useEffect(() => {
-    if (error && options.onError) {
-      const originalError = error.originalError;
-      options.onError(originalError instanceof Error ? originalError : new Error(error.message));
-    }
-  }, [error, options.onError]);
+  // Destructure options to provide stable references for dependency arrays
+  const { onError, resetKeys } = options;
 
-  // Reset error when reset keys change
+  React.useEffect(() => {
+    if (error && onError) {
+      const originalError = error.originalError;
+      onError(originalError instanceof Error ? originalError : new Error(error.message));
+    }
+  }, [error, onError]);
+
+  // Reset error when reset keys change (or when error changes)
   React.useEffect(() => {
     if (error) {
       setError(null);
     }
-  }, options.resetKeys || []);
+  }, [error, resetKeys]);
 
   const handleError = React.useCallback((err: unknown) => {
     const structuredError = categorizeError(err);

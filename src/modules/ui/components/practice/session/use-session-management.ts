@@ -85,7 +85,8 @@ export function useSessionManagement({
       }
 
       setSession(loadedSession);
-      setCurrentTaskIndex(loadedSession.execution.currentTaskIndex || 0);
+      // Use completedCount as the current task index (next task to complete)
+      setCurrentTaskIndex(loadedSession.execution.completedCount || 0);
     } catch (error) {
       console.error('Failed to initialize session:', error);
       onComplete();
@@ -172,19 +173,6 @@ export function useSessionManagement({
   );
 
   /**
-   * Navigate to the next task or complete the session
-   */
-  const nextTask = useCallback(() => {
-    setShowFeedback(false);
-
-    if (session && session.execution.taskIds && currentTaskIndex < session.execution.taskIds.length - 1) {
-      setCurrentTaskIndex(currentTaskIndex + 1);
-    } else {
-      completeSession();
-    }
-  }, [session, currentTaskIndex]);
-
-  /**
    * Complete the session and navigate away
    */
   const completeSession = useCallback(async () => {
@@ -214,6 +202,19 @@ export function useSessionManagement({
   }, [session, onComplete]);
 
   /**
+   * Navigate to the next task or complete the session
+   */
+  const nextTask = useCallback(() => {
+    setShowFeedback(false);
+
+    if (session && session.execution.taskIds && currentTaskIndex < session.execution.taskIds.length - 1) {
+      setCurrentTaskIndex(currentTaskIndex + 1);
+    } else {
+      completeSession();
+    }
+  }, [session, currentTaskIndex, completeSession]);
+
+  /**
    * Calculate progress percentage
    */
   const progress =
@@ -233,14 +234,14 @@ export function useSessionManagement({
     if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex === 0) {
       loadCurrentTask();
     }
-  }, [session, loadCurrentTask]);
+  }, [session, currentTaskIndex, loadCurrentTask]);
 
   // Load current task when index changes
   useEffect(() => {
     if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex > 0) {
       loadCurrentTask();
     }
-  }, [currentTaskIndex, loadCurrentTask]);
+  }, [currentTaskIndex, loadCurrentTask, session]);
 
   return {
     session,

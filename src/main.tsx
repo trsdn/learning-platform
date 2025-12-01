@@ -65,6 +65,60 @@ function AppContent() {
   }, []);
 
   useEffect(() => {
+    // Event listeners for reseed/reset are attached after the handlers are
+    // declared further below to avoid using callbacks before declaration.
+  }, []);
+
+  // Define reseed and reset handlers as stable callbacks so they can be
+  // safely referenced from event listeners without causing exhaustive-deps warnings.
+  const reseedDatabase = React.useCallback(async (showNotification = true) => {
+    try {
+      // With Supabase, data is managed in the cloud by admins
+      // This function is kept for compatibility with event handlers
+      console.log('Reseed not needed with Supabase - data is managed in the cloud');
+
+      // Reload topics from Supabase
+      const topicRepo = getTopicRepository();
+      const loadedTopics = await topicRepo.getAll();
+      setTopics(loadedTopics);
+
+      const detail = {
+        lastUpdatedAt: new Date().toISOString(),
+      };
+      window.dispatchEvent(new CustomEvent('app:database:updated', { detail }));
+
+      if (showNotification) {
+        alert('✅ Daten erfolgreich aktualisiert!');
+      }
+    } catch (error) {
+      console.error('Reload failed:', error);
+      if (showNotification) {
+        alert('❌ Fehler beim Aktualisieren der Daten');
+      }
+    }
+  }, [setTopics]);
+
+  const handleFullReset = React.useCallback(async () => {
+    try {
+      // With Supabase, we only clear local settings
+      localStorage.removeItem('mindforge.app-settings.v1');
+      localStorage.removeItem('audioSettings');
+
+      // Sign out the user (this will trigger re-authentication)
+      await signOut();
+
+      if (window.confirm('App-Einstellungen wurden zurückgesetzt. Seite neu laden?')) {
+        window.location.reload();
+      }
+    } catch (error) {
+      console.error('Reset failed:', error);
+      alert('❌ Fehler beim Zurücksetzen der Einstellungen');
+    }
+  }, [signOut]);
+
+  // Attach event listeners now that reseedDatabase and handleFullReset are
+  // declared as stable callbacks.
+  useEffect(() => {
     const handleReseedEvent = (_event: Event) => {
       reseedDatabase(true).catch((error) => console.error('Reseed event failed', error));
     };
@@ -79,7 +133,7 @@ function AppContent() {
       window.removeEventListener('app:database:reseed', handleReseedEvent);
       window.removeEventListener('app:database:reset', handleResetEvent);
     };
-  }, []);
+  }, [reseedDatabase, handleFullReset]);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -554,50 +608,7 @@ function AppContent() {
     );
   }
 
-  async function reseedDatabase(showNotification = true) {
-    try {
-      // With Supabase, data is managed in the cloud by admins
-      // This function is kept for compatibility with event handlers
-      console.log('Reseed not needed with Supabase - data is managed in the cloud');
-
-      // Reload topics from Supabase
-      const topicRepo = getTopicRepository();
-      const loadedTopics = await topicRepo.getAll();
-      setTopics(loadedTopics);
-
-      const detail = {
-        lastUpdatedAt: new Date().toISOString(),
-      };
-      window.dispatchEvent(new CustomEvent('app:database:updated', { detail }));
-
-      if (showNotification) {
-        alert('✅ Daten erfolgreich aktualisiert!');
-      }
-    } catch (error) {
-      console.error('Reload failed:', error);
-      if (showNotification) {
-        alert('❌ Fehler beim Aktualisieren der Daten');
-      }
-    }
-  }
-
-  async function handleFullReset() {
-    try {
-      // With Supabase, we only clear local settings
-      localStorage.removeItem('mindforge.app-settings.v1');
-      localStorage.removeItem('audioSettings');
-
-      // Sign out the user (this will trigger re-authentication)
-      await signOut();
-
-      if (window.confirm('App-Einstellungen wurden zurückgesetzt. Seite neu laden?')) {
-        window.location.reload();
-      }
-    } catch (error) {
-      console.error('Reset failed:', error);
-      alert('❌ Fehler beim Zurücksetzen der Einstellungen');
-    }
-  }
+  
 
   // Convert Topic to TopicCardTopic
   function topicToCardTopic(topic: Topic): TopicCardTopic {

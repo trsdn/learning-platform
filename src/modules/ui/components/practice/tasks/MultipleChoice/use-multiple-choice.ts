@@ -38,6 +38,14 @@ export function useMultipleChoice(
   const [optionCursor, setOptionCursor] = useState<number>(0);
 
   // Initialize shuffle when task changes
+  const resetState = useCallback(() => {
+    setSelectedAnswer(null);
+    setShuffledOptions([]);
+    setShuffledIndices([]);
+    setCorrectAnswerIndex(0);
+    setOptionCursor(0);
+  }, []);
+
   useEffect(() => {
     if (!task || task.type !== 'multiple-choice') {
       resetState();
@@ -68,7 +76,7 @@ export function useMultipleChoice(
     setCorrectAnswerIndex(correctIndex);
     setSelectedAnswer(null);
     setOptionCursor(0);
-  }, [task]);
+  }, [task, resetState]);
 
   // Adjust cursor when options change
   useEffect(() => {
@@ -77,7 +85,7 @@ export function useMultipleChoice(
     } else {
       setOptionCursor(0);
     }
-  }, [shuffledOptions]);
+  }, [shuffledOptions.length]);
 
   /**
    * Move cursor up/down through options
@@ -111,13 +119,7 @@ export function useMultipleChoice(
   /**
    * Reset all state
    */
-  const resetState = useCallback(() => {
-    setSelectedAnswer(null);
-    setShuffledOptions([]);
-    setShuffledIndices([]);
-    setCorrectAnswerIndex(0);
-    setOptionCursor(0);
-  }, []);
+  // resetState is defined above and reused in the initialization effect
 
   return {
     // State
