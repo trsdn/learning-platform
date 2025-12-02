@@ -37,13 +37,14 @@ jobs:
           sudo chmod +x /usr/local/bin/sops
 
       - name: Decrypt secrets
-        if: ${{ secrets.SOPS_AGE_KEY != '' }}
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          if [ -f .env.local.enc ]; then
+          if [ -n "$SOPS_AGE_KEY" ] && [ -f .env.local.enc ]; then
             sops -d .env.local.enc > .env.local
             echo "✅ Decrypted .env.local"
+          else
+            echo "⏭️ Skipping decryption (no SOPS_AGE_KEY or .env.local.enc)"
           fi
 
       - name: Setup Node.js
