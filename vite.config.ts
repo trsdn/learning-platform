@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -7,10 +7,44 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Vite plugin to inject CSP meta tag with environment-specific Supabase URL
+ */
+function cspPlugin(supabaseUrl: string, isDev: boolean): Plugin {
+  const cspContent = [
+    "default-src 'self'",
+    `script-src 'self' 'unsafe-inline' 'unsafe-eval'${isDev ? ' https://vercel.live' : ''}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' data: https://fonts.gstatic.com",
+    "img-src 'self' data: https:",
+    `connect-src 'self' ${supabaseUrl}${isDev ? ' https://*.vercel.live wss://*.vercel.live' : ''}`,
+    "worker-src 'self'",
+    "manifest-src 'self'",
+    "media-src 'self' blob: data:",
+    isDev ? "frame-src https://vercel.live" : null,
+  ].filter(Boolean).join('; ');
+
+  return {
+    name: 'vite-plugin-csp',
+    transformIndexHtml(html) {
+      const cspMeta = `<meta http-equiv="Content-Security-Policy" content="${cspContent}">`;
+      // Insert CSP meta tag after the comment placeholder
+      return html.replace(
+        '<!-- CSP is injected dynamically by Vite based on VITE_SUPABASE_URL -->',
+        `<!-- CSP injected by Vite -->\n    ${cspMeta}`
+      );
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
+
+  // Get Supabase URL from environment or use default
+  const supabaseUrl = env.VITE_SUPABASE_URL || 'https://knzjdckrtewoigosaxoh.supabase.co';
+  const isDevelopment = env.VITE_ENV === 'development' || mode === 'development';
 
   // Deployment: Vercel only
   // Always use root path (/)
@@ -21,6 +55,7 @@ export default defineConfig(({ mode }) => {
     'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),
   },
   plugins: [
+    cspPlugin(supabaseUrl, isDevelopment),
     tsconfigPaths(),
     react(),
     VitePWA({
