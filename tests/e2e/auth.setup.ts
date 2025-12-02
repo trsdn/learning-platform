@@ -6,9 +6,21 @@
 
 import { Page } from '@playwright/test';
 
+// Test credentials must be provided via environment variables
+// Never commit real credentials to source code
+const email = process.env.TEST_USER_EMAIL;
+const password = process.env.TEST_USER_PASSWORD;
+
+if (!email || !password) {
+  throw new Error(
+    'E2E tests require TEST_USER_EMAIL and TEST_USER_PASSWORD environment variables. ' +
+    'Set them in your .env file or CI secrets.'
+  );
+}
+
 export const TEST_USER = {
-  email: process.env.TEST_USER_EMAIL || 'torsten.mahr@me.com',
-  password: process.env.TEST_USER_PASSWORD || 'xibrox-jYsdag-7zitbu',
+  email,
+  password,
 };
 
 /**
