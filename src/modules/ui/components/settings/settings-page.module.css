@@ -178,6 +178,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  border: none;
+  padding: 0;
+  margin: 0;
 }
 
 .settingLabel {

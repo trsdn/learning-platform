@@ -207,9 +207,9 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       keywords: ['theme', 'dark', 'light', 'schrift', 'font', 'animation'],
       content: (
         <div className={styles.settingGroup}>
-          <div className={styles.settingItem}>
-            <div className={styles.settingLabel}>Theme</div>
-            <div className={styles.radioGroup}>
+          <fieldset className={styles.settingItem}>
+            <legend className={styles.settingLabel}>Theme</legend>
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Theme auswählen">
               {(['light', 'dark', 'system'] as ThemeMode[]).map((mode) => (
                 <label
                   key={mode}
@@ -217,6 +217,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 >
                   <input
                     type="radio"
+                    name="theme-mode"
                     checked={settings.theme.mode === mode}
                     onChange={() => handleThemeModeChange(mode)}
                   />
@@ -224,11 +225,11 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
-          <div className={styles.settingItem}>
-            <div className={styles.settingLabel}>Schriftgröße</div>
-            <div className={styles.radioGroup}>
+          <fieldset className={styles.settingItem}>
+            <legend className={styles.settingLabel}>Schriftgröße</legend>
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Schriftgröße auswählen">
               {(['small', 'medium', 'large', 'x-large'] as FontScale[]).map((scale) => (
                 <label
                   key={scale}
@@ -236,6 +237,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 >
                   <input
                     type="radio"
+                    name="font-scale"
                     checked={settings.theme.fontScale === scale}
                     onChange={() => handleFontScaleChange(scale)}
                   />
@@ -249,7 +251,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           <div className={styles.toggleGroup}>
             <label className={styles.radioOption}>
@@ -415,9 +417,9 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
 
           {settings.interaction.confettiEnabled && (
             <>
-              <div className={styles.settingItem}>
-                <div className={styles.settingLabel}>Konfetti-Stil</div>
-                <div className={styles.radioGroup}>
+              <fieldset className={styles.settingItem}>
+                <legend className={styles.settingLabel}>Konfetti-Stil</legend>
+                <div className={styles.radioGroup} role="radiogroup" aria-label="Konfetti-Stil auswählen">
                   {([
                     { value: 'standard', label: 'Standard' },
                     { value: 'firework', label: 'Feuerwerk' },
@@ -433,6 +435,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                     >
                       <input
                         type="radio"
+                        name="confetti-style"
                         checked={settings.interaction.confettiStyle === option.value}
                         onChange={() =>
                           updateSettings((prev) => ({
@@ -445,11 +448,11 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                     </label>
                   ))}
                 </div>
-              </div>
+              </fieldset>
 
-              <div className={styles.settingItem}>
-                <div className={styles.settingLabel}>Intensität</div>
-                <div className={styles.radioGroup}>
+              <fieldset className={styles.settingItem}>
+                <legend className={styles.settingLabel}>Intensität</legend>
+                <div className={styles.radioGroup} role="radiogroup" aria-label="Konfetti-Intensität auswählen">
                   {([
                     { value: 'light', label: 'Leicht' },
                     { value: 'medium', label: 'Mittel' },
@@ -464,6 +467,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                     >
                       <input
                         type="radio"
+                        name="confetti-intensity"
                         checked={settings.interaction.confettiIntensity === option.value}
                         onChange={() =>
                           updateSettings((prev) => ({
@@ -476,7 +480,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                     </label>
                   ))}
                 </div>
-              </div>
+              </fieldset>
 
               <label className={styles.checkboxOption}>
                 <input
@@ -564,11 +568,12 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       </header>
 
       <div className={styles.searchBar}>
-        <span className={styles.searchIcon}>🔍</span>
+        <span className={styles.searchIcon} aria-hidden="true">🔍</span>
         <input
           className={styles.searchInput}
           type="search"
           placeholder="Einstellungen durchsuchen..."
+          aria-label="Einstellungen durchsuchen"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
