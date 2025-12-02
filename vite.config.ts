@@ -13,7 +13,8 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 function cspPlugin(supabaseUrl: string, isDev: boolean): Plugin {
   const cspContent = [
     "default-src 'self'",
-    `script-src 'self' 'unsafe-inline' 'unsafe-eval'${isDev ? ' https://vercel.live' : ''}`,
+    // 'unsafe-inline' is required for React hydration and Vite dev mode. 'unsafe-eval' is only needed in development.
+    `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://vercel.live" : ""}`,
     "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
     "font-src 'self' data: https://fonts.gstatic.com",
     "img-src 'self' data: https:",
@@ -46,8 +47,14 @@ export default defineConfig(({ mode }) => {
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
 
-  // Get Supabase URL from environment or use default
-  const supabaseUrl = env.VITE_SUPABASE_URL || 'https://knzjdckrtewoigosaxoh.supabase.co';
+  // Get Supabase URL from environment, fail build if not set
+  if (!env.VITE_SUPABASE_URL) {
+    throw new Error(
+      '❌ VITE_SUPABASE_URL is not set. Please provide the Supabase URL in your environment variables. ' +
+      'Failing build to prevent accidental use of production database.'
+    );
+  }
+  const supabaseUrl = env.VITE_SUPABASE_URL;
   const isDevelopment = env.VITE_ENV === 'development' || mode === 'development';
 
   // Deployment: Vercel only
