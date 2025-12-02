@@ -122,14 +122,14 @@ jobs:
           done
           if [[ "$HTTP_STATUS" == "200" ]]; then
             echo "✅ Site is reachable (HTTP $HTTP_STATUS)"
-            echo "status=healthy" >> $GITHUB_OUTPUT
+            echo "status=✅ Healthy" >> $GITHUB_OUTPUT
           elif [[ "$HTTP_STATUS" == "000" ]]; then
             echo "::error title=Health Check Failed::Connection timeout or network error"
-            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "status=❌ Failed" >> $GITHUB_OUTPUT
             HEALTH_FAILED=true
           else
             echo "::error title=Health Check Failed::Site returned HTTP $HTTP_STATUS"
-            echo "status=failed" >> $GITHUB_OUTPUT
+            echo "status=❌ Failed" >> $GITHUB_OUTPUT
             HEALTH_FAILED=true
           fi
 
