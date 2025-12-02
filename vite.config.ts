@@ -22,7 +22,7 @@ function cspPlugin(supabaseUrl: string, isDev: boolean): Plugin {
     "manifest-src 'self'",
     "media-src 'self' blob: data:",
     isDev ? "frame-src https://vercel.live" : null,
-  ].filter(Boolean).join('; ');
+  ].filter(Boolean).join(';');
 
   return {
     name: 'vite-plugin-csp',
