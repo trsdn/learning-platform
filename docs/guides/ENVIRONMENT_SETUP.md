@@ -173,21 +173,39 @@ Development database is automatically seeded when:
 npm run seed:supabase
 ```
 
+### Allowed Development Projects
+
+The seed script maintains an explicit **allowlist** of development projects that can be seeded:
+
+| Project | Reference | Status |
+|---------|-----------|--------|
+| `mindforge-academy-dev` | `ngasmbisrysigagtqpzj` | ✅ Allowed |
+| `mindforge-academy` (prod) | `knzjdckrtewoigosaxoh` | ❌ Blocked |
+
+Unknown projects (not in allowlist) are blocked to prevent accidental seeding of new or misconfigured databases.
+
+To add a new development project, update `ALLOWED_DEV_PROJECT_REFS` in `scripts/seed-supabase.ts`.
+
 ### Production Seeding (Blocked)
 
-Production seeding is **blocked by default** to protect user data.
+Production seeding is **blocked by default** with multiple safety layers to protect user data.
 
-The seed script checks the Supabase URL and will:
-- Exit with error if targeting production
-- Only allow with explicit `FORCE_PRODUCTION_SEED=true` flag
-- Show 5-second warning before proceeding (if forced)
+The seed script validates the environment and will:
+- ❌ Block unknown/unrecognized Supabase projects
+- ❌ Block production unless **double-confirmed** with two flags
+- ⏱️ Show **10-second warning** before proceeding (if forced)
 
 ```bash
-# This will be BLOCKED:
+# This will be BLOCKED (unknown project):
+VITE_SUPABASE_URL=https://unknown-project.supabase.co npm run seed:supabase
+
+# This will be BLOCKED (production without confirmation):
 VITE_SUPABASE_URL=https://knzjdckrtewoigosaxoh.supabase.co npm run seed:supabase
 
-# Only works with explicit force (NOT RECOMMENDED):
-FORCE_PRODUCTION_SEED=true npm run seed:supabase
+# Only works with DOUBLE confirmation (NOT RECOMMENDED):
+FORCE_PRODUCTION_SEED=true \
+CONFIRM_PRODUCTION_SEED=I_UNDERSTAND_THIS_IS_DANGEROUS \
+npm run seed:supabase
 ```
 
 ## Branch Protection

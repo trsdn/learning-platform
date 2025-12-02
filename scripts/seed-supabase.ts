@@ -495,9 +495,11 @@ function extractProjectRef(url: string | undefined): string | null {
 }
 
 /**
- * Check if we're targeting an allowed development environment
+ * Validate the seeding environment by checking URL format, extracting
+ * the project ref, and verifying the project is in the allowlist.
+ * Blocks seeding to unknown or production projects unless explicitly confirmed.
  */
-function checkProductionSafety(): void {
+async function validateSeedingEnvironment(): Promise<void> {
   // First, validate the URL format
   validateSupabaseUrl(supabaseUrl);
 
@@ -556,11 +558,8 @@ function checkProductionSafety(): void {
     console.warn('\n⚠️  WARNING: Force-seeding PRODUCTION database!');
     console.warn('This action cannot be undone easily.');
     console.warn('Waiting 10 seconds... Press Ctrl+C to cancel.\n');
-    // Synchronous delay for warning (increased to 10 seconds)
-    const start = Date.now();
-    while (Date.now() - start < 10000) {
-      // Busy wait - intentionally blocking
-    }
+    // Async delay - doesn't block the event loop
+    await new Promise(resolve => setTimeout(resolve, 10000));
     console.warn('Proceeding with production seeding...\n');
   }
 
@@ -576,8 +575,8 @@ async function main() {
   console.log('🌱 Starting Supabase seeding...\n');
   console.log('📍 Supabase URL:', supabaseUrl);
 
-  // CRITICAL: Check production safety before proceeding
-  checkProductionSafety();
+  // CRITICAL: Validate seeding environment before proceeding
+  await validateSeedingEnvironment();
 
   console.log('🔑 Using service role key\n');
 
