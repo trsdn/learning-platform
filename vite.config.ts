@@ -28,9 +28,13 @@ function cspPlugin(supabaseUrl: string, isDev: boolean): Plugin {
     name: 'vite-plugin-csp',
     transformIndexHtml(html) {
       const cspMeta = `<meta http-equiv="Content-Security-Policy" content="${cspContent.replace(/"/g, '&quot;')}">`;
+      const placeholder = '<!-- CSP is injected dynamically by Vite based on VITE_SUPABASE_URL -->';
       // Insert CSP meta tag after the comment placeholder
+      if (!html.includes(placeholder)) {
+        throw new Error('CSP placeholder comment not found in index.html');
+      }
       return html.replace(
-        '<!-- CSP is injected dynamically by Vite based on VITE_SUPABASE_URL -->',
+        placeholder,
         `<!-- CSP injected by Vite -->\n    ${cspMeta}`
       );
     },
