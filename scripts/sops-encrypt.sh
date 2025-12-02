@@ -15,7 +15,7 @@ if ! command -v sops >/dev/null 2>&1; then
 fi
 
 count=0
-for file in .env.local .env.production .env.staging; do
+for file in .env.local .env.development .env.production .env.staging; do
   if [ -f "$file" ]; then
     echo "🔐 Encrypting $file..."
     sops -e "$file" > "$file.enc"
@@ -25,7 +25,7 @@ done
 
 if [ $count -eq 0 ]; then
   echo "⚠️  No environment files found to encrypt"
-  echo "   Expected: .env.local, .env.production, or .env.staging"
+  echo "   Expected: .env.local, .env.development, .env.production, or .env.staging"
   exit 1
 fi
 

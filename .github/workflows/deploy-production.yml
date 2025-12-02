@@ -1,0 +1,128 @@
+name: Deploy to Production
+
+# Production deployments are triggered ONLY by GitHub Releases
+# This ensures proper versioning, changelog, and controlled releases
+
+on:
+  release:
+    types: [published]
+
+  # Manual trigger with safety confirmation
+  workflow_dispatch:
+    inputs:
+      confirm_production:
+        description: 'Type "deploy-to-production" to confirm'
+        required: true
+        default: ''
+
+jobs:
+  validate:
+    name: Validate Release
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+
+    steps:
+      - name: Validate manual trigger
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [[ "${{ github.event.inputs.confirm_production }}" != "deploy-to-production" ]]; then
+            echo "::error::Production deployment NOT confirmed!"
+            echo "You must type 'deploy-to-production' to proceed."
+            exit 1
+          fi
+          echo "✅ Production deployment confirmed"
+
+      - name: Get version
+        id: version
+        run: |
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            echo "version=${{ github.event.release.tag_name }}" >> $GITHUB_OUTPUT
+            echo "📦 Deploying release: ${{ github.event.release.tag_name }}"
+          else
+            VERSION="manual-$(date +%Y%m%d-%H%M%S)"
+            echo "version=$VERSION" >> $GITHUB_OUTPUT
+            echo "📦 Manual deployment: $VERSION"
+          fi
+
+  deploy:
+    name: Deploy to Vercel Production
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test -- --run
+
+      - name: Type check
+        run: npm run type-check
+
+      - name: Build for production
+        env:
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_PROD_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_PROD_ANON_KEY }}
+          VITE_ENV: production
+        run: npm run build
+
+      - name: Install Vercel CLI
+        run: npm i -g vercel
+
+      - name: Pull Vercel Environment
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+
+      - name: Deploy to Vercel Production
+        id: deploy
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          echo "🚀 Deploying to production..."
+          URL=$(vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN)
+          echo "deployment_url=$URL" >> $GITHUB_OUTPUT
+          echo "✅ Deployed to: $URL"
+
+      - name: Create deployment summary
+        run: |
+          echo "## 🚀 Production Deployment Complete" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Property | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|----------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| **Version** | ${{ needs.validate.outputs.version }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **URL** | ${{ steps.deploy.outputs.deployment_url }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Environment** | Production |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Database** | Production Supabase |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Triggered by** | ${{ github.actor }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| **Event** | ${{ github.event_name }} |" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    name: Post-Deployment
+    needs: [validate, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Report result
+        run: |
+          if [[ "${{ needs.deploy.result }}" == "success" ]]; then
+            echo "::notice title=Production Deployed::Version ${{ needs.validate.outputs.version }} deployed to production"
+          else
+            echo "::error title=Production Deploy Failed::Deployment of ${{ needs.validate.outputs.version }} failed"
+          fi

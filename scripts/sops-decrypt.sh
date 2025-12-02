@@ -23,7 +23,7 @@ if [ -z "$SOPS_AGE_KEY" ] && [ ! -f "${HOME}/.config/sops/age/keys.txt" ]; then
 fi
 
 count=0
-for file in .env.local.enc .env.production.enc .env.staging.enc; do
+for file in .env.local.enc .env.development.enc .env.production.enc .env.staging.enc; do
   if [ -f "$file" ]; then
     output="${file%.enc}"
     echo "🔓 Decrypting $file → $output..."
@@ -34,7 +34,7 @@ done
 
 if [ $count -eq 0 ]; then
   echo "⚠️  No encrypted files found"
-  echo "   Expected: .env.local.enc, .env.production.enc, or .env.staging.enc"
+  echo "   Expected: .env.local.enc, .env.development.enc, .env.production.enc, or .env.staging.enc"
   exit 1
 fi
 

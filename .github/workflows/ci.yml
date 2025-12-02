@@ -36,15 +36,20 @@ jobs:
           sudo mv sops-v3.9.4.linux.amd64 /usr/local/bin/sops
           sudo chmod +x /usr/local/bin/sops
 
-      - name: Decrypt secrets
+      - name: Decrypt development secrets
         env:
           SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
         run: |
-          if [ -n "$SOPS_AGE_KEY" ] && [ -f .env.local.enc ]; then
+          # CI uses development environment (dev Supabase)
+          if [ -n "$SOPS_AGE_KEY" ] && [ -f .env.development.enc ]; then
+            sops -d .env.development.enc > .env.local
+            echo "✅ Decrypted .env.development → .env.local (CI uses dev environment)"
+          elif [ -n "$SOPS_AGE_KEY" ] && [ -f .env.local.enc ]; then
+            # Fallback to .env.local.enc for backwards compatibility
             sops -d .env.local.enc > .env.local
-            echo "✅ Decrypted .env.local"
+            echo "✅ Decrypted .env.local.enc (fallback)"
           else
-            echo "⏭️ Skipping decryption (no SOPS_AGE_KEY or .env.local.enc)"
+            echo "⏭️ Skipping decryption (no SOPS_AGE_KEY or encrypted env files)"
           fi
 
       - name: Setup Node.js
