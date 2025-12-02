@@ -102,6 +102,7 @@ jobs:
       - name: Health check
         id: health
         run: |
+          echo "status=unknown" >> $GITHUB_OUTPUT
           echo "🏥 Running health checks..."
           PROD_URL="${{ steps.deploy.outputs.deployment_url }}"
           HEALTH_FAILED=false
