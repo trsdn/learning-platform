@@ -1,5 +1,5 @@
 ---
-description: Deploy the learning platform to Vercel production (requires confirmation). Arguments: --force (skip checks)
+description: Deploy the learning platform. Arguments: [environment] (preview|production) --force (skip checks)
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
@@ -8,148 +8,143 @@ User input:
 
 $ARGUMENTS
 
-Goal: Deploy to Vercel production environment with full safety checks and user confirmation.
+Goal: Deploy to Vercel with environment-aware configuration.
 
-**⚠️ CRITICAL**: This deploys to PRODUCTION on Vercel. Requires explicit user confirmation.
+## Environment Overview
 
-Execution steps:
+| Environment | Database | Trigger | Use Case |
+|-------------|----------|---------|----------|
+| **Preview** | Dev Supabase | Manual / PR | Safe testing |
+| **Production** | Prod Supabase | GitHub Release | Live users |
+
+## Execution Steps
 
 1. **Parse user input** from `$ARGUMENTS`:
-   - If contains `--force` or `force`: Skip pre-deployment checks (DANGEROUS, not recommended)
-   - Otherwise: Run full safety checks
+   - If empty or `preview`: Deploy to PREVIEW environment (safe, uses dev Supabase)
+   - If `production` or `prod`: Trigger PRODUCTION deployment (requires GitHub Release)
+   - If `--force`: Skip pre-deployment checks (not recommended)
 
-2. **Pre-deployment safety checks**:
-   a. Verify git status is clean:
-      ```bash
-      git status --porcelain
-      ```
-      - If dirty: Ask user to commit or stash changes first
+---
 
-   b. Verify on main branch:
-      ```bash
-      git branch --show-current
-      ```
-      - If not main: Ask user to switch to main branch
+## PREVIEW DEPLOYMENT (Default)
 
-   c. Verify build succeeds:
+When deploying to preview (default):
+
+2. **Pre-deployment checks** (skip if `--force`):
+   a. Verify build succeeds:
       ```bash
       npm run build
       ```
-      - If build fails: ABORT deployment and show errors
+      - If build fails: ABORT and show errors
 
-3. **Request explicit confirmation**:
-   Ask user:
+3. **Deploy to Vercel Preview**:
+   ```bash
+   npx vercel
    ```
-   ⚠️  PRODUCTION DEPLOYMENT CONFIRMATION
-
-   You are about to deploy to: Vercel Production
-
-   Pre-deployment checks:
-   - [x] Git status: Clean
-   - [x] Branch: main
-   - [x] Build: Successful
 
    This will:
-   - Update production site immediately
-   - Affect all users
-   - Use database: mindforge-academy (production)
+   - Create a preview deployment
+   - Use DEVELOPMENT Supabase (test data)
+   - Generate a unique preview URL
+   - NOT affect production
 
-   Type "deploy to production" to confirm:
+4. **Display result**:
+   - Show preview URL
+   - Note: "This preview uses dev Supabase with test data"
+
+---
+
+## PRODUCTION DEPLOYMENT
+
+When deploying to production:
+
+2. **Check for existing GitHub Release**:
+   - Production deployments should go through GitHub Releases
+   - This triggers the `deploy-production.yml` workflow automatically
+
+3. **If no recent release exists**:
+   Ask user:
+   ```
+   Production deployments require a GitHub Release.
+
+   Options:
+   1. Create a release now using `/create-release`
+   2. Manually trigger the deploy-production workflow on GitHub Actions
+   3. Cancel
+
+   Which would you prefer?
    ```
 
-   - Wait for exact confirmation text
-   - If user types anything else: ABORT deployment
+4. **If user wants to create release**:
+   - Run `/create-release` which will:
+     - Generate changelog
+     - Create git tag
+     - Publish GitHub Release
+     - Automatically trigger production deployment
 
-4. **Production deployment**:
-   a. Create deployment tag (optional but recommended):
-      ```bash
-      git tag -a "v$(date +%Y%m%d-%H%M%S)" -m "Production deployment"
-      git push --tags
-      ```
+5. **If user wants manual trigger**:
+   Provide instructions:
+   ```
+   To manually trigger production deployment:
 
-   b. **Deploy to Vercel**:
-      ```bash
-      npx vercel --prod
-      ```
+   1. Go to GitHub Actions:
+      https://github.com/trsdn/learning-platform/actions/workflows/deploy-production.yml
 
-      **IMPORTANT**:
-      - Uses Vercel CLI for deployment
-      - Automatically builds and deploys
-      - Vercel project must be linked (run `vercel link` if not)
-      - Uses production environment variables from Vercel dashboard
+   2. Click "Run workflow"
 
-   c. Monitor deployment output for errors
+   3. Type "deploy-to-production" to confirm
 
-   d. Capture and display the production URL from Vercel output
-
-5. **Post-deployment verification**:
-   a. Display the Vercel production URL provided in deployment output
-
-   b. Remind user to:
-      - Wait 1-2 minutes for deployment to propagate
-      - Clear browser cache (Ctrl+Shift+Delete)
-      - Test in incognito/private window
-
-   c. Verification checklist:
-      - [ ] Production site loads
-      - [ ] Open DevTools → Application → Supabase connection works
-      - [ ] Verify database: `mindforge-academy` (not `-test`)
-      - [ ] Test critical user flows:
-        * Authentication
-        * Select topic
-        * Start practice session
-        * Answer questions
-        * View results
-        * Check dashboard/progress
-      - [ ] Test on mobile device (if possible)
-      - [ ] Check service worker updates correctly
-
-6. **Rollback instructions** (if issues found):
-   ```bash
-   # Rollback to previous deployment via Vercel CLI
-   vercel rollback
-
-   # Or via Vercel Dashboard:
-   # 1. Go to https://vercel.com/dashboard
-   # 2. Select project
-   # 3. Go to Deployments
-   # 4. Find previous working deployment
-   # 5. Click "..." → "Promote to Production"
+   4. Click "Run workflow" button
    ```
 
-7. **Post-deployment actions**:
-   - Update CHANGELOG.md with deployment notes
-   - Notify stakeholders (if applicable)
-   - Monitor Vercel analytics
-   - Check for runtime errors in Vercel logs
+6. **Post-deployment verification** (for production):
+   - Wait for GitHub Actions workflow to complete
+   - Check deployment status
+   - Verify at production URL
 
-Behavior rules:
-- ALWAYS require explicit confirmation ("deploy to production")
-- NEVER skip safety checks unless `--force` flag used
-- NEVER deploy if build fails
-- ALWAYS verify git status and branch
-- ALWAYS provide rollback instructions
-- ALWAYS display the deployed URL
+---
 
-Safety guardrails:
-- Git must be clean (no uncommitted changes)
-- Must be on main branch
-- Build must succeed
-- User must type exact confirmation phrase
-- Vercel project must be linked
+## Rollback Instructions
 
-Environment configuration:
-- Platform: Vercel
+If issues are found after deployment:
+
+**Preview rollback**: Not needed (just deploy again)
+
+**Production rollback**:
+```bash
+# Via Vercel CLI
+vercel rollback
+
+# Or via Vercel Dashboard:
+# 1. Go to https://vercel.com/dashboard
+# 2. Select project → Deployments
+# 3. Find previous working deployment
+# 4. Click "..." → "Promote to Production"
+```
+
+---
+
+## Environment Configuration
+
+**Preview Environment**:
+- Database: `mindforge-academy-dev` (Supabase development)
+- Auto-seeded with test data
+- Safe for incomplete work
+- Uses dev environment variables
+
+**Production Environment**:
 - Database: `mindforge-academy` (Supabase production)
-- Build command: `npm run build`
-- Output directory: `dist`
-- Framework: React + Vite
-- Target: Production (live users)
+- NEVER seeded automatically
+- Requires GitHub Release
+- Uses prod environment variables
 
-Vercel setup requirements:
-- Vercel CLI installed: `npm i -g vercel`
-- Project linked: `vercel link`
-- Environment variables configured in Vercel dashboard
-- Production domain configured (if custom domain used)
+---
+
+## Safety Guardrails
+
+- Production requires GitHub Release (no direct deploys)
+- Build must succeed before any deployment
+- Vercel auto-deploy to production is DISABLED
+- Preview uses dev Supabase (safe to test)
 
 Context: $ARGUMENTS

@@ -207,6 +207,10 @@ Execution steps:
 
 11. **Create GitHub release**:
 
+    **⚠️ IMPORTANT**: Publishing a GitHub Release automatically triggers production deployment!
+
+    The `deploy-production.yml` workflow runs when a release is published.
+
     ```bash
     gh release create v1.3.0 \
       --title "v1.3.0" \
@@ -217,20 +221,22 @@ Execution steps:
     ```
 
     Options to add:
-    - `--draft`: Create as draft (user can publish later)
-    - `--prerelease`: Mark as pre-release (beta, rc, etc.)
+    - `--draft`: Create as draft (does NOT trigger deployment - user can publish later)
+    - `--prerelease`: Mark as pre-release (still triggers deployment)
 
-12. **Deploy to production** (optional):
+    Ask user: "Publish release now? This will automatically deploy to production."
+    - If yes: Publish release (triggers automatic deployment)
+    - If no: Create as `--draft` (user publishes later via GitHub UI)
 
-    Ask: "Deploy to production now? (yes/no/later)"
+12. **Production deployment** (automatic):
 
-    If yes:
-    - Run: `/deploy` command
-    - Monitor deployment status
+    Once the release is published:
+    - The `deploy-production.yml` workflow triggers automatically
+    - Monitor workflow at: https://github.com/trsdn/learning-platform/actions
+    - Wait for deployment to complete
     - Verify production health
 
-    If later:
-    - Remind: "Run `/deploy` when ready"
+    No need for separate `/deploy production` - it's automatic!
 
 13. **Post-release verification**:
 

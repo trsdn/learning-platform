@@ -444,12 +444,54 @@ async function seedTasks(
   console.log(`✅ Tasks seeded: ${seeded}/${data.tasks.length}`);
 }
 
+// Production Supabase project reference (NEVER seed this automatically)
+const PRODUCTION_PROJECT_REF = 'knzjdckrtewoigosaxoh';
+
+/**
+ * Check if we're targeting production and block if so
+ */
+function checkProductionSafety(): void {
+  const isProduction = supabaseUrl?.includes(PRODUCTION_PROJECT_REF);
+  const forceProduction = process.env.FORCE_PRODUCTION_SEED === 'true';
+
+  if (isProduction && !forceProduction) {
+    console.error('\n❌ PRODUCTION SEEDING BLOCKED!');
+    console.error('');
+    console.error('You are attempting to seed the PRODUCTION database.');
+    console.error('This is dangerous and not allowed by default.');
+    console.error('');
+    console.error('Production URL detected:', supabaseUrl);
+    console.error('');
+    console.error('If you REALLY need to seed production (NOT recommended):');
+    console.error('  FORCE_PRODUCTION_SEED=true npm run seed:supabase');
+    console.error('');
+    console.error('⚠️  This action cannot be easily undone!');
+    process.exit(1);
+  }
+
+  if (isProduction && forceProduction) {
+    console.warn('\n⚠️  WARNING: Force-seeding PRODUCTION database!');
+    console.warn('This action cannot be undone easily.');
+    console.warn('Waiting 5 seconds... Press Ctrl+C to cancel.\n');
+    // Synchronous delay for warning
+    const start = Date.now();
+    while (Date.now() - start < 5000) {
+      // Busy wait - intentionally blocking
+    }
+    console.warn('Proceeding with production seeding...\n');
+  }
+}
+
 /**
  * Main seeding function
  */
 async function main() {
   console.log('🌱 Starting Supabase seeding...\n');
   console.log('📍 Supabase URL:', supabaseUrl);
+
+  // CRITICAL: Check production safety before proceeding
+  checkProductionSafety();
+
   console.log('🔑 Using service role key\n');
 
   try {

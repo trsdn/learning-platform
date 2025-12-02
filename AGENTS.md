@@ -20,6 +20,43 @@ npm run deploy     # Deploy to GitHub Pages
 
 ---
 
+## 🌍 Environment Configuration
+
+This project uses **separate environments** for development and production:
+
+| Environment | Supabase Project | Seeding | Deployment Trigger |
+|-------------|-----------------|---------|-------------------|
+| **Local** | Development | Manual | N/A |
+| **CI/Preview** | Development | Automatic | PR / Push |
+| **Production** | Production | NEVER | GitHub Release only |
+
+### Key Points
+
+- **Development database** is auto-seeded with test data
+- **Production database** is NEVER seeded automatically
+- **Preview deployments** (PRs) use dev Supabase - safe to test incomplete work
+- **Production deployments** require a GitHub Release
+
+### Environment Files
+
+```
+.env.local        → Local development (dev Supabase)
+.env.development  → CI/Preview (dev Supabase)
+.env.production   → Production (prod Supabase)
+```
+
+All `.env.*` files are encrypted with SOPS. Use `npm run secrets:decrypt` to decrypt.
+
+### Deployment Workflow
+
+```
+Feature branch → PR → Preview (dev DB) → Merge → Create Release → Production (prod DB)
+```
+
+See [docs/guides/ENVIRONMENT_SETUP.md](./docs/guides/ENVIRONMENT_SETUP.md) for detailed setup.
+
+---
+
 ## 📍 Agent Guide Navigation
 
 **Choose your path based on your task**:

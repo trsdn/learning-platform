@@ -1,6 +1,8 @@
-name: Sync to Supabase
+name: Sync to Supabase (Development Only)
 
-# Trigger when learning path JSON files are modified on main branch
+# This workflow ONLY seeds the DEVELOPMENT database
+# Production seeding is FORBIDDEN - use manual processes if absolutely necessary
+
 on:
   push:
     branches: [main]
@@ -11,16 +13,32 @@ on:
 
   # Allow manual triggering from GitHub UI
   workflow_dispatch:
+    inputs:
+      confirm_dev_only:
+        description: 'Type "development" to confirm you understand this seeds DEV only'
+        required: true
+        default: ''
 
 jobs:
-  seed-supabase:
-    name: Seed Supabase Database
+  seed-development:
+    name: Seed Development Database
     runs-on: ubuntu-latest
 
-    # Only run if not a bot commit
+    # Only run if not a bot commit and not skip-seed
     if: ${{ !contains(github.event.head_commit.message, '[skip-seed]') }}
 
     steps:
+      - name: Verify development target (manual trigger)
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          if [[ "${{ github.event.inputs.confirm_dev_only }}" != "development" ]]; then
+            echo "::error::You must type 'development' to confirm"
+            echo "This workflow ONLY seeds the development database."
+            echo "Production seeding is not allowed via CI."
+            exit 1
+          fi
+          echo "Confirmed: Seeding DEVELOPMENT database only"
+
       - name: Checkout code
         uses: actions/checkout@v4
 
@@ -33,24 +51,27 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Seed Supabase
+      - name: Seed Development Supabase
         env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_DEV_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_DEV_SERVICE_ROLE_KEY }}
         run: |
-          echo "🌱 Starting Supabase seeding..."
+          echo "🌱 Seeding DEVELOPMENT database..."
+          echo "📍 Target: $VITE_SUPABASE_URL"
+          echo ""
+          echo "⚠️  This workflow NEVER seeds production."
+          echo "    Production seeding is blocked by the seed script."
+          echo ""
           npm run seed:supabase
-          echo "✅ Supabase seeding completed successfully!"
+          echo "✅ Development seeding completed!"
 
       - name: Report success
         if: success()
         run: |
-          echo "::notice title=Supabase Sync::\
-          Database successfully synced with learning path changes"
+          echo "::notice title=Dev Supabase Sync::Development database synced with learning path changes"
 
       - name: Report failure
         if: failure()
         run: |
-          echo "::error title=Supabase Sync Failed::\
-          Failed to sync database. Check logs for details."
+          echo "::error title=Dev Supabase Sync Failed::Failed to sync development database. Check logs for details."
           exit 1
