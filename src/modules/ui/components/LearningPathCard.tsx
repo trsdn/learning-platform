@@ -135,8 +135,7 @@ export function LearningPathCard({
       <div className={styles['learning-path-card__header']}>
         <span
           className={styles['learning-path-card__difficulty']}
-          // eslint-disable-next-line no-restricted-syntax -- Dynamic color based on difficulty
-          style={{ color: difficulty.color }}
+          style={{ '--difficulty-color': difficulty.color } as React.CSSProperties}
         >
           {difficulty.emoji} {difficulty.label}
         </span>

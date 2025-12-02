@@ -71,8 +71,9 @@ export function MasteryBar({ label, count, color, max, animate = true }: Mastery
               ? { duration: 0 }
               : { type: 'spring', stiffness: 100, damping: 15, mass: 1 }
           }
-          // eslint-disable-next-line no-restricted-syntax -- Dynamic color from props
-          style={{ background: color }}
+          // @ts-expect-error -- CSS custom properties not typed in MotionStyle
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic color via CSS custom property
+          style={{ '--mastery-bar-color': color }}
         />
       </div>
     </div>

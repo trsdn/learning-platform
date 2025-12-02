@@ -75,6 +75,26 @@ const STROKE_WIDTH_MAP: Record<CircularProgressSize, number> = {
 };
 
 /**
+ * Resolves a CSS variable to its computed value.
+ * Falls back to the original value if not in a browser context.
+ */
+function resolveColorValue(colorValue: string): string {
+  if (typeof window === 'undefined') return colorValue;
+
+  const match = colorValue.match(/var\(([^)]+)\)/);
+  if (!match) return colorValue;
+
+  const varName = match[1]?.trim();
+  if (!varName) return colorValue;
+
+  const computed = getComputedStyle(document.documentElement)
+    .getPropertyValue(varName)
+    .trim();
+
+  return computed || colorValue;
+}
+
+/**
  * Returns the appropriate color based on progress percentage
  */
 function getProgressColor(percentage: number): string {
@@ -126,10 +146,11 @@ export function CircularProgress({
   const skipAnimation = disableAnimation || shouldReduceMotion;
 
   // Compute actual color values from CSS variables for the library
+  // react-circular-progressbar doesn't support CSS variables directly
   const computedStyles = buildStyles({
-    pathColor: resolvedPathColor,
-    trailColor,
-    textColor: 'var(--color-text-primary)',
+    pathColor: resolveColorValue(resolvedPathColor),
+    trailColor: resolveColorValue(trailColor),
+    textColor: resolveColorValue('var(--color-text-primary)'),
     pathTransitionDuration: skipAnimation ? 0.01 : 0.5,
     strokeLinecap: 'round',
   });

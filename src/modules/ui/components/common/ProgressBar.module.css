@@ -39,6 +39,7 @@
   justify-content: flex-end;
   will-change: width;
   transform: translateZ(0);
+  background-color: var(--progress-fill-color);
 }
 
 /* Gradient variant */

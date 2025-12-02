@@ -42,7 +42,7 @@
 }
 
 .session-progress__marker--completed {
-  /* Color set via inline style based on result */
+  background-color: var(--marker-result-color);
 }
 
 /* Pulse animation for current marker */

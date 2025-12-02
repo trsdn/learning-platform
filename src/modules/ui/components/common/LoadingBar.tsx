@@ -121,8 +121,9 @@ export function LoadingBar({
     >
       <motion.div
         className={fillClasses}
-        // eslint-disable-next-line no-restricted-syntax -- Dynamic color from props
-        style={{ backgroundColor: color }}
+        // @ts-expect-error -- CSS custom properties not typed in MotionStyle
+        // eslint-disable-next-line no-restricted-syntax -- Dynamic color via CSS custom property
+        style={{ '--loading-bar-color': color }}
         {...getAnimationProps()}
       />
     </div>

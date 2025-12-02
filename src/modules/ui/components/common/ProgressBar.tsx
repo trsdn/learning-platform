@@ -5,6 +5,9 @@ export type ProgressBarVariant = 'default' | 'gradient' | 'striped' | 'animated-
 export type ProgressBarSize = 'small' | 'medium' | 'large';
 export type ProgressBarLabelPosition = 'inside' | 'outside' | 'top';
 
+/** Minimum percentage required to display the label inside the progress bar */
+const MIN_PERCENTAGE_FOR_INSIDE_LABEL = 15;
+
 export interface ProgressBarProps {
   /**
    * Current progress value (0-100 by default, or 0-max if max is specified)
@@ -162,10 +165,11 @@ export function ProgressBar({
                 ? { duration: 0 }
                 : { type: 'spring', stiffness: 100, damping: 15, mass: 1 }
             }
-            // eslint-disable-next-line no-restricted-syntax -- Dynamic color from props
-            style={{ backgroundColor: fillColor }}
+            // @ts-expect-error -- CSS custom properties not typed in MotionStyle
+            // eslint-disable-next-line no-restricted-syntax -- Dynamic color via CSS custom property
+            style={{ '--progress-fill-color': fillColor }}
           >
-            {showLabel && labelPosition === 'inside' && percentage > 15 && (
+            {showLabel && labelPosition === 'inside' && percentage > MIN_PERCENTAGE_FOR_INSIDE_LABEL && (
               <span className={styles['progress-bar__label-inside']}>{label}</span>
             )}
           </motion.div>

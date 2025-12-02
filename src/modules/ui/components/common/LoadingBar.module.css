@@ -22,6 +22,7 @@
   height: 100%;
   border-radius: var(--border-radius-full);
   will-change: transform, opacity;
+  background-color: var(--loading-bar-color);
 }
 
 /* Indeterminate: sliding bar */

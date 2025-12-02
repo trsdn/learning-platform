@@ -3,6 +3,9 @@ import styles from './SessionProgressBar.module.css';
 
 export type TaskResult = 'correct' | 'incorrect' | 'skipped' | 'pending';
 
+/** Maximum number of tasks to show individual markers for (beyond this, only progress bar is shown) */
+const MAX_TASKS_FOR_MARKERS = 20;
+
 export interface SessionProgressBarProps {
   /**
    * Current task index (0-based)
@@ -103,7 +106,7 @@ export function SessionProgressBar({
       </div>
 
       {/* Task markers */}
-      {showTaskMarkers && totalTasks <= 20 && (
+      {showTaskMarkers && totalTasks <= MAX_TASKS_FOR_MARKERS && (
         <div className={styles['session-progress__markers']}>
           {Array.from({ length: totalTasks }, (_, index) => {
             const result = taskResults[index] || 'pending';
@@ -120,10 +123,12 @@ export function SessionProgressBar({
                 ]
                   .filter(Boolean)
                   .join(' ')}
-                // eslint-disable-next-line no-restricted-syntax -- Dynamic color based on task result
-                style={{
-                  backgroundColor: isCompleted ? RESULT_COLORS[result] : undefined,
-                }}
+                // @ts-expect-error -- CSS custom properties not typed in MotionStyle
+                style={
+                  isCompleted
+                    ? { '--marker-result-color': RESULT_COLORS[result] }
+                    : undefined
+                }
                 initial={skipAnimation ? {} : { scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={

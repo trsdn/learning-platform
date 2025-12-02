@@ -43,12 +43,14 @@ export interface StreakData {
 }
 
 /**
- * Calculate the start of a day (midnight) for a given date
+ * Calculate the start of a day (midnight) for a given date.
+ * Uses local date components to respect user's timezone.
  */
 function getDateKey(date: Date): string {
-  const isoString = date.toISOString();
-  const datePart = isoString.split('T')[0];
-  return datePart ?? isoString.substring(0, 10);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 /**
@@ -101,10 +103,15 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
 
   // Calculate current streak
   let currentStreak = 0;
-  let checkDate = uniqueDates[0] === today ? today : yesterday;
+  const mostRecentDate = uniqueDates[0];
+  // Guard: uniqueDates has at least one element since completedSessions.length > 0
+  if (!mostRecentDate) {
+    return { currentStreak: 0, bestStreak: 0, lastActivityDate: null, isStreakActive: false };
+  }
+  let checkDate = mostRecentDate === today ? today : yesterday;
 
   // Only start counting if the last session was today or yesterday
-  if (uniqueDates[0] === today || uniqueDates[0] === yesterday) {
+  if (mostRecentDate === today || mostRecentDate === yesterday) {
     for (const dateStr of uniqueDates) {
       if (dateStr === checkDate) {
         currentStreak++;
@@ -122,10 +129,17 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
   // Calculate best streak (scan through all dates)
   let bestStreak = currentStreak;
   let tempStreak = 1;
-  let prevDate = uniqueDates[0]!; // Safe: we checked completedSessions.length > 0
+  const firstUniqueDate = uniqueDates[0];
+  // Guard: uniqueDates has at least one element since completedSessions.length > 0
+  if (!firstUniqueDate) {
+    return { currentStreak: 0, bestStreak: 0, lastActivityDate: null, isStreakActive: false };
+  }
+  let prevDate = firstUniqueDate;
 
   for (let i = 1; i < uniqueDates.length; i++) {
-    const currDate = uniqueDates[i]!;
+    const currDate = uniqueDates[i];
+    if (!currDate) continue;
+
     const prevDateObj = new Date(prevDate);
     prevDateObj.setDate(prevDateObj.getDate() - 1);
     const expectedPrev = getDateKey(prevDateObj);
@@ -139,10 +153,13 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
     prevDate = currDate;
   }
 
-  const firstSession = completedSessions[0]!;
-  const lastActivityDate = new Date(firstSession.execution.completedAt!);
-  const firstDate = uniqueDates[0]!;
-  const isStreakActive = firstDate === today || firstDate === yesterday;
+  const firstSession = completedSessions[0];
+  // Guard: completedSessions has at least one element (checked above)
+  if (!firstSession || !firstSession.execution.completedAt) {
+    return { currentStreak: 0, bestStreak: 0, lastActivityDate: null, isStreakActive: false };
+  }
+  const lastActivityDate = new Date(firstSession.execution.completedAt);
+  const isStreakActive = firstUniqueDate === today || firstUniqueDate === yesterday;
 
   return {
     currentStreak,
@@ -155,7 +172,7 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
 /**
  * Hook to calculate and track user's learning streak
  *
- * @example
+ * @example Basic usage
  * ```tsx
  * const { currentStreak, nextMilestone, progressToNextMilestone } = useStreakCalculation();
  *
@@ -166,6 +183,16 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
  *     <p>Noch {nextMilestone - currentStreak} Tage bis {nextMilestone} Tage!</p>
  *   </div>
  * );
+ * ```
+ *
+ * @example With error handling
+ * ```tsx
+ * const { currentStreak, isLoading, error } = useStreakCalculation();
+ *
+ * if (isLoading) return <LoadingSpinner />;
+ * if (error) return <ErrorMessage error={error} />;
+ *
+ * return <StreakDisplay currentStreak={currentStreak} />;
  * ```
  */
 export function useStreakCalculation(): StreakData {
@@ -197,13 +224,16 @@ export function useStreakCalculation(): StreakData {
       // Find previous milestone
       let prevMilestone = 0;
       for (let i = 0; i < STREAK_MILESTONES.length; i++) {
-        if (STREAK_MILESTONES[i] === nextMilestone && i > 0) {
-          prevMilestone = STREAK_MILESTONES[i - 1]!;
+        const milestone = STREAK_MILESTONES[i];
+        const previousMilestone = i > 0 ? STREAK_MILESTONES[i - 1] : undefined;
+        if (milestone === nextMilestone && previousMilestone !== undefined) {
+          prevMilestone = previousMilestone;
           break;
         }
       }
       // If past all milestones, calculate based on 365-day cycles
-      if (currentStreak >= STREAK_MILESTONES[STREAK_MILESTONES.length - 1]!) {
+      const lastMilestone = STREAK_MILESTONES[STREAK_MILESTONES.length - 1];
+      if (lastMilestone !== undefined && currentStreak >= lastMilestone) {
         prevMilestone = Math.floor(currentStreak / 365) * 365;
       }
 

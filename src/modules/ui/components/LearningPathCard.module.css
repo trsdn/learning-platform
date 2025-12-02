@@ -43,6 +43,7 @@
   font-weight: var(--font-weight-semibold);
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  color: var(--difficulty-color);
 }
 
 .learning-path-card__completed-badge {
