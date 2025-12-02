@@ -68,8 +68,8 @@
           "spanish/greetings/buenas-noches.mp3",
           "spanish/greetings/hasta-luego.mp3"
         ],
-        "correctAnswer": 1,
-        "explanation": "Buenas tardes bedeutet 'Guten Nachmittag/Guten Abend' auf Spanisch."
+        "correctAnswer": 2,
+        "explanation": "Buenas noches bedeutet 'Guten Abend' oder 'Gute Nacht' auf Spanisch."
       },
       "metadata": {
         "difficulty": "easy",
