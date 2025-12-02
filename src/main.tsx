@@ -11,6 +11,7 @@ import { PracticeSessionWrapper } from './modules/ui/components/practice/Practic
 import { SessionResults } from './modules/ui/components/session-results';
 import { Dashboard } from './modules/ui/components/dashboard';
 import { TopicCard, type TopicCardTopic } from './modules/ui/components/TopicCard';
+import { LearningPathCard } from './modules/ui/components/LearningPathCard';
 import { SettingsPage } from './modules/ui/components/settings/SettingsPage';
 import { AdminPage, type AdminTab } from './modules/ui/components/admin/AdminPage';
 import { AuthProvider, useAuth } from './modules/ui/contexts/auth-context';
@@ -485,32 +486,14 @@ function AppContent() {
 
         <h2 className={styles.learningPathTitle}>Lernpfade</h2>
         <div className={styles.learningPathGrid}>
-          {learningPaths.map((path) => (
-            <div
+          {learningPaths.map((path, index) => (
+            <LearningPathCard
               key={path.id}
-              className={styles.learningPathCard}
-            >
-              <h3 className={styles.learningPathCardTitle}>{path.title}</h3>
-              <p className={styles.learningPathCardDescription}>
-                {path.description}
-              </p>
-              <div className={styles.learningPathCardMeta}>
-                <span className={styles.learningPathCardMetaItem}>
-                  {path.difficulty === 'easy'
-                    ? '🟢 Leicht'
-                    : path.difficulty === 'medium'
-                    ? '🟡 Mittel'
-                    : '🔴 Schwer'}
-                </span>
-                <span>{learningPathTaskCounts[path.id] || path.taskIds?.length || 0} Aufgaben</span>
-              </div>
-              <button
-                onClick={() => showConfigScreen(path)}
-                className={styles.learningPathStartButton}
-              >
-                Lernpfad starten →
-              </button>
-            </div>
+              learningPath={path}
+              taskCount={learningPathTaskCounts[path.id] || path.taskIds?.length || 0}
+              onSelect={() => showConfigScreen(path)}
+              animationIndex={index}
+            />
           ))}
         </div>
       </div>

@@ -35,13 +35,12 @@ export function MultipleChoiceTask({
     optionCursor,
     setSelectedAnswer,
     setOptionCursor,
-    canSubmit,
   } = useMultipleChoice(task, showFeedback);
 
   // Notify parent when answer state changes
   React.useEffect(() => {
-    onAnswerChange?.(canSubmit());
-  }, [canSubmit, onAnswerChange]);
+    onAnswerChange?.(selectedAnswer !== null);
+  }, [selectedAnswer, onAnswerChange]);
 
   if (task.type !== 'multiple-choice') return null;
 

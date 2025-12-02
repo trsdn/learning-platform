@@ -351,13 +351,11 @@ export function PracticeSessionContainer({
     }
   }, [showFeedback, currentTask, audioSettings, loadAudio]);
 
-  // Update canSubmitAnswer when task hook changes
+  // Reset canSubmitAnswer when task changes (but not on showFeedback change)
+  // The actual canSubmitAnswer state is managed by task components via onAnswerChange
   useEffect(() => {
-    const taskHook = getCurrentTaskHook();
-    if (taskHook) {
-      setCanSubmitAnswer(taskHook.canSubmit());
-    }
-  }, [getCurrentTaskHook, currentTask, showFeedback]);
+    setCanSubmitAnswer(false);
+  }, [currentTask]);
 
   if (isLoading || !session || !currentTask) {
     return <div className={styles['practice-session']}>Laden...</div>;

@@ -1,3 +1,4 @@
+import { motion, useReducedMotion } from 'framer-motion';
 import styles from './MasteryBar.module.css';
 
 export interface MasteryBarProps {
@@ -21,6 +22,11 @@ export interface MasteryBarProps {
    * If not provided, bar shows as full when count > 0
    */
   max?: number;
+
+  /**
+   * Whether to animate the progress bar on mount
+   */
+  animate?: boolean;
 }
 
 /**
@@ -28,6 +34,7 @@ export interface MasteryBarProps {
  *
  * Displays a labeled progress indicator for mastery levels.
  * Used in the dashboard to show progress across different mastery categories.
+ * Now with Framer Motion animations!
  *
  * @example
  * ```tsx
@@ -39,7 +46,9 @@ export interface MasteryBarProps {
  * />
  * ```
  */
-export function MasteryBar({ label, count, color, max }: MasteryBarProps) {
+export function MasteryBar({ label, count, color, max, animate = true }: MasteryBarProps) {
+  const shouldReduceMotion = useReducedMotion();
+  const skipAnimation = !animate || shouldReduceMotion;
   const percentage = max && max > 0 ? (count / max) * 100 : count > 0 ? 100 : 0;
 
   return (
@@ -53,13 +62,18 @@ export function MasteryBar({ label, count, color, max }: MasteryBarProps) {
         </span>
       </div>
       <div className={styles['mastery-bar__track']}>
-        <div
+        <motion.div
           className={styles['mastery-bar__fill']}
-          // eslint-disable-next-line no-restricted-syntax -- Dynamic color and width based on props
-          style={{
-            background: color,
-            width: `${percentage}%`,
-          }}
+          initial={skipAnimation ? { width: `${percentage}%` } : { width: 0 }}
+          animate={{ width: `${percentage}%` }}
+          transition={
+            skipAnimation
+              ? { duration: 0 }
+              : { type: 'spring', stiffness: 100, damping: 15, mass: 1 }
+          }
+          // @ts-expect-error -- CSS custom properties not typed in MotionStyle
+          // eslint-disable-next-line no-restricted-syntax -- Dynamic color via CSS custom property
+          style={{ '--mastery-bar-color': color }}
         />
       </div>
     </div>

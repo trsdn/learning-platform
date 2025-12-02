@@ -5,6 +5,7 @@
  */
 
 import type { Task } from '@core/types/services';
+import { SessionProgressBar, type TaskResult } from './SessionProgressBar';
 import styles from '../../practice-session.module.css';
 
 export interface SessionHeaderProps {
@@ -14,10 +15,14 @@ export interface SessionHeaderProps {
   totalTasks: number;
   /** Current task (for displaying ID) */
   currentTask: Task | null;
-  /** Progress percentage (0-100) */
+  /** Progress percentage (0-100) - kept for backward compatibility */
   progress: number;
   /** Callback when cancel button is clicked */
   onCancel: () => void;
+  /** Optional task results for marker coloring */
+  taskResults?: TaskResult[];
+  /** Whether to show individual task markers */
+  showTaskMarkers?: boolean;
 }
 
 /**
@@ -27,8 +32,9 @@ export function SessionHeader({
   currentTaskIndex,
   totalTasks,
   currentTask,
-  progress,
   onCancel,
+  taskResults,
+  showTaskMarkers = false,
 }: SessionHeaderProps) {
   return (
     <div className={styles['practice-session__header']}>
@@ -52,14 +58,13 @@ export function SessionHeader({
         </button>
       </div>
 
-      {/* Progress bar */}
-      <div className={styles['practice-session__progress-bar']}>
-        <div
-          className={styles['practice-session__progress-fill']}
-          // eslint-disable-next-line no-restricted-syntax -- Dynamic width based on progress
-          style={{ width: `${progress}%` }}
-        />
-      </div>
+      {/* Animated Progress bar */}
+      <SessionProgressBar
+        currentIndex={currentTaskIndex}
+        totalTasks={totalTasks}
+        showTaskMarkers={showTaskMarkers}
+        {...(taskResults && { taskResults })}
+      />
     </div>
   );
 }
