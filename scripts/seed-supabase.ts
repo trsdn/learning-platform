@@ -497,7 +497,7 @@ function extractProjectRef(url: string | undefined): string | null {
 /**
  * Check if we're targeting an allowed development environment
  */
-function checkProductionSafety(): void {
+async function checkProductionSafety(): Promise<void> {
   // First, validate the URL format
   validateSupabaseUrl(supabaseUrl);
 
@@ -556,11 +556,8 @@ function checkProductionSafety(): void {
     console.warn('\n⚠️  WARNING: Force-seeding PRODUCTION database!');
     console.warn('This action cannot be undone easily.');
     console.warn('Waiting 10 seconds... Press Ctrl+C to cancel.\n');
-    // Synchronous delay for warning (increased to 10 seconds)
-    const start = Date.now();
-    while (Date.now() - start < 10000) {
-      // Busy wait - intentionally blocking
-    }
+    // Asynchronous delay for warning (10 seconds)
+    await new Promise(resolve => setTimeout(resolve, 10000));
     console.warn('Proceeding with production seeding...\n');
   }
 
@@ -577,7 +574,7 @@ async function main() {
   console.log('📍 Supabase URL:', supabaseUrl);
 
   // CRITICAL: Check production safety before proceeding
-  checkProductionSafety();
+  await checkProductionSafety();
 
   console.log('🔑 Using service role key\n');
 
