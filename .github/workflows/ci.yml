@@ -13,6 +13,22 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Setup Python for secret scanning
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install detect-secrets
+        run: pip install detect-secrets
+
+      - name: Scan for secrets
+        run: |
+          if [ -f .secrets.baseline ]; then
+            detect-secrets scan --baseline .secrets.baseline
+          else
+            detect-secrets scan
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

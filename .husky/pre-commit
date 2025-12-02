@@ -1,5 +1,38 @@
 #!/usr/bin/env sh
-. "$(dirname -- "$0")/_/husky.sh"
+
+# Secret Detection Hooks
+# ======================
+
+# Quick check: git-secrets (pattern-based, fast)
+if ! command -v git-secrets >/dev/null 2>&1; then
+  echo "❌ Error: git-secrets not installed. Cannot commit without secret scanning."
+  echo ""
+  echo "   Install with:"
+  echo "   brew install git-secrets"
+  echo "   git secrets --install"
+  echo "   git secrets --register-aws"
+  exit 1
+fi
+git secrets --pre_commit_hook -- "$@" || exit 1
+
+# Thorough check: detect-secrets (entropy-based)
+DETECT_SECRETS_PATH="${HOME}/Library/Python/3.9/bin/detect-secrets-hook"
+if command -v detect-secrets-hook >/dev/null 2>&1; then
+  DETECT_SECRETS_PATH="detect-secrets-hook"
+elif [ ! -x "$DETECT_SECRETS_PATH" ]; then
+  echo "❌ Error: detect-secrets not installed. Cannot commit without secret scanning."
+  echo ""
+  echo "   Install with:"
+  echo "   pip install detect-secrets"
+  exit 1
+fi
+
+if [ -f .secrets.baseline ]; then
+  git diff --cached --name-only -z | xargs -0 "$DETECT_SECRETS_PATH" --baseline .secrets.baseline || exit 1
+fi
+
+# Code Quality Hooks
+# ==================
 
 npm run lint
 npm run type-check
