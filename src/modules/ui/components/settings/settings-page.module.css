@@ -214,7 +214,8 @@
   }
 }
 
-.radioOption {
+.radioOption,
+.checkboxOption {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
@@ -228,7 +229,8 @@
   transition: background var(--transition-fast, 150ms);
 }
 
-.radioOption--active {
+.radioOption--active,
+.checkboxOption--active {
   border-color: var(--color-primary, #667eea);
   background: rgba(102, 126, 234, 0.12);
 }

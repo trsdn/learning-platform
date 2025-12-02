@@ -156,21 +156,29 @@ export function PracticeSessionContainer({
     const taskHook = getCurrentTaskHook();
     if (!taskHook) return;
 
-    // Unlock auto-play on first user interaction
-    if (!playbackState.autoPlayUnlocked) {
-      unlockAutoPlay().catch((err) =>
-        console.warn('Failed to unlock auto-play:', err)
-      );
-    }
+    try {
+      // Unlock auto-play on first user interaction
+      if (!playbackState.autoPlayUnlocked) {
+        unlockAutoPlay().catch((err) =>
+          console.warn('Failed to unlock auto-play:', err)
+        );
+      }
 
-    const correct = taskHook.checkAnswer();
-    await submitAnswer(correct);
+      const correct = taskHook.checkAnswer();
+      await submitAnswer(correct);
 
-    // Haptic feedback
-    if (correct) {
-      vibrateCorrect();
-    } else {
-      vibrateIncorrect();
+      // Haptic feedback (non-blocking, failures logged)
+      try {
+        if (correct) {
+          vibrateCorrect();
+        } else {
+          vibrateIncorrect();
+        }
+      } catch {
+        // Vibration failures are non-critical, silently ignore
+      }
+    } catch (error) {
+      console.error('Submit answer failed:', error);
     }
   }, [
     currentTask,
@@ -195,8 +203,17 @@ export function PracticeSessionContainer({
 
   // Handle session completion with haptic feedback
   const handleCompleteSession = useCallback(async () => {
-    vibrateSessionComplete();
-    await completeSession();
+    try {
+      // Haptic feedback (non-blocking, silently ignore failures)
+      try {
+        vibrateSessionComplete();
+      } catch {
+        // Vibration failures are non-critical, silently ignore
+      }
+      await completeSession();
+    } catch (error) {
+      console.error('Complete session failed:', error);
+    }
   }, [completeSession, vibrateSessionComplete]);
 
   // Repeat question audio

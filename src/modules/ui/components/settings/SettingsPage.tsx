@@ -315,15 +315,16 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       content: (
         <div className={styles.settingGroup}>
           {!isVibrationSupported && (
-            <div className={styles.infoCard}>
+            <div className={styles.infoCard} id="vibration-unsupported-notice">
               Vibration wird auf diesem Gerät nicht unterstützt (nur Android-Browser).
             </div>
           )}
-          <label className={styles.radioOption}>
+          <label className={styles.checkboxOption}>
             <input
               type="checkbox"
               checked={settings.interaction.vibrationsEnabled}
               disabled={!isVibrationSupported}
+              aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
               onChange={(event) =>
                 updateSettings((prev) => ({
                   ...prev,
@@ -334,11 +335,12 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
             Vibrationen aktivieren
           </label>
           <div className={styles.toggleGroup}>
-            <label className={styles.radioOption}>
+            <label className={styles.checkboxOption}>
               <input
                 type="checkbox"
                 checked={settings.interaction.vibrationOnCorrect}
                 disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
                 onChange={(event) =>
                   updateSettings((prev) => ({
                     ...prev,
@@ -348,11 +350,12 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               />
               Bei richtigen Antworten
             </label>
-            <label className={styles.radioOption}>
+            <label className={styles.checkboxOption}>
               <input
                 type="checkbox"
                 checked={settings.interaction.vibrationOnIncorrect}
                 disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
                 onChange={(event) =>
                   updateSettings((prev) => ({
                     ...prev,
@@ -362,11 +365,12 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               />
               Bei falschen Antworten
             </label>
-            <label className={styles.radioOption}>
+            <label className={styles.checkboxOption}>
               <input
                 type="checkbox"
                 checked={settings.interaction.vibrationOnSessionComplete}
                 disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
                 onChange={(event) =>
                   updateSettings((prev) => ({
                     ...prev,
