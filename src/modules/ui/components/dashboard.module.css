@@ -41,6 +41,16 @@
   margin-bottom: var(--spacing-2xl);
 }
 
+/* Streak card */
+.dashboard__streak-card {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.dashboard__streak-title {
+  margin-top: 0;
+  margin-bottom: var(--spacing-md);
+}
+
 /* Mastery levels card */
 .dashboard__mastery-card {
   margin-bottom: var(--spacing-2xl);

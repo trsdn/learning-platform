@@ -1,0 +1,55 @@
+.loading-bar__track {
+  width: 100%;
+  background: var(--color-bg-tertiary);
+  border-radius: var(--border-radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+.loading-bar__track--small {
+  height: var(--progress-height-sm);
+}
+
+.loading-bar__track--medium {
+  height: var(--progress-height-md);
+}
+
+.loading-bar__track--large {
+  height: var(--progress-height-lg);
+}
+
+.loading-bar__fill {
+  height: 100%;
+  border-radius: var(--border-radius-full);
+  will-change: transform, opacity;
+}
+
+/* Indeterminate: sliding bar */
+.loading-bar__fill--indeterminate {
+  width: 40%;
+}
+
+/* Shimmer: gradient sweep */
+.loading-bar__fill--shimmer {
+  width: 50%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--color-primary) 50%,
+    transparent 100%
+  ) !important;
+}
+
+/* Pulse: full width pulsing */
+.loading-bar__fill--pulse {
+  width: 100%;
+  transform-origin: center;
+}
+
+/* Reduced motion: simple fade */
+@media (prefers-reduced-motion: reduce) {
+  .loading-bar__fill {
+    width: 100% !important;
+    transform: none !important;
+  }
+}

@@ -85,6 +85,13 @@
   --z-modal: 1050;
   --z-popover: 1060;
   --z-tooltip: 1070;
+
+  /* Progress Bar */
+  --progress-height-sm: 4px;
+  --progress-height-md: 8px;
+  --progress-height-lg: 12px;
+  --progress-animation-duration: 500ms;
+  --progress-stripe-size: 1rem;
 }
 
 [data-theme='dark'] {

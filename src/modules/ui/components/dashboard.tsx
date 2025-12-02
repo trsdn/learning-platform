@@ -9,6 +9,8 @@ import { StatCard } from './common/StatCard';
 import { Card } from './common/Card';
 import { Button } from './common/Button';
 import { MasteryBar } from './common/MasteryBar';
+import { StreakDisplay } from './common/StreakDisplay';
+import { useStreakCalculation } from '../hooks/use-streak-calculation';
 import { colors } from '@ui/design-tokens';
 import { ErrorMessage } from './error';
 import { handleComponentError, type StructuredError } from '@core/utils/error-handler';
@@ -47,6 +49,9 @@ export function Dashboard({ onClose }: DashboardProps) {
   const [stats, setStats] = useState<DashboardStats | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<StructuredError | null>(null);
+
+  // Use the streak calculation hook
+  const streakData = useStreakCalculation();
 
   useEffect(() => {
     loadDashboardStats();
@@ -271,6 +276,20 @@ export function Dashboard({ onClose }: DashboardProps) {
           color={colors.info[500]}
         />
       </div>
+
+      {/* Streak Display */}
+      <Card padding="medium" className={styles['dashboard__streak-card']}>
+        <h2 className={styles['dashboard__streak-title']}>🔥 Tagesstreak</h2>
+        <StreakDisplay
+          currentStreak={streakData.currentStreak}
+          bestStreak={streakData.bestStreak}
+          nextMilestone={streakData.nextMilestone}
+          progressToMilestone={streakData.progressToNextMilestone}
+          isStreakActive={streakData.isStreakActive}
+          showMilestoneProgress
+          size="standard"
+        />
+      </Card>
 
       {/* Mastery Levels */}
       <Card padding="medium" className={styles['dashboard__mastery-card']}>

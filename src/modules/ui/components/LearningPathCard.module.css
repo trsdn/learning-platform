@@ -1,0 +1,149 @@
+.learning-path-card {
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-bg-tertiary);
+  border-radius: var(--border-radius-lg);
+  cursor: pointer;
+  transition:
+    box-shadow var(--transition-normal) var(--transition-ease-in-out),
+    border-color var(--transition-normal) var(--transition-ease-in-out);
+}
+
+.learning-path-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--color-primary);
+}
+
+.learning-path-card:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+.learning-path-card--completed {
+  border-color: var(--color-success);
+  background: linear-gradient(
+    to bottom right,
+    var(--color-bg-primary),
+    rgba(74, 222, 128, 0.05)
+  );
+}
+
+/* Header */
+.learning-path-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.learning-path-card__difficulty {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.learning-path-card__completed-badge {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-success);
+  background: rgba(74, 222, 128, 0.15);
+  padding: var(--spacing-xs) var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+}
+
+/* Title */
+.learning-path-card__title {
+  margin: 0 0 var(--spacing-xs) 0;
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  line-height: var(--line-height-tight);
+}
+
+/* Description */
+.learning-path-card__description {
+  margin: 0 0 var(--spacing-md) 0;
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-normal);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Meta info */
+.learning-path-card__meta {
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-md);
+}
+
+.learning-path-card__task-count,
+.learning-path-card__time {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Progress section */
+.learning-path-card__progress {
+  margin-top: auto;
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--color-bg-tertiary);
+}
+
+.learning-path-card__progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--spacing-xs);
+}
+
+.learning-path-card__progress-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+.learning-path-card__progress-value {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.learning-path-card__accuracy {
+  display: block;
+  margin-top: var(--spacing-xs);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+
+/* Action button */
+.learning-path-card__action {
+  margin-top: var(--spacing-md);
+  text-align: right;
+}
+
+.learning-path-card__action-text {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-primary);
+  transition: transform var(--transition-fast) var(--transition-ease-in-out);
+}
+
+.learning-path-card:hover .learning-path-card__action-text {
+  transform: translateX(4px);
+  display: inline-block;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .learning-path-card {
+    transition: none;
+  }
+
+  .learning-path-card:hover .learning-path-card__action-text {
+    transform: none;
+  }
+}
