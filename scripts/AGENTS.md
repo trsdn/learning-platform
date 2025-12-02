@@ -152,6 +152,60 @@ node scripts/apply-schema.js
 
 ---
 
+### 🔐 Secret Management (SOPS)
+
+#### `sops-encrypt.sh`
+**Purpose**: Encrypt environment files with SOPS + age
+**Usage**: `npm run secrets:encrypt`
+
+**What it does**:
+1. Finds `.env.local`, `.env.production`, `.env.staging`
+2. Encrypts each file → `.env.*.enc`
+3. Encrypted files are safe to commit to git
+
+**Prerequisites**:
+- SOPS installed: `brew install sops`
+- age installed: `brew install age`
+
+#### `sops-decrypt.sh`
+**Purpose**: Decrypt environment files
+**Usage**: `npm run secrets:decrypt`
+
+**What it does**:
+1. Finds `.env.*.enc` files
+2. Decrypts each → `.env.*` (unencrypted)
+3. App can now use the secrets
+
+**Prerequisites**:
+- SOPS + age installed
+- age private key in one of:
+  - `SOPS_AGE_KEY` environment variable
+  - macOS: `~/Library/Application Support/sops/age/keys.txt`
+  - Linux: `~/.config/sops/age/keys.txt`
+
+**Workflow**:
+```bash
+# First time setup (get key from team lead)
+mkdir -p ~/Library/Application\ Support/sops/age
+# Save key to keys.txt
+
+# Decrypt secrets
+npm run secrets:decrypt
+
+# After modifying .env.local
+npm run secrets:encrypt
+git add .env.local.enc
+git commit -m "chore: update encrypted secrets"
+```
+
+**Important**:
+- ✅ `.env.*.enc` files ARE committed (encrypted)
+- ❌ `.env.*` files are gitignored (unencrypted)
+- ❌ Never commit the age private key (`keys.txt`)
+- 🔑 Store private key in 1Password, Bitwarden, or secure team channel
+
+---
+
 ### 🚀 Deployment & Validation
 
 #### `pre-deploy-check.sh`
@@ -224,6 +278,23 @@ python3 scripts/generate-spanish-audio.py
 
 # 3. Add audio paths to JSONs
 python3 scripts/add-audio-to-flashcards.py
+```
+
+### Secret Management Workflow
+
+```bash
+# First time setup (new machine/developer)
+brew install sops age
+# Get age private key from team lead / password manager
+# Save to: ~/Library/Application Support/sops/age/keys.txt
+
+# Decrypt secrets
+npm run secrets:decrypt
+
+# After modifying secrets
+npm run secrets:encrypt
+git add .env.local.enc
+git commit -m "chore: update encrypted secrets"
 ```
 
 ### Pre-Deployment Workflow
@@ -357,17 +428,22 @@ set -euo pipefail
 
 ### Sensitive Data
 
-**Environment Variables**: Store in `.env.local` (gitignored)
+**Environment Variables**: Store in `.env.local` (gitignored), encrypted in `.env.local.enc` (committed)
+
+**SOPS Encryption** (recommended):
 ```bash
-VITE_SUPABASE_URL=your-url
-VITE_SUPABASE_ANON_KEY=your-key
+# Encrypt secrets for git
+npm run secrets:encrypt
+
+# Decrypt on new machine
+npm run secrets:decrypt
 ```
 
 **Never commit**:
-- API keys
-- Database credentials
-- Service account tokens
-- Private keys
+- Unencrypted `.env.*` files
+- age private key (`keys.txt`)
+- Database credentials (except encrypted)
+- Service account tokens (except encrypted)
 
 ### Database Operations
 
@@ -489,6 +565,6 @@ python3 scripts/add-audio-to-flashcards.py
 
 ---
 
-**Last Updated**: 2025-12-01  
+**Last Updated**: 2025-12-02
 **Maintained by**: @trsdn  
 **Questions?**: See main `AGENTS.md` or project documentation

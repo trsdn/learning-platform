@@ -1,0 +1,8 @@
+# SOPS Configuration
+# https://github.com/getsops/sops
+
+creation_rules:
+  # Encrypt .env.local and .env.production files
+  - path_regex: \.env\.(local|production|staging)$
+    age: >-
+      age1z6anndh8r8h03965h5kt0gc0vn88lv242q8jsr8n3hgkcne679vqwe2ymp
