@@ -177,17 +177,35 @@ npm run seed:supabase
 
 Production seeding is **blocked by default** to protect user data.
 
-The seed script checks the Supabase URL and will:
-- Exit with error if targeting production
-- Only allow with explicit `FORCE_PRODUCTION_SEED=true` flag
-- Show 5-second warning before proceeding (if forced)
+The seed script uses a **multi-layer protection system**:
+
+1. **Allowlist Check**: Only explicitly allowed development project refs can be seeded automatically. Unknown projects are blocked.
+2. **Production Detection**: The script detects production by project ref and blocks seeding by default.
+3. **Double-Confirmation Requirement**: Production seeding requires **both** environment variables:
+   - `FORCE_PRODUCTION_SEED=true`
+   - `CONFIRM_PRODUCTION_SEED=I_UNDERSTAND_THIS_IS_DANGEROUS`
+4. **10-Second Warning**: Even with both flags, shows a 10-second countdown before proceeding (press Ctrl+C to cancel).
+
+#### Allowed Development Projects
+
+The following development project refs are allowed for automatic seeding:
+- `ngasmbisrysigagtqpzj` (mindforge-academy-dev)
+
+To add a new development project, update `ALLOWED_DEV_PROJECT_REFS` in `scripts/seed-supabase.ts`.
+
+#### Production Seeding Examples
 
 ```bash
-# This will be BLOCKED:
+# This will be BLOCKED (production URL without confirmation):
 VITE_SUPABASE_URL=https://knzjdckrtewoigosaxoh.supabase.co npm run seed:supabase
 
-# Only works with explicit force (NOT RECOMMENDED):
+# This will also be BLOCKED (missing double-confirmation):
 FORCE_PRODUCTION_SEED=true npm run seed:supabase
+
+# Only works with BOTH flags (NOT RECOMMENDED):
+FORCE_PRODUCTION_SEED=true \
+CONFIRM_PRODUCTION_SEED=I_UNDERSTAND_THIS_IS_DANGEROUS \
+npm run seed:supabase
 ```
 
 ## Branch Protection
