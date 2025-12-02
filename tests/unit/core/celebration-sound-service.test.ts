@@ -4,43 +4,70 @@ import {
   getCelebrationSoundService,
 } from '../../../src/modules/core/services/celebration-sound-service';
 
-// Mock AudioContext
-const mockOscillator = {
-  type: 'sine',
+// Mock AudioContext - vitest 4.x requires class-based mocks for constructors
+const createMockOscillator = () => ({
+  type: 'sine' as OscillatorType,
   frequency: { value: 440 },
   connect: vi.fn(),
   start: vi.fn(),
   stop: vi.fn(),
-};
+});
 
-const mockGainNode = {
+const createMockGainNode = () => ({
   gain: {
     value: 0,
     setValueAtTime: vi.fn(),
     linearRampToValueAtTime: vi.fn(),
   },
   connect: vi.fn(),
-};
+});
 
-const mockAudioContext = {
-  state: 'running',
+// Track mock instances for assertions
+let mockAudioContextInstance: ReturnType<typeof createMockAudioContext> | null = null;
+
+const createMockAudioContext = () => ({
+  state: 'running' as AudioContextState,
   currentTime: 0,
   destination: {},
   resume: vi.fn().mockResolvedValue(undefined),
-  createOscillator: vi.fn(() => ({ ...mockOscillator })),
-  createGain: vi.fn(() => ({
-    ...mockGainNode,
-    gain: { ...mockGainNode.gain },
-  })),
-};
+  createOscillator: vi.fn(() => createMockOscillator()),
+  createGain: vi.fn(() => createMockGainNode()),
+});
 
-vi.stubGlobal('AudioContext', vi.fn(() => mockAudioContext));
+// Use a class-based mock for vitest 4.x compatibility
+class MockAudioContextImpl {
+  state: AudioContextState;
+  currentTime: number;
+  destination: object;
+  resume: ReturnType<typeof vi.fn>;
+  createOscillator: ReturnType<typeof vi.fn>;
+  createGain: ReturnType<typeof vi.fn>;
+
+  constructor() {
+    const mock = createMockAudioContext();
+    this.state = mock.state;
+    this.currentTime = mock.currentTime;
+    this.destination = mock.destination;
+    this.resume = mock.resume;
+    this.createOscillator = mock.createOscillator;
+    this.createGain = mock.createGain;
+    mockAudioContextInstance = this as unknown as ReturnType<typeof createMockAudioContext>;
+  }
+}
+
+// Wrap in a spy-trackable function for vitest 4.x
+const MockAudioContext = vi.fn().mockImplementation(function(this: MockAudioContextImpl) {
+  return new MockAudioContextImpl();
+});
+
+vi.stubGlobal('AudioContext', MockAudioContext);
 
 describe('CelebrationSoundService', () => {
   let service: CelebrationSoundService;
 
   beforeEach(() => {
     vi.clearAllMocks();
+    mockAudioContextInstance = null;
     service = new CelebrationSoundService();
   });
 
@@ -81,46 +108,80 @@ describe('CelebrationSoundService', () => {
     it('should create oscillators and gain nodes', async () => {
       await service.playConfettiSound();
       // Should create multiple oscillators for the arpeggio
-      expect(mockAudioContext.createOscillator).toHaveBeenCalled();
-      expect(mockAudioContext.createGain).toHaveBeenCalled();
+      expect(mockAudioContextInstance?.createOscillator).toHaveBeenCalled();
+      expect(mockAudioContextInstance?.createGain).toHaveBeenCalled();
     });
 
     it('should use volume from getter', async () => {
       service.setVolumeGetter(() => 0.5);
       await service.playConfettiSound();
-      expect(mockAudioContext.createGain).toHaveBeenCalled();
+      expect(mockAudioContextInstance?.createGain).toHaveBeenCalled();
     });
 
     it('should not play when disabled via callback', async () => {
       service.setEnabledCheck(() => false);
       await service.playConfettiSound();
-      // AudioContext should be created but no oscillators
-      expect(mockAudioContext.createOscillator).not.toHaveBeenCalled();
+      // AudioContext should NOT be created when disabled
+      expect(mockAudioContextInstance).toBeNull();
     });
 
     it('should resume suspended audio context', async () => {
-      const suspendedContext = {
-        ...mockAudioContext,
-        state: 'suspended',
-      };
-      vi.mocked(AudioContext).mockImplementationOnce(() => suspendedContext as unknown as AudioContext);
+      // Track resume calls
+      const resumeMock = vi.fn().mockResolvedValue(undefined);
+
+      // Create a suspended context class with tracked resume
+      class SuspendedMockAudioContext {
+        state: AudioContextState = 'suspended';
+        currentTime = 0;
+        destination = {};
+        resume = resumeMock;
+        createOscillator = vi.fn(() => createMockOscillator());
+        createGain = vi.fn(() => createMockGainNode());
+      }
+
+      vi.stubGlobal('AudioContext', SuspendedMockAudioContext);
 
       const newService = new CelebrationSoundService();
       await newService.playConfettiSound();
 
-      expect(suspendedContext.resume).toHaveBeenCalled();
+      expect(resumeMock).toHaveBeenCalled();
+
+      // Restore original mock
+      vi.stubGlobal('AudioContext', MockAudioContext);
     });
 
     it('should clamp volume to valid range', async () => {
+      // Track createGain calls
+      const createGainMock = vi.fn(() => createMockGainNode());
+
+      class VolumeTestMockAudioContext {
+        state: AudioContextState = 'running';
+        currentTime = 0;
+        destination = {};
+        resume = vi.fn().mockResolvedValue(undefined);
+        createOscillator = vi.fn(() => createMockOscillator());
+        createGain = createGainMock;
+      }
+
+      vi.stubGlobal('AudioContext', VolumeTestMockAudioContext);
+
       // Test high volume
-      service.setVolumeGetter(() => 1.5);
-      await service.playConfettiSound();
-      expect(mockAudioContext.createGain).toHaveBeenCalled();
+      const service1 = new CelebrationSoundService();
+      service1.setVolumeGetter(() => 1.5);
+      await service1.playConfettiSound();
+      expect(createGainMock).toHaveBeenCalled();
+
+      // Reset for low volume test
+      createGainMock.mockClear();
 
       // Test low volume
-      service.setVolumeGetter(() => -0.5);
-      await service.playConfettiSound();
-      expect(mockAudioContext.createGain).toHaveBeenCalled();
+      const service2 = new CelebrationSoundService();
+      service2.setVolumeGetter(() => -0.5);
+      await service2.playConfettiSound();
+      expect(createGainMock).toHaveBeenCalled();
+
+      // Restore original mock
+      vi.stubGlobal('AudioContext', MockAudioContext);
     });
   });
 });

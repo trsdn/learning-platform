@@ -17,8 +17,11 @@ import type { Task } from '../../../src/modules/core/types/services';
 describe('AudioService (Contract Tests)', () => {
   let audioService: IAudioService;
 
-  // Mock HTMLAudioElement
-  const mockAudio = {
+  // Track the current mock audio instance
+  let mockAudioInstance: ReturnType<typeof createMockAudio> | null = null;
+
+  // Factory to create mock HTMLAudioElement
+  const createMockAudio = () => ({
     play: vi.fn().mockResolvedValue(undefined),
     pause: vi.fn(),
     load: vi.fn(),
@@ -27,17 +30,40 @@ describe('AudioService (Contract Tests)', () => {
     src: '',
     addEventListener: vi.fn(),
     removeEventListener: vi.fn(),
-  };
+  });
+
+  // Class-based mock for vitest 4.x compatibility
+  class MockAudio {
+    play: ReturnType<typeof vi.fn>;
+    pause: ReturnType<typeof vi.fn>;
+    load: ReturnType<typeof vi.fn>;
+    currentTime: number;
+    duration: number;
+    src: string;
+    addEventListener: ReturnType<typeof vi.fn>;
+    removeEventListener: ReturnType<typeof vi.fn>;
+
+    constructor() {
+      const mock = createMockAudio();
+      this.play = mock.play;
+      this.pause = mock.pause;
+      this.load = mock.load;
+      this.currentTime = mock.currentTime;
+      this.duration = mock.duration;
+      this.src = mock.src;
+      this.addEventListener = mock.addEventListener;
+      this.removeEventListener = mock.removeEventListener;
+      mockAudioInstance = this as unknown as ReturnType<typeof createMockAudio>;
+    }
+  }
 
   beforeEach(() => {
     // Reset mocks
     vi.clearAllMocks();
-    mockAudio.currentTime = 0;
-    mockAudio.duration = 0;
-    mockAudio.src = '';
+    mockAudioInstance = null;
 
-    // Mock global Audio constructor
-    global.Audio = vi.fn().mockImplementation(() => mockAudio) as unknown as typeof Audio;
+    // Mock global Audio constructor with class-based mock
+    global.Audio = MockAudio as unknown as typeof Audio;
 
     // Create service instance (will fail until implementation exists)
     audioService = createAudioService();
@@ -235,7 +261,9 @@ describe('AudioService (Contract Tests)', () => {
       await audioService.play();
 
       // Simulate some playback
-      mockAudio.currentTime = 1.5;
+      if (mockAudioInstance) {
+        mockAudioInstance.currentTime = 1.5;
+      }
 
       audioService.pause();
 
@@ -258,7 +286,9 @@ describe('AudioService (Contract Tests)', () => {
       await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
-      mockAudio.currentTime = 2.0;
+      if (mockAudioInstance) {
+        mockAudioInstance.currentTime = 2.0;
+      }
 
       audioService.stop();
 
@@ -282,7 +312,9 @@ describe('AudioService (Contract Tests)', () => {
       await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
       await audioService.play();
 
-      mockAudio.currentTime = 2.5;
+      if (mockAudioInstance) {
+        mockAudioInstance.currentTime = 2.5;
+      }
 
       await audioService.replay();
 
@@ -325,9 +357,11 @@ describe('AudioService (Contract Tests)', () => {
 
       expect(audioService.getPlaybackState().status).toBe('paused');
 
-      // Ensure mockAudio.play resolves properly for toggle
-      mockAudio.play.mockClear();
-      mockAudio.play.mockResolvedValue(undefined);
+      // Ensure mockAudioInstance.play resolves properly for toggle
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockClear();
+        mockAudioInstance.play.mockResolvedValue(undefined);
+      }
       await audioService.togglePlayPause();
 
       // Give time for async state updates
@@ -376,8 +410,10 @@ describe('AudioService (Contract Tests)', () => {
 
     it.skip('should return true when auto-play is allowed', async () => {
       // Clear previous calls and ensure play resolves successfully
-      mockAudio.play.mockClear();
-      mockAudio.play.mockResolvedValue(undefined);
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockClear();
+        mockAudioInstance.play.mockResolvedValue(undefined);
+      }
 
       const result = await audioService.checkAutoPlayPermission();
 
@@ -385,12 +421,21 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should return false when auto-play is blocked', async () => {
+      // Set up a mock that rejects with NotAllowedError
       const error = new Error('NotAllowedError');
       error.name = 'NotAllowedError';
-      mockAudio.play.mockRejectedValue(error);
+
+      // Override the MockAudio class to reject play
+      class RejectingMockAudio extends MockAudio {
+        override play = vi.fn().mockRejectedValue(error);
+      }
+      global.Audio = RejectingMockAudio as unknown as typeof Audio;
 
       const result = await audioService.checkAutoPlayPermission();
       expect(result).toBe(false);
+
+      // Restore original mock
+      global.Audio = MockAudio as unknown as typeof Audio;
     });
   });
 
@@ -400,7 +445,7 @@ describe('AudioService (Contract Tests)', () => {
     });
 
     it('should return true when unlock succeeds', async () => {
-      mockAudio.play.mockResolvedValue(undefined);
+      // MockAudio already mocks play to resolve successfully
       const result = await audioService.unlockAutoPlay();
       expect(result).toBe(true);
     });
