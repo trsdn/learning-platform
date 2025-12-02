@@ -305,6 +305,89 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
+    const isVibrationSupported = typeof navigator !== 'undefined' && 'vibrate' in navigator;
+
+    const hapticSection: SectionDefinition = {
+      id: 'haptic',
+      icon: '📳',
+      title: 'Haptisches Feedback',
+      keywords: ['vibration', 'haptisch', 'feedback', 'mobil'],
+      content: (
+        <div className={styles.settingGroup}>
+          {!isVibrationSupported && (
+            <div className={styles.infoCard} id="vibration-unsupported-notice">
+              Vibration wird auf diesem Gerät nicht unterstützt (nur Android-Browser).
+            </div>
+          )}
+          <label className={styles.checkboxOption}>
+            <input
+              type="checkbox"
+              checked={settings.interaction.vibrationsEnabled}
+              disabled={!isVibrationSupported}
+              aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
+              onChange={(event) =>
+                updateSettings((prev) => ({
+                  ...prev,
+                  interaction: { ...prev.interaction, vibrationsEnabled: event.target.checked },
+                }))
+              }
+            />
+            Vibrationen aktivieren
+          </label>
+          <div className={styles.toggleGroup}>
+            <label className={styles.checkboxOption}>
+              <input
+                type="checkbox"
+                checked={settings.interaction.vibrationOnCorrect}
+                disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
+                onChange={(event) =>
+                  updateSettings((prev) => ({
+                    ...prev,
+                    interaction: { ...prev.interaction, vibrationOnCorrect: event.target.checked },
+                  }))
+                }
+              />
+              Bei richtigen Antworten
+            </label>
+            <label className={styles.checkboxOption}>
+              <input
+                type="checkbox"
+                checked={settings.interaction.vibrationOnIncorrect}
+                disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
+                onChange={(event) =>
+                  updateSettings((prev) => ({
+                    ...prev,
+                    interaction: { ...prev.interaction, vibrationOnIncorrect: event.target.checked },
+                  }))
+                }
+              />
+              Bei falschen Antworten
+            </label>
+            <label className={styles.checkboxOption}>
+              <input
+                type="checkbox"
+                checked={settings.interaction.vibrationOnSessionComplete}
+                disabled={!isVibrationSupported || !settings.interaction.vibrationsEnabled}
+                aria-describedby={!isVibrationSupported ? 'vibration-unsupported-notice' : undefined}
+                onChange={(event) =>
+                  updateSettings((prev) => ({
+                    ...prev,
+                    interaction: { ...prev.interaction, vibrationOnSessionComplete: event.target.checked },
+                  }))
+                }
+              />
+              Bei Session-Abschluss
+            </label>
+          </div>
+          <p className={styles.settingDescription}>
+            Haptisches Feedback bei Antworten. Respektiert die Einstellung &bdquo;Reduzierte Bewegungen&ldquo;.
+          </p>
+        </div>
+      ),
+    };
+
     const infoSection: SectionDefinition = {
       id: 'info',
       icon: 'ℹ️',
@@ -337,7 +420,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
-    return [databaseSection, themeSection, audioSection, infoSection];
+    return [databaseSection, themeSection, audioSection, hapticSection, infoSection];
   })();
 
   const filteredSections = sections.filter((section) => {
