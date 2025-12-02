@@ -134,9 +134,9 @@ jobs:
             HEALTH_FAILED=true
           fi
 
-          # Check if critical assets load (with 30s timeout)
+          # Check if page content is present (search for "mindforge" in HTML)
           if curl -s --max-time 30 "$PROD_URL" | grep -qi "mindforge"; then
-            echo "✅ Page title found"
+            echo "✅ Page content verified"
           else
             echo "::error title=Content Check Failed::Expected page title not found"
             HEALTH_FAILED=true
