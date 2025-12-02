@@ -53,7 +53,8 @@ export interface UseVibrationReturn {
  */
 export function useVibration(): UseVibrationReturn {
   const { settings } = useAppSettings();
-  const serviceRef = useRef<IVibrationService | null>(null);
+  // Initialize service synchronously to ensure isSupported is accurate on first render
+  const serviceRef = useRef<IVibrationService>(getVibrationService());
   // Use ref to always have latest settings without triggering callback recreation
   const settingsRef = useRef<AppSettings | null>(settings);
 
@@ -62,20 +63,10 @@ export function useVibration(): UseVibrationReturn {
     settingsRef.current = settings;
   }, [settings]);
 
-  // Initialize service and configure enabled check
-  // Combined into single effect to prevent race condition
+  // Configure enabled check callback
+  // This callback reads from settingsRef to always get latest settings
   useEffect(() => {
-    // Initialize service if not already done
-    if (!serviceRef.current) {
-      serviceRef.current = getVibrationService();
-    }
-
-    const service = serviceRef.current;
-    if (!service) return;
-
-    // Configure the enabled check callback
-    // This callback reads from settingsRef to always get latest settings
-    service.setEnabledCheck(() => {
+    serviceRef.current.setEnabledCheck(() => {
       const currentSettings = settingsRef.current;
       if (!currentSettings) return false;
       // Master toggle must be enabled
@@ -90,26 +81,26 @@ export function useVibration(): UseVibrationReturn {
   const vibrateCorrect = useCallback(() => {
     const s = settingsRef.current;
     if (!s?.interaction.vibrationOnCorrect) return;
-    serviceRef.current?.vibrateSuccess();
+    serviceRef.current.vibrateSuccess();
   }, []);
 
   const vibrateIncorrect = useCallback(() => {
     const s = settingsRef.current;
     if (!s?.interaction.vibrationOnIncorrect) return;
-    serviceRef.current?.vibrateError();
+    serviceRef.current.vibrateError();
   }, []);
 
   const vibrateSessionComplete = useCallback(() => {
     const s = settingsRef.current;
     if (!s?.interaction.vibrationOnSessionComplete) return;
-    serviceRef.current?.vibrateSessionComplete();
+    serviceRef.current.vibrateSessionComplete();
   }, []);
 
   const cancel = useCallback(() => {
-    serviceRef.current?.cancel();
+    serviceRef.current.cancel();
   }, []);
 
-  const isSupported = serviceRef.current?.isSupported() ?? false;
+  const isSupported = serviceRef.current.isSupported();
 
   return {
     isSupported,
