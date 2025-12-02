@@ -454,6 +454,38 @@ const ALLOWED_DEV_PROJECT_REFS = [
 const PRODUCTION_PROJECT_REF = 'knzjdckrtewoigosaxoh';
 
 /**
+ * Validate Supabase URL format
+ */
+function validateSupabaseUrl(url: string | undefined): void {
+  if (!url) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('VITE_SUPABASE_URL is not set or is empty.');
+    console.error('Please set the environment variable to a valid Supabase URL.');
+    console.error('');
+    console.error('Example: VITE_SUPABASE_URL=https://yourproject.supabase.co');
+    process.exit(1);
+  }
+
+  if (!url.startsWith('https://')) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('URL must start with https://');
+    console.error('Provided URL:', url);
+    process.exit(1);
+  }
+
+  if (!url.includes('.supabase.co')) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('URL does not appear to be a valid Supabase URL.');
+    console.error('Expected format: https://<project-ref>.supabase.co');
+    console.error('Provided URL:', url);
+    process.exit(1);
+  }
+}
+
+/**
  * Extract project ref from Supabase URL
  */
 function extractProjectRef(url: string | undefined): string | null {
@@ -466,6 +498,9 @@ function extractProjectRef(url: string | undefined): string | null {
  * Check if we're targeting an allowed development environment
  */
 function checkProductionSafety(): void {
+  // First, validate the URL format
+  validateSupabaseUrl(supabaseUrl);
+
   const projectRef = extractProjectRef(supabaseUrl);
   const isAllowedDev = projectRef && ALLOWED_DEV_PROJECT_REFS.includes(projectRef);
   const isProduction = projectRef === PRODUCTION_PROJECT_REF;

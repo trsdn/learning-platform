@@ -104,26 +104,39 @@ jobs:
         run: |
           echo "🏥 Running health checks..."
           PROD_URL="${{ steps.deploy.outputs.deployment_url }}"
+          HEALTH_FAILED=false
 
           # Wait for deployment to stabilize
           sleep 10
 
-          # Check if the site is reachable
-          HTTP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$PROD_URL" || echo "000")
+          # Check if the site is reachable (with 30s timeout)
+          HTTP_STATUS=$(curl -s --max-time 30 -o /dev/null -w "%{http_code}" "$PROD_URL" || echo "000")
 
           if [[ "$HTTP_STATUS" == "200" ]]; then
             echo "✅ Site is reachable (HTTP $HTTP_STATUS)"
             echo "status=healthy" >> $GITHUB_OUTPUT
+          elif [[ "$HTTP_STATUS" == "000" ]]; then
+            echo "::error title=Health Check Failed::Connection timeout or network error"
+            echo "status=failed" >> $GITHUB_OUTPUT
+            HEALTH_FAILED=true
           else
-            echo "::warning title=Health Check Warning::Site returned HTTP $HTTP_STATUS"
-            echo "status=degraded" >> $GITHUB_OUTPUT
+            echo "::error title=Health Check Failed::Site returned HTTP $HTTP_STATUS"
+            echo "status=failed" >> $GITHUB_OUTPUT
+            HEALTH_FAILED=true
           fi
 
-          # Check if critical assets load
-          if curl -s "$PROD_URL" | grep -q "MindForge Academy"; then
+          # Check if critical assets load (with 30s timeout)
+          if curl -s --max-time 30 "$PROD_URL" | grep -q "MindForge Academy"; then
             echo "✅ Page title found"
           else
-            echo "::warning title=Content Warning::Expected page title not found"
+            echo "::error title=Content Check Failed::Expected page title not found"
+            HEALTH_FAILED=true
+          fi
+
+          # Fail the deployment if health checks failed
+          if [[ "$HEALTH_FAILED" == "true" ]]; then
+            echo "❌ Health checks failed - deployment may be broken"
+            exit 1
           fi
 
       - name: Create deployment summary
