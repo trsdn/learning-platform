@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useAppSettings } from '../../hooks/use-app-settings';
 import { useAudioSettings } from '../../hooks/use-audio-settings';
-import type { AppSettings, ThemeMode, FontScale } from '../../../core/entities/app-settings';
+import type { AppSettings, ThemeMode, FontScale, ConfettiStyle, ConfettiIntensity } from '../../../core/entities/app-settings';
 import type { AudioSettings as LegacyAudioSettings } from '../../../core/entities/audio-settings';
 import styles from './settings-page.module.css';
 
@@ -388,6 +388,124 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
+    const confettiSection: SectionDefinition = {
+      id: 'confetti',
+      icon: '🎉',
+      title: 'Konfetti & Animationen',
+      keywords: ['konfetti', 'confetti', 'animation', 'feier', 'celebration'],
+      content: (
+        <div className={styles.settingGroup}>
+          <p className={styles.settingDescription}>
+            Feiere deine Erfolge mit bunten Konfetti-Animationen!
+          </p>
+
+          <label className={styles.checkboxOption}>
+            <input
+              type="checkbox"
+              checked={settings.interaction.confettiEnabled}
+              onChange={(event) =>
+                updateSettings((prev) => ({
+                  ...prev,
+                  interaction: { ...prev.interaction, confettiEnabled: event.target.checked },
+                }))
+              }
+            />
+            Konfetti aktivieren
+          </label>
+
+          {settings.interaction.confettiEnabled && (
+            <>
+              <div className={styles.settingItem}>
+                <div className={styles.settingLabel}>Konfetti-Stil</div>
+                <div className={styles.radioGroup}>
+                  {([
+                    { value: 'standard', label: 'Standard' },
+                    { value: 'firework', label: 'Feuerwerk' },
+                    { value: 'cannon', label: 'Kanone' },
+                    { value: 'emoji', label: 'Emoji' },
+                  ] as { value: ConfettiStyle; label: string }[]).map((option) => (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        styles.radioOption,
+                        settings.interaction.confettiStyle === option.value && styles['radioOption--active']
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        checked={settings.interaction.confettiStyle === option.value}
+                        onChange={() =>
+                          updateSettings((prev) => ({
+                            ...prev,
+                            interaction: { ...prev.interaction, confettiStyle: option.value },
+                          }))
+                        }
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <div className={styles.settingItem}>
+                <div className={styles.settingLabel}>Intensität</div>
+                <div className={styles.radioGroup}>
+                  {([
+                    { value: 'light', label: 'Leicht' },
+                    { value: 'medium', label: 'Mittel' },
+                    { value: 'strong', label: 'Stark' },
+                  ] as { value: ConfettiIntensity; label: string }[]).map((option) => (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        styles.radioOption,
+                        settings.interaction.confettiIntensity === option.value && styles['radioOption--active']
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        checked={settings.interaction.confettiIntensity === option.value}
+                        onChange={() =>
+                          updateSettings((prev) => ({
+                            ...prev,
+                            interaction: { ...prev.interaction, confettiIntensity: option.value },
+                          }))
+                        }
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              <label className={styles.checkboxOption}>
+                <input
+                  type="checkbox"
+                  checked={settings.interaction.confettiSoundEnabled}
+                  onChange={(event) =>
+                    updateSettings((prev) => ({
+                      ...prev,
+                      interaction: { ...prev.interaction, confettiSoundEnabled: event.target.checked },
+                    }))
+                  }
+                />
+                Sound bei Konfetti abspielen
+              </label>
+            </>
+          )}
+
+          <div className={styles.infoCard}>
+            <strong>Wann wird Konfetti ausgelöst?</strong>
+            <ul className={styles.infoList}>
+              <li>✨ Perfekte Sitzung (100% richtig, mind. 5 Fragen)</li>
+              <li>🔥 Streak-Meilensteine (7, 30, 100 Tage)</li>
+              <li>🎯 Lernpfad abgeschlossen</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    };
+
     const infoSection: SectionDefinition = {
       id: 'info',
       icon: 'ℹ️',
@@ -420,7 +538,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
-    return [databaseSection, themeSection, audioSection, hapticSection, infoSection];
+    return [databaseSection, themeSection, audioSection, hapticSection, confettiSection, infoSection];
   })();
 
   const filteredSections = sections.filter((section) => {

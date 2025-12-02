@@ -192,6 +192,27 @@
   font-size: 0.875rem;
 }
 
+.settingSubtitle {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.infoList {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  list-style: none;
+}
+
+.infoList li {
+  font-size: 0.875rem;
+  color: var(--color-text-secondary, #6b7280);
+}
+
 .inlineOptions {
   display: flex;
   flex-wrap: wrap;

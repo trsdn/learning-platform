@@ -1,8 +1,9 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Button } from './common/Button';
 import { Card } from './common/Card';
+import { useConfetti } from '../hooks/use-confetti';
 import styles from './session-results.module.css';
 
 interface Props {
@@ -15,6 +16,24 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
   const [shareMessage, setShareMessage] = useState<string | null>(null);
   const accuracy = session.results.accuracy;
   const averageTime = Math.round(session.results.averageTime);
+
+  // Confetti celebration for perfect sessions
+  const { firePerfectSession } = useConfetti();
+  const hasTriggeredConfetti = useRef(false);
+
+  useEffect(() => {
+    // Only trigger once per session result
+    if (hasTriggeredConfetti.current) return;
+
+    // Check for perfect session: 100% accuracy with at least 5 questions
+    const isPerfect = accuracy === 100;
+    const minQuestions = session.execution.completedCount >= 5;
+
+    if (isPerfect && minQuestions) {
+      hasTriggeredConfetti.current = true;
+      firePerfectSession();
+    }
+  }, [accuracy, session.execution.completedCount, firePerfectSession]);
 
   // Calculate performance rating
   let performanceRating = '';

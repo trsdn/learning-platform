@@ -42,7 +42,7 @@ export interface NotificationPreferences {
   weeklyReportEnabled: boolean;
 }
 
-export type ConfettiStyle = 'standard' | 'firework' | 'emoji';
+export type ConfettiStyle = 'standard' | 'firework' | 'cannon' | 'emoji';
 export type ConfettiIntensity = 'light' | 'medium' | 'strong';
 
 export interface InteractionPreferences {
@@ -53,6 +53,7 @@ export interface InteractionPreferences {
   confettiEnabled: boolean;
   confettiStyle: ConfettiStyle;
   confettiIntensity: ConfettiIntensity;
+  confettiSoundEnabled: boolean;
   wakeLockEnabled: boolean;
   keyboardShortcutsEnabled: boolean;
 }
@@ -153,6 +154,7 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
     confettiEnabled: true,
     confettiStyle: 'standard',
     confettiIntensity: 'medium',
+    confettiSoundEnabled: false,
     wakeLockEnabled: true,
     keyboardShortcutsEnabled: true,
   },
@@ -205,7 +207,7 @@ function isLearningAlgorithm(value: unknown): value is LearningAlgorithm {
 }
 
 function isConfettiStyle(value: unknown): value is ConfettiStyle {
-  return value === 'standard' || value === 'firework' || value === 'emoji';
+  return value === 'standard' || value === 'firework' || value === 'cannon' || value === 'emoji';
 }
 
 function isConfettiIntensity(value: unknown): value is ConfettiIntensity {
@@ -293,6 +295,7 @@ function sanitizeInteractionPreferences(raw: unknown): InteractionPreferences {
     confettiEnabled: Boolean(rawObj?.confettiEnabled ?? DEFAULT_APP_SETTINGS.interaction.confettiEnabled),
     confettiStyle: isConfettiStyle(rawObj?.confettiStyle) ? (rawObj.confettiStyle as ConfettiStyle) : DEFAULT_APP_SETTINGS.interaction.confettiStyle,
     confettiIntensity: isConfettiIntensity(rawObj?.confettiIntensity) ? (rawObj.confettiIntensity as ConfettiIntensity) : DEFAULT_APP_SETTINGS.interaction.confettiIntensity,
+    confettiSoundEnabled: Boolean(rawObj?.confettiSoundEnabled ?? DEFAULT_APP_SETTINGS.interaction.confettiSoundEnabled),
     wakeLockEnabled: Boolean(rawObj?.wakeLockEnabled ?? DEFAULT_APP_SETTINGS.interaction.wakeLockEnabled),
     keyboardShortcutsEnabled: Boolean(rawObj?.keyboardShortcutsEnabled ?? DEFAULT_APP_SETTINGS.interaction.keyboardShortcutsEnabled),
   };
