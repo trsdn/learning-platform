@@ -1,3 +1,4 @@
+import { useState, useCallback } from 'react';
 import type { PracticeSession } from '@core/types/services';
 import { StatCard } from './common/StatCard';
 import { Button } from './common/Button';
@@ -11,6 +12,7 @@ interface Props {
 }
 
 export function SessionResults({ session, onClose, onStartNew }: Props) {
+  const [shareMessage, setShareMessage] = useState<string | null>(null);
   const accuracy = session.results.accuracy;
   const averageTime = Math.round(session.results.averageTime);
 
@@ -40,6 +42,40 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
     }
     return `${secs} sek`;
   }
+
+  // Share results using Web Share API or clipboard fallback
+  const handleShare = useCallback(async () => {
+    const correctCount = session.execution.correctCount;
+    const completedCount = session.execution.completedCount;
+    const shareText = `MindForge Academy: ${correctCount}/${completedCount} richtig (${Math.round(accuracy)}%)! 🎓`;
+
+    try {
+      if (navigator.share) {
+        await navigator.share({
+          title: 'MindForge Ergebnis',
+          text: shareText,
+        });
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(shareText);
+        setShareMessage('In Zwischenablage kopiert!');
+        setTimeout(() => setShareMessage(null), 2000);
+      }
+    } catch (error) {
+      // User cancelled or error occurred
+      if (error instanceof Error && error.name !== 'AbortError') {
+        // Try clipboard as fallback
+        try {
+          await navigator.clipboard.writeText(shareText);
+          setShareMessage('In Zwischenablage kopiert!');
+          setTimeout(() => setShareMessage(null), 2000);
+        } catch {
+          setShareMessage('Teilen fehlgeschlagen');
+          setTimeout(() => setShareMessage(null), 2000);
+        }
+      }
+    }
+  }, [session, accuracy]);
 
   return (
     <div className={styles['session-results']}>
@@ -105,12 +141,22 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
         </p>
       </Card>
 
+      {/* Share Message Toast */}
+      {shareMessage && (
+        <div className={styles['session-results__toast']}>
+          {shareMessage}
+        </div>
+      )}
+
       {/* Actions */}
       <div className={styles['session-results__actions']}>
         <Button onClick={onStartNew} variant="primary">
           Neue Sitzung starten
         </Button>
-        <Button onClick={onClose} variant="secondary">
+        <Button onClick={handleShare} variant="secondary">
+          Ergebnis teilen
+        </Button>
+        <Button onClick={onClose} variant="ghost">
           Zurück zur Übersicht
         </Button>
       </div>

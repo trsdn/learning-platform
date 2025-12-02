@@ -22,6 +22,38 @@ This guide provides testing-specific guidelines for AI agents working with:
 
 ---
 
+## 🔴 Test-Driven Development (TDD)
+
+**We follow TDD for all feature development.** Write tests before implementation.
+
+### TDD Cycle
+
+1. **Red**: Write a failing test that defines expected behavior
+2. **Green**: Write minimal code to make the test pass
+3. **Refactor**: Clean up code while keeping tests green
+
+### TDD Workflow
+
+```bash
+# 1. Write test first
+npm test -- --watch tests/unit/core/my-feature.test.ts
+
+# 2. See it fail (Red)
+# 3. Implement feature
+# 4. See it pass (Green)
+# 5. Refactor, verify tests still pass
+```
+
+### TDD Best Practices
+
+- **One test at a time**: Don't write all tests upfront
+- **Smallest step**: Write the simplest failing test first
+- **No production code without a failing test**
+- **Refactor only when green**: Never refactor while tests are failing
+- **Test behavior, not implementation**: Tests should survive refactoring
+
+---
+
 ## 📁 Directory Structure
 
 ```

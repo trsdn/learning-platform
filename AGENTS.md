@@ -149,12 +149,18 @@ Each type has unique content interface:
 3. Make minimal fix
 4. Verify: `npm run build` (TypeScript errors break prod)
 
-### Adding Features
+### Adding Features (TDD Approach)
 
-1. Types first (`src/modules/core/types/`)
-2. Service layer (`src/modules/core/services/`)
-3. UI components (`src/modules/ui/components/`)
-4. Tests (`tests/unit/`, `tests/e2e/`)
+**We follow Test-Driven Development (TDD)**. Write tests first, then implementation.
+
+1. **Write failing tests** (`tests/unit/`, `tests/e2e/`)
+2. Types (`src/modules/core/types/`)
+3. Service layer (`src/modules/core/services/`)
+4. UI components (`src/modules/ui/components/`)
+5. **Verify tests pass**
+6. Refactor if needed
+
+**TDD Cycle**: Red → Green → Refactor
 
 ---
 
