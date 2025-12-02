@@ -95,3 +95,4 @@ __pycache__/
 *.bak
 *.bak*
 .mcp.json
+tests/artifacts/.last-run.json
