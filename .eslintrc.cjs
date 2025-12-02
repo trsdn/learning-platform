@@ -1,14 +1,7 @@
 module.exports = {
   root: true,
   env: { browser: true, es2022: true, node: true },
-  extends: [
-    'eslint:recommended',
-    'plugin:@typescript-eslint/recommended',
-    'plugin:react/recommended',
-    'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
-    'prettier',
-  ],
+  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/recommended', 'plugin:react/jsx-runtime', 'plugin:react-hooks/recommended', 'prettier', 'plugin:storybook/recommended'],
   ignorePatterns: ['dist', '.eslintrc.cjs', 'node_modules'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -47,4 +40,16 @@ module.exports = {
       },
     ],
   },
+  overrides: [
+    {
+      // Relax rules for Storybook story files (development/documentation only)
+      files: ['**/*.stories.tsx', '**/*.stories.ts'],
+      rules: {
+        'no-console': 'off', // Console.log used for action logging in stories
+        'no-restricted-syntax': 'off', // Inline styles acceptable in story decorators/mocks
+        '@typescript-eslint/no-unused-vars': 'off', // Mock components may have unused vars
+        'react-refresh/only-export-components': 'off', // Stories export multiple items
+      },
+    },
+  ],
 };

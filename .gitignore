@@ -68,6 +68,8 @@ tests/reports/*.json
 # Build artifacts
 *.tsbuildinfo
 dev-dist/
+storybook-static/
+storybook.log
 
 # Environment variables (unencrypted)
 .env

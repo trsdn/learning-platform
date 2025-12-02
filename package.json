@@ -25,7 +25,9 @@
     "cleanup:artifacts": "./scripts/cleanup-test-artifacts.sh",
     "pre-deploy": "./scripts/pre-deploy-check.sh",
     "secrets:encrypt": "./scripts/sops-encrypt.sh",
-    "secrets:decrypt": "./scripts/sops-decrypt.sh"
+    "secrets:decrypt": "./scripts/sops-decrypt.sh",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static"
   },
   "dependencies": {
     "@supabase/auth-ui-react": "^0.4.7",
@@ -44,6 +46,12 @@
   "devDependencies": {
     "@napi-rs/canvas": "^0.1.80",
     "@playwright/test": "^1.41.2",
+    "@storybook/addon-a11y": "^8.6.14",
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/addon-interactions": "^8.6.14",
+    "@storybook/react": "^8.6.14",
+    "@storybook/react-vite": "^8.6.14",
+    "@storybook/test": "^8.6.14",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -64,6 +72,7 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.5",
+    "eslint-plugin-storybook": "^0.11.6",
     "happy-dom": "^19.0.1",
     "husky": "^9.0.10",
     "jest-axe": "^10.0.0",
@@ -71,6 +80,7 @@
     "lint-staged": "^15.2.2",
     "playwright": "^1.41.2",
     "prettier": "^3.2.5",
+    "storybook": "^8.6.14",
     "tsx": "^4.20.6",
     "typescript": "^5.3.3",
     "vite": "^5.1.0",
