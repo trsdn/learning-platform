@@ -25,20 +25,15 @@ export interface UseWakeLockReturn {
  */
 export function useWakeLock(): UseWakeLockReturn {
   const { settings } = useAppSettings();
-  const serviceRef = useRef<IWakeLockService | null>(null);
+  // Initialize service synchronously to avoid race conditions
+  const serviceRef = useRef<IWakeLockService>(getWakeLockService());
   const [isActive, setIsActive] = useState(false);
-
-  // Initialize service on mount
-  useEffect(() => {
-    serviceRef.current = getWakeLockService();
-  }, []);
+  // isSupported is constant - Wake Lock API support doesn't change at runtime
+  const isSupported = serviceRef.current.isSupported();
 
   // Configure enabled check based on settings
   useEffect(() => {
-    const service = serviceRef.current;
-    if (!service) return;
-
-    service.setEnabledCheck(() => {
+    serviceRef.current.setEnabledCheck(() => {
       if (!settings) return false;
       // Check if wake lock is enabled in settings
       if (!settings.interaction.wakeLockEnabled) return false;
@@ -49,16 +44,14 @@ export function useWakeLock(): UseWakeLockReturn {
   const acquire = useCallback(async () => {
     if (!settings?.interaction.wakeLockEnabled) return;
 
-    const success = await serviceRef.current?.acquire();
-    setIsActive(success ?? false);
+    const success = await serviceRef.current.acquire();
+    setIsActive(success);
   }, [settings?.interaction.wakeLockEnabled]);
 
   const release = useCallback(async () => {
-    await serviceRef.current?.release();
+    await serviceRef.current.release();
     setIsActive(false);
   }, []);
-
-  const isSupported = serviceRef.current?.isSupported() ?? false;
 
   return {
     isSupported,
