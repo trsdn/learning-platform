@@ -7,6 +7,17 @@ import type { PracticeSession } from '@core/types/services';
  */
 export const STREAK_MILESTONES = [7, 14, 30, 60, 100, 180, 365] as const;
 
+/**
+ * Type predicate to narrow PracticeSession to one with completedAt
+ */
+function hasCompletedAt(
+  session: PracticeSession
+): session is PracticeSession & {
+  execution: { completedAt: NonNullable<PracticeSession['execution']['completedAt']> };
+} {
+  return session.execution.status === 'completed' && session.execution.completedAt != null;
+}
+
 export interface StreakData {
   /**
    * Current consecutive days with completed sessions
@@ -75,13 +86,13 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
   lastActivityDate: Date | null;
   isStreakActive: boolean;
 } {
-  // Filter only completed sessions with completion dates
+  // Filter only completed sessions with completion dates using type predicate
   const completedSessions = sessions
-    .filter((s) => s.execution.status === 'completed' && s.execution.completedAt)
+    .filter(hasCompletedAt)
     .sort(
       (a, b) =>
-        new Date(b.execution.completedAt!).getTime() -
-        new Date(a.execution.completedAt!).getTime()
+        new Date(b.execution.completedAt).getTime() -
+        new Date(a.execution.completedAt).getTime()
     );
 
   if (completedSessions.length === 0) {
@@ -95,7 +106,7 @@ function calculateStreakFromSessions(sessions: PracticeSession[]): {
 
   // Get unique dates (one session per day counts)
   const uniqueDates = [...new Set(
-    completedSessions.map((s) => getDateKey(new Date(s.execution.completedAt!)))
+    completedSessions.map((s) => getDateKey(new Date(s.execution.completedAt)))
   )].sort().reverse();
 
   const today = getDateKey(new Date());
