@@ -8,6 +8,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { getAudioConfig, type AudioConfig } from '@storage/template-loader';
 import { useAudioPlayback } from '../../hooks/use-audio-playback';
 import { useAudioSettings } from '../../hooks/use-audio-settings';
+import { useVibration } from '../../hooks/use-vibration';
 import { isEligibleForAutoPlay } from '@core/utils/audio-helpers';
 import { AudioButton } from '../audio-button';
 import { useSessionManagement } from './session';
@@ -68,6 +69,9 @@ export function PracticeSessionContainer({
   const [audioConfig, setAudioConfig] = useState<AudioConfig | null>(null);
   const { playbackState, loadAudio, replay, unlockAutoPlay } = useAudioPlayback();
   const { settings: audioSettings } = useAudioSettings();
+
+  // Haptic feedback
+  const { vibrateCorrect, vibrateIncorrect, vibrateSessionComplete } = useVibration();
 
   // UI state
   const [hintVisible, setHintVisible] = useState(false);
@@ -161,6 +165,13 @@ export function PracticeSessionContainer({
 
     const correct = taskHook.checkAnswer();
     await submitAnswer(correct);
+
+    // Haptic feedback
+    if (correct) {
+      vibrateCorrect();
+    } else {
+      vibrateIncorrect();
+    }
   }, [
     currentTask,
     showFeedback,
@@ -168,6 +179,8 @@ export function PracticeSessionContainer({
     submitAnswer,
     playbackState.autoPlayUnlocked,
     unlockAutoPlay,
+    vibrateCorrect,
+    vibrateIncorrect,
   ]);
 
   // Handle task skip
@@ -179,6 +192,12 @@ export function PracticeSessionContainer({
   const handleNext = useCallback(() => {
     nextTask();
   }, [nextTask]);
+
+  // Handle session completion with haptic feedback
+  const handleCompleteSession = useCallback(async () => {
+    vibrateSessionComplete();
+    await completeSession();
+  }, [completeSession, vibrateSessionComplete]);
 
   // Repeat question audio
   const repeatQuestionAudio = useCallback(() => {
@@ -415,7 +434,7 @@ export function PracticeSessionContainer({
           onSubmit={handleSubmit}
           onSkip={handleSkip}
           onNext={handleNext}
-          onComplete={completeSession}
+          onComplete={handleCompleteSession}
         />
 
         <SessionStats session={session} />
