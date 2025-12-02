@@ -43,6 +43,10 @@
   outline-offset: 2px;
 }
 
+.button--primary:active:not(:disabled):not(.button--loading) {
+  transform: scale(0.97);
+}
+
 /* Variant: Secondary */
 .button--secondary {
   background-color: var(--color-bg-secondary);
@@ -56,6 +60,10 @@
 .button--secondary:focus-visible {
   outline: 2px solid var(--color-primary);
   outline-offset: 2px;
+}
+
+.button--secondary:active:not(:disabled):not(.button--loading) {
+  transform: scale(0.97);
 }
 
 /* Variant: Ghost */
@@ -75,6 +83,10 @@
   outline-offset: 2px;
 }
 
+.button--ghost:active:not(:disabled):not(.button--loading) {
+  transform: scale(0.97);
+}
+
 /* Variant: Danger */
 .button--danger {
   background-color: var(--color-error);
@@ -88,6 +100,10 @@
 .button--danger:focus-visible {
   outline: 2px solid #fca5a5;
   outline-offset: 2px;
+}
+
+.button--danger:active:not(:disabled):not(.button--loading) {
+  transform: scale(0.97);
 }
 
 /* Size: Small */
