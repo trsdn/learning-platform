@@ -29,6 +29,22 @@ jobs:
             detect-secrets scan
           fi
 
+      - name: Install SOPS
+        run: |
+          curl -LO https://github.com/getsops/sops/releases/download/v3.9.4/sops-v3.9.4.linux.amd64
+          sudo mv sops-v3.9.4.linux.amd64 /usr/local/bin/sops
+          sudo chmod +x /usr/local/bin/sops
+
+      - name: Decrypt secrets
+        if: ${{ secrets.SOPS_AGE_KEY != '' }}
+        env:
+          SOPS_AGE_KEY: ${{ secrets.SOPS_AGE_KEY }}
+        run: |
+          if [ -f .env.local.enc ]; then
+            sops -d .env.local.enc > .env.local
+            echo "✅ Decrypted .env.local"
+          fi
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:

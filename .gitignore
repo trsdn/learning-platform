@@ -69,11 +69,15 @@ tests/reports/*.json
 *.tsbuildinfo
 dev-dist/
 
-# Environment variables
+# Environment variables (unencrypted)
 .env
 .env.local
 .env.*.local
 .env.production
+.env.staging
+
+# SOPS encrypted files ARE committed
+!.env.*.enc
 
 # Input files (training data, scans, etc.)
 input/

@@ -23,7 +23,9 @@
     "supabase:schema": "./scripts/apply-schema.sh",
     "seed:supabase": "tsx scripts/seed-supabase.ts",
     "cleanup:artifacts": "./scripts/cleanup-test-artifacts.sh",
-    "pre-deploy": "./scripts/pre-deploy-check.sh"
+    "pre-deploy": "./scripts/pre-deploy-check.sh",
+    "secrets:encrypt": "./scripts/sops-encrypt.sh",
+    "secrets:decrypt": "./scripts/sops-decrypt.sh"
   },
   "dependencies": {
     "@supabase/auth-ui-react": "^0.4.7",
