@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { useAppSettings } from '../../hooks/use-app-settings';
 import { useAudioSettings } from '../../hooks/use-audio-settings';
-import type { AppSettings, ThemeMode, FontScale } from '../../../core/entities/app-settings';
+import type { AppSettings, ThemeMode, FontScale, ConfettiStyle, ConfettiIntensity } from '../../../core/entities/app-settings';
 import type { AudioSettings as LegacyAudioSettings } from '../../../core/entities/audio-settings';
 import styles from './settings-page.module.css';
 
@@ -207,9 +207,9 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       keywords: ['theme', 'dark', 'light', 'schrift', 'font', 'animation'],
       content: (
         <div className={styles.settingGroup}>
-          <div className={styles.settingItem}>
-            <div className={styles.settingLabel}>Theme</div>
-            <div className={styles.radioGroup}>
+          <fieldset className={styles.settingItem}>
+            <legend className={styles.settingLabel}>Theme</legend>
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Theme auswählen">
               {(['light', 'dark', 'system'] as ThemeMode[]).map((mode) => (
                 <label
                   key={mode}
@@ -217,6 +217,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 >
                   <input
                     type="radio"
+                    name="theme-mode"
                     checked={settings.theme.mode === mode}
                     onChange={() => handleThemeModeChange(mode)}
                   />
@@ -224,11 +225,11 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
-          <div className={styles.settingItem}>
-            <div className={styles.settingLabel}>Schriftgröße</div>
-            <div className={styles.radioGroup}>
+          <fieldset className={styles.settingItem}>
+            <legend className={styles.settingLabel}>Schriftgröße</legend>
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Schriftgröße auswählen">
               {(['small', 'medium', 'large', 'x-large'] as FontScale[]).map((scale) => (
                 <label
                   key={scale}
@@ -236,6 +237,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 >
                   <input
                     type="radio"
+                    name="font-scale"
                     checked={settings.theme.fontScale === scale}
                     onChange={() => handleFontScaleChange(scale)}
                   />
@@ -249,7 +251,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
                 </label>
               ))}
             </div>
-          </div>
+          </fieldset>
 
           <div className={styles.toggleGroup}>
             <label className={styles.radioOption}>
@@ -388,6 +390,126 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
+    const confettiSection: SectionDefinition = {
+      id: 'confetti',
+      icon: '🎉',
+      title: 'Konfetti & Animationen',
+      keywords: ['konfetti', 'confetti', 'animation', 'feier', 'celebration'],
+      content: (
+        <div className={styles.settingGroup}>
+          <p className={styles.settingDescription}>
+            Feiere deine Erfolge mit bunten Konfetti-Animationen!
+          </p>
+
+          <label className={styles.checkboxOption}>
+            <input
+              type="checkbox"
+              checked={settings.interaction.confettiEnabled}
+              onChange={(event) =>
+                updateSettings((prev) => ({
+                  ...prev,
+                  interaction: { ...prev.interaction, confettiEnabled: event.target.checked },
+                }))
+              }
+            />
+            Konfetti aktivieren
+          </label>
+
+          {settings.interaction.confettiEnabled && (
+            <>
+              <fieldset className={styles.settingItem}>
+                <legend className={styles.settingLabel}>Konfetti-Stil</legend>
+                <div className={styles.radioGroup} role="radiogroup" aria-label="Konfetti-Stil auswählen">
+                  {([
+                    { value: 'standard', label: 'Standard' },
+                    { value: 'firework', label: 'Feuerwerk' },
+                    { value: 'cannon', label: 'Kanone' },
+                    { value: 'emoji', label: 'Emoji' },
+                  ] as { value: ConfettiStyle; label: string }[]).map((option) => (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        styles.radioOption,
+                        settings.interaction.confettiStyle === option.value && styles['radioOption--active']
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        name="confetti-style"
+                        checked={settings.interaction.confettiStyle === option.value}
+                        onChange={() =>
+                          updateSettings((prev) => ({
+                            ...prev,
+                            interaction: { ...prev.interaction, confettiStyle: option.value },
+                          }))
+                        }
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <fieldset className={styles.settingItem}>
+                <legend className={styles.settingLabel}>Intensität</legend>
+                <div className={styles.radioGroup} role="radiogroup" aria-label="Konfetti-Intensität auswählen">
+                  {([
+                    { value: 'light', label: 'Leicht' },
+                    { value: 'medium', label: 'Mittel' },
+                    { value: 'strong', label: 'Stark' },
+                  ] as { value: ConfettiIntensity; label: string }[]).map((option) => (
+                    <label
+                      key={option.value}
+                      className={clsx(
+                        styles.radioOption,
+                        settings.interaction.confettiIntensity === option.value && styles['radioOption--active']
+                      )}
+                    >
+                      <input
+                        type="radio"
+                        name="confetti-intensity"
+                        checked={settings.interaction.confettiIntensity === option.value}
+                        onChange={() =>
+                          updateSettings((prev) => ({
+                            ...prev,
+                            interaction: { ...prev.interaction, confettiIntensity: option.value },
+                          }))
+                        }
+                      />
+                      {option.label}
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
+
+              <label className={styles.checkboxOption}>
+                <input
+                  type="checkbox"
+                  checked={settings.interaction.confettiSoundEnabled}
+                  onChange={(event) =>
+                    updateSettings((prev) => ({
+                      ...prev,
+                      interaction: { ...prev.interaction, confettiSoundEnabled: event.target.checked },
+                    }))
+                  }
+                />
+                Sound bei Konfetti abspielen
+              </label>
+            </>
+          )}
+
+          <div className={styles.infoCard}>
+            <strong>Wann wird Konfetti ausgelöst?</strong>
+            <ul className={styles.infoList}>
+              <li>✨ Perfekte Sitzung (100% richtig, mind. 5 Fragen)</li>
+              <li>🔥 Streak-Meilensteine (7, 30, 100 Tage)</li>
+              <li>🎯 Lernpfad abgeschlossen</li>
+            </ul>
+          </div>
+        </div>
+      ),
+    };
+
     const infoSection: SectionDefinition = {
       id: 'info',
       icon: 'ℹ️',
@@ -420,7 +542,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
-    return [databaseSection, themeSection, audioSection, hapticSection, infoSection];
+    return [databaseSection, themeSection, audioSection, hapticSection, confettiSection, infoSection];
   })();
 
   const filteredSections = sections.filter((section) => {
@@ -446,11 +568,12 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       </header>
 
       <div className={styles.searchBar}>
-        <span className={styles.searchIcon}>🔍</span>
+        <span className={styles.searchIcon} aria-hidden="true">🔍</span>
         <input
           className={styles.searchInput}
           type="search"
           placeholder="Einstellungen durchsuchen..."
+          aria-label="Einstellungen durchsuchen"
           value={searchQuery}
           onChange={(event) => setSearchQuery(event.target.value)}
         />
