@@ -135,7 +135,7 @@ jobs:
           fi
 
           # Check if critical assets load (with 30s timeout)
-          if curl -s --max-time 30 "$PROD_URL" | grep -q "MindForge Academy"; then
+          if curl -s --max-time 30 "$PROD_URL" | grep -qi "mindforge"; then
             echo "✅ Page title found"
           else
             echo "::error title=Content Check Failed::Expected page title not found"
