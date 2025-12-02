@@ -19,6 +19,11 @@ on:
         required: true
         default: ''
 
+# Prevent concurrent seeding - only one at a time
+concurrency:
+  group: supabase-seeding
+  cancel-in-progress: false
+
 jobs:
   seed-development:
     name: Seed Development Database

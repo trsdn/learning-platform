@@ -1,4 +1,4 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig, loadEnv, Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -7,10 +7,55 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+/**
+ * Vite plugin to inject CSP meta tag with environment-specific Supabase URL
+ */
+function cspPlugin(supabaseUrl: string, isDev: boolean): Plugin {
+  const cspContent = [
+    "default-src 'self'",
+    // 'unsafe-inline' is required for React hydration and Vite dev mode. 'unsafe-eval' is only needed in development.
+    `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval' https://vercel.live" : ""}`,
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com",
+    "font-src 'self' data: https://fonts.gstatic.com",
+    "img-src 'self' data: https:",
+    `connect-src 'self' ${supabaseUrl}${isDev ? ' https://*.vercel.live wss://*.vercel.live' : ''}`,
+    "worker-src 'self'",
+    "manifest-src 'self'",
+    "media-src 'self' blob: data:",
+    isDev ? "frame-src https://vercel.live" : null,
+  ].filter(Boolean).join(';');
+
+  return {
+    name: 'vite-plugin-csp',
+    transformIndexHtml(html) {
+      const cspMeta = `<meta http-equiv="Content-Security-Policy" content="${cspContent.replace(/"/g, '&quot;')}">`;
+      const placeholder = '<!-- CSP is injected dynamically by Vite based on VITE_SUPABASE_URL -->';
+      // Insert CSP meta tag after the comment placeholder
+      if (!html.includes(placeholder)) {
+        throw new Error('CSP placeholder comment not found in index.html');
+      }
+      return html.replace(
+        placeholder,
+        `<!-- CSP injected by Vite -->\n    ${cspMeta}`
+      );
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   // Load env file based on `mode` in the current working directory.
   // Set the third parameter to '' to load all env regardless of the `VITE_` prefix.
   const env = loadEnv(mode, process.cwd(), '');
+
+  // Get Supabase URL from environment, fail build if not set
+  if (!env.VITE_SUPABASE_URL) {
+    throw new Error(
+      '❌ VITE_SUPABASE_URL is not set. Please provide the Supabase URL in your environment variables. ' +
+      'Failing build to prevent accidental use of production database.'
+    );
+  }
+  const supabaseUrl = env.VITE_SUPABASE_URL;
+  const isDevelopment = env.VITE_ENV === 'development' || mode === 'development';
 
   // Deployment: Vercel only
   // Always use root path (/)
@@ -21,6 +66,7 @@ export default defineConfig(({ mode }) => {
     'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),
   },
   plugins: [
+    cspPlugin(supabaseUrl, isDevelopment),
     tsconfigPaths(),
     react(),
     VitePWA({

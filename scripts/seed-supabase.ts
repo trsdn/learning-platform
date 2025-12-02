@@ -444,16 +444,86 @@ async function seedTasks(
   console.log(`✅ Tasks seeded: ${seeded}/${data.tasks.length}`);
 }
 
-// Production Supabase project reference (NEVER seed this automatically)
+// Explicit allowlist of ALLOWED development project references
+// Only these projects can be seeded automatically
+const ALLOWED_DEV_PROJECT_REFS = [
+  'ngasmbisrysigagtqpzj', // mindforge-academy-dev
+];
+
+// Production project reference - NEVER seed automatically
 const PRODUCTION_PROJECT_REF = 'knzjdckrtewoigosaxoh';
 
 /**
- * Check if we're targeting production and block if so
+ * Validate Supabase URL format
+ */
+function validateSupabaseUrl(url: string | undefined): void {
+  if (!url) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('VITE_SUPABASE_URL is not set or is empty.');
+    console.error('Please set the environment variable to a valid Supabase URL.');
+    console.error('');
+    console.error('Example: VITE_SUPABASE_URL=https://yourproject.supabase.co');
+    process.exit(1);
+  }
+
+  if (!url.startsWith('https://')) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('URL must start with https://');
+    console.error('Provided URL:', url);
+    process.exit(1);
+  }
+
+  if (!url.includes('.supabase.co')) {
+    console.error('\n❌ SUPABASE URL VALIDATION FAILED!');
+    console.error('');
+    console.error('URL does not appear to be a valid Supabase URL.');
+    console.error('Expected format: https://<project-ref>.supabase.co');
+    console.error('Provided URL:', url);
+    process.exit(1);
+  }
+}
+
+/**
+ * Extract project ref from Supabase URL
+ */
+function extractProjectRef(url: string | undefined): string | null {
+  if (!url) return null;
+  const match = url.match(/^https:\/\/([a-z0-9]+)\.supabase\.co\/?$/);
+  return match ? match[1] : null;
+}
+
+/**
+ * Check if we're targeting an allowed development environment
  */
 function checkProductionSafety(): void {
-  const isProduction = supabaseUrl?.includes(PRODUCTION_PROJECT_REF);
-  const forceProduction = process.env.FORCE_PRODUCTION_SEED === 'true';
+  // First, validate the URL format
+  validateSupabaseUrl(supabaseUrl);
 
+  const projectRef = extractProjectRef(supabaseUrl);
+  const isAllowedDev = projectRef && ALLOWED_DEV_PROJECT_REFS.includes(projectRef);
+  const isProduction = projectRef === PRODUCTION_PROJECT_REF;
+  const forceProduction = process.env.FORCE_PRODUCTION_SEED === 'true';
+  const confirmProduction = process.env.CONFIRM_PRODUCTION_SEED === 'I_UNDERSTAND_THIS_IS_DANGEROUS';
+
+  // Block unknown/unrecognized projects
+  if (!isAllowedDev && !isProduction) {
+    console.error('\n❌ UNKNOWN PROJECT BLOCKED!');
+    console.error('');
+    console.error('The target Supabase project is not in the allowed list.');
+    console.error('');
+    console.error('Project ref:', projectRef);
+    console.error('URL:', supabaseUrl);
+    console.error('');
+    console.error('Allowed dev projects:', ALLOWED_DEV_PROJECT_REFS.join(', '));
+    console.error('');
+    console.error('If this is a new dev project, add it to ALLOWED_DEV_PROJECT_REFS');
+    console.error('in scripts/seed-supabase.ts');
+    process.exit(1);
+  }
+
+  // Block production without double-confirmation
   if (isProduction && !forceProduction) {
     console.error('\n❌ PRODUCTION SEEDING BLOCKED!');
     console.error('');
@@ -463,22 +533,39 @@ function checkProductionSafety(): void {
     console.error('Production URL detected:', supabaseUrl);
     console.error('');
     console.error('If you REALLY need to seed production (NOT recommended):');
-    console.error('  FORCE_PRODUCTION_SEED=true npm run seed:supabase');
+    console.error('  FORCE_PRODUCTION_SEED=true \\');
+    console.error('  CONFIRM_PRODUCTION_SEED=I_UNDERSTAND_THIS_IS_DANGEROUS \\');
+    console.error('  npm run seed:supabase');
     console.error('');
     console.error('⚠️  This action cannot be easily undone!');
     process.exit(1);
   }
 
-  if (isProduction && forceProduction) {
+  // Require double confirmation for production
+  if (isProduction && forceProduction && !confirmProduction) {
+    console.error('\n❌ PRODUCTION CONFIRMATION REQUIRED!');
+    console.error('');
+    console.error('You set FORCE_PRODUCTION_SEED=true but did not confirm.');
+    console.error('');
+    console.error('To proceed, also set:');
+    console.error('  CONFIRM_PRODUCTION_SEED=I_UNDERSTAND_THIS_IS_DANGEROUS');
+    process.exit(1);
+  }
+
+  if (isProduction && forceProduction && confirmProduction) {
     console.warn('\n⚠️  WARNING: Force-seeding PRODUCTION database!');
     console.warn('This action cannot be undone easily.');
-    console.warn('Waiting 5 seconds... Press Ctrl+C to cancel.\n');
-    // Synchronous delay for warning
+    console.warn('Waiting 10 seconds... Press Ctrl+C to cancel.\n');
+    // Synchronous delay for warning (increased to 10 seconds)
     const start = Date.now();
-    while (Date.now() - start < 5000) {
+    while (Date.now() - start < 10000) {
       // Busy wait - intentionally blocking
     }
     console.warn('Proceeding with production seeding...\n');
+  }
+
+  if (isAllowedDev) {
+    console.log('✅ Development project verified:', projectRef);
   }
 }
 
