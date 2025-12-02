@@ -4,11 +4,12 @@
  * Main container that orchestrates the practice session using all extracted components.
  */
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { getAudioConfig, type AudioConfig } from '@storage/template-loader';
 import { useAudioPlayback } from '../../hooks/use-audio-playback';
 import { useAudioSettings } from '../../hooks/use-audio-settings';
 import { useVibration } from '../../hooks/use-vibration';
+import { useWakeLock } from '../../hooks/use-wake-lock';
 import { isEligibleForAutoPlay } from '@core/utils/audio-helpers';
 import { AudioButton } from '../audio-button';
 import { useSessionManagement } from './session';
@@ -72,6 +73,23 @@ export function PracticeSessionContainer({
 
   // Haptic feedback
   const { vibrateCorrect, vibrateIncorrect, vibrateSessionComplete } = useVibration();
+
+  // Screen wake lock (keep screen on during session)
+  const { acquire: acquireWakeLock, release: releaseWakeLock } = useWakeLock();
+
+  // Acquire wake lock when component mounts, release when it unmounts
+  // Using refs to avoid unnecessary effect re-runs when callbacks change
+  const acquireRef = useRef(acquireWakeLock);
+  const releaseRef = useRef(releaseWakeLock);
+  acquireRef.current = acquireWakeLock;
+  releaseRef.current = releaseWakeLock;
+
+  useEffect(() => {
+    acquireRef.current();
+    return () => {
+      releaseRef.current();
+    };
+  }, []);
 
   // UI state
   const [hintVisible, setHintVisible] = useState(false);
