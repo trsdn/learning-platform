@@ -490,7 +490,7 @@ function validateSupabaseUrl(url: string | undefined): void {
  */
 function extractProjectRef(url: string | undefined): string | null {
   if (!url) return null;
-  const match = url.match(/https:\/\/([^.]+)\.supabase\.co/);
+  const match = url.match(/^https:\/\/([a-z0-9]+)\.supabase\.co\/?$/);
   return match ? match[1] : null;
 }
 
