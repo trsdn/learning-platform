@@ -36,6 +36,7 @@ A modern, cloud-based learning platform built with TypeScript, React, Supabase, 
 - **Deployment**: Vercel
 - **PWA**: Workbox
 - **Testing**: Vitest, Playwright
+- **Component Library**: Storybook 8
 - **Styling**: CSS Modules
 - **i18n**: react-i18next
 
@@ -63,6 +64,12 @@ npm run build
 
 # Preview production build
 npm run preview
+
+# Run Storybook (component library)
+npm run storybook
+
+# Build static Storybook
+npm run build-storybook
 ```
 
 ## 🔧 Environment Variables
@@ -165,6 +172,33 @@ npm run test:e2e
 # Run E2E tests with UI
 npm run test:e2e:ui
 ```
+
+## 📖 Storybook (Component Library)
+
+Browse and test UI components in isolation:
+
+```bash
+# Start Storybook development server
+npm run storybook
+# Opens at http://localhost:6006
+
+# Build static Storybook for deployment
+npm run build-storybook
+```
+
+**33 story files** covering all components:
+- **Common** (6): Button, IconButton, Card, StatCard, FeedbackCard, MasteryBar
+- **Forms** (4): Input, Checkbox, Select, Slider
+- **Tasks** (10): All 8 task types plus components
+- **Session** (4): SessionHeader, SessionStats, NavigationControls, FeedbackDisplay
+- **Error** (3): ErrorMessage, ErrorBoundary, ConnectionStatus
+- **Features** (6): TopicCard, AudioButton, SessionResults, Dashboard, AuthModal, PWAInstallPrompt
+
+Features:
+- Dark mode toggle in toolbar
+- Auto-generated documentation
+- Interactive controls for component props
+- Accessibility testing with a11y addon
 
 ## 📁 Project Structure
 

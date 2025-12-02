@@ -1,20 +1,21 @@
 # AI Agent Development Guide
 
-**Last Updated**: 2025-12-01 | **Platform**: MindForge Academy Learning Platform
+**Last Updated**: 2025-12-02 | **Platform**: MindForge Academy Learning Platform
 
 ## 🎯 Quick Start
 
 **Target Users**: German Gymnasium students (ages 10-19), <100 concurrent users
-**Tech Stack**: TypeScript 5.x + React 18.3 + Vite + IndexedDB (Dexie.js) + CSS Modules
+**Tech Stack**: TypeScript 5.x + React 18.3 + Vite + Supabase PostgreSQL + CSS Modules + Storybook 8
 **Core Features**: 8 task types, spaced repetition (SM-2), offline PWA, German UI
 
 ### Essential Commands
 
 ```bash
-npm run dev      # Development server
-npm run build    # Production build (validates TypeScript)
-npm test         # Run tests
-npm run deploy   # Deploy to GitHub Pages
+npm run dev        # Development server
+npm run build      # Production build (validates TypeScript)
+npm test           # Run tests
+npm run storybook  # Component library (http://localhost:6006)
+npm run deploy     # Deploy to GitHub Pages
 ```
 
 ---
@@ -30,6 +31,7 @@ npm run deploy   # Deploy to GitHub Pages
 | Add/modify learning content | [public/AGENTS.md](./public/AGENTS.md) | 🟡 High |
 | Run/create tests | [tests/AGENTS.md](./tests/AGENTS.md) | 🟡 High |
 | Work with database | [infrastructure/supabase/AGENTS.md](./infrastructure/supabase/AGENTS.md) | 🟡 High |
+| Develop UI components | See Storybook section below | 🟡 High |
 | Run/create scripts | [scripts/AGENTS.md](./scripts/AGENTS.md) | 🟢 Medium |
 | Update documentation | [docs/AGENTS.md](./docs/AGENTS.md) | 🟢 Medium |
 | Understand source code | [src/AGENTS.md](./src/AGENTS.md) | 🔵 Reference |
@@ -42,7 +44,7 @@ npm run deploy   # Deploy to GitHub Pages
 - 🧪 Running tests? → `tests/AGENTS.md`
 - 🗄️ Database operations? → `infrastructure/supabase/AGENTS.md`
 - 📝 Writing docs? → `docs/AGENTS.md`
-- 🎨 Building UI? → `templates/AGENTS.md`
+- 🎨 Building UI? → `npm run storybook` + `templates/AGENTS.md`
 
 ---
 
@@ -76,6 +78,85 @@ src/modules/
 **Dynamic values**: Pass via CSS custom properties
 
 **Details**: See `docs/css-modules.md` and reference implementation `TopicCard.tsx`
+
+---
+
+## 📖 Storybook (Component Development)
+
+**All 33 components have stories** in `*.stories.tsx` files alongside their components.
+
+### Commands
+
+```bash
+npm run storybook       # Start dev server at http://localhost:6006
+npm run build-storybook # Build static site to storybook-static/
+```
+
+### Writing Stories
+
+Stories live next to components:
+
+```
+src/modules/ui/components/
+├── common/
+│   ├── Button.tsx
+│   ├── Button.module.css
+│   └── Button.stories.tsx  ← Story file
+```
+
+### Story Structure
+
+```tsx
+import type { Meta, StoryObj } from '@storybook/react';
+import { MyComponent } from './MyComponent';
+
+const meta = {
+  title: 'Category/MyComponent',  // Sidebar path
+  component: MyComponent,
+  tags: ['autodocs'],             // Auto-generate docs
+} satisfies Meta<typeof MyComponent>;
+
+export default meta;
+type Story = StoryObj<typeof meta>;
+
+export const Default: Story = {
+  args: { /* props */ },
+};
+```
+
+### When to Use Storybook
+
+- ✅ **Developing new components**: Build in isolation before integration
+- ✅ **Testing visual states**: All variants (loading, error, empty, filled)
+- ✅ **Dark mode verification**: Toggle via toolbar
+- ✅ **Accessibility checks**: Built-in a11y addon
+- ✅ **Component documentation**: Auto-generated from props
+
+### Story Categories
+
+| Category | Count | Path |
+|----------|-------|------|
+| Common | 6 | `common/*.stories.tsx` |
+| Forms | 4 | `forms/*.stories.tsx` |
+| Tasks | 10 | `practice/tasks/**/*.stories.tsx` |
+| Session | 4 | `practice/session/*.stories.tsx` |
+| Error | 3 | `error/*.stories.tsx` |
+| Features | 6 | Various locations |
+
+### Mock Data Pattern
+
+Components using external services use mock implementations:
+
+```tsx
+// Mock for components that fetch data
+const MockDashboard = ({ stats, isLoading }) => {
+  // Render UI without real data fetching
+};
+
+export const Loading: Story = {
+  render: () => <MockDashboard isLoading={true} />,
+};
+```
 
 ---
 
