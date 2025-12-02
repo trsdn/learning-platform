@@ -495,9 +495,11 @@ function extractProjectRef(url: string | undefined): string | null {
 }
 
 /**
- * Check if we're targeting an allowed development environment
+ * Validate the seeding environment by checking URL format, extracting
+ * the project ref, and verifying the project is in the allowlist.
+ * Blocks seeding to unknown or production projects unless explicitly confirmed.
  */
-function checkProductionSafety(): void {
+function validateSeedingEnvironment(): void {
   // First, validate the URL format
   validateSupabaseUrl(supabaseUrl);
 
@@ -576,8 +578,8 @@ async function main() {
   console.log('🌱 Starting Supabase seeding...\n');
   console.log('📍 Supabase URL:', supabaseUrl);
 
-  // CRITICAL: Check production safety before proceeding
-  checkProductionSafety();
+  // CRITICAL: Validate seeding environment before proceeding
+  validateSeedingEnvironment();
 
   console.log('🔑 Using service role key\n');
 
