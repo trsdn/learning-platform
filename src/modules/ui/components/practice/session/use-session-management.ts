@@ -4,7 +4,7 @@
  * Manages practice session initialization, navigation, and completion.
  */
 
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import type { PracticeSession, Task } from '@core/types/services';
 import { PracticeSessionService } from '@core/services/practice-session-service';
 import { SpacedRepetitionService } from '@core/services/spaced-repetition-service';
@@ -68,6 +68,10 @@ export function useSessionManagement({
   const [showFeedback, setShowFeedback] = useState(false);
   const [isCorrect, setIsCorrect] = useState(false);
   const [startTime, setStartTime] = useState(Date.now());
+
+  // Ref to track current task index for callbacks (fixes stale closure issue)
+  const currentTaskIndexRef = useRef(currentTaskIndex);
+  currentTaskIndexRef.current = currentTaskIndex;
 
   /**
    * Initialize the session from the database
@@ -207,12 +211,14 @@ export function useSessionManagement({
   const nextTask = useCallback(() => {
     setShowFeedback(false);
 
-    if (session && session.execution.taskIds && currentTaskIndex < session.execution.taskIds.length - 1) {
-      setCurrentTaskIndex(currentTaskIndex + 1);
+    // Use ref to get the latest task index (fixes stale closure issue)
+    const idx = currentTaskIndexRef.current;
+    if (session && session.execution.taskIds && idx < session.execution.taskIds.length - 1) {
+      setCurrentTaskIndex(idx + 1);
     } else {
       completeSession();
     }
-  }, [session, currentTaskIndex, completeSession]);
+  }, [session, completeSession]);
 
   /**
    * Calculate progress percentage

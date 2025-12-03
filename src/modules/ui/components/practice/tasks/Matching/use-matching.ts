@@ -81,6 +81,8 @@ export function useMatching(
     const content = task.content as MatchingContent;
 
     // All pairs must be matched correctly
+    // matchingAnswers[leftIndex] stores the original pair index the user selected
+    // For a correct match, the selected index should equal the left index
     return content.pairs.every((_pair, i) => matchingAnswers[i] === i);
   }, [matchingAnswers, task]);
 

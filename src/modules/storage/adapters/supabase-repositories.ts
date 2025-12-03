@@ -549,6 +549,7 @@ export class TaskRepository implements ITaskRepository {
       learningPathIds?: string[];
       difficulty?: string;
       excludeIds?: string[];
+      deterministic?: boolean;
     }
   ): Promise<Task[]> {
     logger.debug(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
@@ -580,18 +581,20 @@ export class TaskRepository implements ITaskRepository {
     const tasks = (data || []).map(row => this.mapFromDb(row));
     logger.debug(`[TaskRepository] Found ${tasks.length} tasks`);
 
-    // Shuffle tasks
-    const shuffled = tasks.sort(() => Math.random() - 0.5);
+    // Either shuffle or sort deterministically (by ID) based on filter flag
+    const orderedTasks = filters?.deterministic
+      ? tasks.sort((a, b) => a.id.localeCompare(b.id))
+      : tasks.sort(() => Math.random() - 0.5);
 
     // Return up to count tasks (with repetition if needed)
     const result: Task[] = [];
-    if (shuffled.length === 0) {
+    if (orderedTasks.length === 0) {
       logger.debug(`[TaskRepository] No tasks available!`);
       return result;
     }
 
     for (let i = 0; i < count; i++) {
-      const task = shuffled[i % shuffled.length];
+      const task = orderedTasks[i % orderedTasks.length];
       if (task) {
         result.push(task);
       }
@@ -1258,7 +1261,9 @@ export class PracticeSessionRepository implements IPracticeSessionRepository {
       .from('practice_sessions')
       .update({ execution: updatedExecution as unknown as Json })
       .eq('id', id)
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .select()
+      .single();
 
     if (error) {
       console.error('Error updating session status:', error);
@@ -1290,7 +1295,9 @@ export class PracticeSessionRepository implements IPracticeSessionRepository {
       .from('practice_sessions')
       .update({ execution: updatedExecution as unknown as Json })
       .eq('id', id)
-      .eq('user_id', userId);
+      .eq('user_id', userId)
+      .select()
+      .single();
 
     if (error) {
       console.error('Error incrementing session progress:', error);

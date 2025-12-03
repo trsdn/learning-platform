@@ -56,6 +56,15 @@ export function useMultipleChoice(
     const originalOptions = [...(content.options as unknown[])];
     const originalCorrectAnswer = content.correctAnswer;
 
+    // Determine the correct answer text
+    // correctAnswer can be either a number (index) or the actual text
+    let correctAnswerText: string;
+    if (typeof originalCorrectAnswer === 'number') {
+      correctAnswerText = originalOptions[originalCorrectAnswer] as string;
+    } else {
+      correctAnswerText = originalCorrectAnswer as string;
+    }
+
     // Create array of indices to track original positions
     const indices = originalOptions.map((_, i) => i);
 
@@ -69,7 +78,7 @@ export function useMultipleChoice(
     const shuffled = indices.map((i) => originalOptions[i]!) as string[];
 
     // Find where the correct answer ended up
-    const correctIndex = shuffled.indexOf(originalCorrectAnswer as string);
+    const correctIndex = shuffled.indexOf(correctAnswerText);
 
     setShuffledOptions(shuffled);
     setShuffledIndices(indices);

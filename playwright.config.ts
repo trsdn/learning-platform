@@ -1,4 +1,16 @@
 import { defineConfig, devices } from '@playwright/test';
+import * as dotenv from 'dotenv';
+import * as path from 'path';
+import { fileURLToPath } from 'url';
+
+// Get directory name in ESM
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Load environment variables for E2E tests
+// Priority: .env.local > .env.development
+// Use override: true to ensure .env files take precedence over shell environment variables
+dotenv.config({ path: path.resolve(__dirname, '.env.local'), override: true });
+dotenv.config({ path: path.resolve(__dirname, '.env.development'), override: true });
 
 export default defineConfig({
   testDir: './tests/e2e',

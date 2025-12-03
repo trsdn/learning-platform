@@ -196,13 +196,20 @@ export class PracticeSessionService implements IPracticeSessionService {
 
     // Get new tasks from learning paths
     if (remainingCount > 0) {
+      // Use deterministic order for demo learning path in dev mode (for E2E tests)
+      const isDev = import.meta.env.VITE_ENV === 'development';
+      const isDemoPath = config.learningPathIds.includes('all-task-types-demo');
+      const useDeterministic = isDev && isDemoPath;
+
       const filters: {
         learningPathIds: string[];
         excludeIds: string[];
         difficulty?: 'easy' | 'medium' | 'hard';
+        deterministic?: boolean;
       } = {
         learningPathIds: config.learningPathIds,
         excludeIds: selectedTaskIds,
+        deterministic: useDeterministic,
       };
       if (config.difficultyFilter) {
         filters.difficulty = config.difficultyFilter;

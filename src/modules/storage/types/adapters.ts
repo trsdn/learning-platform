@@ -75,6 +75,8 @@ export interface TaskFilters {
   type?: string;
   tags?: string[];
   excludeIds?: string[];
+  /** When true, tasks are returned in a deterministic order (by ID) instead of shuffled. Useful for E2E tests. */
+  deterministic?: boolean;
 }
 
 export interface IAnswerHistoryRepository extends IRepository<AnswerHistory> {
