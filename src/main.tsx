@@ -17,7 +17,6 @@ import { AdminPage, type AdminTab } from './modules/ui/components/admin/AdminPag
 import { AuthProvider, useAuth } from './modules/ui/contexts/auth-context';
 import { AuthModal } from './modules/ui/components/auth/auth-modal';
 import { settingsService } from '@core/services/settings-service';
-import type { ThemeMode, AppSettings } from '@core/entities/app-settings';
 import { ErrorBoundary, ConnectionStatusIndicator, ErrorMessage } from './modules/ui/components/error';
 import { handleComponentError, type StructuredError } from './modules/core/utils/error-handler';
 import { checkSupabaseConnection, ConnectionStatus } from './modules/core/utils/connection-health';
@@ -57,7 +56,6 @@ function AppContent() {
   const [showSettings, setShowSettings] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('components');
-  const [themeMode, setThemeMode] = useState<ThemeMode>('system');
   const [initError, setInitError] = useState<StructuredError | null>(null);
   const initStarted = useRef(false);
 
@@ -139,20 +137,6 @@ function AppContent() {
     };
   }, [reseedDatabase, handleFullReset]);
 
-  useEffect(() => {
-    const handler = (event: Event) => {
-      const detail = (event as CustomEvent<{ settings: AppSettings }>).detail;
-      if (detail?.settings?.theme?.mode) {
-        setThemeMode(detail.settings.theme.mode as ThemeMode);
-      }
-    };
-    window.addEventListener('app:settings:updated', handler);
-    setThemeMode(settingsService.getSettings().theme.mode as ThemeMode);
-    return () => {
-      window.removeEventListener('app:settings:updated', handler);
-    };
-  }, []);
-
   // Admin panel keyboard shortcut (Ctrl+Shift+A / Cmd+Shift+A)
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -182,19 +166,6 @@ function AppContent() {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  const cycleThemeMode = () => {
-    const order: ThemeMode[] = ['system', 'light', 'dark'];
-    const currentIndex = order.indexOf(themeMode);
-    const nextMode = (order[(currentIndex + 1) % order.length] ?? 'system') as ThemeMode;
-    const updated = settingsService.update((prev) => ({
-      ...prev,
-      theme: { ...prev.theme, mode: nextMode },
-    }));
-    setThemeMode(updated.theme.mode as ThemeMode);
-  };
-
-  const themeLabel = themeMode === 'system' ? 'System' : themeMode === 'light' ? 'Hell' : 'Dunkel';
 
   async function initializeApp() {
     try {
@@ -561,13 +532,6 @@ function AppContent() {
               👋 Abmelden
             </button>
           )}
-          <button
-            onClick={cycleThemeMode}
-            title={`Theme wechseln (aktuell: ${themeLabel})`}
-            className={`${styles.mainActionButton} ${styles.themeButton}`}
-          >
-            🌓 {themeLabel}
-          </button>
           <button
             onClick={() => setShowDashboard(true)}
             className={`${styles.mainActionButton} ${styles.dashboardButton}`}
