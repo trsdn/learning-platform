@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import clsx from 'clsx';
 import { useAppSettings } from '../../hooks/use-app-settings';
 import { useAudioSettings } from '../../hooks/use-audio-settings';
@@ -38,13 +38,9 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
     saveState,
     updateSettings,
     resetSettings,
-    exportSettings,
-    importSettingsFromText,
   } = useAppSettings();
   const { settings: audioSettings, updateSettings: updateAudioSettings } = useAudioSettings();
   const [searchQuery, setSearchQuery] = useState('');
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [showImportError, setShowImportError] = useState<string | null>(null);
 
   const handleThemeModeChange = (mode: ThemeMode) => {
     updateSettings((prev) => ({
@@ -76,30 +72,6 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
     }
   };
 
-  const handleDatabaseMetadataUpdate = useCallback((updates: Partial<AppSettings['database']>) => {
-    updateSettings((prev) => ({
-      ...prev,
-      database: { ...prev.database, ...updates },
-    }));
-  }, [updateSettings]);
-
-  useEffect(() => {
-    const listener = (event: Event) => {
-      const detail = (event as CustomEvent<{ lastUpdatedAt?: string; storageUsageBytes?: number }>).detail;
-      if (detail?.lastUpdatedAt) {
-        handleDatabaseMetadataUpdate({ lastUpdatedAt: detail.lastUpdatedAt });
-      }
-      if (typeof detail?.storageUsageBytes === 'number') {
-        handleDatabaseMetadataUpdate({ storageUsageBytes: detail.storageUsageBytes });
-      }
-    };
-
-    window.addEventListener('app:database:updated', listener);
-    return () => {
-      window.removeEventListener('app:database:updated', listener);
-    };
-  }, [handleDatabaseMetadataUpdate]);
-
   if (loading || !settings) {
     return (
       <div className={styles.settingsPage}>
@@ -108,98 +80,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
     );
   }
 
-  const handleExport = () => {
-    const data = exportSettings();
-    const blob = new Blob([data], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = `mindforge-settings-${new Date().toISOString().slice(0, 10)}.json`;
-    link.click();
-    URL.revokeObjectURL(url);
-  };
-
-  const handleImport = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      try {
-        const text = typeof reader.result === 'string' ? reader.result : '';
-        importSettingsFromText(text);
-        setShowImportError(null);
-      } catch (error) {
-        console.error(error);
-        setShowImportError('Import fehlgeschlagen. Bitte gültige JSON-Datei auswählen.');
-      }
-    };
-    reader.onerror = () => {
-      setShowImportError('Datei konnte nicht gelesen werden.');
-    };
-    reader.readAsText(file);
-    event.target.value = '';
-  };
-
   const sections: SectionDefinition[] = (() => {
-    const databaseSection: SectionDefinition = {
-      id: 'database',
-      icon: '📦',
-      title: 'Datenbank & Speicherung',
-      keywords: ['datenbank', 'speicherung', 'backup', 'import', 'export', 'speicher'],
-      content: (
-        <div className={styles.settingGroup}>
-          <div className={styles.buttonRow}>
-            <button
-              type="button"
-              onClick={() => {
-                const confirmed = confirm('Datenbank neu laden? Lernpfade werden aktualisiert.');
-                if (!confirmed) return;
-                window.dispatchEvent(new CustomEvent('app:database:reseed'));
-              }}
-            >
-              🔄 Datenbank Aktualisieren
-            </button>
-            <button
-              type="button"
-              className={clsx(styles.dangerButton)}
-              onClick={() => {
-                const confirmed = confirm('⚠️ Alle Daten löschen? Dies kann nicht rückgängig gemacht werden!');
-                if (!confirmed) return;
-                window.dispatchEvent(new CustomEvent('app:database:reset'));
-              }}
-            >
-              🗑️ Alle Daten Löschen
-            </button>
-            <button type="button" onClick={handleExport}>
-              📥 Daten Exportieren
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                fileInputRef.current?.click();
-              }}
-            >
-              📤 Daten Importieren
-            </button>
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="application/json"
-              // eslint-disable-next-line no-restricted-syntax -- Hide file input visually
-              style={{ display: 'none' }}
-              onChange={handleImport}
-            />
-          </div>
-          {showImportError && (
-            // eslint-disable-next-line no-restricted-syntax -- Dynamic error colors
-            <div className={styles.infoCard} style={{ borderColor: '#f97316', color: '#b45309' }}>
-              {showImportError}
-            </div>
-          )}
-        </div>
-      ),
-    };
-
     const themeSection: SectionDefinition = {
       id: 'theme',
       icon: '🎨',
@@ -542,7 +423,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
-    return [databaseSection, themeSection, audioSection, hapticSection, confettiSection, infoSection];
+    return [themeSection, audioSection, hapticSection, confettiSection, infoSection];
   })();
 
   const filteredSections = sections.filter((section) => {
