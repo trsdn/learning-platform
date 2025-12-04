@@ -42,6 +42,8 @@ tests/artifacts/*.webm
 tests/artifacts/**/*.png
 tests/artifacts/**/*.jpg
 tests/artifacts/**/*.webm
+tests/artifacts/**/*.md
+tests/artifacts/**/*.zip
 tests/artifacts/temp/
 tests/screenshots/debug/
 tests/reports/*.html
