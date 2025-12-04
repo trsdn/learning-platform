@@ -1,0 +1,140 @@
+{
+  "id": "error-detection-basic",
+  "name": "Error Detection (Basic)",
+  "description": "Find and identify errors in presented content by clicking on them",
+  "type": "error-detection",
+  "schema": {
+    "content": {
+      "type": "string",
+      "required": true,
+      "description": "The text containing errors for the student to find"
+    },
+    "contentLanguage": {
+      "type": "string",
+      "enum": [
+        "de",
+        "es",
+        "en"
+      ],
+      "required": false,
+      "description": "Language of the content (for audio support)"
+    },
+    "contentAudio": {
+      "type": "string",
+      "required": false,
+      "description": "Audio file path for content (language learning)"
+    },
+    "errors": {
+      "type": "array",
+      "required": true,
+      "minItems": 0,
+      "maxItems": 10,
+      "description": "Array of errors in the content (empty array for 'no errors' tasks)",
+      "items": {
+        "errorText": {
+          "type": "string",
+          "required": true,
+          "description": "The incorrect text to find (can be multi-word phrase)"
+        },
+        "correction": {
+          "type": "string",
+          "required": true,
+          "description": "The correct replacement text"
+        },
+        "errorType": {
+          "type": "string",
+          "enum": [
+            "factual",
+            "logical",
+            "grammatical",
+            "calculation"
+          ],
+          "required": true,
+          "description": "Type of error (for content authors, not shown to users)"
+        },
+        "position": {
+          "type": "number",
+          "required": false,
+          "description": "Character index for handling duplicate errorText (optional)"
+        }
+      }
+    },
+    "showErrorCount": {
+      "type": "boolean",
+      "required": false,
+      "default": true,
+      "description": "Whether to show 'Find X errors' instruction"
+    },
+    "explanation": {
+      "type": "string",
+      "required": false,
+      "description": "Explanation shown after answering"
+    },
+    "hint": {
+      "type": "string",
+      "required": false,
+      "description": "Manual hint text for the student"
+    }
+  },
+  "audioConfig": {
+    "autoPlay": {
+      "onLoad": [
+        "contentAudio"
+      ]
+    },
+    "buttons": {
+      "content": {
+        "show": true,
+        "field": "contentAudio"
+      }
+    }
+  },
+  "metadata": {
+    "difficulty": [
+      "medium",
+      "hard"
+    ],
+    "tags": [
+      "array"
+    ],
+    "estimatedTime": "number (seconds)",
+    "points": "number"
+  },
+  "examples": [
+    {
+      "content": "The capital of Australia is Sydney. It was founded in 1888.",
+      "errors": [
+        {
+          "errorText": "Sydney",
+          "correction": "Canberra",
+          "errorType": "factual"
+        },
+        {
+          "errorText": "1888",
+          "correction": "1913",
+          "errorType": "factual"
+        }
+      ],
+      "showErrorCount": true,
+      "explanation": "Canberra is the capital of Australia, and it was founded in 1913. Sydney is the largest city but not the capital.",
+      "hint": "Look for geographical and historical errors."
+    },
+    {
+      "content": "The Statue of Liberty is located in Los Angeles. It was a gift from England.",
+      "errors": [
+        {
+          "errorText": "Los Angeles",
+          "correction": "New York",
+          "errorType": "factual"
+        },
+        {
+          "errorText": "England",
+          "correction": "France",
+          "errorType": "factual"
+        }
+      ],
+      "showErrorCount": true,
+      "hint": "Check the location and origin of the statue."
+    }
+  ]
+}

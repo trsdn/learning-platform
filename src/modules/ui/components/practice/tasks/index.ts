@@ -43,3 +43,7 @@ export type { UseOrderingReturn } from './Ordering';
 // Matching
 export { MatchingTask, useMatching } from './Matching';
 export type { UseMatchingReturn } from './Matching';
+
+// ErrorDetection
+export { ErrorDetectionTask, useErrorDetection } from './ErrorDetection';
+export type { UseErrorDetectionReturn, Segment, ScoreResult } from './ErrorDetection';

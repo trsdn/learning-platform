@@ -3,14 +3,14 @@
     "id": "all-task-types-demo",
     "topicId": "test",
     "title": "🎯 Alle Aufgabentypen - Demo",
-    "description": "Demonstriert alle 8 verschiedenen Aufgabentypen der Plattform mit automatischer Synchronisierung",
+    "description": "Demonstriert alle 11 verschiedenen Aufgabentypen der Plattform mit automatischer Synchronisierung",
     "difficulty": "easy",
     "estimatedTime": 30,
     "isActive": true,
     "createdAt": "2025-09-30T14:00:00.000Z",
     "requirements": {
       "minimumAccuracy": 60,
-      "requiredTasks": 10
+      "requiredTasks": 16
     }
   },
   "tasks": [
@@ -226,62 +226,63 @@
       }
     },
     {
-      "id": "test-ordering-2",
+      "id": "test-error-detection-1",
       "learningPathId": "all-task-types-demo",
-      "templateId": "ordering-basic",
-      "type": "ordering",
+      "templateId": "error-detection-basic",
+      "type": "error-detection",
       "content": {
-        "question": "🔢 Sortierung: Ordne diese Zahlen von klein nach groß:",
-        "items": [
-          "1000",
-          "10",
-          "100",
-          "1"
+        "content": "🔍 Fehlererkennung: Die Hauptstadt von Australien ist Sydney. Sie wurde 1888 gegründet.",
+        "errors": [
+          {
+            "errorText": "Sydney",
+            "correction": "Canberra",
+            "errorType": "factual"
+          },
+          {
+            "errorText": "1888",
+            "correction": "1913",
+            "errorType": "factual"
+          }
         ],
-        "correctOrder": [3, 1, 2, 0],
-        "explanation": "Die richtige Reihenfolge von klein nach groß ist: 1, 10, 100, 1000",
-        "hint": "Welche Zahl ist am kleinsten?"
+        "showErrorCount": true,
+        "explanation": "Canberra ist die Hauptstadt von Australien und wurde 1913 gegründet. Sydney ist die größte Stadt, aber nicht die Hauptstadt.",
+        "hint": "Suche nach geografischen und historischen Fehlern."
       },
       "metadata": {
-        "difficulty": "easy",
-        "tags": ["demo", "ordering", "mathematik"],
-        "estimatedTime": 25,
-        "points": 10
+        "difficulty": "medium",
+        "tags": ["demo", "error-detection", "geographie"],
+        "estimatedTime": 45,
+        "points": 20
       }
     },
     {
-      "id": "test-matching-2",
+      "id": "test-error-detection-2",
       "learningPathId": "all-task-types-demo",
-      "templateId": "matching-basic",
-      "type": "matching",
+      "templateId": "error-detection-basic",
+      "type": "error-detection",
       "content": {
-        "question": "🔗 Zuordnung: Ordne jedes Tier seiner Kategorie zu:",
-        "pairs": [
+        "content": "🔍 Fehlererkennung: Die Freiheitsstatue steht in Los Angeles. Sie war ein Geschenk von England.",
+        "errors": [
           {
-            "left": "Hund",
-            "right": "Säugetier"
+            "errorText": "Los Angeles",
+            "correction": "New York",
+            "errorType": "factual"
           },
           {
-            "left": "Adler",
-            "right": "Vogel"
-          },
-          {
-            "left": "Hai",
-            "right": "Fisch"
-          },
-          {
-            "left": "Frosch",
-            "right": "Amphibie"
+            "errorText": "England",
+            "correction": "Frankreich",
+            "errorType": "factual"
           }
         ],
-        "explanation": "Tierklassifikation: Hund=Säugetier, Adler=Vogel, Hai=Fisch, Frosch=Amphibie",
-        "hint": "Denke an die verschiedenen Tierklassen"
+        "showErrorCount": true,
+        "explanation": "Die Freiheitsstatue steht in New York und war ein Geschenk von Frankreich an die USA im Jahr 1886.",
+        "hint": "Überprüfe den Standort und die Herkunft des Geschenks."
       },
       "metadata": {
-        "difficulty": "easy",
-        "tags": ["demo", "matching", "biologie"],
-        "estimatedTime": 25,
-        "points": 10
+        "difficulty": "medium",
+        "tags": ["demo", "error-detection", "geschichte"],
+        "estimatedTime": 45,
+        "points": 20
       }
     },
     {

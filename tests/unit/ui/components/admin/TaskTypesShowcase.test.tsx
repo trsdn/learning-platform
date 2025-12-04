@@ -17,7 +17,7 @@ describe('TaskTypesShowcase', () => {
       render(<TaskTypesShowcase />);
 
       expect(screen.getByText(/Task Types Showcase/)).toBeInTheDocument();
-      expect(screen.getByText(/Interactive examples of all 9 task types with 19 sample tasks/)).toBeInTheDocument();
+      expect(screen.getByText(/Interactive examples of all 10 task types with 21 sample tasks/)).toBeInTheDocument();
     });
 
     it('should render search input', () => {
@@ -30,7 +30,7 @@ describe('TaskTypesShowcase', () => {
     it('should render difficulty filter buttons', () => {
       render(<TaskTypesShowcase />);
 
-      expect(screen.getByRole('button', { name: /All \(9\)/ })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /All \(10\)/ })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Easy/ })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Medium/ })).toBeInTheDocument();
       expect(screen.getByRole('button', { name: /Hard/ })).toBeInTheDocument();
@@ -39,10 +39,10 @@ describe('TaskTypesShowcase', () => {
     it('should render results count', () => {
       render(<TaskTypesShowcase />);
 
-      expect(screen.getByText(/Showing 9 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 10 of 10 task types/)).toBeInTheDocument();
     });
 
-    it('should render all 9 task type demos', () => {
+    it('should render all 10 task type demos', () => {
       render(<TaskTypesShowcase />);
 
       expect(screen.getByTestId('task-demo-flashcard')).toBeInTheDocument();
@@ -54,6 +54,7 @@ describe('TaskTypesShowcase', () => {
       expect(screen.getByTestId('task-demo-ordering')).toBeInTheDocument();
       expect(screen.getByTestId('task-demo-slider')).toBeInTheDocument();
       expect(screen.getByTestId('task-demo-word-scramble')).toBeInTheDocument();
+      expect(screen.getByTestId('task-demo-error-detection')).toBeInTheDocument();
     });
   });
 
@@ -64,7 +65,7 @@ describe('TaskTypesShowcase', () => {
       const searchInput = screen.getByPlaceholderText(/search task types/i);
       fireEvent.change(searchInput, { target: { value: 'flashcard' } });
 
-      expect(screen.getByText(/Showing 1 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 1 of 10 task types/)).toBeInTheDocument();
       expect(screen.getByTestId('task-demo-flashcard')).toBeInTheDocument();
     });
 
@@ -97,7 +98,7 @@ describe('TaskTypesShowcase', () => {
       fireEvent.click(clearButton);
 
       expect(searchInput).toHaveValue('');
-      expect(screen.getByText(/Showing 9 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 10 of 10 task types/)).toBeInTheDocument();
     });
   });
 
@@ -105,7 +106,7 @@ describe('TaskTypesShowcase', () => {
     it('should set All filter as active by default', () => {
       render(<TaskTypesShowcase />);
 
-      const allButton = screen.getByRole('button', { name: /All \(9\)/ });
+      const allButton = screen.getByRole('button', { name: /All \(10\)/ });
       // Check that it has a class name containing "active" (CSS modules generate unique names)
       expect(allButton.className).toMatch(/active/i);
     });
@@ -116,7 +117,7 @@ describe('TaskTypesShowcase', () => {
       const easyButton = screen.getByRole('button', { name: /Easy/ });
       fireEvent.click(easyButton);
 
-      expect(screen.getByText(/Showing 6 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 6 of 10 task types/)).toBeInTheDocument();
     });
 
     it('should filter by medium difficulty', () => {
@@ -125,7 +126,7 @@ describe('TaskTypesShowcase', () => {
       const mediumButton = screen.getByRole('button', { name: /Medium/ });
       fireEvent.click(mediumButton);
 
-      expect(screen.getByText(/Showing 9 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 10 of 10 task types/)).toBeInTheDocument();
     });
 
     it('should filter by hard difficulty', () => {
@@ -134,7 +135,7 @@ describe('TaskTypesShowcase', () => {
       const hardButton = screen.getByRole('button', { name: /Hard/ });
       fireEvent.click(hardButton);
 
-      expect(screen.getByText(/Showing 5 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 6 of 10 task types/)).toBeInTheDocument();
     });
 
     it('should reset to all when clicking All button', () => {
@@ -143,10 +144,10 @@ describe('TaskTypesShowcase', () => {
       const easyButton = screen.getByRole('button', { name: /Easy/ });
       fireEvent.click(easyButton);
 
-      const allButton = screen.getByRole('button', { name: /All \(9\)/ });
+      const allButton = screen.getByRole('button', { name: /All \(10\)/ });
       fireEvent.click(allButton);
 
-      expect(screen.getByText(/Showing 9 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 10 of 10 task types/)).toBeInTheDocument();
     });
   });
 
@@ -161,7 +162,7 @@ describe('TaskTypesShowcase', () => {
       fireEvent.click(mediumButton);
 
       // Both multiple-choice and multiple-select have medium difficulty
-      expect(screen.getByText(/Showing 2 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 2 of 10 task types/)).toBeInTheDocument();
     });
 
     it('should clear search but keep difficulty filter', () => {
@@ -177,7 +178,7 @@ describe('TaskTypesShowcase', () => {
       fireEvent.click(clearButton);
 
       // Should still show medium filtered results
-      expect(screen.getByText(/Showing 9 of 9 task types/)).toBeInTheDocument();
+      expect(screen.getByText(/Showing 10 of 10 task types/)).toBeInTheDocument();
     });
   });
 
