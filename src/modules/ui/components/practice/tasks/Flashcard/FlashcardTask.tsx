@@ -38,6 +38,35 @@ export function FlashcardTask({
     onAnswerChange?.(canSubmit());
   }, [canSubmit, onAnswerChange]);
 
+  // Auto-play audio on load (if configured)
+  React.useEffect(() => {
+    if (task.type !== 'flashcard') return;
+
+    const content = task.content as FlashcardContent;
+    const playOnLoadAudio = async () => {
+      if (audioConfig?.autoPlay?.onLoad && !revealed) {
+        const fieldsToPlay = audioConfig.autoPlay.onLoad;
+        for (const field of fieldsToPlay) {
+          const audioFile = (content as unknown as Record<string, unknown>)[
+            field
+          ];
+          if (audioFile) {
+            try {
+              const audio = new Audio(
+                `${import.meta.env.BASE_URL}audio/${audioFile}`
+              );
+              await audio.play();
+              break; // Only play first available audio
+            } catch (err) {
+              console.warn(`Failed to auto-play ${field} on load:`, err);
+            }
+          }
+        }
+      }
+    };
+    playOnLoadAudio();
+  }, [task.id, task.type, task.content, audioConfig, revealed]);
+
   if (task.type !== 'flashcard') return null;
 
   const content = task.content as FlashcardContent;
