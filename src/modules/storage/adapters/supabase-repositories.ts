@@ -1443,9 +1443,15 @@ export class PracticeSessionRepository implements IPracticeSessionRepository {
       targetCount: row.task_ids.length,
       includeReview: false,
     };
+
+    // Compute results from execution data
+    const completedCount = execution.completedCount || 0;
+    const correctCount = execution.correctCount || 0;
+    const totalTimeSpent = execution.totalTimeSpent || 0;
+
     const results = {
-      accuracy: 0,
-      averageTime: 0,
+      accuracy: completedCount > 0 ? (correctCount / completedCount) * 100 : 0,
+      averageTime: completedCount > 0 ? totalTimeSpent / completedCount : 0,
       difficultyDistribution: {},
       improvementAreas: [],
     };
