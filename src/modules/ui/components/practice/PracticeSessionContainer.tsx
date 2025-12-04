@@ -432,6 +432,7 @@ export function PracticeSessionContainer({
           isCorrect={isCorrect}
           audioConfig={audioConfig}
           onAnswerChange={setCanSubmitAnswer}
+          onAutoAdvance={handleNext}
         />
       </div>
 

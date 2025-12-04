@@ -242,12 +242,18 @@ export function useSessionManagement({
     }
   }, [session, currentTaskIndex, loadCurrentTask]);
 
-  // Load current task when index changes
+  // Load current task when index changes (but not during feedback display)
   useEffect(() => {
-    if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex > 0) {
+    if (
+      session &&
+      session.execution.taskIds &&
+      session.execution.taskIds.length > 0 &&
+      currentTaskIndex > 0 &&
+      !showFeedback // Don't reload task when showing feedback
+    ) {
       loadCurrentTask();
     }
-  }, [currentTaskIndex, loadCurrentTask, session]);
+  }, [currentTaskIndex, loadCurrentTask, session, showFeedback]);
 
   return {
     session,
