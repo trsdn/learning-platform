@@ -283,11 +283,6 @@
   color: #ffffff;
 }
 
-.themeButton {
-  background: var(--color-primary, #667eea);
-  color: #ffffff;
-}
-
 .dashboardButton {
   background: var(--color-primary);
   color: var(--color-text-inverse);
