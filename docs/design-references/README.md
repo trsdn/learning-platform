@@ -35,5 +35,5 @@ Please save the following design mockup images to this folder:
 
 ## Related Issues
 
-- [#139 - Dashboard Redesign](https://github.com/torstenmahr/learning-platform/issues/139)
-- [#140 - Practice Session Redesign](https://github.com/torstenmahr/learning-platform/issues/140)
+- [#139 - Dashboard Redesign](https://github.com/trsdn/learning-platform/issues/139)
+- [#140 - Practice Session Redesign](https://github.com/trsdn/learning-platform/issues/140)
