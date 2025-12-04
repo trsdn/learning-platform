@@ -70,13 +70,6 @@ jobs:
       - name: Type check
         run: npm run type-check
 
-      - name: Build for production
-        env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_PROD_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_PROD_ANON_KEY }}
-          VITE_ENV: production
-        run: npm run build
-
       - name: Install Vercel CLI
         run: npm i -g vercel
 
@@ -86,6 +79,16 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+
+      - name: Build for production
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_PROD_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_PROD_ANON_KEY }}
+          VITE_ENV: production
+        run: vercel build --prod --token=$VERCEL_TOKEN
 
       - name: Deploy to Vercel Production
         id: deploy
