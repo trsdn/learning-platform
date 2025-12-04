@@ -33,9 +33,9 @@ Both agents share the same codebase understanding through `AGENTS.md` and agent-
 │   └── platform/          # Platform development agents
 └── commands/              # Command implementations
 
-CLAUDE.md                  # Root-level Claude instructions
-.github/workflows/claude.yml             # Claude GitHub Action
-.github/workflows/claude-code-review.yml # Claude PR review workflow
+CLAUDE.md                              # Root-level Claude instructions
+.github/workflows/claude.yml           # Claude GitHub Action
+.github/workflows/claude-code-review.yml  # Claude PR review workflow
 ```
 
 ### GitHub Copilot Configuration
