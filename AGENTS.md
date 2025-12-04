@@ -57,12 +57,37 @@ See [docs/guides/ENVIRONMENT_SETUP.md](./docs/guides/ENVIRONMENT_SETUP.md) for d
 
 ---
 
+## 🤖 Supported AI Agents
+
+This repository supports two AI coding agents:
+
+| Agent | Primary Use | Configuration | Trigger |
+|-------|-------------|---------------|---------|
+| **Claude** | Complex tasks, multi-file changes, PR reviews | `.claude/`, `CLAUDE.md` | `@claude` in issue/PR |
+| **GitHub Copilot** | Issue implementation, code completion | `.github/copilot-instructions.md` | Copilot Workspace / Assignment |
+
+**📖 Full Guide**: [docs/guides/AGENT_SWITCHING.md](./docs/guides/AGENT_SWITCHING.md)
+
+### Quick Agent Selection
+
+| Task Type | Recommended Agent |
+|-----------|-------------------|
+| Quick bug fix | GitHub Copilot |
+| Complex refactoring | Claude |
+| New learning content | Claude (content agents) |
+| Test generation | GitHub Copilot |
+| PR review | Claude (automatic) |
+| Release management | Claude (`/create-release`) |
+
+---
+
 ## 📍 Agent Guide Navigation
 
 **Choose your path based on your task**:
 
 | I need to... | Read this guide | Priority |
 |--------------|----------------|----------|
+| Switch between agents | [docs/guides/AGENT_SWITCHING.md](./docs/guides/AGENT_SWITCHING.md) | 🔴 Critical |
 | Understand agent architecture | [.claude/AGENTS.md](./.claude/AGENTS.md) | 🔴 Critical |
 | Create/modify components | [templates/AGENTS.md](./templates/AGENTS.md) | 🟡 High |
 | Add/modify learning content | [public/AGENTS.md](./public/AGENTS.md) | 🟡 High |
@@ -76,6 +101,7 @@ See [docs/guides/ENVIRONMENT_SETUP.md](./docs/guides/ENVIRONMENT_SETUP.md) for d
 
 **Quick Decision Tree**:
 
+- 🔄 Switching agents? → `docs/guides/AGENT_SWITCHING.md`
 - 🤖 Working with AI agents? → `.claude/AGENTS.md`
 - 📚 Creating learning content? → `public/AGENTS.md`
 - 🧪 Running tests? → `tests/AGENTS.md`

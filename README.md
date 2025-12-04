@@ -339,6 +339,7 @@ Tasks can be added via:
 ### Development
 - [CONTRIBUTING.md](./CONTRIBUTING.md) - Contribution guidelines
 - [AGENTS.md](./AGENTS.md) - AI agent workflows and patterns
+- [docs/guides/AGENT_SWITCHING.md](./docs/guides/AGENT_SWITCHING.md) - Switching between Claude and Copilot
 
 ## 🔒 Security
 
