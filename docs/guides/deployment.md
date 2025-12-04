@@ -134,7 +134,174 @@ The `vercel.json` configuration includes:
 - **Cache headers**: Long-term caching for `/assets/*`
 - **Git settings**: Auto-deploy disabled for `main`
 
+## Release Procedure
+
+### Step-by-Step Release Process
+
+#### 1. Pre-Release Checklist
+
+Before creating a release, ensure:
+
+- [ ] All PRs for the release are merged to `main`
+- [ ] CI passes on `main` branch
+- [ ] No blocking issues in the milestone
+- [ ] CHANGELOG.md is updated (if not using auto-generation)
+
+```bash
+# Check CI status on main
+gh run list --branch main --limit 3
+
+# Check for any failing workflows
+gh run list --status failure --limit 5
+```
+
+#### 2. Determine Version Type
+
+Follow [Semantic Versioning](https://semver.org/):
+
+| Change Type | Version Bump | Example |
+|-------------|--------------|---------|
+| Breaking changes | `major` | 1.0.0 → 2.0.0 |
+| New features (backward compatible) | `minor` | 1.0.0 → 1.1.0 |
+| Bug fixes only | `patch` | 1.0.0 → 1.0.1 |
+
+#### 3. Create the Release
+
+**Option A: Using the slash command (recommended)**
+
+```bash
+/create-release minor
+```
+
+**Option B: Manual process**
+
+```bash
+# 1. Update package.json version
+npm version minor --no-git-tag-version
+
+# 2. Commit version bump
+git add package.json
+git commit -m "chore: release v1.2.0"
+
+# 3. Create and push tag
+git tag v1.2.0
+git push origin main --tags
+
+# 4. Create GitHub release
+gh release create v1.2.0 --title "v1.2.0" --notes "Release notes here..."
+```
+
+#### 4. Monitor Deployment
+
+The release triggers the `deploy-production.yml` workflow automatically:
+
+```bash
+# Watch the deployment
+gh run list --workflow=deploy-production.yml --limit 1
+gh run watch <run-id>
+
+# Or watch in real-time
+gh run list --workflow=deploy-production.yml --limit 1 --json databaseId -q '.[0].databaseId' | xargs gh run watch
+```
+
+#### 5. Verify Deployment
+
+After deployment completes:
+
+```bash
+# Check production site is healthy
+curl -s -o /dev/null -w "%{http_code}" https://learning-platform.vercel.app
+
+# Verify version in app (Settings → Info & Support)
+```
+
+### Hotfix Releases
+
+For urgent production fixes:
+
+```bash
+# 1. Create hotfix branch from tag
+git checkout -b hotfix/critical-fix v1.1.0
+
+# 2. Apply fix and commit
+git commit -m "fix: critical bug description"
+
+# 3. Merge to main
+git checkout main
+git merge hotfix/critical-fix
+git push origin main
+
+# 4. Create patch release
+/create-release patch
+```
+
+### Rollback Procedure
+
+If a deployment causes issues:
+
+```bash
+# Option 1: Re-deploy previous version
+gh workflow run deploy-production.yml --ref v1.0.0 -f confirm_production=deploy-to-production
+
+# Option 2: Revert via Vercel Dashboard
+# Go to Vercel → Deployments → Find previous successful deployment → Promote to Production
+```
+
+### Release Artifacts
+
+Each release should include:
+
+1. **Git tag** (e.g., `v1.1.0`)
+2. **GitHub Release** with:
+   - Summary of changes
+   - Link to CHANGELOG or PR list
+   - Any migration notes
+3. **Vercel deployment** to production
+
+### Vercel Credentials Setup
+
+If secrets need to be updated (e.g., new team member):
+
+```bash
+# Get correct IDs using Vercel CLI
+npx vercel login
+npx vercel link --yes
+
+# Read the generated IDs
+cat .vercel/project.json
+# Output: {"projectId":"prj_xxx","orgId":"team_xxx","projectName":"learning-platform"}
+
+# Update GitHub secrets
+gh secret set VERCEL_PROJECT_ID --body "prj_xxx"
+gh secret set VERCEL_ORG_ID --body "team_xxx"
+```
+
+### Common Issues
+
+#### Deployment fails with "prebuilt output not found"
+
+The workflow uses `vercel build` to create `.vercel/output/`. If this fails:
+
+1. Check that `vercel.json` is valid
+2. Ensure the build command in workflow matches project setup
+3. Verify Vercel CLI version is up to date
+
+#### Health check fails after deployment
+
+The workflow checks if the site returns HTTP 200:
+
+1. Check Vercel function logs for errors
+2. Verify environment variables are set correctly
+3. Check if Supabase connection is working
+
+```bash
+# View recent Vercel logs
+vercel logs --prod
+```
+
 ## History
 
+- **2025-12-04**: Added comprehensive release procedure documentation
+- **2025-12-04**: Fixed deployment workflow to use `vercel build` for prebuilt output
 - **2025-12-04**: Documented Vercel deployment and no-auto-deploy design decision
 - **2025-10-05**: Migrated from GitHub Pages to Vercel for production hosting
