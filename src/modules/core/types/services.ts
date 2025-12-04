@@ -36,14 +36,14 @@ export interface LearningPath {
   updatedAt: Date;
 }
 
-export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard' | 'text-input';
+export type TaskType = 'multiple-choice' | 'cloze-deletion' | 'true-false' | 'ordering' | 'matching' | 'multiple-select' | 'slider' | 'word-scramble' | 'flashcard' | 'text-input' | 'error-detection';
 
 export interface Task {
   id: string;
   learningPathId: string;
   templateId: string;
   type: TaskType;
-  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent | FlashcardContent | TextInputContent;
+  content: MultipleChoiceContent | ClozeDeletionContent | TrueFalseContent | OrderingContent | MatchingContent | MultipleSelectContent | SliderContent | WordScrambleContent | FlashcardContent | TextInputContent | ErrorDetectionContent;
   metadata: {
     difficulty: 'easy' | 'medium' | 'hard';
     tags: string[];
@@ -185,6 +185,21 @@ export interface TextInputContent {
   caseSensitive?: boolean; // Default: false
   explanation?: string;
   hint?: string;
+}
+
+export interface ErrorDetectionContent {
+  content: string; // The text containing errors
+  contentLanguage?: 'de' | 'es' | 'en'; // For audio support (language learning)
+  contentAudio?: string; // Audio file path (language learning)
+  errors: Array<{
+    errorText: string; // The incorrect text (can be multi-word phrase)
+    correction: string; // The correct replacement
+    errorType: 'factual' | 'logical' | 'grammatical' | 'calculation';
+    position?: number; // Character index for handling duplicate errorText (optional)
+  }>;
+  showErrorCount?: boolean; // Whether to show "Find X errors" (default: true)
+  explanation?: string;
+  hint?: string; // Manual hint text (e.g., "Look for date errors")
 }
 
 export interface AnswerHistory {

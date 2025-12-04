@@ -13,7 +13,8 @@ export type TaskType =
   | 'matching'
   | 'ordering'
   | 'slider'
-  | 'word-scramble';
+  | 'word-scramble'
+  | 'error-detection';
 
 export interface TaskTypeMeta {
   id: TaskType;
@@ -342,6 +343,45 @@ export const taskTypeRegistry: Record<TaskType, TaskTypeMeta> = {
           scrambled: 'LPAPE',
           correctAnswer: 'APPLE',
           hint: 'A red or green fruit',
+        },
+      },
+    ],
+  },
+
+  'error-detection': {
+    id: 'error-detection',
+    name: 'Error Detection',
+    description: 'Find and identify errors in presented content',
+    icon: '🔍',
+    templateFile: 'error-detection-basic.json',
+    difficulty: ['medium', 'hard'],
+    exampleCount: 2,
+    examples: [
+      {
+        title: 'Geography Facts',
+        description: 'Find factual errors in geography text',
+        data: {
+          content: 'The capital of Australia is Sydney. It was founded in 1888.',
+          errors: [
+            { errorText: 'Sydney', correction: 'Canberra', errorType: 'factual' },
+            { errorText: '1888', correction: '1913', errorType: 'factual' },
+          ],
+          showErrorCount: true,
+          explanation: 'Canberra is the capital of Australia, and it was founded in 1913.',
+          hint: 'Look for geographical and historical errors.',
+        },
+      },
+      {
+        title: 'Famous Landmarks',
+        description: 'Identify location and origin errors',
+        data: {
+          content: 'The Statue of Liberty is located in Los Angeles. It was a gift from England.',
+          errors: [
+            { errorText: 'Los Angeles', correction: 'New York', errorType: 'factual' },
+            { errorText: 'England', correction: 'France', errorType: 'factual' },
+          ],
+          showErrorCount: true,
+          hint: 'Check the location and origin of the statue.',
         },
       },
     ],
