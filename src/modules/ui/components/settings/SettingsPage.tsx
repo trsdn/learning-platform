@@ -298,10 +298,10 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
               checked={settings.audio.autoPlayEnabled}
               onChange={(event) => handleAudioUpdate({ autoPlayEnabled: event.target.checked })}
             />
-            Audio automatisch abspielen (Spanisch)
+            Audio automatisch abspielen
           </label>
           <p className={styles.settingDescription}>
-            Steuert, ob Vokabelkarten automatisch die spanische Aussprache wiedergeben.
+            Steuert, ob Vokabelkarten automatisch die Aussprache wiedergeben.
           </p>
         </div>
       ),
