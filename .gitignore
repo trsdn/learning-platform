@@ -99,3 +99,4 @@ __pycache__/
 *.bak*
 .mcp.json
 tests/artifacts/.last-run.json
+.env*.local

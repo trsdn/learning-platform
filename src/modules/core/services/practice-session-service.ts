@@ -182,14 +182,24 @@ export class PracticeSessionService implements IPracticeSessionService {
 
     logger.debug(`Selecting tasks: targetCount=${config.targetCount}, learningPaths=${config.learningPathIds.join(',')}`);
 
-    // Get review tasks if requested
+    // Get review tasks if requested (filtered by learning path)
     if (config.includeReview && remainingCount > 0) {
       const dueItems = await this.spacedRepRepository.getDue(new Date());
-      const reviewTaskIds = dueItems
-        .slice(0, Math.min(dueItems.length, Math.ceil(config.targetCount * 0.3))) // 30% review
-        .map((item) => item.taskId);
+      const maxReviewCount = Math.ceil(config.targetCount * 0.3); // 30% review
 
-      logger.debug(`Review tasks found: ${reviewTaskIds.length}`);
+      // Filter review tasks by learning path to avoid cross-contamination
+      const reviewTaskIds: string[] = [];
+      for (const item of dueItems) {
+        if (reviewTaskIds.length >= maxReviewCount) break;
+
+        // Look up the task to check its learning path
+        const task = await this.taskRepository.getById(item.taskId);
+        if (task && config.learningPathIds.includes(task.learningPathId)) {
+          reviewTaskIds.push(item.taskId);
+        }
+      }
+
+      logger.debug(`Review tasks found: ${reviewTaskIds.length} (filtered from ${dueItems.length} due items)`);
       selectedTaskIds.push(...reviewTaskIds);
       remainingCount -= reviewTaskIds.length;
     }
