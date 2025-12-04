@@ -10,9 +10,9 @@ import {
 
 describe('task-registry', () => {
   describe('taskTypeRegistry', () => {
-    it('should contain all 9 task types', () => {
+    it('should contain all 10 task types', () => {
       const taskTypes = Object.keys(taskTypeRegistry);
-      expect(taskTypes).toHaveLength(9);
+      expect(taskTypes).toHaveLength(10);
       expect(taskTypes).toEqual(
         expect.arrayContaining([
           'flashcard',
@@ -24,6 +24,7 @@ describe('task-registry', () => {
           'ordering',
           'slider',
           'word-scramble',
+          'error-detection',
         ])
       );
     });
@@ -62,7 +63,7 @@ describe('task-registry', () => {
     it('should return all task types as array', () => {
       const taskTypes = getAllTaskTypes();
       expect(taskTypes).toBeInstanceOf(Array);
-      expect(taskTypes).toHaveLength(9);
+      expect(taskTypes).toHaveLength(10);
     });
 
     it('should return task types with metadata', () => {
@@ -156,9 +157,9 @@ describe('task-registry', () => {
       });
     });
 
-    it('should return all 9 tasks for medium difficulty', () => {
+    it('should return all 10 tasks for medium difficulty', () => {
       const mediumTasks = getTaskTypesByDifficulty('medium');
-      expect(mediumTasks).toHaveLength(9);
+      expect(mediumTasks).toHaveLength(10);
     });
 
     it('should return 6 tasks for easy difficulty', () => {
@@ -199,10 +200,10 @@ describe('task-registry', () => {
   });
 
   describe('Total Example Count', () => {
-    it('should have 19 total examples across all task types', () => {
+    it('should have 21 total examples across all task types', () => {
       const allTasks = getAllTaskTypes();
       const totalExamples = allTasks.reduce((sum, task) => sum + task.exampleCount, 0);
-      expect(totalExamples).toBe(19);
+      expect(totalExamples).toBe(21);
     });
   });
 });

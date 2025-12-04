@@ -69,6 +69,12 @@ const MatchingTask = lazy(() =>
   }))
 );
 
+const ErrorDetectionTask = lazy(() =>
+  import('./tasks/ErrorDetection').then((mod) => ({
+    default: mod.ErrorDetectionTask,
+  }))
+);
+
 export interface TaskRendererProps {
   /** The task to render */
   task: Task | null;
@@ -120,6 +126,7 @@ export function TaskRenderer({
       {task.type === 'cloze-deletion' && <ClozeDeletionTask {...commonProps} />}
       {task.type === 'ordering' && <OrderingTask {...commonProps} />}
       {task.type === 'matching' && <MatchingTask {...commonProps} />}
+      {task.type === 'error-detection' && <ErrorDetectionTask {...commonProps} />}
       {/* Handle unknown task types */}
       {![
         'multiple-choice',
@@ -132,6 +139,7 @@ export function TaskRenderer({
         'cloze-deletion',
         'ordering',
         'matching',
+        'error-detection',
       ].includes(task.type) && <div>Unbekannter Aufgabentyp: {task.type}</div>}
     </Suspense>
   );

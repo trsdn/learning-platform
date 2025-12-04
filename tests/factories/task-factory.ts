@@ -13,6 +13,7 @@ import type {
   WordScrambleContent,
   FlashcardContent,
   TextInputContent,
+  ErrorDetectionContent,
 } from '@core/types/services';
 
 /**
@@ -222,6 +223,70 @@ export function createTextInputTask(overrides?: Partial<Task>): Task {
 }
 
 /**
+ * Error Detection Task Factory
+ */
+export function createErrorDetectionTask(overrides?: Partial<Task>): Task {
+  const content: ErrorDetectionContent = {
+    content: 'The capital of Australia is Sydney. It was founded in 1888.',
+    errors: [
+      { errorText: 'Sydney', correction: 'Canberra', errorType: 'factual' },
+      { errorText: '1888', correction: '1913', errorType: 'factual' },
+    ],
+    showErrorCount: true,
+    explanation: 'Canberra is the capital of Australia, and it was founded in 1913.',
+    hint: 'Look for geographical and historical errors.',
+  };
+
+  return {
+    ...createBaseTask(overrides),
+    type: 'error-detection',
+    content,
+    ...overrides,
+  } as Task;
+}
+
+/**
+ * Create error detection task with no errors (edge case)
+ */
+export function createErrorDetectionTaskNoErrors(overrides?: Partial<Task>): Task {
+  const content: ErrorDetectionContent = {
+    content: 'Berlin is the capital of Germany. It is located in northeastern Germany.',
+    errors: [],
+    showErrorCount: false,
+    explanation: 'This text contains no errors.',
+  };
+
+  return {
+    ...createBaseTask(overrides),
+    type: 'error-detection',
+    content,
+    ...overrides,
+  } as Task;
+}
+
+/**
+ * Create error detection task with multi-word errors
+ */
+export function createErrorDetectionTaskMultiWord(overrides?: Partial<Task>): Task {
+  const content: ErrorDetectionContent = {
+    content: 'The Statue of Liberty is located in Los Angeles. It was a gift from England.',
+    errors: [
+      { errorText: 'Los Angeles', correction: 'New York', errorType: 'factual' },
+      { errorText: 'England', correction: 'France', errorType: 'factual' },
+    ],
+    showErrorCount: true,
+    hint: 'Check the location and origin of the statue.',
+  };
+
+  return {
+    ...createBaseTask(overrides),
+    type: 'error-detection',
+    content,
+    ...overrides,
+  } as Task;
+}
+
+/**
  * Helper to create a task by type name
  */
 export function createTaskByType(
@@ -249,6 +314,8 @@ export function createTaskByType(
       return createFlashcardTask(overrides);
     case 'text-input':
       return createTextInputTask(overrides);
+    case 'error-detection':
+      return createErrorDetectionTask(overrides);
     default:
       throw new Error(`Unknown task type: ${type}`);
   }
