@@ -433,6 +433,7 @@ export function PracticeSessionContainer({
           audioConfig={audioConfig}
           onAnswerChange={setCanSubmitAnswer}
           onAutoAdvance={handleNext}
+          onSubmitAnswer={submitAnswer}
         />
       </div>
 

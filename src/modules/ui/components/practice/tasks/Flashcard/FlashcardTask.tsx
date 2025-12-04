@@ -18,6 +18,7 @@ interface FlashcardTaskProps {
   audioConfig: AudioConfig | null;
   onAnswerChange?: (canSubmit: boolean) => void;
   onAutoAdvance?: () => void;
+  onSubmitAnswer?: (correct: boolean) => Promise<void>;
 }
 
 export function FlashcardTask({
@@ -27,6 +28,7 @@ export function FlashcardTask({
   audioConfig,
   onAnswerChange,
   onAutoAdvance,
+  onSubmitAnswer,
 }: FlashcardTaskProps) {
   const { revealed, known: _known, setRevealed, setKnown, canSubmit } = useFlashcard(
     task,
@@ -100,8 +102,14 @@ export function FlashcardTask({
     }
   };
 
-  const handleKnownResponse = (knownValue: boolean) => {
+  const handleKnownResponse = async (knownValue: boolean) => {
     setKnown(knownValue);
+
+    // Submit the answer to record stats (known = correct)
+    if (onSubmitAnswer) {
+      await onSubmitAnswer(knownValue);
+    }
+
     // Auto-advance after brief delay
     if (onAutoAdvance) {
       setTimeout(() => {
