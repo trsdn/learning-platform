@@ -38,13 +38,19 @@ export function FlashcardTask({
     onAnswerChange?.(canSubmit());
   }, [canSubmit, onAnswerChange]);
 
-  // Auto-play audio on load (if configured)
+  // Auto-play audio on load (only for foreign→German direction)
+  // When front is foreign language and back is German, play front audio on load
+  // Otherwise, audio plays on reveal (German→foreign cards)
   React.useEffect(() => {
     if (task.type !== 'flashcard') return;
 
     const content = task.content as FlashcardContent;
+
+    // Only auto-play on load for foreign→German cards
+    const isForeignToGerman = content.frontLanguage !== 'de' && content.backLanguage === 'de';
+
     const playOnLoadAudio = async () => {
-      if (audioConfig?.autoPlay?.onLoad && !revealed) {
+      if (audioConfig?.autoPlay?.onLoad && !revealed && isForeignToGerman) {
         const fieldsToPlay = audioConfig.autoPlay.onLoad;
         for (const field of fieldsToPlay) {
           const audioFile = (content as unknown as Record<string, unknown>)[
