@@ -167,7 +167,7 @@ export function ErrorDetectionTask({
       {showFeedback && (
         <div className={styles['error-detection__feedback']}>
           {/* Score summary */}
-          <div className={styles['error-detection__score']}>
+          <div className={styles['error-detection__score']} aria-live="polite">
             {score.hits}/{score.totalErrors} errors found
             {score.falsePositives > 0 && (
               <span className={styles['error-detection__false-positives']}>

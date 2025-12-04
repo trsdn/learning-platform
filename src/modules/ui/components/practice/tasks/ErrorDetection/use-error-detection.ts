@@ -59,6 +59,25 @@ function parseContent(content: string, errors: ErrorDetectionContent['errors']):
     return words.map((text) => ({ text, isError: false }));
   }
 
+  // Check for overlapping errors (when positions are provided)
+  const errorsWithPositions = errors.filter((e) => e.position !== undefined);
+  if (errorsWithPositions.length > 1) {
+    const sorted = [...errorsWithPositions].sort((a, b) => (a.position ?? 0) - (b.position ?? 0));
+    for (let i = 1; i < sorted.length; i++) {
+      const prev = sorted[i - 1]!;
+      const curr = sorted[i]!;
+      const prevEnd = (prev.position ?? 0) + prev.errorText.length;
+      if ((curr.position ?? 0) < prevEnd) {
+        console.warn(
+          '[ErrorDetection] Overlapping errors detected - behavior may be undefined:',
+          prev.errorText,
+          'and',
+          curr.errorText
+        );
+      }
+    }
+  }
+
   // Sort errors by position (if provided) or by length (longer first to match multi-word first)
   const sortedErrors = [...errors].sort((a, b) => {
     if (a.position !== undefined && b.position !== undefined) {
