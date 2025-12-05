@@ -1,5 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+import { readFileSync } from 'fs';
+import { resolve } from 'path';
 import { Button } from '@ui/components/common/Button';
 import styles from '@ui/components/common/Button.module.css';
 
@@ -239,6 +241,111 @@ describe('Button', () => {
       render(<Button type="reset">Reset Type</Button>);
       const button = screen.getByRole('button');
       expect(button).toHaveAttribute('type', 'reset');
+    });
+  });
+
+  describe('CSS Design Token Compliance', () => {
+    const cssPath = resolve(__dirname, '../../../src/modules/ui/components/common/Button.module.css');
+    let cssContent: string;
+
+    beforeAll(() => {
+      cssContent = readFileSync(cssPath, 'utf-8');
+    });
+
+    it('should not use hardcoded hex colors', () => {
+      // Match hex colors like #fff, #ffffff, #f3f4f6 but not inside var() or rgba()
+      // This regex finds hex colors that are not preceded by rgba( or var(
+      const hexColorPattern = /(?<!rgba\([^)]*|var\([^)]*):?\s*#[0-9a-fA-F]{3,8}\b/g;
+      const matches = cssContent.match(hexColorPattern);
+
+      // Filter out comments and rgba() values (which may contain hex-like values)
+      const filteredMatches = matches?.filter(match => {
+        // Allow hex in rgba() context
+        return !match.includes('rgba');
+      });
+
+      expect(filteredMatches || []).toEqual([]);
+    });
+
+    it('should use CSS variables for colors', () => {
+      // Check that color-related properties use var(--color-*)
+      const colorProperties = ['background-color', 'color', 'border-color', 'outline'];
+
+      for (const prop of colorProperties) {
+        const propPattern = new RegExp(`${prop}:\\s*([^;]+)`, 'gi');
+        const matches = [...cssContent.matchAll(propPattern)];
+
+        for (const match of matches) {
+          const value = match[1].trim();
+          // Skip 'transparent', 'inherit', 'currentColor', 'none', or values containing var()
+          if (
+            value === 'transparent' ||
+            value === 'inherit' ||
+            value === 'currentColor' ||
+            value === 'none' ||
+            value.includes('var(')
+          ) {
+            continue;
+          }
+          // Fail if hardcoded color found
+          expect(value).toMatch(/var\(--/);
+        }
+      }
+    });
+
+    it('should use CSS variables for spacing', () => {
+      // Check that padding and gap use var(--spacing-*) or calc() with variables
+      const spacingPattern = /(?:padding|gap):\s*([^;]+);/gi;
+      const matches = [...cssContent.matchAll(spacingPattern)];
+
+      for (const match of matches) {
+        const value = match[1].trim();
+        // Value should contain var(--spacing-*) or calc()
+        expect(value).toMatch(/var\(--spacing-|calc\(/);
+      }
+    });
+
+    it('should use CSS variables for border-radius', () => {
+      const borderRadiusPattern = /border-radius:\s*([^;]+);/gi;
+      const matches = [...cssContent.matchAll(borderRadiusPattern)];
+
+      for (const match of matches) {
+        const value = match[1].trim();
+        expect(value).toMatch(/var\(--border-radius-/);
+      }
+    });
+
+    it('should use CSS variables for font properties', () => {
+      const fontFamilyPattern = /font-family:\s*([^;]+);/gi;
+      const fontWeightPattern = /font-weight:\s*([^;]+);/gi;
+      const fontSizePattern = /font-size:\s*([^;]+);/gi;
+
+      const fontFamilyMatches = [...cssContent.matchAll(fontFamilyPattern)];
+      const fontWeightMatches = [...cssContent.matchAll(fontWeightPattern)];
+      const fontSizeMatches = [...cssContent.matchAll(fontSizePattern)];
+
+      for (const match of fontFamilyMatches) {
+        expect(match[1].trim()).toMatch(/var\(--font-family-/);
+      }
+
+      for (const match of fontWeightMatches) {
+        expect(match[1].trim()).toMatch(/var\(--font-weight-/);
+      }
+
+      for (const match of fontSizeMatches) {
+        expect(match[1].trim()).toMatch(/var\(--font-size-/);
+      }
+    });
+
+    it('should use CSS variables for transitions', () => {
+      const transitionPattern = /transition:\s*([^;]+);/gi;
+      const matches = [...cssContent.matchAll(transitionPattern)];
+
+      for (const match of matches) {
+        const value = match[1].trim();
+        // Transition should use var(--transition-*)
+        expect(value).toMatch(/var\(--transition-/);
+      }
     });
   });
 });
