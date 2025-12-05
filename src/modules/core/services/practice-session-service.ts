@@ -158,9 +158,11 @@ export class PracticeSessionService implements IPracticeSessionService {
 
     const sessionEntity = PracticeSessionEntity.fromJSON(session);
 
-    // Start session if it's still planned
+    // Ensure session is active before recording
     if (sessionEntity.execution.status === 'planned') {
       sessionEntity.start();
+    } else if (sessionEntity.execution.status === 'paused') {
+      sessionEntity.resume();
     }
 
     sessionEntity.recordAnswer(isCorrect, timeSpent);

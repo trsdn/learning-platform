@@ -148,18 +148,6 @@ export function SessionResults({ session, onClose, onStartNew }: Props) {
         </p>
       </Card>
 
-      {/* Progress Message */}
-      <Card padding="large" className={styles['session-results__progress-card']}>
-        <h3 className={styles['session-results__progress-title']}>📈 Dein Fortschritt</h3>
-        <p className={styles['session-results__progress-text']}>
-          {accuracy >= 90 && 'Hervorragende Leistung! Du beherrschst dieses Thema sehr gut.'}
-          {accuracy >= 75 && accuracy < 90 && 'Sehr gute Arbeit! Du machst große Fortschritte.'}
-          {accuracy >= 60 && accuracy < 75 && 'Gute Arbeit! Weiter so, du verbesserst dich stetig.'}
-          {accuracy < 60 &&
-            'Bleib dran! Übung macht den Meister. Die nächste Sitzung wird noch besser!'}
-        </p>
-      </Card>
-
       {/* Share Message Toast */}
       {shareMessage && (
         <div className={styles['session-results__toast']}>

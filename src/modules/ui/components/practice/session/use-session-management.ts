@@ -147,26 +147,30 @@ export function useSessionManagement({
       // Calculate time spent
       const timeSpent = Math.round((Date.now() - startTime) / 1000);
 
-      // Record answer in session
-      const sessionService = new PracticeSessionService(
-        getPracticeSessionRepository(),
-        getTaskRepository(),
-        getSpacedRepetitionRepository()
-      );
+      try {
+        // Record answer in session
+        const sessionService = new PracticeSessionService(
+          getPracticeSessionRepository(),
+          getTaskRepository(),
+          getSpacedRepetitionRepository()
+        );
 
-      await sessionService.recordSessionAnswer(session.id, correct, timeSpent);
+        await sessionService.recordSessionAnswer(session.id, correct, timeSpent);
 
-      // Update spaced repetition
-      const spacedRepService = new SpacedRepetitionService(
-        getSpacedRepetitionRepository(),
-        getTaskRepository()
-      );
+        // Update spaced repetition
+        const spacedRepService = new SpacedRepetitionService(
+          getSpacedRepetitionRepository(),
+          getTaskRepository()
+        );
 
-      // Convert boolean to grade (0-5 scale)
-      const grade = correct ? 4 : 2;
-      await spacedRepService.recordAnswer(currentTask.id, correct, grade);
+        // Convert boolean to grade (0-5 scale)
+        const grade = correct ? 4 : 2;
+        await spacedRepService.recordAnswer(currentTask.id, correct, grade);
+      } catch (error) {
+        console.error('Failed to record answer:', error);
+      }
 
-      // Update session state
+      // Always update session state (even if recording failed)
       const sessionRepo = getPracticeSessionRepository();
       const updatedSession = await sessionRepo.getById(session.id);
       if (updatedSession) {

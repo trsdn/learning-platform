@@ -433,11 +433,12 @@ export function PracticeSessionContainer({
           audioConfig={audioConfig}
           onAnswerChange={setCanSubmitAnswer}
           onAutoAdvance={handleNext}
+          onSubmitAnswer={submitAnswer}
         />
       </div>
 
-      {/* Feedback */}
-      {showFeedback && (
+      {/* Feedback - skip for flashcard tasks (self-assessment doesn't need feedback splash) */}
+      {showFeedback && currentTask.type !== 'flashcard' && (
         <FeedbackDisplay isCorrect={isCorrect} currentTask={currentTask} />
       )}
 

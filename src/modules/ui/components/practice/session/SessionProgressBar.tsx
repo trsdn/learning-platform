@@ -1,3 +1,4 @@
+import { useRef } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import styles from './SessionProgressBar.module.css';
 
@@ -79,6 +80,12 @@ export function SessionProgressBar({
   const skipAnimation = !animate || shouldReduceMotion;
   const progress = totalTasks > 0 ? ((currentIndex + 1) / totalTasks) * 100 : 0;
 
+  // Track previous progress to animate from current position instead of zero
+  const prevProgressRef = useRef(progress);
+  const initialProgress = prevProgressRef.current;
+  // Update ref after render so next animation starts from current position
+  prevProgressRef.current = progress;
+
   const containerClasses = [styles['session-progress'], className].filter(Boolean).join(' ');
 
   return (
@@ -94,7 +101,7 @@ export function SessionProgressBar({
       >
         <motion.div
           className={styles['session-progress__fill']}
-          initial={skipAnimation ? { width: `${progress}%` } : { width: 0 }}
+          initial={skipAnimation ? { width: `${progress}%` } : { width: `${initialProgress}%` }}
           animate={{ width: `${progress}%` }}
           transition={
             skipAnimation
