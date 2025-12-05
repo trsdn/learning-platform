@@ -26,12 +26,17 @@ export default defineConfig({
     ['html', { outputFolder: 'tests/bdd-report' }],
     ['json', { outputFile: 'tests/bdd-report/results.json' }],
   ],
-  timeout: 60000,
+  timeout: 30000,
+  expect: {
+    timeout: 10000,
+  },
   use: {
     baseURL: 'http://localhost:5173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
+    navigationTimeout: 15000,
+    actionTimeout: 10000,
   },
   outputDir: 'tests/artifacts/bdd',
   projects: [

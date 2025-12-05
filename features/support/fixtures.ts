@@ -25,29 +25,34 @@ export const test = base.extend<TestFixtures>({
   },
 
   authenticatedPage: async ({ page, testData }, use) => {
-    // Navigate to app
-    await page.goto('/');
+    try {
+      // Navigate to app
+      await page.goto('/');
 
-    // Wait for auth modal or dashboard
-    await page.waitForLoadState('networkidle');
+      // Wait for auth modal or dashboard
+      await page.waitForLoadState('networkidle');
 
-    // Check if already logged in
-    const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
+      // Check if already logged in
+      const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
 
-    if (!isLoggedIn) {
-      // Find and fill login form
-      const emailInput = page.getByRole('textbox', { name: /email/i });
-      const passwordInput = page.getByRole('textbox', { name: /password/i });
+      if (!isLoggedIn) {
+        // Find and fill login form
+        const emailInput = page.getByRole('textbox', { name: /email/i });
+        const passwordInput = page.getByRole('textbox', { name: /password/i });
 
-      if (await emailInput.isVisible()) {
-        await emailInput.fill(testData.testEmail);
-        await passwordInput.fill(testData.testPassword);
-        await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
-        await page.waitForURL('**/', { timeout: 10000 });
+        if (await emailInput.isVisible()) {
+          await emailInput.fill(testData.testEmail);
+          await passwordInput.fill(testData.testPassword);
+          await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
+          await page.waitForURL('**/', { timeout: 10000 });
+        }
       }
-    }
 
-    await use(page);
+      await use(page);
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      throw new Error(`Authentication fixture failed: ${errorMessage}. Check test credentials and login form selectors.`);
+    }
   },
 });
 

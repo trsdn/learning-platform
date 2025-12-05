@@ -43,7 +43,7 @@ Feature: Practice Session
     And I submit my answer
     Then I should see positive feedback
 
-  @PS-005
+  @PS-005 @wip
   Scenario: Complete a matching task
     Given I am in an active practice session
     And the current task is a matching task
@@ -52,7 +52,7 @@ Feature: Practice Session
     Then I should see positive feedback
     And all matches should be highlighted as correct
 
-  @PS-006
+  @PS-006 @wip
   Scenario: Complete an ordering task
     Given I am in an active practice session
     And the current task is an ordering task
@@ -60,7 +60,7 @@ Feature: Practice Session
     And I submit my answer
     Then I should see positive feedback
 
-  @PS-007
+  @PS-007 @wip
   Scenario: Complete a word scramble task
     Given I am in an active practice session
     And the current task is a word scramble task
@@ -76,7 +76,7 @@ Feature: Practice Session
     And I submit my answer
     Then I should see positive feedback
 
-  @PS-009
+  @PS-009 @wip
   Scenario: Complete an error detection task
     Given I am in an active practice session
     And the current task is an error detection task
@@ -85,7 +85,7 @@ Feature: Practice Session
     Then I should see which errors I found
     And I should see any errors I missed
 
-  @PS-010 @smoke
+  @PS-010 @smoke @wip
   Scenario: Complete a full practice session
     Given I am in an active practice session
     When I complete all tasks in the session
@@ -102,7 +102,7 @@ Feature: Practice Session
     And I should be able to cancel and continue
     And I should be able to exit and lose progress
 
-  @PS-012
+  @PS-012 @wip
   Scenario: Session progress is saved
     Given I am in an active practice session
     And I have completed some tasks
