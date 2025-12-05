@@ -239,25 +239,19 @@ export function useSessionManagement({
     initializeSession();
   }, [initializeSession]);
 
-  // Load current task when session is first loaded
-  useEffect(() => {
-    if (session && session.execution.taskIds && session.execution.taskIds.length > 0 && currentTaskIndex === 0) {
-      loadCurrentTask();
-    }
-  }, [session, currentTaskIndex, loadCurrentTask]);
-
-  // Load current task when index changes (but not during feedback display)
+  // Load current task when session is ready or task index changes
+  // Guard with !showFeedback to prevent reload during feedback display
+  // This unified effect handles ALL task indices (0, 1, 2, ...) uniformly
   useEffect(() => {
     if (
       session &&
       session.execution.taskIds &&
       session.execution.taskIds.length > 0 &&
-      currentTaskIndex > 0 &&
-      !showFeedback // Don't reload task when showing feedback
+      !showFeedback
     ) {
       loadCurrentTask();
     }
-  }, [currentTaskIndex, loadCurrentTask, session, showFeedback]);
+  }, [session, currentTaskIndex, loadCurrentTask, showFeedback]);
 
   return {
     session,
