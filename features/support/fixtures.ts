@@ -1,0 +1,54 @@
+import { test as base, createBdd } from 'playwright-bdd';
+import { Page } from '@playwright/test';
+
+/**
+ * Custom fixtures for BDD tests
+ */
+export interface TestFixtures {
+  authenticatedPage: Page;
+  testData: {
+    testEmail: string;
+    testPassword: string;
+    demoTopic: string;
+    demoLearningPath: string;
+  };
+}
+
+export const test = base.extend<TestFixtures>({
+  testData: async (_, use) => {
+    await use({
+      testEmail: process.env.E2E_TEST_EMAIL || 'test@example.com',
+      testPassword: process.env.E2E_TEST_PASSWORD || 'testpassword123',
+      demoTopic: 'Test & Demo',
+      demoLearningPath: 'Alle Aufgabentypen - Demo',
+    });
+  },
+
+  authenticatedPage: async ({ page, testData }, use) => {
+    // Navigate to app
+    await page.goto('/');
+
+    // Wait for auth modal or dashboard
+    await page.waitForLoadState('networkidle');
+
+    // Check if already logged in
+    const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
+
+    if (!isLoggedIn) {
+      // Find and fill login form
+      const emailInput = page.getByRole('textbox', { name: /email/i });
+      const passwordInput = page.getByRole('textbox', { name: /password/i });
+
+      if (await emailInput.isVisible()) {
+        await emailInput.fill(testData.testEmail);
+        await passwordInput.fill(testData.testPassword);
+        await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
+        await page.waitForURL('**/', { timeout: 10000 });
+      }
+    }
+
+    await use(page);
+  },
+});
+
+export const { Given, When, Then } = createBdd(test);
