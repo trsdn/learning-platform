@@ -302,6 +302,85 @@ content-orchestrator
         └─ ...rest of content pipeline
 ```
 
+## Circuit Breaker Pattern
+
+To prevent infinite revision loops, implement circuit breaker logic:
+
+```yaml
+circuit_breaker:
+  # Maximum retry attempts before escalation
+  max_retries:
+    content_quality_validation: 3
+    curriculum_alignment: 3
+    overall_pipeline: 5
+
+  # Track retry state
+  state:
+    closed: "Normal operation, retries allowed"
+    open: "Max retries exceeded, escalate immediately"
+    half_open: "Testing if issue is resolved"
+
+  # Retry behavior
+  retry_policy:
+    initial_delay_seconds: 5
+    backoff_multiplier: 2
+    max_delay_seconds: 60
+
+  # On max retries exceeded
+  on_circuit_open:
+    - Stop retry loop immediately
+    - Generate failure report with all attempts
+    - Escalate to human reviewer
+    - Block further automated attempts
+    - Require manual reset to continue
+```
+
+### Circuit Breaker Implementation
+
+```
+Validation Failed
+        │
+        ↓
+    ┌───────────┐
+    │ Increment │
+    │  Counter  │
+    └─────┬─────┘
+          │
+          ↓
+    ┌───────────────┐
+    │ Counter > Max │──────── YES ────→ OPEN CIRCUIT
+    │   Retries?    │                        │
+    └───────┬───────┘                        ↓
+            │                         ┌─────────────┐
+           NO                         │ Escalate to │
+            │                         │   Human     │
+            ↓                         └─────────────┘
+    ┌───────────────┐
+    │ revision-     │
+    │ coordinator   │
+    └───────┬───────┘
+            │
+            ↓
+    ┌───────────────┐
+    │ Retry with    │
+    │ Fixes         │
+    └───────────────┘
+```
+
+### Retry Tracking
+
+Each workflow maintains retry state:
+
+```yaml
+workflow_state:
+  pipeline_id: "curriculum-mathe7-lineare-funktionen"
+  started_at: "2025-12-05T22:00:00Z"
+  retry_count: 0
+  max_retries: 3
+  last_failure_reason: null
+  circuit_state: "closed"
+```
+
 ## Error Handling
 
 ```yaml
@@ -317,7 +396,15 @@ on_failure:
     - Wait for guidance
 
   alignment_failed:
-    - Generate gap report
-    - Invoke revision-coordinator
+    - Check circuit breaker state
+    - If closed: Generate gap report → revision-coordinator → retry
+    - If open: Escalate immediately to human
     - Target specific objectives
+
+  max_retries_exceeded:
+    - Open circuit breaker
+    - Generate comprehensive failure report
+    - List all attempted fixes
+    - Require human intervention
+    - Do NOT attempt further automated fixes
 ```

@@ -18,6 +18,39 @@ tools:
   - mcp__supabase__merge_branch
   - mcp__supabase__reset_branch
   - mcp__supabase__rebase_branch
+tool_constraints:
+  Bash:
+    # Only allow specific, safe migration-related commands
+    allowed_commands:
+      - "npm run"           # Package scripts only
+      - "npx supabase"      # Supabase CLI
+      - "git status"        # Check migration file status
+      - "git diff"          # Review migration changes
+      - "cat"               # View migration files
+      - "ls"                # List migration files
+    blocked_commands:
+      - "rm -rf"            # No recursive deletion
+      - "sudo"              # No elevated privileges
+      - "curl"              # No external downloads
+      - "wget"              # No external downloads
+      - "> /dev"            # No device writes
+      - "| sh"              # No piped execution
+      - "| bash"            # No piped execution
+      - "eval"              # No dynamic evaluation
+      - "exec"              # No process replacement
+    working_directory: "/supabase/migrations"
+    require_confirmation: true
+    max_execution_time: 300  # 5 minutes max
+  mcp__supabase__execute_sql:
+    # Prevent destructive operations without branch testing
+    blocked_patterns:
+      - "DROP TABLE"        # Must use apply_migration
+      - "TRUNCATE"          # Data loss risk
+      - "DELETE FROM.*WHERE 1=1"  # Mass deletion
+    require_branch_first: true
+  mcp__supabase__apply_migration:
+    require_rollback_sql: true
+    require_branch_test: true
 ---
 
 You are a senior database migration specialist focused on safe, reversible schema changes.

@@ -1,7 +1,10 @@
 ---
 name: platform-quality-orchestrator
 description: Quality assurance workflow orchestrator. Coordinates accessibility audits, performance optimization, localization review, and comprehensive quality validation. Ensures platform meets all quality standards.
-model: sonnet
+model: haiku
+# Using haiku for orchestration as routing decisions are deterministic
+# and don't require opus-level reasoning. Individual quality agents
+# use sonnet for their specialized analysis.
 tools:
   - Read
   - Write

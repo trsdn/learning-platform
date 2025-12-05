@@ -235,6 +235,62 @@ content-creator (creates aligned content)
 - [ ] Competency levels noted
 - [ ] Cache updated
 
+## URL Security Policy
+
+### Allowed Domains (Allowlist)
+
+Only fetch curriculum documents from these official sources:
+
+```yaml
+allowed_domains:
+  # Federal Level
+  - kmk.org
+  - www.kmk.org
+
+  # Bundesland Official Sources
+  - lehrplanplus.bayern.de
+  - www.lehrplanplus.bayern.de
+  - schulentwicklung.nrw.de
+  - www.schulentwicklung.nrw.de
+  - bildungsplaene-bw.de
+  - www.bildungsplaene-bw.de
+  - bildungsserver.de
+  - www.bildungsserver.de
+
+  # Additional approved educational sources
+  - kultusministerium.hessen.de
+  - bildungsserver.berlin-brandenburg.de
+  - bildung-mv.de
+  - sachsen.schule
+  - bildungsserver.hamburg.de
+```
+
+### URL Validation Requirements
+
+Before fetching any URL:
+1. **Domain Check**: URL must match an allowed domain
+2. **Protocol Check**: Only HTTPS allowed (no HTTP)
+3. **Path Validation**: No path traversal sequences (../)
+4. **No Internal IPs**: Reject localhost, 127.x.x.x, 10.x.x.x, 192.168.x.x
+
+### SSRF Prevention
+
+```yaml
+validation_rules:
+  - reject_private_ips: true
+  - reject_localhost: true
+  - https_only: true
+  - max_redirects: 2
+  - timeout_seconds: 30
+```
+
+### If URL Not in Allowlist
+
+1. Log the attempted URL
+2. Notify orchestrator
+3. Request human approval before proceeding
+4. Do NOT fetch unapproved URLs
+
 ## Forbidden Actions
 
 - ❌ Using unofficial curriculum sources
@@ -242,6 +298,8 @@ content-creator (creates aligned content)
 - ❌ Ignoring Bundesland differences
 - ❌ Using outdated curriculum versions
 - ❌ Skipping source attribution
+- ❌ Fetching URLs not in the allowlist without approval
+- ❌ Bypassing URL validation
 
 ## Example Interactions
 
