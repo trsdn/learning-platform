@@ -326,6 +326,7 @@ Each task type has a unique content interface defined in `src/modules/core/types
 - `README.md` - Project overview, quick start
 - `CONTRIBUTING.md` - Contribution guidelines, commit format
 - `AGENTS.md` - AI agent development guide (comprehensive)
+- `docs/guides/AGENT_SWITCHING.md` - Guide for switching between Claude and Copilot
 - `docs/css-modules.md` - Complete CSS Modules guide
 - `docs/DEPLOYMENT.md` - Deployment procedures
 - `docs/NEW_TASK_TYPE_GUIDE.md` - Task type creation guide
@@ -335,6 +336,15 @@ Each task type has a unique content interface defined in `src/modules/core/types
 - API/interface changes
 - Build/deployment process changes
 - Breaking changes (always)
+
+## 🤖 Working with Claude
+
+This repository also supports Claude as an AI coding agent. For hybrid workflows:
+
+- **Claude**: Complex tasks, multi-file refactoring, PR reviews (triggered via `@claude` in issues/PRs)
+- **GitHub Copilot**: Issue implementation, code completion, quick fixes
+
+See `docs/guides/AGENT_SWITCHING.md` for detailed guidance on when to use each agent.
 
 ## 🐛 Debugging
 
