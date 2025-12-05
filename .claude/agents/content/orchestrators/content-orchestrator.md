@@ -14,12 +14,38 @@ Coordinates the complete lifecycle of creating learning paths, from initial desi
 
 ## Workflow
 
+0. **Curriculum Phase** (Optional) → Invoke `content-curriculum-orchestrator`
 1. **Design Phase** → Invoke `content-designer`
 2. **Planning Phase** → Invoke `content-planner`
 3. **Creation Phase** → Invoke `content-creator`
-4. **Review Phase** → Invoke `content-reviewer`
-5. **Testing Phase** → Invoke `content-tester`
-6. **Publishing Phase** → Invoke `content-publisher`
+4. **Quality Validation** → Invoke `content-quality-validator`
+5. **Review Phase** → Invoke `content-reviewer`
+6. **Testing Phase** → Invoke `content-tester`
+7. **Publishing Phase** → Invoke `content-publisher`
+
+### Curriculum-Aligned Workflow
+
+For content that should align with German curriculum standards:
+
+```
+content-curriculum-orchestrator
+        │
+        ├─ curriculum-fetcher (retrieve Bildungsstandards)
+        ├─ curriculum-researcher (extract objectives)
+        │
+        ↓ (curriculum context)
+
+content-designer → content-planner → content-creator
+        │
+        ↓
+content-quality-validator (5-dimension validation)
+        │
+    ┌───┴───┐
+    ↓       ↓
+ [PASS]  [FAIL] → revision-coordinator → content-creator (retry)
+    ↓
+content-reviewer → content-tester → content-publisher
+```
 
 ---
 

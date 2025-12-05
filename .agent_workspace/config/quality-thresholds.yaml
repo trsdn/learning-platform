@@ -1,0 +1,186 @@
+# Content Quality Thresholds
+# Used by content-quality-validator
+
+thresholds:
+  # Must be 100% - no factual errors allowed
+  accuracy: 100
+
+  # Questions and instructions must be clear
+  clarity: 85
+
+  # Critical for educational content
+  age_appropriateness: 95
+
+  # Target: 30% easy, 50% medium, 20% hard
+  difficulty_balance: 85
+
+  # Target: 40% remember/understand, 40% apply/analyze, 20% evaluate/create
+  blooms_alignment: 85
+
+# Overall pass threshold (weighted average)
+overall_pass_threshold: 85
+
+# These dimensions MUST pass regardless of overall score
+dimensions_must_pass:
+  - accuracy
+  - age_appropriateness
+
+# Revision limits
+revision_limits:
+  default_max_attempts: 3
+  per_agent:
+    content-creator: 5
+    frontend-engineer: 3
+    backend-engineer: 3
+  per_severity:
+    critical: 1  # Escalate immediately
+    major: 2
+    minor: 5
+
+# Difficulty distribution targets
+difficulty_distribution:
+  easy:
+    range: [1, 3]
+    target_percentage: 30
+  medium:
+    range: [4, 6]
+    target_percentage: 50
+  hard:
+    range: [7, 10]
+    target_percentage: 20
+  tolerance: 5  # percentage points
+
+# Bloom's taxonomy distribution targets
+blooms_distribution:
+  remember_understand:
+    levels: [1, 2]
+    target_percentage: 40
+  apply_analyze:
+    levels: [3, 4]
+    target_percentage: 40
+  evaluate_create:
+    levels: [5, 6]
+    target_percentage: 20
+  tolerance: 5
+
+# Accessibility thresholds (WCAG 2.1 AA)
+accessibility:
+  # Zero tolerance for critical violations
+  critical_violations: 0
+  # Maximum allowed warnings
+  max_warnings: 5
+
+  requirements:
+    keyboard_navigation: 100
+    color_contrast_text: 4.5  # ratio
+    color_contrast_large: 3.0  # ratio
+    focus_indicators: required
+    aria_labels: required
+    screen_reader_tested: required
+
+  dimensions_must_pass:
+    - keyboard_navigation
+    - color_contrast_text
+
+# Performance thresholds (Core Web Vitals)
+performance:
+  core_web_vitals:
+    LCP: 2500   # Largest Contentful Paint (ms)
+    FID: 100    # First Input Delay (ms)
+    CLS: 0.1    # Cumulative Layout Shift
+    INP: 200    # Interaction to Next Paint (ms)
+
+  bundle_size:
+    total_gzipped_kb: 300
+    largest_chunk_kb: 100
+
+  load_times:
+    initial_load_3g_seconds: 3
+    time_to_interactive_seconds: 3.5
+
+  thresholds:
+    pass: 85
+    warning: 70
+
+# Localization thresholds (German)
+localization:
+  language: de-DE
+  register: informal  # du-Form
+
+  requirements:
+    no_english_ui: 100
+    terminology_consistency: 95
+    age_appropriate_language: 100
+
+  format_standards:
+    date_format: "DD.MM.YYYY"
+    time_format: "HH:mm"
+    number_decimal_separator: ","
+    number_thousands_separator: "."
+    currency: "EUR"
+
+  dimensions_must_pass:
+    - no_english_ui
+    - age_appropriate_language
+
+# Security thresholds (OWASP)
+security:
+  # Zero tolerance for critical vulnerabilities
+  critical_vulnerabilities: 0
+  high_vulnerabilities: 0
+  medium_vulnerabilities: 3  # max allowed
+  low_vulnerabilities: 10    # max allowed
+
+  requirements:
+    xss_protection: required
+    csrf_protection: required
+    sql_injection_prevention: required
+    authentication_secure: required
+    authorization_enforced: required
+    rls_policies_enabled: required
+    secrets_not_exposed: required
+
+  scan_frequency:
+    pre_release: required
+    weekly: recommended
+
+  dimensions_must_pass:
+    - critical_vulnerabilities
+    - high_vulnerabilities
+    - secrets_not_exposed
+
+# Visual/Design System thresholds
+visual:
+  design_system_compliance: 90
+  component_consistency: 95
+  responsive_breakpoints_tested: 100
+
+  requirements:
+    follows_design_tokens: required
+    consistent_spacing: required
+    consistent_typography: required
+    brand_colors_only: required
+
+  breakpoints_required:
+    - mobile: 375
+    - tablet: 768
+    - desktop: 1024
+    - large: 1440
+
+# Overall quality gate
+quality_gate:
+  # All dimensions must meet their thresholds
+  all_dimensions_required: true
+
+  # Dimensions that block release if failed
+  blocking_dimensions:
+    - accuracy
+    - age_appropriateness
+    - accessibility.critical_violations
+    - security.critical_vulnerabilities
+    - security.high_vulnerabilities
+
+  # Dimensions that warn but don't block
+  warning_dimensions:
+    - performance
+    - visual
