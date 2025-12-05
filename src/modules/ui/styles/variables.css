@@ -8,6 +8,14 @@
   --color-warning: #fbbf24;
   --color-info: #60a5fa;
 
+  /* Background tints (for text highlights, not buttons) */
+  --color-primary-bg: #dbeafe;
+  --color-success-bg: #dcfce7;
+  --color-error-bg: #fee2e2;
+  --color-warning-bg: #fef9c3;
+  --color-warning-border: #facc15;
+  --color-text-on-warning: #854d0e;
+
   --color-text-primary: #1f2937;
   --color-text-secondary: #6b7280;
   --color-text-inverse: #ffffff;
@@ -17,6 +25,7 @@
   --color-bg-tertiary: #e5e7eb;
 
   /* Spacing (based on 0.25rem = 4px) */
+  --spacing-2xs: 0.125rem; /* 2px */
   --spacing-xs: 0.25rem;   /* 4px */
   --spacing-sm: 0.5rem;    /* 8px */
   --spacing-md: 1rem;      /* 16px */
@@ -44,6 +53,7 @@
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
 
   /* Border */
   --border-radius-sm: 0.375rem;  /* 6px */
@@ -66,6 +76,10 @@
   --transition-fast: 150ms;
   --transition-normal: 200ms;
   --transition-slow: 300ms;
+
+  --transition-all-fast: all 150ms ease;
+  --transition-all-normal: all 200ms ease;
+  --transition-all-slow: all 300ms ease;
 
   --transition-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-ease-out: cubic-bezier(0, 0, 0.2, 1);
@@ -102,6 +116,14 @@
   --color-error: #f87171;
   --color-warning: #fbbf24;
   --color-info: #38bdf8;
+
+  /* Background tints (for text highlights, not buttons) */
+  --color-primary-bg: #1e3a8a;
+  --color-success-bg: #064e3b;
+  --color-error-bg: #7f1d1d;
+  --color-warning-bg: #78350f;
+  --color-warning-border: #d97706;
+  --color-text-on-warning: #fef3c7;
 
   --color-text-primary: #f9fafb;
   --color-text-secondary: #d1d5db;
