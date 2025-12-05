@@ -1,0 +1,64 @@
+# Content Quality Thresholds
+# Used by content-quality-validator
+
+thresholds:
+  # Must be 100% - no factual errors allowed
+  accuracy: 100
+
+  # Questions and instructions must be clear
+  clarity: 85
+
+  # Critical for educational content
+  age_appropriateness: 95
+
+  # Target: 30% easy, 50% medium, 20% hard
+  difficulty_balance: 85
+
+  # Target: 40% remember/understand, 40% apply/analyze, 20% evaluate/create
+  blooms_alignment: 85
+
+# Overall pass threshold (weighted average)
+overall_pass_threshold: 85
+
+# These dimensions MUST pass regardless of overall score
+dimensions_must_pass:
+  - accuracy
+  - age_appropriateness
+
+# Revision limits
+revision_limits:
+  default_max_attempts: 3
+  per_agent:
+    content-creator: 5
+    frontend-engineer: 3
+    backend-engineer: 3
+  per_severity:
+    critical: 1  # Escalate immediately
+    major: 2
+    minor: 5
+
+# Difficulty distribution targets
+difficulty_distribution:
+  easy:
+    range: [1, 3]
+    target_percentage: 30
+  medium:
+    range: [4, 6]
+    target_percentage: 50
+  hard:
+    range: [7, 10]
+    target_percentage: 20
+  tolerance: 5  # percentage points
+
+# Bloom's taxonomy distribution targets
+blooms_distribution:
+  remember_understand:
+    levels: [1, 2]
+    target_percentage: 40
+  apply_analyze:
+    levels: [3, 4]
+    target_percentage: 40
+  evaluate_create:
+    levels: [5, 6]
+    target_percentage: 20
+  tolerance: 5

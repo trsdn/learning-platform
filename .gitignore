@@ -73,6 +73,10 @@ dev-dist/
 storybook-static/
 storybook.log
 
+# BDD generated tests
+.features-gen/
+tests/bdd-report/
+
 # Environment variables (unencrypted)
 .env
 .env.local
@@ -100,3 +104,8 @@ __pycache__/
 .mcp.json
 tests/artifacts/.last-run.json
 .env*.local
+
+# Agent Workspace (intermediate files, audit trails)
+.agent_workspace/
+!.agent_workspace/README.md
+!.agent_workspace/config/

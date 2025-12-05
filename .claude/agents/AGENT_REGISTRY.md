@@ -1,7 +1,7 @@
 # Agent Registry
 
-**Last Updated**: 2025-11-24
-**Total Agents**: 33 (2 Orchestrators + 31 Specialized Agents)
+**Last Updated**: 2025-12-05
+**Total Agents**: 50 (2 Master Orchestrators + 9 Sub-Orchestrators + 39 Specialized Agents)
 
 This is the complete registry of all agents available in the learning platform.
 
@@ -70,6 +70,35 @@ This is the complete registry of all agents available in the learning platform.
 - **Location**: `.claude/agents/content/agents/content-publisher.md`
 - **Purpose**: Publishes content to Supabase production
 - **Output**: Deployment confirmation, backup files
+
+#### `curriculum-fetcher`
+
+- **Location**: `.claude/agents/content/agents/curriculum-fetcher.md`
+- **Purpose**: Fetches official German curriculum standards (Bildungsstandards)
+- **Output**: Structured curriculum documents in .agent_workspace/curriculum/
+
+#### `curriculum-researcher`
+
+- **Location**: `.claude/agents/content/agents/curriculum-researcher.md`
+- **Purpose**: Analyzes and extracts learning objectives from curriculum
+- **Output**: Task-type mappings, Bloom's taxonomy analysis, prerequisite graphs
+
+#### `content-quality-validator`
+
+- **Location**: `.claude/agents/content/agents/content-quality-validator.md`
+- **Purpose**: Multi-dimensional quality validation with strict thresholds
+- **Dimensions**: Accuracy (100%), Clarity (85%), Age-Appropriateness (95%), Difficulty Balance (85%), Bloom's Alignment (85%)
+
+---
+
+## 1.2 Content Sub-Orchestrators
+
+#### `content-curriculum-orchestrator`
+
+- **Location**: `.claude/agents/content/orchestrators/content-curriculum-orchestrator.md`
+- **Purpose**: Curriculum integration workflow orchestrator
+- **Workflow**: Fetch Bildungsstandards → Extract objectives → Validate alignment
+- **Agents**: curriculum-fetcher → curriculum-researcher → content-quality-validator
 
 ---
 
@@ -180,6 +209,24 @@ This is the complete registry of all agents available in the learning platform.
 - **Purpose**: Validates implementation against plan
 - **Checks**: Tests pass, acceptance criteria met, code quality
 
+#### `frontend-engineer`
+
+- **Location**: `.claude/agents/platform/agents/frontend-engineer.md`
+- **Purpose**: React/TypeScript implementation specialist
+- **Focus**: Component implementation, state management, CSS Modules
+
+#### `backend-engineer`
+
+- **Location**: `.claude/agents/platform/agents/backend-engineer.md`
+- **Purpose**: Supabase/PostgreSQL specialist
+- **Focus**: Schema design, RLS policies, Edge Functions, query optimization
+
+#### `api-designer`
+
+- **Location**: `.claude/agents/platform/agents/api-designer.md`
+- **Purpose**: API contract and TypeScript interface design
+- **Output**: Type definitions, API schemas, service interfaces
+
 ---
 
 ## 2.4 Testing Flow
@@ -223,6 +270,18 @@ This is the complete registry of all agents available in the learning platform.
 - **Location**: `.claude/agents/platform/agents/security-tester.md`
 - **Purpose**: Security and vulnerability testing
 - **Checks**: XSS, SQL injection, OWASP compliance
+
+#### `accessibility-auditor`
+
+- **Location**: `.claude/agents/platform/agents/accessibility-auditor.md`
+- **Purpose**: WCAG 2.1 AA compliance specialist
+- **Checks**: Keyboard navigation, color contrast, screen reader compatibility, jest-axe
+
+#### `performance-optimizer`
+
+- **Location**: `.claude/agents/platform/agents/performance-optimizer.md`
+- **Purpose**: Frontend performance and Core Web Vitals
+- **Metrics**: Bundle size, LCP, FID, CLS, TTI
 
 ---
 
@@ -314,6 +373,98 @@ This is the complete registry of all agents available in the learning platform.
 
 ---
 
+## 2.7 Infrastructure Flow
+
+### Orchestrator
+
+#### `platform-infrastructure-orchestrator`
+
+- **Location**: `.claude/agents/platform/orchestrators/platform-infrastructure-orchestrator.md`
+- **Purpose**: Coordinates database, backend, and DevOps workflows
+- **Workflow**: API Design → Backend Implementation → Migration → CI/CD
+- **Agents**: api-designer → backend-engineer → data-migration-specialist → devops-engineer
+
+### Agents
+
+#### `devops-engineer`
+
+- **Location**: `.claude/agents/platform/agents/devops-engineer.md`
+- **Purpose**: CI/CD and infrastructure specialist
+- **Focus**: GitHub Actions, secrets management, environment configuration
+
+#### `data-migration-specialist`
+
+- **Location**: `.claude/agents/platform/agents/data-migration-specialist.md`
+- **Purpose**: Safe database schema and data migrations
+- **Focus**: Reversible migrations, branch testing, rollback procedures
+
+---
+
+## 2.8 Quality Assurance Flow
+
+### Orchestrator
+
+#### `platform-quality-orchestrator`
+
+- **Location**: `.claude/agents/platform/orchestrators/platform-quality-orchestrator.md`
+- **Purpose**: Coordinates accessibility, performance, and localization quality
+- **Workflow**: Parallel audits → Consolidate → Pass/Fail → Revision if needed
+- **Agents**: accessibility-auditor, performance-optimizer, localization-engineer, revision-coordinator
+
+### Agents
+
+#### `accessibility-auditor`
+
+- **Location**: `.claude/agents/platform/agents/accessibility-auditor.md`
+- **Purpose**: WCAG 2.1 AA compliance auditing
+- **Checks**: Keyboard navigation, color contrast, screen reader, jest-axe
+
+#### `performance-optimizer`
+
+- **Location**: `.claude/agents/platform/agents/performance-optimizer.md`
+- **Purpose**: Core Web Vitals and bundle optimization
+- **Metrics**: LCP, FID, CLS, bundle size, TTI
+
+#### `localization-engineer`
+
+- **Location**: `.claude/agents/platform/agents/localization-engineer.md`
+- **Purpose**: German language quality and i18n
+- **Focus**: Terminology, du-Form, date/number formats
+
+---
+
+## 2.9 Specialized Agents
+
+### Coordination Agents
+
+#### `revision-coordinator`
+
+- **Location**: `.claude/agents/platform/agents/revision-coordinator.md`
+- **Purpose**: Feedback loop coordination and automatic revision cycles
+- **Features**: Monitors validations, triggers retries, enforces limits, escalates to human
+
+#### `requirements-interviewer`
+
+- **Location**: `.claude/agents/platform/agents/requirements-interviewer.md`
+- **Purpose**: Requirements gathering via reverse interviewing
+- **Output**: Requirements documents, acceptance criteria, user stories
+
+### Domain Specialists
+
+#### `localization-engineer`
+
+- **Location**: `.claude/agents/platform/agents/localization-engineer.md`
+- **Purpose**: German localization and i18n specialist
+- **Focus**: German UI text, terminology consistency, future multi-language prep
+
+#### `analytics-engineer`
+
+- **Location**: `.claude/agents/platform/agents/analytics-engineer.md`
+- **Purpose**: Learning analytics and user insights
+- **Metrics**: Task success rates, retention curves, difficulty calibration, engagement
+
+---
+
 ## Agent Selection Guide
 
 ### For Users
@@ -352,22 +503,59 @@ User Request
 ### Content Stream
 
 - **1 Orchestrator**: content-orchestrator
-- **6 Specialized Agents**: designer, planner, creator, reviewer, tester, publisher
-- **Total Lines**: ~5,500 lines of detailed instructions
+- **9 Specialized Agents**: designer, planner, creator, reviewer, tester, publisher, curriculum-fetcher, curriculum-researcher, content-quality-validator
+- **Total Lines**: ~8,000 lines of detailed instructions
 
 ### Platform Stream
 
 - **1 Master Orchestrator**: platform-orchestrator
 - **6 Sub-Orchestrators**: docs, planning, dev, test, review, deploy
-- **25 Specialized Agents**: Covering all aspects of SDLC (including mermaid-expert, ui-ux-designer)
-- **Total Lines**: ~15,000+ lines of detailed instructions
+- **35 Specialized Agents**: Full SDLC + infrastructure + specialized domains
+- **Total Lines**: ~25,000+ lines of detailed instructions
+
+### New Agent Categories (2025-12-05)
+
+**Development Engineers**:
+- `frontend-engineer` - React/TypeScript implementation
+- `backend-engineer` - Supabase/PostgreSQL operations
+- `api-designer` - API contracts and TypeScript types
+
+**Quality Specialists**:
+- `accessibility-auditor` - WCAG 2.1 AA compliance
+- `performance-optimizer` - Core Web Vitals optimization
+
+**Infrastructure**:
+- `devops-engineer` - CI/CD and GitHub Actions
+- `data-migration-specialist` - Safe database migrations
+
+**Domain Specialists**:
+- `localization-engineer` - German i18n
+- `analytics-engineer` - Learning metrics and insights
+
+**Curriculum Integration**:
+- `curriculum-fetcher` - German Bildungsstandards retrieval
+- `curriculum-researcher` - Learning objectives extraction
+- `content-quality-validator` - Multi-dimensional quality gates
+
+**Coordination**:
+- `revision-coordinator` - Feedback loops and retries
+- `requirements-interviewer` - Reverse interviewing
+
+### New Sub-Orchestrators (2025-12-05)
+
+**Platform Stream**:
+- `platform-infrastructure-orchestrator` - Database, backend, DevOps
+- `platform-quality-orchestrator` - Accessibility, performance, localization
+
+**Content Stream**:
+- `content-curriculum-orchestrator` - German Bildungsstandards integration
 
 ### Grand Total
 
 - **2 Master Orchestrators**
-- **6 Sub-Orchestrators**
-- **31 Specialized Agents**
-- **39 Agent Definitions**
+- **9 Sub-Orchestrators** (6 original + 3 new)
+- **39 Specialized Agents**
+- **50 Agent Definitions**
 
 ---
 

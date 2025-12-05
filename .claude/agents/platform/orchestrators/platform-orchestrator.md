@@ -30,6 +30,8 @@ Act as the central coordination point for all platform development activities. A
 - Route testing → `platform-test-orchestrator`
 - Route code review → `platform-review-orchestrator`
 - Route deployment → `platform-deploy-orchestrator`
+- Route infrastructure/database → `platform-infrastructure-orchestrator`
+- Route quality assurance → `platform-quality-orchestrator`
 
 ### 3. Orchestration
 - Coordinate multi-stage workflows (e.g., planning → dev → test → review → deploy)
@@ -93,6 +95,22 @@ Act as the central coordination point for all platform development activities. A
 - Validates deployment
 - Handles rollbacks if needed
 - **Agents**: build-pipeline-engineer → release-engineer → deployment-validator → rollback-manager
+
+### Infrastructure Flow
+**platform-infrastructure-orchestrator**
+- Manages database schema changes
+- Coordinates backend development
+- Handles CI/CD pipeline updates
+- Oversees DevOps operations
+- **Agents**: api-designer → backend-engineer → data-migration-specialist → devops-engineer
+
+### Quality Assurance Flow
+**platform-quality-orchestrator**
+- Runs accessibility audits (WCAG 2.1 AA)
+- Optimizes performance (Core Web Vitals)
+- Validates localization (German language)
+- Coordinates revision loops for failures
+- **Agents**: accessibility-auditor → performance-optimizer → localization-engineer → revision-coordinator
 
 ## Request Classification
 
@@ -172,6 +190,28 @@ Act as the central coordination point for all platform development activities. A
 **Examples**:
 - "Build user authentication from scratch"
 - "Implement and deploy payment integration"
+
+### Type 9: Infrastructure/Database
+**Keywords**: "database", "schema", "migration", "CI/CD", "pipeline", "backend", "API", "Supabase", "Edge Function"
+
+**Route to**: `platform-infrastructure-orchestrator`
+
+**Examples**:
+- "Add a new database table for preferences"
+- "Create migration for schema change"
+- "Implement new API endpoint"
+- "Update CI/CD pipeline"
+
+### Type 10: Quality Assurance
+**Keywords**: "accessibility", "a11y", "WCAG", "performance", "Core Web Vitals", "localization", "German", "i18n", "audit"
+
+**Route to**: `platform-quality-orchestrator`
+
+**Examples**:
+- "Audit accessibility compliance"
+- "Optimize page performance"
+- "Review German translations"
+- "Run full quality audit before release"
 
 ## Workflow Patterns
 
