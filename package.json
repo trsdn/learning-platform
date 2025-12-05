@@ -1,6 +1,6 @@
 {
   "name": "german-learning-platform",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "German Learning Platform with Spaced Repetition",
   "type": "module",
   "scripts": {
