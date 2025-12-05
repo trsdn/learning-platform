@@ -16,7 +16,16 @@
   --color-bg-secondary: #f3f4f6;
   --color-bg-tertiary: #e5e7eb;
 
+  /* Semantic background colors (light tints for text containers) */
+  --color-primary-bg: #dbeafe;
+  --color-success-bg: #dcfce7;
+  --color-error-bg: #fee2e2;
+  --color-warning-bg: #fef9c3;
+  --color-warning-border: #facc15;
+  --color-text-on-warning: #854d0e;
+
   /* Spacing (based on 0.25rem = 4px) */
+  --spacing-2xs: 0.125rem; /* 2px */
   --spacing-xs: 0.25rem;   /* 4px */
   --spacing-sm: 0.5rem;    /* 8px */
   --spacing-md: 1rem;      /* 16px */
@@ -44,6 +53,7 @@
   --line-height-tight: 1.25;
   --line-height-normal: 1.5;
   --line-height-relaxed: 1.75;
+  --line-height-loose: 2;
 
   /* Border */
   --border-radius-sm: 0.375rem;  /* 6px */
@@ -70,6 +80,11 @@
   --transition-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
   --transition-ease-out: cubic-bezier(0, 0, 0.2, 1);
   --transition-ease-in: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Complete transition shorthands */
+  --transition-all-fast: all 150ms ease;
+  --transition-all-normal: all 200ms ease;
+  --transition-all-slow: all 300ms ease;
 
   /* Safe Area (for notched devices) */
   --safe-area-top: env(safe-area-inset-top, 0px);
@@ -110,6 +125,14 @@
   --color-bg-primary: #0f172a;
   --color-bg-secondary: #111827;
   --color-bg-tertiary: #1f2937;
+
+  /* Semantic background colors (dark tints for text containers) */
+  --color-primary-bg: #1e3a8a;
+  --color-success-bg: #064e3b;
+  --color-error-bg: #7f1d1d;
+  --color-warning-bg: #78350f;
+  --color-warning-border: #d97706;
+  --color-text-on-warning: #fef3c7;
 
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 6px rgba(15, 23, 42, 0.4);

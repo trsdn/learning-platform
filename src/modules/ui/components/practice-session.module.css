@@ -1084,26 +1084,25 @@
 }
 
 .error-detection__hint {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border-radius: var(--border-radius-sm);
-  background: var(--color-warning);
-  border: var(--border-width-thin) solid var(--color-warning);
-  color: #854d0e;
-  /* keep as is, no token available */
+  padding: 0.75rem var(--spacing-md);
+  border-radius: var(--border-radius-md);
+  background: var(--color-warning-bg);
+  border: var(--border-width-thin) solid var(--color-warning-border);
+  color: var(--color-text-on-warning);
   font-size: var(--font-size-sm);
 }
 
 .error-detection__content {
-  line-height: var(--line-height-relaxed);
+  line-height: var(--line-height-loose);
   font-size: var(--font-size-lg);
 }
 
 .error-detection__segment {
   display: inline;
-  padding: var(--spacing-xs) var(--spacing-sm);
-  border-radius: var(--border-radius-sm);
+  padding: var(--spacing-2xs) var(--spacing-xs);
+  border-radius: 4px;
   cursor: pointer;
-  transition: var(--transition-fast);
+  transition: var(--transition-all-fast);
   border: var(--border-width-medium) solid transparent;
 }
 
@@ -1117,7 +1116,7 @@
 }
 
 .error-detection__segment--selected {
-  background: var(--color-primary);
+  background: var(--color-primary-bg);
   border-color: var(--color-primary);
   font-weight: var(--font-weight-medium);
 }
@@ -1128,13 +1127,13 @@
 
 /* Feedback states */
 .error-detection__segment--correct-hit {
-  background: var(--color-success);
+  background: var(--color-success-bg);
   border-color: var(--color-success);
   cursor: default;
 }
 
 .error-detection__segment--missed-error {
-  background: var(--color-error);
+  background: var(--color-error-bg);
   border-color: var(--color-error);
   border-style: dashed;
   text-decoration: line-through;
@@ -1142,7 +1141,7 @@
 }
 
 .error-detection__segment--false-positive {
-  background: var(--color-warning);
+  background: var(--color-warning-bg);
   border-color: var(--color-warning);
   cursor: default;
 }
