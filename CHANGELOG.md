@@ -5,6 +5,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2025-12-06
+
+### Features
+
+- Expand agent workforce with 14 new agents and 3 orchestrators (#185) @trsdn
+- Add BDD feature files with Playwright-BDD integration (#186) @trsdn
+
+### Bug Fixes
+
+- Fix first task repeating and not registering correct answer (#168) @trsdn
+
+### Refactoring
+
+- Replace hardcoded CSS values with design tokens in Error Detection Task (#150) @AVBharath10
+
+**Full Changelog**: https://github.com/trsdn/learning-platform/compare/v1.1.2...v1.2.0
+
 ## [1.1.0] - 2025-12-04
 
 ### Features
