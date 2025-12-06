@@ -4,8 +4,13 @@ import { VitePWA } from 'vite-plugin-pwa';
 import tsconfigPaths from 'vite-tsconfig-paths';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { readFileSync } from 'fs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+// Read version from package.json at build time
+const packageJson = JSON.parse(readFileSync(path.resolve(__dirname, 'package.json'), 'utf-8'));
+const appVersion = packageJson.version;
 
 /**
  * Vite plugin to inject CSP meta tag with environment-specific Supabase URL
@@ -64,6 +69,7 @@ export default defineConfig(({ mode }) => {
   define: {
     'import.meta.env.VITE_DB_NAME': JSON.stringify(env.VITE_DB_NAME || 'mindforge-academy'),
     'import.meta.env.VITE_ENV': JSON.stringify(env.VITE_ENV || 'production'),
+    'import.meta.env.VITE_APP_VERSION': JSON.stringify(appVersion),
   },
   plugins: [
     cspPlugin(supabaseUrl, isDevelopment),
