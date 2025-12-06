@@ -23,6 +23,7 @@ export default defineConfig({
         '**/dist/',
         '**/coverage/',
         '**/.{idea,git,cache,output,temp}/',
+        '**/*.stories.{ts,tsx}',
       ],
       include: ['src/**/*.{ts,tsx}'],
       all: true,
