@@ -388,15 +388,30 @@
 
 @media (max-width: 500px) {
   .auth-modal {
-    width: 95%;
-    max-width: none;
+    width: calc(100% - 32px);
+    max-width: calc(100vw - 32px);
+    margin: 0 16px;
+  }
+
+  .auth-modal-header {
+    padding: 16px 16px 12px;
+  }
+
+  .auth-modal-header h2 {
+    font-size: 1.25rem;
   }
 
   .auth-content {
-    padding: 20px;
+    padding: 16px;
   }
 
   .oauth-buttons {
     grid-template-columns: 1fr;
+  }
+
+  .auth-message {
+    margin: 0 16px 12px;
+    padding: 10px 12px;
+    font-size: 0.85rem;
   }
 }

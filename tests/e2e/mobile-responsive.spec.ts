@@ -43,9 +43,7 @@ test.describe('iPhone XS (375x812)', () => {
   });
 
   test('login modal is fully visible on screen', async ({ page }) => {
-    // SKIP: This test found a real UI bug - the auth modal is wider than 375px on mobile
-    // TODO: Fix the auth modal to be responsive on small screens (Issue: auth modal overflow)
-    // For now, just verify the modal can be shown
+    // Test verifies auth modal is properly constrained on mobile viewports (Issue #109)
     await page.goto('/');
 
     // Wait for page to settle
@@ -78,10 +76,16 @@ test.describe('iPhone XS (375x812)', () => {
     const authModal = page.locator('.auth-modal');
     await expect(authModal).toBeVisible({ timeout: 5000 });
 
-    // Just verify modal is visible - skip the width check for now
-    // (known issue: modal width exceeds 375px viewport on mobile)
+    // Verify modal width is constrained to viewport
     const box = await authModal.boundingBox();
     expect(box).not.toBeNull();
+    if (box) {
+      const viewportSize = page.viewportSize();
+      const maxExpectedWidth = (viewportSize?.width ?? 375) - 32; // 16px padding each side
+      expect(box.width).toBeLessThanOrEqual(maxExpectedWidth + 1); // +1 for rounding
+      expect(box.x).toBeGreaterThanOrEqual(0); // Modal starts within viewport
+      expect(box.x + box.width).toBeLessThanOrEqual(viewportSize?.width ?? 375); // Modal ends within viewport
+    }
   });
 
   test('topic cards are readable and tappable', async ({ page }) => {
