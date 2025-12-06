@@ -929,4 +929,275 @@ describe('PracticeSessionContainer', () => {
       });
     });
   });
+
+  describe('Loading State', () => {
+    it('should display loading indicator when isLoading is true', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: null,
+        currentTask: null,
+        currentTaskIndex: 0,
+        isLoading: true,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 0, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.getByText(/Lade/i)).toBeInTheDocument();
+    });
+
+    it('should not display task content when loading', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: createMockTask('multiple-choice', { question: 'Q?', options: ['A', 'B'], correctAnswer: 0 }),
+        currentTaskIndex: 0,
+        isLoading: true,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.queryByTestId('task-renderer')).not.toBeInTheDocument();
+    });
+
+    it('should not allow submit while loading', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: createMockTask('multiple-choice', { question: 'Q?', options: ['A', 'B'], correctAnswer: 0 }),
+        currentTaskIndex: 0,
+        isLoading: true,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      const submitButton = screen.queryByText(/Antwort überprüfen/i);
+      expect(submitButton).not.toBeInTheDocument();
+    });
+
+    it('should transition from loading to showing task', async () => {
+      const { rerender } = render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      // Initially loading
+      mockUseSessionManagement.mockReturnValue({
+        session: null,
+        currentTask: null,
+        currentTaskIndex: 0,
+        isLoading: true,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 0, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      rerender(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.getByText(/Lade/i)).toBeInTheDocument();
+
+      // After loading completes
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: createMockTask('multiple-choice', { question: 'Q?', options: ['A', 'B'], correctAnswer: 0 }),
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      rerender(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.queryByText(/Lade/i)).not.toBeInTheDocument();
+      expect(screen.getByTestId('task-renderer')).toBeInTheDocument();
+    });
+  });
+
+  describe('Session State Management', () => {
+    it('should show loading state when no session and no task', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: null,
+        currentTask: null,
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 0, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      // When session is not loaded yet, should show loading
+      expect(screen.getByText(/Laden/i)).toBeInTheDocument();
+    });
+
+    it('should render content when session and task are available', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: createMockTask('multiple-choice', { question: 'Q?', options: ['A', 'B'], correctAnswer: 0 }),
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.getByTestId('task-renderer')).toBeInTheDocument();
+    });
+
+    it('should allow user to cancel the session', async () => {
+      const user = userEvent.setup();
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: createMockTask('multiple-choice', { question: 'Q?', options: ['A', 'B'], correctAnswer: 0 }),
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      const cancelButton = screen.getByText(/Abbrechen|Cancel/i);
+      await user.click(cancelButton);
+      expect(mockOnCancel).toHaveBeenCalled();
+    });
+  });
+
+  describe('Edge Cases', () => {
+    it('should handle empty session gracefully', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: { ...mockSession, tasks: [] },
+        currentTask: null,
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 0, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      // Should not crash, may show empty state or complete
+      expect(screen.queryByTestId('task-renderer')).not.toBeInTheDocument();
+    });
+
+    it('should handle null currentTask after session start', () => {
+      mockUseSessionManagement.mockReturnValue({
+        session: mockSession,
+        currentTask: null,
+        currentTaskIndex: 0,
+        isLoading: false,
+        showFeedback: false,
+        isCorrect: false,
+        progress: { completed: 0, total: 3, percentage: 0 },
+        submitAnswer: mockSubmitAnswer,
+        nextTask: mockNextTask,
+        completeSession: mockCompleteSession,
+      });
+
+      render(
+        <PracticeSessionContainer
+          sessionId="session-1"
+          onComplete={mockOnComplete}
+          onCancel={mockOnCancel}
+        />
+      );
+
+      expect(screen.queryByTestId('task-renderer')).not.toBeInTheDocument();
+    });
+  });
 });
