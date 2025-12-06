@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 import { login } from './auth.setup';
 
 /**
@@ -13,7 +13,7 @@ import { login } from './auth.setup';
 /**
  * Helper to navigate to Spanish flashcard learning path and start session
  */
-async function startFlashcardSession(page: import('@playwright/test').Page) {
+async function startFlashcardSession(page: Page) {
   // Click on Spanisch topic
   await page.getByRole('button', { name: /Spanisch/i }).click();
   await page.waitForSelector('text=Vokabeltest - Karteikarten', { timeout: 10000 });
