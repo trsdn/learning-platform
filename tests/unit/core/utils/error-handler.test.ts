@@ -442,12 +442,14 @@ describe('error-handler', () => {
 
       const promise = withRetry(operation, 'maxRetriesTest', { maxRetries: 2 });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler before running timers
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.NETWORK,
         isRetryable: true,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       // Initial attempt + 2 retries = 3 total calls
       expect(operation).toHaveBeenCalledTimes(3);
@@ -510,12 +512,14 @@ describe('error-handler', () => {
         maxRetries: 1,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler before running timers
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.TIMEOUT,
         message: 'Request timeout',
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
     });
 
     it('should use custom shouldRetry function', async () => {
@@ -528,11 +532,13 @@ describe('error-handler', () => {
         shouldRetry,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler immediately for non-retryable operations
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.NETWORK,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       // Should only call operation once since custom shouldRetry returns false
       expect(operation).toHaveBeenCalledTimes(1);
@@ -589,12 +595,14 @@ describe('error-handler', () => {
         maxRetries: 3,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler immediately for non-retryable operations
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.AUTHENTICATION,
         isRetryable: false,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       // Should only attempt once
       expect(operation).toHaveBeenCalledTimes(1);
@@ -608,11 +616,13 @@ describe('error-handler', () => {
         maxRetries: 3,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler immediately for non-retryable operations
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.VALIDATION,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       expect(operation).toHaveBeenCalledTimes(1);
     });
@@ -625,11 +635,13 @@ describe('error-handler', () => {
         maxRetries: 3,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler immediately for non-retryable operations
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.AUTHORIZATION,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       expect(operation).toHaveBeenCalledTimes(1);
     });
@@ -642,12 +654,14 @@ describe('error-handler', () => {
         maxRetries: 3,
       });
 
-      await vi.runAllTimersAsync();
-
-      await expect(promise).rejects.toMatchObject({
+      // Attach rejection handler immediately for non-retryable operations
+      const expectation = expect(promise).rejects.toMatchObject({
         category: ErrorCategory.DATABASE,
         isRetryable: false,
       });
+
+      await vi.runAllTimersAsync();
+      await expectation;
 
       // Should only attempt once for non-retryable errors
       expect(operation).toHaveBeenCalledTimes(1);
