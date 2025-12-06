@@ -422,6 +422,101 @@ describe('FlashcardTask', () => {
       expect(screen.queryByText('Gewusst')).not.toBeInTheDocument();
       expect(screen.queryByText('Nicht gewusst')).not.toBeInTheDocument();
     });
+
+    it('should hide assessment buttons after user has answered (#167 - prevent duplicate answer)', () => {
+      const task = createFlashcardTask();
+
+      const { rerender } = render(
+        <FlashcardTask
+          task={task}
+          showFeedback={false}
+          isCorrect={false}
+          audioConfig={null}
+          onSubmitAnswer={mockOnSubmitAnswer}
+          onAutoAdvance={mockOnAutoAdvance}
+        />
+      );
+
+      // Reveal the card
+      fireEvent.click(screen.getByText('Ergebnis anzeigen'));
+
+      // Assessment buttons should be visible
+      expect(screen.getByText('Gewusst')).toBeInTheDocument();
+      expect(screen.getByText('Nicht gewusst')).toBeInTheDocument();
+
+      // Click "Gewusst" - this sets known = true
+      fireEvent.click(screen.getByText('Gewusst'));
+
+      // Even with showFeedback still false, buttons should be hidden because known is set
+      // This prevents the bug where buttons reappear when showFeedback toggles back to false
+      expect(screen.queryByText('Gewusst')).not.toBeInTheDocument();
+      expect(screen.queryByText('Nicht gewusst')).not.toBeInTheDocument();
+
+      // Simulate what happens during session completion:
+      // showFeedback goes true, then false again - buttons should NOT reappear
+      rerender(
+        <FlashcardTask
+          task={task}
+          showFeedback={true}
+          isCorrect={true}
+          audioConfig={null}
+          onSubmitAnswer={mockOnSubmitAnswer}
+          onAutoAdvance={mockOnAutoAdvance}
+        />
+      );
+
+      rerender(
+        <FlashcardTask
+          task={task}
+          showFeedback={false}
+          isCorrect={true}
+          audioConfig={null}
+          onSubmitAnswer={mockOnSubmitAnswer}
+          onAutoAdvance={mockOnAutoAdvance}
+        />
+      );
+
+      // Buttons should still be hidden - user already answered
+      expect(screen.queryByText('Gewusst')).not.toBeInTheDocument();
+      expect(screen.queryByText('Nicht gewusst')).not.toBeInTheDocument();
+    });
+
+    it('should prevent double-answering the last flashcard (#167)', async () => {
+      const task = createFlashcardTask();
+
+      render(
+        <FlashcardTask
+          task={task}
+          showFeedback={false}
+          isCorrect={false}
+          audioConfig={null}
+          onSubmitAnswer={mockOnSubmitAnswer}
+          onAutoAdvance={mockOnAutoAdvance}
+        />
+      );
+
+      // Reveal and answer
+      fireEvent.click(screen.getByText('Ergebnis anzeigen'));
+      fireEvent.click(screen.getByText('Gewusst'));
+
+      // onSubmitAnswer should be called exactly once
+      expect(mockOnSubmitAnswer).toHaveBeenCalledTimes(1);
+      expect(mockOnSubmitAnswer).toHaveBeenCalledWith(true);
+
+      // Buttons are now hidden, can't click again
+      expect(screen.queryByText('Gewusst')).not.toBeInTheDocument();
+
+      // Even if we try to find and click, nothing happens
+      mockOnSubmitAnswer.mockClear();
+
+      // Wait for any potential re-renders
+      await act(async () => {
+        await Promise.resolve();
+      });
+
+      // Still no additional calls
+      expect(mockOnSubmitAnswer).not.toHaveBeenCalled();
+    });
   });
 
   describe('Audio Configuration', () => {
