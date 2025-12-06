@@ -190,8 +190,8 @@ export function FlashcardTask({
         )}
       </div>
 
-      {/* Self-assessment buttons - only shown after reveal */}
-      {revealed && !showFeedback && (
+      {/* Self-assessment buttons - only shown after reveal and before answering */}
+      {revealed && !showFeedback && _known === null && (
         <div className={styles['practice-session__flashcard-assessment']}>
           <button
             onClick={() => handleKnownResponse(false)}
