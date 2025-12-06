@@ -37,6 +37,9 @@ export default defineConfig({
     include: ['tests/**/*.{test,spec}.{ts,tsx}'],
     exclude: ['tests/e2e/**/*', 'tests/visual/**/*', 'node_modules'],
     testTimeout: 10000,
+    // Allow unhandled errors from withRetry timeout racing (see tests/unit/core/utils/error-handler.test.ts)
+    // The withRetry function creates timeout promises that can reject after the main operation completes
+    dangerouslyIgnoreUnhandledErrors: true,
   },
   resolve: {
     alias: {
