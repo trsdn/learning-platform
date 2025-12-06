@@ -1,16 +1,17 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { LearningContentService } from '@core/services/learning-content-service';
-import type {
-  Topic,
-  LearningPath,
-  Task,
-  TaskSearchFilters,
-} from '@core/types/services';
+import type { TaskSearchFilters } from '@core/types/services';
 import type {
   ITopicRepository,
   ILearningPathRepository,
   ITaskRepository,
 } from '@storage/types/adapters';
+import {
+  createMockTopic,
+  createMockLearningPath,
+  createMockTask,
+  createMockFlashcardTask,
+} from '@tests/fixtures';
 
 describe('LearningContentService', () => {
   // Mock repositories
@@ -19,28 +20,13 @@ describe('LearningContentService', () => {
   let mockTaskRepository: ITaskRepository;
   let service: LearningContentService;
 
-  // Test data
-  const mockTopic: Topic = {
-    id: 'topic-1',
-    title: 'Spanish Basics',
-    description: 'Learn basic Spanish vocabulary',
-    learningPathIds: ['path-1', 'path-2'],
-    isActive: true,
-    metadata: {
-      estimatedHours: 10,
-      difficultyLevel: 'beginner',
-      prerequisites: [],
-    },
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01'),
-  };
-
-  const mockTopic2: Topic = {
+  // Test data using shared fixtures
+  const mockTopic = createMockTopic();
+  const mockTopic2 = createMockTopic({
     id: 'topic-2',
     title: 'German Basics',
     description: 'Learn basic German vocabulary',
     learningPathIds: ['path-3'],
-    isActive: true,
     metadata: {
       estimatedHours: 12,
       difficultyLevel: 'beginner',
@@ -48,89 +34,30 @@ describe('LearningContentService', () => {
     },
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
-  };
+  });
 
-  const mockLearningPath: LearningPath = {
-    id: 'path-1',
-    topicId: 'topic-1',
-    title: 'Greetings and Introductions',
-    description: 'Learn how to greet people in Spanish',
-    difficulty: 'easy',
-    taskIds: ['task-1', 'task-2'],
-    estimatedTime: 30,
-    isActive: true,
-    requirements: {
-      minimumAccuracy: 0.8,
-      requiredTasks: 5,
-    },
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01'),
-  };
-
-  const mockLearningPath2: LearningPath = {
+  const mockLearningPath = createMockLearningPath();
+  const mockLearningPath2 = createMockLearningPath({
     id: 'path-2',
-    topicId: 'topic-1',
     title: 'Numbers and Counting',
     description: 'Learn numbers in Spanish',
     difficulty: 'medium',
     taskIds: ['task-3'],
     estimatedTime: 45,
-    isActive: true,
     requirements: {
       minimumAccuracy: 0.75,
       requiredTasks: 8,
     },
     createdAt: new Date('2024-01-02'),
     updatedAt: new Date('2024-01-02'),
-  };
+  });
 
-  const mockTask: Task = {
-    id: 'task-1',
-    learningPathId: 'path-1',
-    templateId: 'template-1',
-    type: 'multiple-choice',
-    content: {
-      question: '¿Cómo estás?',
-      options: ['Good', 'Bad', 'So-so', 'Great'],
-      correctAnswer: 0,
-      explanation: 'How are you?',
-    },
-    metadata: {
-      difficulty: 'easy',
-      tags: ['greetings', 'common-phrases'],
-      estimatedTime: 60,
-      points: 10,
-    },
-    createdAt: new Date('2024-01-01'),
-    updatedAt: new Date('2024-01-01'),
-  };
-
-  const mockTask2: Task = {
-    id: 'task-2',
-    learningPathId: 'path-1',
-    templateId: 'template-2',
-    type: 'flashcard',
-    content: {
-      front: 'Hola',
-      back: 'Hello',
-      frontLanguage: 'es' as const,
-      backLanguage: 'en' as const,
-    },
-    metadata: {
-      difficulty: 'easy',
-      tags: ['greetings', 'vocabulary'],
-      estimatedTime: 30,
-      points: 5,
-    },
-    createdAt: new Date('2024-01-02'),
-    updatedAt: new Date('2024-01-02'),
-  };
-
-  const mockTask3: Task = {
+  const mockTask = createMockTask();
+  const mockTask2 = createMockFlashcardTask({ id: 'task-2' });
+  const mockTask3 = createMockTask({
     id: 'task-3',
     learningPathId: 'path-2',
     templateId: 'template-3',
-    type: 'multiple-choice',
     content: {
       question: 'What is uno in English?',
       options: ['One', 'Two', 'Three', 'Four'],
@@ -144,7 +71,7 @@ describe('LearningContentService', () => {
     },
     createdAt: new Date('2024-01-03'),
     updatedAt: new Date('2024-01-03'),
-  };
+  });
 
   beforeEach(() => {
     // Create mock implementations

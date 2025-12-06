@@ -8,6 +8,8 @@
 import { describe, it, expect, beforeEach, vi, afterEach } from 'vitest';
 import { SupabaseAuthService, getAuthErrorMessage } from '@/modules/core/services/supabase-auth-service';
 import type { AuthError, AuthResponse, OAuthResponse, User, Session } from '@supabase/supabase-js';
+// Shared fixtures available for future refactoring:
+// import { createMockUser, createMockAuthResponse, authErrors } from '@tests/fixtures';
 
 // Mock the supabase client
 vi.mock('@/modules/storage/supabase-client', () => ({
