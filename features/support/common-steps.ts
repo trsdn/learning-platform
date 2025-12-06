@@ -14,6 +14,11 @@ Given('I am logged in as a learner', async ({ authenticatedPage }) => {
   await expect(authenticatedPage).toHaveURL('/');
 });
 
+Given('I am logged in', async ({ authenticatedPage }) => {
+  // Generic login step - authenticatedPage fixture handles login
+  await expect(authenticatedPage).toHaveURL('/');
+});
+
 Given('I am not logged in', async ({ page }) => {
   // Clear any existing session
   await page.context().clearCookies();

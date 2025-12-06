@@ -13,3 +13,4 @@ import '../authentication/step-definitions/auth-steps';
 import '../learning/step-definitions/browse-steps';
 import '../session/step-definitions/practice-steps';
 import '../settings/step-definitions/settings-steps';
+import '../progress/step-definitions/progress-steps';

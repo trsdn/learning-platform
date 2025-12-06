@@ -15,7 +15,8 @@ export interface TestFixtures {
 }
 
 export const test = base.extend<TestFixtures>({
-  testData: async (_, use) => {
+  // eslint-disable-next-line no-empty-pattern
+  testData: async ({}, use) => {
     await use({
       testEmail: process.env.E2E_TEST_EMAIL || 'test@example.com',
       testPassword: process.env.E2E_TEST_PASSWORD || 'testpassword123',
