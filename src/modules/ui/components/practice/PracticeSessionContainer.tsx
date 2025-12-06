@@ -119,10 +119,12 @@ export function PracticeSessionContainer({
       setAudioConfig(config);
     });
 
-    // Load audio for the task
-    loadAudio(currentTask, audioSettings, false).catch((error) => {
-      console.warn('Failed to load audio:', error);
-    });
+    // Load audio for the task (only if task has audio URL)
+    if (currentTask.audioUrl) {
+      loadAudio(currentTask, audioSettings, false).catch((error) => {
+        console.warn('Failed to load audio:', error);
+      });
+    }
   }, [currentTask, audioSettings, loadAudio]);
 
   // Get current task hook based on type
