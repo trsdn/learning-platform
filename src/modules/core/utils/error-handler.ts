@@ -265,10 +265,12 @@ export async function withRetry<T>(
   let lastError: StructuredError | null = null;
 
   for (let attempt = 1; attempt <= opts.maxRetries + 1; attempt++) {
+    let timeoutId: ReturnType<typeof setTimeout> | undefined;
+
     try {
-      // Create timeout promise
+      // Create timeout promise with cleanup capability
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => {
+        timeoutId = setTimeout(() => {
           const timeoutError = new Error('Operation timeout');
           timeoutError.name = 'AbortError';
           reject(timeoutError);
@@ -277,8 +279,19 @@ export async function withRetry<T>(
 
       // Race between operation and timeout
       const result = await Promise.race([operation(), timeoutPromise]);
+
+      // Clear timeout on success
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+
       return result;
     } catch (error) {
+      // Clear timeout on error
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
+
       // Categorize the error
       lastError = categorizeError(error, { operation: operationName, attempt });
 
