@@ -550,5 +550,515 @@ describe('AudioService (Contract Tests)', () => {
       const state = audioService.getPlaybackState();
       expect(state.status).toBe('stopped');
     });
+
+    it('should cleanup preloaded audio when disposed', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      const nextTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/next.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+      audioService.preloadNext(nextTask as Task);
+
+      expect(() => audioService.dispose()).not.toThrow();
+
+      const state = audioService.getPlaybackState();
+      expect(state.preloadedNextUrl).toBeNull();
+    });
+
+    it('should clear all state listeners when disposed', async () => {
+      const callback = vi.fn();
+      audioService.onStateChange(callback);
+
+      // Clear any initial calls from dispose itself
+      callback.mockClear();
+
+      audioService.dispose();
+
+      // Try to trigger state change after dispose
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      // Clear any calls from dispose before loading audio
+      callback.mockClear();
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Callback should not be called because listeners were cleared
+      expect(callback).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('Error Handling', () => {
+    beforeEach(async () => {
+      await audioService.initialize();
+    });
+
+    it('should handle missing audioUrl in loadAudio', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: false,
+        audioUrl: undefined,
+      };
+
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, false)
+      ).rejects.toThrow('Task does not have an audio URL');
+    });
+
+    it('should handle invalid audio URL (too long)', async () => {
+      const longUrl = '/audio/' + 'x'.repeat(2050) + '.mp3';
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: longUrl,
+      };
+
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, false)
+      ).rejects.toThrow('Invalid audio URL');
+    });
+
+    it('should handle invalid audio URL (wrong path)', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: 'https://external.com/file.mp3',
+      };
+
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, false)
+      ).rejects.toThrow('Invalid audio URL');
+    });
+
+    it('should handle audio load errors via event listener', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Simulate error event
+      const errorHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'error'
+      )?.[1];
+
+      if (errorHandler) {
+        errorHandler({ message: 'Network error' });
+      }
+
+      const state = audioService.getPlaybackState();
+      expect(state.status).toBe('error');
+      expect(state.error).toContain('Failed to load audio');
+    });
+
+    it('should handle NotAllowedError when play is blocked', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Mock play to reject with NotAllowedError
+      const error = new Error('Auto-play blocked');
+      error.name = 'NotAllowedError';
+
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockRejectedValueOnce(error);
+      }
+
+      await expect(audioService.play()).rejects.toThrow('Auto-play blocked');
+
+      const state = audioService.getPlaybackState();
+      expect(state.status).toBe('error');
+      expect(state.error).toContain('Auto-play blocked by browser');
+    });
+
+    it('should rethrow non-NotAllowedError errors from play', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Mock play to reject with a different error
+      const error = new Error('Unknown error');
+      error.name = 'UnknownError';
+
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockRejectedValueOnce(error);
+      }
+
+      await expect(audioService.play()).rejects.toThrow('Unknown error');
+    });
+
+    it('should throw error when replay is called without audio', async () => {
+      await expect(audioService.replay()).rejects.toThrow('No audio loaded');
+    });
+
+    it('should handle auto-play failure silently', async () => {
+      // Spy on console.error to verify error is logged
+      const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+
+      // Create a custom MockAudio that will fail on play
+      const error = new Error('Auto-play blocked');
+      class FailingMockAudio extends MockAudio {
+        override play = vi.fn().mockRejectedValue(error);
+      }
+
+      // Override the global Audio constructor
+      global.Audio = FailingMockAudio as unknown as typeof Audio;
+
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      // Unlock auto-play
+      await audioService.unlockAutoPlay();
+
+      // Load with auto-play - should not throw even if play fails
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, true)
+      ).resolves.not.toThrow();
+
+      // Wait for auto-play attempt
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      // Verify error was logged
+      expect(consoleErrorSpy).toHaveBeenCalledWith('Auto-play failed:', error);
+
+      // Cleanup
+      consoleErrorSpy.mockRestore();
+
+      // Restore original mock
+      global.Audio = MockAudio as unknown as typeof Audio;
+    });
+  });
+
+  describe('Audio Event Listeners', () => {
+    beforeEach(async () => {
+      await audioService.initialize();
+    });
+
+    it('should update duration when loadedmetadata event fires', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Simulate loadedmetadata event
+      if (mockAudioInstance) {
+        mockAudioInstance.duration = 45.5;
+      }
+
+      const metadataHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'loadedmetadata'
+      )?.[1];
+
+      if (metadataHandler) {
+        metadataHandler();
+      }
+
+      const state = audioService.getPlaybackState();
+      expect(state.duration).toBe(45.5);
+      expect(state.status).toBe('stopped');
+    });
+
+    it('should update currentTime when timeupdate event fires during playback', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+      await audioService.play();
+
+      // Simulate timeupdate event
+      if (mockAudioInstance) {
+        mockAudioInstance.currentTime = 3.2;
+      }
+
+      const timeupdateHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'timeupdate'
+      )?.[1];
+
+      if (timeupdateHandler) {
+        timeupdateHandler();
+      }
+
+      const state = audioService.getPlaybackState();
+      expect(state.currentTime).toBe(3.2);
+    });
+
+    it('should NOT update currentTime when timeupdate fires while not playing', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Don't play - status should be 'stopped'
+      const initialState = audioService.getPlaybackState();
+      const initialTime = initialState.currentTime;
+
+      // Simulate timeupdate event
+      if (mockAudioInstance) {
+        mockAudioInstance.currentTime = 5.0;
+      }
+
+      const timeupdateHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'timeupdate'
+      )?.[1];
+
+      if (timeupdateHandler) {
+        timeupdateHandler();
+      }
+
+      const state = audioService.getPlaybackState();
+      // Should still have initial time, not updated from event
+      expect(state.currentTime).toBe(initialTime);
+    });
+
+    it('should reset to stopped when ended event fires', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+      await audioService.play();
+
+      // Simulate ended event
+      const endedHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'ended'
+      )?.[1];
+
+      if (endedHandler) {
+        endedHandler();
+      }
+
+      const state = audioService.getPlaybackState();
+      expect(state.status).toBe('stopped');
+      expect(state.currentTime).toBe(0);
+    });
+  });
+
+  describe('Rate Limiting', () => {
+    beforeEach(async () => {
+      await audioService.initialize();
+
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+    });
+
+    it('should prevent rapid successive play calls', async () => {
+      // First play should succeed
+      await audioService.play();
+
+      // Clear the mock to track new calls
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockClear();
+      }
+
+      // Immediate second play should be rate limited
+      await audioService.play();
+
+      // play() should not have been called on the audio element
+      expect(mockAudioInstance?.play).not.toHaveBeenCalled();
+    });
+
+    it('should allow play after rate limit interval', async () => {
+      // First play
+      await audioService.play();
+
+      // Clear mock
+      if (mockAudioInstance) {
+        mockAudioInstance.play.mockClear();
+      }
+
+      // Wait for rate limit to expire (100ms + buffer)
+      await new Promise(resolve => setTimeout(resolve, 150));
+
+      // Second play should succeed
+      await audioService.play();
+
+      expect(mockAudioInstance?.play).toHaveBeenCalled();
+    });
+  });
+
+  describe('Edge Cases', () => {
+    beforeEach(async () => {
+      await audioService.initialize();
+    });
+
+    it('should handle pause when no audio is loaded', () => {
+      expect(() => audioService.pause()).not.toThrow();
+
+      const state = audioService.getPlaybackState();
+      // State should remain unchanged
+      expect(state.status).toBe('stopped');
+    });
+
+    it('should handle stop when no audio is loaded', () => {
+      expect(() => audioService.stop()).not.toThrow();
+
+      const state = audioService.getPlaybackState();
+      expect(state.status).toBe('stopped');
+    });
+
+    it('should handle preloadNext with task without audio URL', () => {
+      const nextTask: Partial<Task> = {
+        hasAudio: false,
+        audioUrl: undefined,
+      };
+
+      expect(() => audioService.preloadNext(nextTask as Task)).not.toThrow();
+
+      const state = audioService.getPlaybackState();
+      // preloadedNextUrl should remain null
+      expect(state.preloadedNextUrl).toBeNull();
+    });
+
+    it('should toggle from stopped to playing', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Trigger loadedmetadata to set status to 'stopped'
+      if (mockAudioInstance) {
+        mockAudioInstance.duration = 30;
+      }
+      const metadataHandler = mockAudioInstance?.addEventListener.mock.calls.find(
+        call => call[0] === 'loadedmetadata'
+      )?.[1];
+      if (metadataHandler) {
+        metadataHandler();
+      }
+
+      expect(audioService.getPlaybackState().status).toBe('stopped');
+
+      await audioService.togglePlayPause();
+
+      expect(audioService.getPlaybackState().status).toBe('playing');
+    });
+
+    it('should accept valid audio URL with base path', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: 'https://example.com/audio/test.mp3',
+      };
+
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, false)
+      ).resolves.not.toThrow();
+    });
+
+    it('should accept valid data URI for audio', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: 'data:audio/mp3;base64,SGVsbG8gV29ybGQ=',
+      };
+
+      await expect(
+        audioService.loadAudio(mockTask as Task, {} as AudioSettings, false)
+      ).resolves.not.toThrow();
+    });
+
+    it('should clear auto-play timer when loading new audio', async () => {
+      const mockTask1: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test1.mp3',
+      };
+
+      const mockTask2: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test2.mp3',
+      };
+
+      await audioService.unlockAutoPlay();
+
+      // Load first audio with auto-play
+      await audioService.loadAudio(mockTask1 as Task, {} as AudioSettings, true);
+
+      // Immediately load second audio (should clear timer from first)
+      await audioService.loadAudio(mockTask2 as Task, {} as AudioSettings, false);
+
+      // Wait to ensure first auto-play doesn't trigger
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      // Should NOT be playing because timer was cleared
+      const state = audioService.getPlaybackState();
+      expect(state.audioUrl).toBe('/audio/test2.mp3');
+    });
+
+    it('should not trigger auto-play if not unlocked', async () => {
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      // Don't unlock auto-play
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, true);
+
+      // Wait for potential auto-play delay
+      await new Promise(resolve => setTimeout(resolve, 600));
+
+      const state = audioService.getPlaybackState();
+      // Should not be playing
+      expect(state.status).not.toBe('playing');
+    });
+
+    it('should preserve autoPlayUnlocked state when loading new audio', async () => {
+      await audioService.unlockAutoPlay();
+
+      expect(audioService.getPlaybackState().autoPlayUnlocked).toBe(true);
+
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/test.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Should still be unlocked after loading audio
+      expect(audioService.getPlaybackState().autoPlayUnlocked).toBe(true);
+    });
+
+    it('should preserve preloadedNextUrl when loading new audio', async () => {
+      const nextTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/next.mp3',
+      };
+
+      audioService.preloadNext(nextTask as Task);
+      expect(audioService.getPlaybackState().preloadedNextUrl).toBe('/audio/next.mp3');
+
+      const mockTask: Partial<Task> = {
+        hasAudio: true,
+        audioUrl: '/audio/current.mp3',
+      };
+
+      await audioService.loadAudio(mockTask as Task, {} as AudioSettings, false);
+
+      // Preloaded URL should be preserved
+      expect(audioService.getPlaybackState().preloadedNextUrl).toBe('/audio/next.mp3');
+    });
   });
 });
