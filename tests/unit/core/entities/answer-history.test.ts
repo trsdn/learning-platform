@@ -107,9 +107,10 @@ describe('AnswerHistoryEntity', () => {
       });
 
       it('should include field and value in validation error', () => {
+        expect(() => AnswerHistoryEntity.validate({ timeSpent: -5 })).toThrow(ValidationError);
+
         try {
           AnswerHistoryEntity.validate({ timeSpent: -5 });
-          expect.fail('Should have thrown ValidationError');
         } catch (error) {
           expect(error).toBeInstanceOf(ValidationError);
           if (error instanceof ValidationError) {
@@ -153,9 +154,10 @@ describe('AnswerHistoryEntity', () => {
       });
 
       it('should include field and value in validation error', () => {
+        expect(() => AnswerHistoryEntity.validate({ confidence: 10 })).toThrow(ValidationError);
+
         try {
           AnswerHistoryEntity.validate({ confidence: 10 });
-          expect.fail('Should have thrown ValidationError');
         } catch (error) {
           expect(error).toBeInstanceOf(ValidationError);
           if (error instanceof ValidationError) {
