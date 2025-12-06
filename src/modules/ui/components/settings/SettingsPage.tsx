@@ -399,7 +399,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       content: (
         <div className={styles.settingGroup}>
           <div className={styles.infoCard}>
-            <div>Version: 1.0.0</div>
+            <div>Version: {import.meta.env.VITE_APP_VERSION ?? 'unknown'}</div>
             <div>Letzte Aktualisierung: {new Intl.DateTimeFormat('de-DE').format(new Date())}</div>
           </div>
           <div className={styles.buttonRow}>
