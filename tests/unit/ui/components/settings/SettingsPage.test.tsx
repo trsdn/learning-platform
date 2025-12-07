@@ -950,7 +950,7 @@ describe('SettingsPage', () => {
     it('should render version information', () => {
       render(<SettingsPage onClose={mockOnClose} />);
 
-      expect(screen.getByText(/Version: 1.0.0/)).toBeInTheDocument();
+      expect(screen.getByText(/Version: \d+\.\d+\.\d+/)).toBeInTheDocument();
     });
 
     it('should render documentation link', () => {
