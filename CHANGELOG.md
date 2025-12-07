@@ -1,11 +1,42 @@
 # Changelog
 
+<!-- markdownlint-disable MD024 MD034 -->
+
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [1.2.0] - 2025-12-06
+
+## [1.3.0] - 2025-12-07
+
+### Features
+
+- Add responsive styles for iPad Mini landscape mode (#220) @trsdn
+- Remove session configuration screen and rely on settings defaults (#217) @trsdn
+- Add Spanish Unit 3 learning paths and audio assets (#216, #219) @trsdn
+- Generate missing Spanish audio files and update fixtures @trsdn
+- Implement BDD testing framework and step definitions (#205, #182) @trsdn
+
+### Bug Fixes
+
+- Prevent last flashcard from appearing twice (#197) @trsdn
+- Constrain auth modal width on mobile (#203) @trsdn
+- Display correct version from package.json in Settings (#201) @trsdn
+- Suppress console warnings for tasks without audio URLs (#200) @trsdn
+- Improve UI layout and spacing for flashcards on small tablets (#220) @trsdn
+
+### Testing & Quality
+
+- Improve unit and E2E coverage across practice flows, feedback, and keyboard shortcuts (#204, #206, #202, #198, #199, #196, #194) @trsdn
+- Add contract and integration tests for storage and spaced repetition services (#205) @trsdn
+
+### Documentation
+
+- Streamline README and align agent guides @trsdn
+
+**Full Changelog**: [https://github.com/trsdn/learning-platform/compare/v1.2.0...v1.3.0](https://github.com/trsdn/learning-platform/compare/v1.2.0...v1.3.0)
 
 ### Features
 
@@ -20,7 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Replace hardcoded CSS values with design tokens in Error Detection Task (#150) @AVBharath10
 
-**Full Changelog**: https://github.com/trsdn/learning-platform/compare/v1.1.2...v1.2.0
+**Full Changelog**: [https://github.com/trsdn/learning-platform/compare/v1.1.2...v1.2.0](https://github.com/trsdn/learning-platform/compare/v1.1.2...v1.2.0)
 
 ## [1.1.0] - 2025-12-04
 
@@ -53,7 +84,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve seed script and update docs (#108) @trsdn
 - Bump happy-dom from 19.0.2 to 20.0.11 (#98) @dependabot
 
-**Full Changelog**: https://github.com/trsdn/learning-platform/compare/v20251004-101103...v1.1.0
+**Full Changelog**: [https://github.com/trsdn/learning-platform/compare/v20251004-101103...v1.1.0](https://github.com/trsdn/learning-platform/compare/v20251004-101103...v1.1.0)
 
 ## [1.0.0] - 2025-10-04
 
