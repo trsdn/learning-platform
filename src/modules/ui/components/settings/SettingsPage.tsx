@@ -202,6 +202,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
             <input
               id="repeat-difficult-tasks"
               type="checkbox"
+              aria-describedby="repeat-difficult-tasks-desc"
               checked={settings.learning.repeatDifficultTasks}
               onChange={(event) =>
                 updateSettings((prev) => ({
