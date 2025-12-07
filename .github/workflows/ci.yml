@@ -80,6 +80,13 @@ jobs:
       # - name: Run E2E tests
       #   run: npm run test:e2e -- --project=chromium
 
+      # Temporarily disabled - BDD tests have same Playwright browser issues (Issue #182)
+      # - name: Install Playwright browsers for BDD
+      #   run: npx playwright install --with-deps chromium
+
+      # - name: Run BDD tests
+      #   run: npm run test:bdd -- --project=chromium
+
       - name: Upload test results
         if: always()
         uses: actions/upload-artifact@v4
@@ -88,4 +95,5 @@ jobs:
           path: |
             playwright-report/
             test-results/
+            tests/bdd-report/
           retention-days: 7

@@ -12,6 +12,9 @@
     "test:coverage": "vitest --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
+    "test:bdd": "npx bddgen --config playwright.bdd.config.ts && playwright test --config playwright.bdd.config.ts",
+    "test:bdd:ui": "npx bddgen --config playwright.bdd.config.ts && playwright test --config playwright.bdd.config.ts --ui",
+    "test:bdd:smoke": "npx bddgen --config playwright.bdd.config.ts && playwright test --config playwright.bdd.config.ts --grep @smoke",
     "lint": "eslint . --ext .ts,.tsx --report-unused-disable-directives --max-warnings 0",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "format": "prettier --write \"src/**/*.{ts,tsx,json,css,md}\"",
@@ -47,6 +50,7 @@
     "zustand": "^4.5.0"
   },
   "devDependencies": {
+    "@cucumber/cucumber": "^12.3.0",
     "@napi-rs/canvas": "^0.1.80",
     "@playwright/test": "^1.41.2",
     "@storybook/addon-a11y": "^8.6.14",
@@ -83,6 +87,7 @@
     "jsdom": "^27.0.0",
     "lint-staged": "^15.2.2",
     "playwright": "^1.41.2",
+    "playwright-bdd": "^8.4.2",
     "prettier": "^3.2.5",
     "storybook": "^8.6.14",
     "tsx": "^4.20.6",
