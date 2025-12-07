@@ -1,62 +1,96 @@
-# Testing Agent Guidelines
+# AI Agent Guide – Tests (`tests/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
-**Status**: 🏆 **Authoritative Source** for test artifacts and screenshot management
+## Scope
 
-> **For AI Agents**: This guide contains specific instructions for testing operations. Always read this before performing any testing tasks.
+- Describes how all automated tests are organized under `tests/`.
+- Covers unit, integration, E2E, visual, performance, accessibility, and contract tests.
+- Focuses on **how to work with tests and artifacts**, not on how to write application code (see `src/AGENTS.md`).
 
-**Related Guides**: [scripts/AGENTS.md](../scripts/AGENTS.md) for cleanup scripts, [templates/AGENTS.md](../templates/AGENTS.md) for test templates
+## Responsibilities
+
+- Provide a clear structure for all test suites and categories.
+- Define how and where to store test artifacts (screenshots, logs, reports).
+- Describe preferred tools and patterns for each test type.
+- Document common test commands and workflows for agents.
+
+## Entry Points
+
+- `unit/` – Vitest unit tests for core, storage, and UI.
+- `e2e/` – Playwright end‑to‑end tests for main user flows.
+- `visual/` – Visual regression tests and snapshots.
+- `integration/` – Integration tests covering multiple modules.
+- `contract/` – Contract tests for repositories and external boundaries.
+- `artifacts/` – Screenshots, logs, and test reports (gitignored).
+
+## Conventions
+
+- Use **Vitest** for unit, integration, and most non‑visual tests.
+- Use **Playwright** for E2E and visual regression tests.
+- Mirror the `src/` structure inside `tests/unit/` where possible (e.g., `tests/unit/core`, `tests/unit/ui`).
+- Keep test files close in naming to the source under test (`ComponentName.test.tsx`, `service-name.test.ts`).
+- Store **temporary artifacts** only inside `tests/artifacts/` and never commit them.
+- Use `jest-axe` for accessibility checks on React components.
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `platform-test-orchestrator` – For end‑to‑end test planning and execution across unit, integration, and E2E suites.
+- `unit-tester` – When adding or extending unit tests for services, hooks, or components.
+- `e2e-tester` – When creating or updating Playwright tests under `tests/e2e/`.
+- `ui-visual-validator` – For visual regression and screenshot‑based validation.
+
+### Helpful commands
+
+- `/validate-implementation <issue-number>` – Run the full validation workflow (tests, type‑check, lint, build) for a change.
+- `/deploy-test` – After major test changes to verify flows against the test deployment.
+
+## Do & Don’t
+
+### Do
+
+- Keep tests **fast and deterministic**; avoid reliance on real external services.
+- Add tests when fixing bugs to prevent regressions.
+- Use `data-testid` selectors in UI for robust Playwright tests.
+- Capture screenshots for failing E2E tests in `tests/artifacts/screenshots/debug/`.
+- Use snapshot tests only where changes are rare and intentional.
+
+### Don’t
+
+- Don’t store screenshots or logs in the project root or commit them to git.
+- Don’t couple tests tightly to internal implementation details; prefer behavior‑driven assertions.
+- Don’t skip tests locally that will run in CI.
+- Don’t hardcode environment‑specific values; use configuration or fixtures.
+
+## Testing
+
+- Unit tests (Vitest): `tests/unit/**/*.test.ts` / `.test.tsx`.
+- Integration tests: `tests/integration/**/*.test.ts`.
+- E2E tests (Playwright): `tests/e2e/**/*.spec.ts`.
+- Visual regression tests: `tests/visual/**/*.spec.ts` and corresponding snapshots.
+- Accessibility tests: `tests/accessibility/**/*.test.tsx` (using `jest-axe`).
+
+Recommended commands:
+
+- `npm test` – Run unit and integration tests.
+- `npm run test:e2e` – Run E2E tests with Playwright.
+- `npm run test:visual` – Run visual regression tests.
+- `npm run test:coverage` – Generate coverage report.
+- `npm run cleanup:artifacts` – Clean temporary test artifacts.
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Scripts Directory – AI Agent Guide](../scripts/AGENTS.md)
+- [Source Code Agent Guide](../src/AGENTS.md)
 
 ---
-
-## 🎯 Purpose
-
-This guide provides testing-specific guidelines for AI agents working with:
-- Unit tests (Vitest)
-- E2E tests (Playwright)
-- Visual regression tests
-- Integration tests
-- Performance tests
-- Accessibility tests
-
----
-
-## 🔴 Test-Driven Development (TDD)
-
-**We follow TDD for all feature development.** Write tests before implementation.
-
-### TDD Cycle
-
-1. **Red**: Write a failing test that defines expected behavior
-2. **Green**: Write minimal code to make the test pass
-3. **Refactor**: Clean up code while keeping tests green
-
-### TDD Workflow
-
-```bash
-# 1. Write test first
-npm test -- --watch tests/unit/core/my-feature.test.ts
-
-# 2. See it fail (Red)
-# 3. Implement feature
-# 4. See it pass (Green)
-# 5. Refactor, verify tests still pass
-```
-
-### TDD Best Practices
-
-- **One test at a time**: Don't write all tests upfront
-- **Smallest step**: Write the simplest failing test first
-- **No production code without a failing test**
-- **Refactor only when green**: Never refactor while tests are failing
-- **Test behavior, not implementation**: Tests should survive refactoring
 
 ---
 
 ## 📁 Directory Structure
 
-```
+```text
 tests/
 ├── unit/              # Vitest unit tests (*.test.ts, *.test.tsx)
 │   ├── core/         # Core domain logic tests
@@ -82,11 +116,13 @@ tests/
 ### Screenshot Storage Rules
 
 **✅ DO**:
+
 - Save to `tests/artifacts/screenshots/{category}/`
 - Use naming: `{purpose}-{timestamp}.png`
 - Categories: `debug/`, `reports/`, `validation/`
 
 **❌ DON'T**:
+
 - Save to project root
 - Save to `.playwright-mcp/` (deprecated)
 - Commit temporary screenshots to git
@@ -123,6 +159,7 @@ writeFileSync(
 ## 🔬 Unit Testing Guidelines
 
 ### File Naming
+
 - **Component tests**: `ComponentName.test.tsx`
 - **Service tests**: `ServiceName.test.ts`
 - **Utility tests**: `utilityName.test.ts`
@@ -173,6 +210,7 @@ describe('ComponentName Accessibility', () => {
 ```
 
 ### Coverage Requirements
+
 - **Line coverage**: ≥80%
 - **Branch coverage**: ≥75%
 - **Function coverage**: ≥80%
@@ -181,11 +219,12 @@ describe('ComponentName Accessibility', () => {
 
 ## 🎭 E2E Testing Guidelines
 
-### File Naming
+### File Naming (E2E & Visual)
+
 - **E2E tests**: `featureName.spec.ts`
 - **Visual tests**: `componentName.visual.spec.ts`
 
-### Test Structure
+### Test Structure (E2E)
 
 ```typescript
 import { test, expect } from '@playwright/test'
@@ -226,6 +265,7 @@ test.describe('Feature Name', () => {
 ## 📸 Visual Regression Testing
 
 ### Snapshot Storage
+
 - **Location**: `tests/visual/snapshots/`
 - **Naming**: `{test-name}-{browser}-{os}.png`
 - **Committed**: Yes (for comparison)
@@ -300,6 +340,7 @@ describe('Performance Benchmarks', () => {
 ```
 
 ### Performance Metrics to Track
+
 - Initial page load: <2s
 - Time to interactive: <3s
 - Task rendering: <50ms
@@ -310,15 +351,19 @@ describe('Performance Benchmarks', () => {
 ## 🚨 Common Issues & Solutions
 
 ### Issue: Screenshots accumulating in root
+
 **Solution**: Use `tests/artifacts/screenshots/` instead
 
 ### Issue: Test artifacts committed to git
+
 **Solution**: Ensure `.gitignore` includes `tests/artifacts/`
 
 ### Issue: Tests failing in CI but passing locally
+
 **Solution**: Check viewport size, wait for network idle
 
 ### Issue: Flaky E2E tests
+
 **Solution**: Add explicit waits, avoid `setTimeout()`
 
 ---
@@ -340,6 +385,7 @@ npm run test:visual
 ```
 
 ### Report Storage
+
 - **Coverage**: `coverage/` (gitignored)
 - **Playwright**: `playwright-report/` (gitignored)
 - **Test results**: `test-results/` (gitignored)
@@ -394,6 +440,7 @@ npm run build
 ## ✅ Pre-Test Checklist
 
 Before running tests:
+
 - [ ] Database is clean (IndexedDB cleared)
 - [ ] Dev server is running (`npm run dev`)
 - [ ] No uncommitted test artifacts
@@ -404,6 +451,7 @@ Before running tests:
 ## 🎯 Test Quality Standards
 
 **Required for all tests**:
+
 - ✅ Descriptive test names
 - ✅ Arrange-Act-Assert pattern
 - ✅ No flaky tests (deterministic)
@@ -412,6 +460,7 @@ Before running tests:
 - ✅ Clear failure messages
 
 **Code Review Checklist**:
+
 - [ ] Tests cover happy path
 - [ ] Tests cover error cases
 - [ ] Tests cover edge cases

@@ -1,24 +1,64 @@
-# Supabase Database Agent Guidelines
+# AI Agent Guide – Supabase (`infrastructure/supabase/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../../AGENTS.md](../../AGENTS.md)
-**Status**: 🏆 **Authoritative Source** for database operations and migrations
+## Scope
 
-> **For AI Agents**: This guide contains specific instructions for working with Supabase database operations, migrations, and data management.
+- Describes the **database layer** backed by Supabase: migrations, schema, RLS, and related config.
+- Focuses on SQL migrations and Supabase CLI operations for this project.
 
-**Related Guides**: [scripts/AGENTS.md](../../scripts/AGENTS.md) for seeding scripts, [public/AGENTS.md](../../public/AGENTS.md) for content structure
+## Responsibilities
 
----
+- Define and evolve the database schema via timestamped migrations.
+- Configure Row Level Security (RLS) policies for all tables.
+- Coordinate with scripts in `scripts/` for schema application and seeding.
 
-## 🎯 Purpose
+## Entry Points
 
-This guide provides Supabase-specific guidelines for AI agents working with:
-- Database migrations
-- Schema management
-- Data seeding
-- Type generation
-- Authentication setup
+- `migrations/*.sql` – Timestamped migration files (authoritative history of schema changes).
+- `config.toml` – Supabase project configuration.
+- `.temp/` – Temporary artifacts (gitignored).
 
+## Conventions
+
+- Always create new migrations; never edit existing ones that have been applied.
+- Enable RLS for all user‑facing tables and define explicit policies.
+- Use descriptive migration names and include comments on tables/columns.
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `platform-deploy-orchestrator` – For workflows that include schema changes and production deployments.
+- `security-auditor` – When reviewing or updating RLS policies and access control.
+- `integration-tester` – When validating schema changes against application behavior.
+
+### Helpful commands
+
+- `/deploy` – For production deployments after migrations and seeding are validated.
+- `/validate-implementation <issue-number>` – To run full validation after schema or RLS changes.
+
+## Do & Don’t
+
+### Do
+
+- Test migrations locally with the Supabase CLI before applying remotely.
+- Keep seeding logic in `scripts/seed-supabase.ts` aligned with the current schema.
+- Document non‑obvious RLS rules and access patterns.
+
+### Don’t
+
+- Don’t embed secrets in migration files.
+- Don’t bypass RLS for production data except via carefully‑scoped service role keys.
+
+## Testing
+
+- Use Supabase CLI (`supabase db reset`, `supabase db push`) to test migrations.
+- Integration tests that rely on Supabase should live under `tests/integration/` or dedicated setup files.
+
+## Related Guides
+
+- [Root AI Agent Guide](../../AGENTS.md)
+- [Scripts Directory – AI Agent Guide](../../scripts/AGENTS.md)
+- [Learning Content Agent Guidelines](../../public/AGENTS.md)
 ---
 
 ## 📁 Directory Structure

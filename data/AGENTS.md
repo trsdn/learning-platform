@@ -1,24 +1,68 @@
-# Data Templates Agent Guidelines
+# AI Agent Guide – Data Templates (`data/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
-**Status**: 🏆 **Authoritative Source** for data templates and task type schemas
+## Scope
 
-> **For AI Agents**: This guide contains specific instructions for working with data templates, task type schemas, and JSON validation.
+- Describes the **task type templates** stored under `data/templates/`.
+- Focuses on JSON schemas, examples, and best practices for task content.
+- Does **not** describe learning path files themselves (see `public/AGENTS.md`).
 
-**Related Guides**: [public/AGENTS.md](../public/AGENTS.md) for learning content, [src/AGENTS.md](../src/AGENTS.md) for type definitions
+## Responsibilities
 
----
+- Provide authoritative schemas for all supported task types.
+- Offer reusable examples and best practices for content authors.
+- Serve as the reference for validating and generating task JSON.
 
-## 🎯 Purpose
+## Entry Points
 
-This guide provides data template guidelines for AI agents working with:
+- `templates/*.json` – Template files for each task type (multiple-choice, cloze-deletion, matching, etc.).
+- `templates/README.md` – Additional documentation on how to use the templates.
 
-- Task type templates
-- JSON schema validation
-- Template creation and modification
-- Task content structure
-- Template versioning
+## Conventions
+
+- Each template file includes `taskType`, `version`, `schema`, `examples`, and `bestPractices` sections.
+- Template structure must remain aligned with interfaces in `src/modules/core/types/services.ts`.
+- Use clear, language‑agnostic placeholders (e.g., `{{LANGUAGE}}`, `{{ENGLISH_WORD}}`).
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `content-planner` – When designing reusable patterns for a family of tasks.
+- `content-creator` – When generating many similar tasks from a template.
+- `docs-architect` – When updating documentation that references task schemas.
+
+### Helpful commands
+
+- `/new-task-type <task-type-name>` – When introducing a brand‑new task type that needs a template, types, and UI support.
+
+## Do & Don’t
+
+### Do
+
+- Keep templates in sync with **type definitions** and **runtime behavior**.
+- Provide multiple realistic examples per template.
+- Capture validation rules explicitly in the `schema` section.
+
+### Don’t
+
+- Don’t change template shapes without updating `src/modules/core/types/services.ts` and `public` content.
+- Don’t add project‑specific or one‑off data to templates; keep them generic and reusable.
+
+## Testing
+
+- Validate sample content from templates by loading it through the application and seed scripts.
+- Use unit tests in `tests/unit/` (where present) to verify that template‑generated data conforms to types.
+
+Recommended commands:
+
+- `npm run type-check` – Ensures template‑driven types remain correct.
+- `npm test` – Runs tests that may include template‑based fixtures.
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Learning Content Agent Guidelines](../public/AGENTS.md)
+- [Source Code Agent Guide](../src/AGENTS.md)
 
 ---
 

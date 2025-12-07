@@ -1,21 +1,64 @@
-# Template Management Agent Guidelines
+# AI Agent Guide – Templates (`templates/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
+## Scope
 
-> **For AI Agents**: This guide contains specific instructions for working with code templates and scaffolding.
+- Describes how **code templates and scaffolding** are organized under `templates/`.
+- Focuses on templates for React components and related boilerplate.
+- Does **not** define task content templates (see `data/AGENTS.md` for that).
 
-**Related Guides**: [src/AGENTS.md](../src/AGENTS.md) for source organization, [docs/css-modules.md](../docs/architecture/css-modules.md) for styling details
+## Responsibilities
 
----
+- Provide a canonical starting point for new UI components and related files.
+- Ensure new components follow CSS Modules, testing, and accessibility conventions.
+- Help agents generate consistent, well‑structured boilerplate.
 
-## 🎯 Purpose
+## Entry Points
 
-This guide provides template-specific guidelines for AI agents working with:
-- Component templates
-- Code generation templates
-- Project scaffolding
-- Boilerplate code
+- `component/` – Base template for React components (`Component.tsx`, `.module.css`, tests, `index.ts`).
+
+## Conventions
+
+- Every new UI component created from these templates must live under `src/modules/ui/components/`.
+- Template code must follow the same TypeScript, CSS Modules, and accessibility patterns documented in `src/AGENTS.md` and `docs/css-modules.md`.
+- Tests and (optionally) a11y tests should be included when generating new components.
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `component-library-architect` – For evolving or refactoring the base templates.
+- `ui-ux-designer` – When adjusting component templates to match design system changes.
+- `unit-tester` / `ui-visual-validator` – When adding test or visual‑regression patterns into templates.
+
+### Helpful commands
+
+- `/validate-implementation <issue-number>` – To verify that new components generated from templates integrate cleanly (build, lint, tests).
+
+## Do & Don’t
+
+### Do
+
+- Keep templates small, opinionated, and aligned with current best practices.
+- Update templates when cross‑cutting conventions change (e.g., design tokens, accessibility patterns).
+- Use design tokens and CSS Modules in all template styles.
+
+### Don’t
+
+- Don’t add business logic or app‑specific behavior into templates.
+- Don’t diverge templates from real component patterns – templates should mirror “how we actually build things now”.
+
+## Testing
+
+- When templates change, create a **dummy component** from the updated template and run:
+  - `npm test` (component tests and a11y tests, if present).
+  - `npm run type-check` and `npm run build` to ensure generated code compiles.
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Source Code Agent Guide](../src/AGENTS.md)
+- [Testing Agent Guidelines](../tests/AGENTS.md)
+- [CSS Modules Guide](../docs/architecture/css-modules.md)
 
 ---
 

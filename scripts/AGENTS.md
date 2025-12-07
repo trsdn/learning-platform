@@ -1,14 +1,71 @@
-# Scripts Directory - AI Agent Guide
+# AI Agent Guide – Scripts (`scripts/`)
 
-**Last Updated**: 2025-12-01 | **Purpose**: Automation, seeding, testing, content generation
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
+## Scope
 
-**Related Guides**: [infrastructure/supabase/AGENTS.md](../infrastructure/supabase/AGENTS.md) for database operations, [tests/AGENTS.md](../tests/AGENTS.md) for test cleanup
+- Describes automation and helper scripts under `scripts/` used for seeding, deployment, content generation, and maintenance.
+- Covers TypeScript, Python, and Bash scripts that support development and operations.
 
-## 🎯 Overview
+## Responsibilities
 
-This directory contains utility scripts for development, deployment, content generation, and database management. Scripts are written in TypeScript, Python, and Bash.
+- Provide repeatable automation for database schema application and seeding.
+- Generate and manage static assets (icons, audio).
+- Clean up test artifacts and run pre‑deploy checks.
+- Manage encrypted secrets (SOPS + age).
 
+## Entry Points
+
+- `seed-supabase.ts` – Seed Supabase with learning content.
+- `apply-schema.sh` / `apply-schema.js` – Apply database schema and migrations.
+- `cleanup-test-artifacts.sh` – Remove temporary test artifacts and stray screenshots.
+- `pre-deploy-check.sh` – Run pre‑deployment validation (type‑check, lint, tests, build).
+- `sops-encrypt.sh` / `sops-decrypt.sh` – Encrypt and decrypt environment files.
+
+## Conventions
+
+- Use **kebab‑case** filenames (e.g., `generate-pwa-icons.js`).
+- Document purpose, usage, prerequisites, and exit codes at the top of each script.
+- Prefer idempotent behavior where possible (e.g., seeding, schema application).
+- Keep language‑specific dependencies in `scripts/requirements.txt` (Python) or `package.json` (Node).
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `platform-deploy-orchestrator` – For workflows involving schema, seeding, and deployment validation.
+- `platform-test-orchestrator` – When using cleanup scripts and test helpers as part of validation.
+- `release-engineer` / `deployment-validator` – For pre‑deploy and release scripting changes.
+
+### Helpful commands
+
+- `/deploy` – Full deployment workflow, which should assume `pre-deploy-check.sh` has succeeded.
+- `/deploy-test` – Deploy to the test environment after seeding and validation.
+
+## Do & Don’t
+
+### Do
+
+- Keep scripts **safe by default** – prompt or clearly document destructive operations.
+- Log meaningful progress and errors for easier debugging.
+- Reuse shared logic where appropriate rather than duplicating scripts.
+
+### Don’t
+
+- Don’t hardcode secrets or environment‑specific values in scripts.
+- Don’t modify production databases without going through the documented workflows.
+
+## Testing
+
+- Test scripts locally before relying on them in CI or deployment workflows.
+- For TypeScript/Node scripts, rely on the main test and build commands:
+   - `npm run type-check`
+   - `npm test`
+   - `npm run build`
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Supabase Database Agent Guidelines](../infrastructure/supabase/AGENTS.md)
+- [Testing Agent Guidelines](../tests/AGENTS.md)
 ---
 
 ## 📋 Script Categories

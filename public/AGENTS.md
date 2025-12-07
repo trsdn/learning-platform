@@ -1,21 +1,79 @@
-# Learning Content Agent Guidelines
+# AI Agent Guide – Public Content (`public/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
-**Status**: 🏆 **Authoritative Source** for learning content and task types
+## Scope
 
-> **For AI Agents**: This guide contains specific instructions for working with learning paths, tasks, and educational content. This is the **authoritative source** for task type definitions.
+- Describes how **learning content and static assets** are organized under `public/`.
+- Focuses on learning paths (`learning-paths/**/*.json`), audio files, and any shared content templates.
+- Does **not** cover database schema or runtime behavior – see `infrastructure/supabase/AGENTS.md` and `src/AGENTS.md` for that.
 
----
+## Responsibilities
 
-## 🎯 Purpose
+- Store all **learning path JSON files** that are loaded by the app or seed scripts.
+- Define the **canonical, file-based representation** of learning tasks and paths.
+- Host audio assets and other static files referenced by tasks.
+- Provide test/demo content for development and automated testing.
 
-This guide provides content-specific guidelines for AI agents working with:
-- Learning paths (JSON files)
-- Task creation and validation
-- Audio content
-- Content templates
-- Educational quality assurance
+## Entry Points
+
+- `learning-paths/` – Topic‑specific and test learning paths.
+- `learning-paths/test/all-task-types.json` – Demo file covering all 8 task types; useful for validation.
+- `audio/` – Static audio files (e.g., Spanish pronunciation) referenced from tasks.
+- `templates/` – Any public-facing content templates (if present; most task templates live in `data/templates/`).
+
+## Conventions
+
+- Learning paths live under `public/learning-paths/{topic}/{file}.json` with kebab‑case filenames.
+- JSON files must match the structure defined by task type interfaces in `src/modules/core/types/services.ts`.
+- Use German for UI‑facing text; keep IDs and internal keys stable.
+- Keep **test content** clearly separated under `learning-paths/test/`.
+- Audio file paths should be stable and referenced via absolute or `/audio/...` paths from tasks.
+
+## Agent & Command Usage
+
+### Recommended agents
+
+- `content-orchestrator` – For end‑to‑end learning path creation and refinement.
+- `content-designer` / `content-planner` – When designing pedagogy and task sequencing for new paths.
+- `content-creator` – For generating concrete tasks, hints, and explanations.
+- `content-reviewer` – For pedagogical and quality review of existing JSON content.
+
+### Helpful commands
+
+- `/new-learning-path <topic-id> <path-id>` – Guided creation of a new learning path in `public/learning-paths/`.
+- `/review-learning-path <topic/path>` – Pedagogical and quality review of an existing learning path file.
+
+## Do & Don’t
+
+### Do
+
+- Validate JSON syntax and ensure it conforms to the task templates in `data/templates/`.
+- Keep learning paths small and focused; use test paths for experiments.
+- Add or update explanations and hints to improve learning quality.
+- Coordinate ID changes with `src/modules/storage/json-loader.ts` and any seeding scripts.
+
+### Don’t
+
+- Don’t change task type structure here without updating `src/modules/core/types/services.ts` and templates.
+- Don’t embed environment‑specific URLs directly in content.
+- Don’t mix real production content with experimental test data.
+
+## Testing
+
+- Content validation relies on TypeScript types and runtime loading via `src/modules/storage/json-loader.ts`.
+- Automated flows that use these files:
+  - `npm run seed:supabase` (via `scripts/seed-supabase.ts`).
+  - E2E tests that load specific learning paths from `learning-paths/test/`.
+
+Recommended commands:
+
+- `npm run dev` – Manually test learning paths in the browser.
+- `npm test` and `npm run test:e2e` – Run automated tests that may depend on test learning paths.
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Data Templates Agent Guidelines](../data/AGENTS.md)
+- [Supabase Database Agent Guidelines](../infrastructure/supabase/AGENTS.md)
 
 ---
 

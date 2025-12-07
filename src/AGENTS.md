@@ -1,464 +1,81 @@
-# Source Code Organization Agent Guidelines
+# AI Agent Guide – Source Code (`src/`)
 
-**Last Updated**: 2025-12-01
-**Parent Guide**: [../AGENTS.md](../AGENTS.md)
-**Status**: 🏆 **Authoritative Source** for source code structure and conventions
-
-> **For AI Agents**: This guide contains specific instructions for working with the source code structure, module organization, and coding conventions.
+## Scope
 
-**Related Guides**: [templates/AGENTS.md](../templates/AGENTS.md) for component scaffolding, [tests/AGENTS.md](../tests/AGENTS.md) for test organization
+- Describes how source code under `src/` is structured and how modules relate to each other.
+- Covers module boundaries, import conventions, file naming, and code organization patterns.
+- Does **not** cover tests, scripts, or content JSON (see `tests/`, `scripts/`, and `public/` guides instead).
 
----
+## Responsibilities
 
-## 🎯 Purpose
+- Define and enforce the **source-level architecture** (core, storage, UI modules).
+- Provide patterns for services, repositories, React components, and hooks.
+- Describe and enforce TypeScript, import, and naming conventions for `src/`.
+- Point to authoritative type definitions and key entry points.
 
-This guide provides source code organization guidelines for AI agents working with:
+## Entry Points
 
-- Module structure and organization
-- Import conventions
-- File naming rules
-- Code organization patterns
-- Dependency management
+- `main.tsx` – React application entry point.
+- `index.css` – Global styles imported by Vite entry.
+- `modules/core/types/services.ts` – Authoritative type definitions for domain entities and task types.
+- `modules/storage/database.ts` – IndexedDB database schema.
+- `modules/ui/components/practice-session.tsx` – Main practice session UI (task rendering + SM‑2 logic).
 
----
+## Conventions
 
-## 📁 Directory Structure
-
-```text
-src/
-├── main.tsx              # Application entry point
-├── index.css             # Global styles
-├── vite-env.d.ts         # Vite type definitions
-├── components/           # Deprecated - being migrated to modules/ui
-├── hooks/                # Shared React hooks
-├── modules/              # Core application modules
-│   ├── core/            # Domain logic, entities, services
-│   │   ├── entities/    # Domain entities
-│   │   ├── services/    # Business logic services
-│   │   └── types/       # TypeScript type definitions
-│   ├── storage/         # Data persistence layer
-│   │   ├── adapters/    # IndexedDB adapters
-│   │   ├── repositories/ # Repository pattern implementations
-│   │   └── seed/        # Seed data
-│   └── ui/              # User interface components
-│       ├── components/  # React components (*.tsx + *.module.css)
-│       ├── hooks/       # UI-specific hooks
-│       └── styles/      # Shared styles, design tokens
-├── shared/              # Shared utilities across modules
-└── test/                # Test utilities and mocks
-```
-
----
-
-## 🏗️ Module Architecture
-
-### Core Module (`src/modules/core/`)
-
-**Purpose**: Domain logic, business rules, and type definitions
-
-**Structure**:
-
-```text
-core/
-├── entities/          # Domain entities (Task, Topic, LearningPath)
-├── services/          # Business logic (spaced repetition, scoring)
-└── types/            # TypeScript definitions
-    └── services.ts   # Authoritative type definitions
-```
-
-**Key File**: `src/modules/core/types/services.ts`
-
-- ✅ **Authoritative source** for all type definitions
-- ✅ Always update types here first
-- ✅ Export from barrel file (`index.ts`)
-
-**Example Entity**:
-
-```typescript
-// src/modules/core/entities/task.ts
-import type { Task, TaskType } from '@/modules/core/types/services'
-
-export class TaskEntity {
-  constructor(private task: Task) {}
-
-  isComplete(): boolean {
-    return this.task.lastReviewDate !== null
-  }
-
-  getType(): TaskType {
-    return this.task.type
-  }
-}
-```
+- Use **strict TypeScript** – no `any`; prefer explicit interfaces and types.
+- Use the `@/` alias for imports from `src/` instead of long relative paths.
+- Organize code by **module** (`core`, `storage`, `ui`) and **concern** (entities, services, repositories, components, hooks, styles).
+- Every React component in `modules/ui/components/` must have a matching `.module.css` file and (ideally) a unit test.
+- Use CSS design tokens from `modules/ui/styles/variables.css`; avoid hard‑coded colors/sizes.
+- Prefer barrel files (`index.ts`) for module exports where it improves clarity.
 
-**Example Service**:
-
-```typescript
-// src/modules/core/services/spaced-repetition.ts
-import type { UserProgress } from '@/modules/core/types/services'
-
-export class SpacedRepetitionService {
-  calculateNextReview(progress: UserProgress): Date {
-    // SM-2 algorithm implementation
-  }
-}
-```
-
----
-
-### Storage Module (`src/modules/storage/`)
-
-**Purpose**: Data persistence, database operations, repositories
-
-**Structure**:
-
-```text
-storage/
-├── adapters/          # IndexedDB adapters
-│   └── dexie-adapter.ts
-├── repositories/      # Repository pattern
-│   ├── topic-repository.ts
-│   ├── learning-path-repository.ts
-│   └── task-repository.ts
-├── seed/             # Seed data
-│   └── initial-data.ts
-├── database.ts       # Dexie database schema
-└── json-loader.ts    # JSON content loader
-```
-
-**Repository Pattern**:
-
-```typescript
-// src/modules/storage/repositories/topic-repository.ts
-import { db } from '../database'
-import type { Topic } from '@/modules/core/types/services'
-
-export class TopicRepository {
-  async findAll(): Promise<Topic[]> {
-    return await db.topics.toArray()
-  }
-
-  async findById(id: string): Promise<Topic | undefined> {
-    return await db.topics.get(id)
-  }
-
-  async create(topic: Topic): Promise<string> {
-    return await db.topics.add(topic)
-  }
-
-  async update(id: string, topic: Partial<Topic>): Promise<void> {
-    await db.topics.update(id, topic)
-  }
-
-  async delete(id: string): Promise<void> {
-    await db.topics.delete(id)
-  }
-}
-```
-
-**Database Schema** (`database.ts`):
-
-```typescript
-import Dexie, { type Table } from 'dexie'
-import type { Topic, LearningPath, Task } from '@/modules/core/types/services'
-
-export class AppDatabase extends Dexie {
-  topics!: Table<Topic>
-  learningPaths!: Table<LearningPath>
-  tasks!: Table<Task>
-
-  constructor() {
-    super('mindforge-academy')
-    this.version(1).stores({
-      topics: 'id, name',
-      learningPaths: 'id, topicId, title',
-      tasks: 'id, learningPathId, type'
-    })
-  }
-}
-
-export const db = new AppDatabase()
-```
-
----
-
-### UI Module (`src/modules/ui/`)
-
-**Purpose**: React components, UI logic, styles
-
-**Structure**:
-
-```text
-ui/
-├── components/        # React components
-│   ├── practice-session.tsx         # Main practice UI
-│   ├── practice-session.module.css
-│   ├── topic-card.tsx
-│   ├── topic-card.module.css
-│   └── ...
-├── hooks/            # UI-specific hooks
-│   ├── use-spaced-repetition.ts
-│   └── use-task-state.ts
-└── styles/           # Shared styles
-    ├── variables.css  # Design tokens (AUTHORITATIVE)
-    └── global.css
-```
-
-**Component Structure** (Mandatory):
-
-Every component MUST have:
-
-1. `ComponentName.tsx` - Component logic
-2. `ComponentName.module.css` - Styles (CSS Modules)
-3. `ComponentName.test.tsx` - Unit tests (optional but recommended)
-
-**Component Example**:
-
-```typescript
-// src/modules/ui/components/topic-card.tsx
-import { clsx } from 'clsx'
-import styles from './topic-card.module.css'
-import type { Topic } from '@/modules/core/types/services'
-
-export interface TopicCardProps {
-  topic: Topic
-  onClick?: () => void
-  className?: string
-}
-
-export function TopicCard({ topic, onClick, className }: TopicCardProps) {
-  return (
-    <div 
-      className={clsx(styles.card, className)} 
-      onClick={onClick}
-      role="button"
-      tabIndex={0}
-    >
-      <div className={styles.icon}>{topic.icon}</div>
-      <h3 className={styles.title}>{topic.title}</h3>
-      <p className={styles.description}>{topic.description}</p>
-    </div>
-  )
-}
-```
-
-**CSS Module Example**:
-
-```css
-/* src/modules/ui/components/topic-card.module.css */
-.card {
-  padding: var(--spacing-md);
-  border-radius: var(--border-radius-md);
-  background-color: var(--color-surface);
-  cursor: pointer;
-  transition: all var(--transition-normal);
-}
-
-.card:hover {
-  background-color: var(--color-surface-hover);
-  transform: translateY(-2px);
-}
-
-.card:focus-visible {
-  outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
-}
-
-.icon {
-  font-size: var(--font-size-2xl);
-  margin-bottom: var(--spacing-sm);
-}
-
-.title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--spacing-xs);
-}
-
-.description {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-}
-```
-
----
-
-## 📝 File Naming Conventions
-
-### TypeScript/React Files
-
-| Type | Convention | Example |
-|------|------------|---------|
-| **Components** | PascalCase | `TopicCard.tsx` |
-| **Hooks** | camelCase with `use-` prefix | `use-spaced-repetition.ts` |
-| **Services** | kebab-case | `spaced-repetition-service.ts` |
-| **Repositories** | kebab-case with `-repository` suffix | `topic-repository.ts` |
-| **Types** | kebab-case or `types.ts` | `services.ts`, `database.types.ts` |
-| **Utilities** | kebab-case | `date-utils.ts`, `string-helpers.ts` |
-| **Tests** | Same as source + `.test.ts(x)` | `TopicCard.test.tsx` |
-| **CSS Modules** | Same as component + `.module.css` | `TopicCard.module.css` |
-
-### Directories
-
-- **Lowercase with hyphens**: `learning-paths/`, `user-progress/`
-- **No underscores**: Use hyphens instead
-- **Plural for collections**: `components/`, `services/`, `hooks/`
-
----
-
-## 📦 Import Conventions
-
-### Path Aliases
-
-Use `@/` alias for absolute imports from `src/`:
-
-```typescript
-// ✅ DO: Use path alias
-import { Task } from '@/modules/core/types/services'
-import { TopicRepository } from '@/modules/storage/repositories/topic-repository'
-
-// ❌ DON'T: Use relative paths for cross-module imports
-import { Task } from '../../core/types/services'
-```
-
-### Import Order
-
-```typescript
-// 1. External dependencies (React, libraries)
-import React, { useState, useEffect } from 'react'
-import { clsx } from 'clsx'
-import Dexie from 'dexie'
-
-// 2. Internal modules - types first
-import type { Task, Topic } from '@/modules/core/types/services'
-
-// 3. Internal modules - services/repositories
-import { SpacedRepetitionService } from '@/modules/core/services/spaced-repetition'
-import { TopicRepository } from '@/modules/storage/repositories/topic-repository'
-
-// 4. Internal modules - components
-import { TopicCard } from '@/modules/ui/components/topic-card'
-
-// 5. Styles (always last)
-import styles from './Component.module.css'
-```
-
-### Barrel Exports
-
-Each module should have an `index.ts` for cleaner imports:
-
-```typescript
-// src/modules/core/types/index.ts
-export * from './services'
-export * from './database.types'
-
-// Usage:
-import { Task, Topic } from '@/modules/core/types'
-```
-
----
-
-## 🔧 Code Organization Patterns
-
-### Service Pattern
-
-**When to use**: Business logic, calculations, algorithms
-
-```typescript
-// src/modules/core/services/scoring-service.ts
-export class ScoringService {
-  calculateScore(userAnswer: string, correctAnswer: string): number {
-    // Scoring logic
-  }
-
-  calculateAccuracy(correct: number, total: number): number {
-    return (correct / total) * 100
-  }
-}
-```
-
-### Repository Pattern
-
-**When to use**: Database operations, data access
-
-```typescript
-// src/modules/storage/repositories/task-repository.ts
-export class TaskRepository {
-  async findByLearningPath(pathId: string): Promise<Task[]> {
-    return await db.tasks.where('learningPathId').equals(pathId).toArray()
-  }
-}
-```
-
-### Custom Hooks
-
-**When to use**: Reusable React stateful logic
-
-```typescript
-// src/modules/ui/hooks/use-task-state.ts
-export function useTaskState(taskId: string) {
-  const [task, setTask] = useState<Task | null>(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    // Load task logic
-  }, [taskId])
-
-  return { task, loading }
-}
-```
-
----
-
-## 🚨 Critical Rules
-
-### DO
-
-- ✅ Use **TypeScript strict mode** (no `any` types)
-- ✅ Define types in `src/modules/core/types/services.ts` first
-- ✅ Use **CSS Modules** for all component styles
-- ✅ Use **path aliases** (`@/`) for absolute imports
-- ✅ Follow **repository pattern** for data access
-- ✅ Export from barrel files (`index.ts`)
-- ✅ Use **design tokens** from `variables.css`
-- ✅ Write **unit tests** for business logic
-
-### DON'T
-
-- ❌ Use `any` type (use `unknown` if necessary)
-- ❌ Use inline styles (except CSS custom properties)
-- ❌ Mix business logic with UI components
-- ❌ Access database directly from components (use repositories)
-- ❌ Create circular dependencies
-- ❌ Hardcode values (use constants or config)
-- ❌ Skip type definitions
-
----
-
-## 🔄 Migration Notes
-
-### Deprecated Paths
-
-**Old**: `src/components/` → **New**: `src/modules/ui/components/`
-
-**Status**: Migrating incrementally. New components should go to `src/modules/ui/components/`.
-
-**Old**: Inline type definitions → **New**: `src/modules/core/types/services.ts`
-
-**Status**: All type definitions should be centralized.
-
----
-
-## 📊 Module Dependencies
-
-**Dependency Flow** (✅ Allowed):
-
-```text
-UI → Storage → Core
-UI → Core
-Storage → Core
-```
+## Agent & Command Usage
+
+### Recommended agents
+
+- `platform-dev-orchestrator` – For multi-step changes that affect several modules (core + storage + UI).
+- `component-library-architect` – When designing or refactoring shared UI components in `modules/ui/components/`.
+- `unit-tester` – When you add or modify logic that must be covered by unit tests in `src/`.
+
+### Helpful commands
+
+- `/validate-implementation <issue-number>` – Run the full implementation validation workflow (build, lint, tests) for source changes.
+- `/new-task-type <task-type-name>` – When introducing a brand‑new task type that affects types, services, and the practice session UI.
+- `/deploy-test` – After major changes in `src/` to verify the test deployment.
+
+## Do & Don’t
+
+### Do
+
+- Update `modules/core/types/services.ts` **first** when introducing or changing domain types.
+- Keep module boundaries clear: domain logic in `core`, persistence in `storage`, UI in `ui`.
+- Add or update unit tests in `tests/unit/` when modifying business logic or complex components.
+- Use `clsx` for conditional class names in React components.
+- Reuse existing patterns and utilities from `shared/` and `modules/**/hooks/`.
+
+### Don’t
+
+- Don’t introduce `any` or loosen TypeScript strictness to “make it compile”.
+- Don’t access Supabase or external services directly from UI components – go through services/repositories.
+- Don’t place new React components in the legacy `components/` root folder; prefer `modules/ui/components/`.
+- Don’t change the database schema (`database.ts`) without coordinating with `infrastructure/supabase/AGENTS.md`.
+
+## Testing
+
+- Unit tests for source code live in `tests/unit/` (mirroring `src/modules/**` structure).
+- Integration tests that touch multiple layers live in `tests/integration/`.
+- E2E tests for critical flows (e.g., practice session) live in `tests/e2e/`.
+- Recommended commands:
+  - `npm test` – Run unit tests.
+  - `npm run test:e2e` – Run Playwright end‑to‑end tests.
+  - `npm run type-check` – Strict TypeScript validation for all source files.
+
+## Related Guides
+
+- [Root AI Agent Guide](../AGENTS.md)
+- [Testing Agent Guidelines](../tests/AGENTS.md)
+- [Template Management Agent Guidelines](../templates/AGENTS.md)
 
 **Forbidden Dependencies** (❌ Not Allowed):
 

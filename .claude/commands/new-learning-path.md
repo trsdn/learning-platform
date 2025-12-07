@@ -1,5 +1,6 @@
 ---
 description: Create a new learning path with tasks interactively. Arguments: [topic-id] [learning-path-id] (optional)
+agent: content-orchestrator
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
@@ -10,7 +11,7 @@ $ARGUMENTS
 
 Goal: Interactively guide the user through creating a new learning path with tasks, generating properly structured JSON content.
 
-**Reference**: See `AGENTS.md` section "Adding New Learning Paths" for documentation.
+**Reference**: See `public/AGENTS.md` for folder-specific rules and `data/AGENTS.md` for task template details.
 
 Execution steps:
 

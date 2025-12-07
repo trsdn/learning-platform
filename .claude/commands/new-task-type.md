@@ -1,5 +1,6 @@
 ---
 description: Guide user through implementing a new task type with interactive prompts and code generation. Arguments: [task-type-name]
+agent: platform-dev-orchestrator
 ---
 
 The user input to you can be provided directly by the agent or as a command argument - you **MUST** consider it before proceeding with the prompt (if not empty).
