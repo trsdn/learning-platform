@@ -58,6 +58,7 @@ function createMultipleChoiceTask(
       question: '¿Cómo se dice "hello" en español?',
       questionLanguage: 'de',
       options: ['Hola', 'Adiós', 'Gracias', 'Por favor'],
+      optionsAudio: ['spanish/greetings/hola.mp3', 'spanish/greetings/adios.mp3', 'spanish/greetings/gracias.mp3', 'spanish/greetings/por-favor.mp3'],
       correctAnswer: 0,
       ...contentOverrides,
     } as MultipleChoiceContent,
@@ -541,7 +542,7 @@ describe('MultipleChoiceTask', () => {
 
     it('should not render audio button when optionsAudio is not provided', () => {
       setupMockHook();
-      const task = createMultipleChoiceTask();
+      const task = createMultipleChoiceTask({}, { optionsAudio: undefined });
 
       render(
         <MultipleChoiceTask
