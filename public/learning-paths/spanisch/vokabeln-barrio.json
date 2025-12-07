@@ -1,0 +1,690 @@
+{
+  "learningPath": {
+    "id": "vokabeln-barrio",
+    "topicId": "spanisch",
+    "title": "Vokabeln: Im Stadtviertel (el barrio)",
+    "description": "Lerne wichtige spanische Vokabeln für Geschäfte und Orte in deinem Stadtviertel",
+    "difficulty": "medium",
+    "estimatedTime": 30,
+    "isActive": true,
+    "createdAt": "2025-12-07T10:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 16
+    }
+  },
+  "tasks": [
+    {
+      "id": "spanisch-barrio-1",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la heladería",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/heladeria.mp3",
+        "back": "die Eisdiele",
+        "backLanguage": "de",
+        "explanation": "'La heladería' ist der Ort, wo man Eis kauft. Das Wort kommt von 'helado' (Eis)."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-2",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la panadería",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/panaderia.mp3",
+        "back": "die Bäckerei",
+        "backLanguage": "de",
+        "explanation": "'La panadería' ist die Bäckerei. Das Wort kommt von 'pan' (Brot)."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-3",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "el supermercado",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/supermercado.mp3",
+        "back": "der Supermarkt",
+        "backLanguage": "de",
+        "explanation": "'El supermercado' ist der Supermarkt. Beachte: maskulin, daher 'el'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-4",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la farmacia",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/farmacia.mp3",
+        "back": "die Apotheke",
+        "backLanguage": "de",
+        "explanation": "'La farmacia' ist die Apotheke. Sehr ähnlich zum deutschen Wort 'Pharmazie'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-5",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie heißt 'die Buchhandlung' auf Spanisch?",
+        "questionLanguage": "de",
+        "options": [
+          "la biblioteca",
+          "la librería",
+          "la papelería",
+          "la tienda"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/neighborhood/biblioteca.mp3",
+          "spanish/neighborhood/libreria.mp3",
+          "spanish/neighborhood/papeleria.mp3",
+          "spanish/neighborhood/tienda.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'La librería' ist die Buchhandlung. Nicht zu verwechseln mit 'la biblioteca' (die Bibliothek)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-6",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la zapatería",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/zapateria.mp3",
+        "back": "das Schuhgeschäft",
+        "backLanguage": "de",
+        "explanation": "'La zapatería' ist das Schuhgeschäft. Das Wort kommt von 'zapato' (Schuh)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-7",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la carnicería",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/carniceria.mp3",
+        "back": "die Metzgerei",
+        "backLanguage": "de",
+        "explanation": "'La carnicería' ist die Metzgerei. Das Wort kommt von 'carne' (Fleisch)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-8",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "la pescadería",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/pescaderia.mp3",
+        "back": "das Fischgeschäft",
+        "backLanguage": "de",
+        "explanation": "'La pescadería' ist das Fischgeschäft. Das Wort kommt von 'pescado' (Fisch)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-9",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die spanischen Geschäfte den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "la frutería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/fruteria.mp3",
+            "right": "das Obstgeschäft",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la pastelería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/pasteleria.mp3",
+            "right": "die Konditorei",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la panadería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/panaderia.mp3",
+            "right": "die Bäckerei",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la carnicería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/carniceria.mp3",
+            "right": "die Metzgerei",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Geschäfte verkaufen verschiedene Lebensmittel. Beachte die Endung '-ería', die häufig für Geschäfte verwendet wird."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-10",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wo kauft man Obst? '¿Dónde compras fruta?'",
+        "questionLanguage": "de",
+        "options": [
+          "En la pescadería",
+          "En la frutería",
+          "En la pastelería",
+          "En la carnicería"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/neighborhood/pescaderia.mp3",
+          "spanish/neighborhood/fruteria.mp3",
+          "spanish/neighborhood/pasteleria.mp3",
+          "spanish/neighborhood/carniceria.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'En la frutería' ist das Obstgeschäft. 'Fruta' bedeutet Obst."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-11",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "el cine",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/neighborhood/cine.mp3",
+        "back": "das Kino",
+        "backLanguage": "de",
+        "explanation": "'El cine' ist das Kino. Beachte: maskulin, daher 'el'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 45,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-12",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie heißt 'die Bibliothek' auf Spanisch?",
+        "questionLanguage": "de",
+        "options": [
+          "la librería",
+          "la biblioteca",
+          "el museo",
+          "la escuela"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/neighborhood/libreria.mp3",
+          "spanish/neighborhood/biblioteca.mp3",
+          "spanish/neighborhood/museo.mp3",
+          "spanish/neighborhood/escuela.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'La biblioteca' ist die Bibliothek, wo man Bücher ausleihen kann. 'La librería' ist die Buchhandlung, wo man Bücher kauft."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-13",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die spanischen Orte den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "el hospital",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/hospital.mp3",
+            "right": "das Krankenhaus",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "el parque",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/parque.mp3",
+            "right": "der Park",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la plaza",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/plaza.mp3",
+            "right": "der Platz",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la iglesia",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/iglesia.mp3",
+            "right": "die Kirche",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Orte findet man häufig in jedem Stadtviertel. Beachte die unterschiedlichen Artikel."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-14",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Voy a {correos} para enviar una carta.",
+        "textLanguage": "es",
+        "textAudio": "spanish/neighborhood/correos-sentence.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "correos",
+            "alternatives": ["Correos"],
+            "hint": "die Post"
+          }
+        ],
+        "explanation": "'Correos' bedeutet Post (Postamt). 'Enviar una carta' heißt 'einen Brief schicken'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 75,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-15",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'die Bank' (Geldinstitut) auf Spanisch?",
+        "questionLanguage": "de",
+        "correctAnswer": "el banco",
+        "correctAnswerLanguage": "es",
+        "correctAnswerAudio": "spanish/neighborhood/banco.mp3",
+        "alternatives": [
+          "El banco",
+          "banco"
+        ],
+        "explanation": "'El banco' bedeutet die Bank (Geldinstitut). Es ist maskulin, daher 'el'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-16",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die spanischen Gastronomiebetriebe den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "el restaurante",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/restaurante.mp3",
+            "right": "das Restaurant",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la cafetería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/cafeteria.mp3",
+            "right": "das Café",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la heladería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/heladeria.mp3",
+            "right": "die Eisdiele",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la pastelería",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/pasteleria.mp3",
+            "right": "die Konditorei",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Orte sind perfekt, um etwas zu essen oder zu trinken."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "gastronomie",
+          "barrio"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-17",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Mi hermana trabaja en {la farmacia} del barrio.",
+        "textLanguage": "es",
+        "textAudio": "spanish/neighborhood/farmacia-sentence.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "la farmacia",
+            "alternatives": ["farmacia", "La farmacia"],
+            "hint": "die Apotheke"
+          }
+        ],
+        "explanation": "'Mi hermana trabaja en la farmacia' bedeutet 'Meine Schwester arbeitet in der Apotheke'. 'Del barrio' heißt 'des Viertels'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 75,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-18",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wo kann man Schuhe kaufen?",
+        "questionLanguage": "de",
+        "options": [
+          "En la librería",
+          "En la zapatería",
+          "En la frutería",
+          "En la pescadería"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/neighborhood/libreria.mp3",
+          "spanish/neighborhood/zapateria.mp3",
+          "spanish/neighborhood/fruteria.mp3",
+          "spanish/neighborhood/pescaderia.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'En la zapatería' ist das Schuhgeschäft. Das Wort kommt von 'zapato' (Schuh)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "geschaefte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-19",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Wie sagt man 'der Park' auf Spanisch?",
+        "questionLanguage": "de",
+        "correctAnswer": "el parque",
+        "correctAnswerLanguage": "es",
+        "correctAnswerAudio": "spanish/neighborhood/parque.mp3",
+        "alternatives": [
+          "El parque",
+          "parque"
+        ],
+        "explanation": "'El parque' ist der Park. Es ist ein maskulines Wort, daher verwendet man 'el'."
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "barrio"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-barrio-20",
+      "learningPathId": "vokabeln-barrio",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Wiederholung: Ordne alle Geschäfte und Orte richtig zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "el supermercado",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/supermercado.mp3",
+            "right": "der Supermarkt",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "el cine",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/cine.mp3",
+            "right": "das Kino",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "correos",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/correos.mp3",
+            "right": "die Post",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "la biblioteca",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/neighborhood/biblioteca.mp3",
+            "right": "die Bibliothek",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Glückwunsch! Du kennst jetzt viele wichtige Orte und Geschäfte im Stadtviertel auf Spanisch."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "vokabeln",
+          "orte",
+          "geschaefte",
+          "barrio",
+          "wiederholung"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    }
+  ]
+}

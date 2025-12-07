@@ -1,0 +1,614 @@
+{
+  "learningPath": {
+    "id": "preposiciones-lugar",
+    "topicId": "spanisch",
+    "title": "Preposiciones de lugar - Ortsangaben",
+    "description": "Lerne die wichtigsten spanischen Präpositionen zur Angabe von Orten und Positionen",
+    "difficulty": "medium",
+    "estimatedTime": 25,
+    "isActive": true,
+    "createdAt": "2025-10-05T10:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 18
+    }
+  },
+  "tasks": [
+    {
+      "id": "spanisch-prepos-1",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "encima de",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/encima-de.mp3",
+        "back": "auf / oben auf",
+        "backLanguage": "de",
+        "explanation": "Beispiel: El libro está encima de la mesa. (Das Buch liegt auf dem Tisch.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-2",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "debajo de",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/debajo-de.mp3",
+        "back": "unter",
+        "backLanguage": "de",
+        "explanation": "Beispiel: El gato está debajo de la mesa. (Die Katze ist unter dem Tisch.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-3",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "delante de",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/delante-de.mp3",
+        "back": "vor",
+        "backLanguage": "de",
+        "explanation": "Beispiel: El coche está delante de la casa. (Das Auto steht vor dem Haus.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-4",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "detrás de",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/detras-de.mp3",
+        "back": "hinter",
+        "backLanguage": "de",
+        "explanation": "Beispiel: El jardín está detrás de la casa. (Der Garten ist hinter dem Haus.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-5",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "al lado de",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/al-lado-de.mp3",
+        "back": "neben",
+        "backLanguage": "de",
+        "explanation": "Beispiel: La silla está al lado de la puerta. (Der Stuhl steht neben der Tür.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-6",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "entre",
+        "frontLanguage": "es",
+        "frontAudio": "spanish/prepositions/entre.mp3",
+        "back": "zwischen",
+        "backLanguage": "de",
+        "explanation": "Beispiel: El banco está entre la tienda y el café. (Die Bank ist zwischen dem Geschäft und dem Café.)"
+      },
+      "metadata": {
+        "difficulty": "easy",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-prepos-7",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die spanischen Präpositionen den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "cerca de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/cerca-de.mp3",
+            "right": "in der Nähe von",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "lejos de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/lejos-de.mp3",
+            "right": "weit von",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "enfrente de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/enfrente-de.mp3",
+            "right": "gegenüber",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "dentro de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/dentro-de.mp3",
+            "right": "innerhalb",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Präpositionen beschreiben die räumliche Nähe oder Position relativ zu einem Bezugspunkt."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 90,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-8",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die spanischen Präpositionen den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "encima de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/encima-de.mp3",
+            "right": "auf / oben auf",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "debajo de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/debajo-de.mp3",
+            "right": "unter",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "delante de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/delante-de.mp3",
+            "right": "vor",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "detrás de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/detras-de.mp3",
+            "right": "hinter",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Präpositionen beschreiben vertikale und horizontale Positionen."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 90,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-9",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Die Katze ist unter dem Tisch'?",
+        "questionLanguage": "de",
+        "options": [
+          "El gato está encima de la mesa",
+          "El gato está debajo de la mesa",
+          "El gato está delante de la mesa",
+          "El gato está detrás de la mesa"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/sentences/gato-encima-mesa.mp3",
+          "spanish/sentences/gato-debajo-mesa.mp3",
+          "spanish/sentences/gato-delante-mesa.mp3",
+          "spanish/sentences/gato-detras-mesa.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Debajo de' bedeutet 'unter'. Beachte die Kontraktion: de + la = de la (keine Kontraktion bei weiblichen Artikeln)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 75,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-10",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Das Buch ist auf dem Tisch'?",
+        "questionLanguage": "de",
+        "options": [
+          "El libro está debajo de la mesa",
+          "El libro está al lado de la mesa",
+          "El libro está encima de la mesa",
+          "El libro está entre la mesa"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/sentences/libro-debajo-mesa.mp3",
+          "spanish/sentences/libro-lado-mesa.mp3",
+          "spanish/sentences/libro-encima-mesa.mp3",
+          "spanish/sentences/libro-entre-mesa.mp3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Encima de' bedeutet 'auf' oder 'oben auf'. Es beschreibt eine Position über einem Objekt."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 75,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-11",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die Richtungspräpositionen den deutschen Übersetzungen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "a la derecha de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/derecha-de.mp3",
+            "right": "rechts von",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "a la izquierda de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/izquierda-de.mp3",
+            "right": "links von",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "al lado de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/al-lado-de.mp3",
+            "right": "neben",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "fuera de",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/prepositions/fuera-de.mp3",
+            "right": "außerhalb",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Beachte die Kontraktion: a + el = al (aber a + la bleibt a la)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 90,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-12",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Die Schule ist in der Nähe vom Park'?",
+        "questionLanguage": "de",
+        "options": [
+          "La escuela está lejos del parque",
+          "La escuela está cerca del parque",
+          "La escuela está dentro del parque",
+          "La escuela está fuera del parque"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/sentences/escuela-lejos-parque.mp3",
+          "spanish/sentences/escuela-cerca-parque.mp3",
+          "spanish/sentences/escuela-dentro-parque.mp3",
+          "spanish/sentences/escuela-fuera-parque.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "'Cerca de' bedeutet 'in der Nähe von'. Wichtig: de + el = del (Kontraktion bei männlichen Artikeln)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben",
+          "kontraktion"
+        ],
+        "estimatedTime": 75,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-13",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Wie sagt man 'Das Café ist gegenüber vom Museum'?",
+        "questionLanguage": "de",
+        "options": [
+          "El café está enfrente del museo",
+          "El café está detrás del museo",
+          "El café está dentro del museo",
+          "El café está entre del museo"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/sentences/cafe-enfrente-museo.mp3",
+          "spanish/sentences/cafe-detras-museo.mp3",
+          "spanish/sentences/cafe-dentro-museo.mp3",
+          "spanish/sentences/cafe-entre-museo.mp3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "'Enfrente de' bedeutet 'gegenüber von'. Beachte: de + el = del."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben",
+          "kontraktion"
+        ],
+        "estimatedTime": 75,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-14",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "La pelota está {{debajo de}} la cama.",
+        "textLanguage": "es",
+        "textAudio": "spanish/sentences/pelota-debajo-cama.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "debajo de",
+            "alternatives": [
+              "debajo"
+            ],
+            "hint": "unter"
+          }
+        ],
+        "explanation": "Der Ball ist unter dem Bett. 'Debajo de' bedeutet 'unter'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 80,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-15",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "El supermercado está {{entre}} el banco y la farmacia.",
+        "textLanguage": "es",
+        "textAudio": "spanish/sentences/supermercado-entre-banco-farmacia.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "entre",
+            "alternatives": [],
+            "hint": "zwischen"
+          }
+        ],
+        "explanation": "Der Supermarkt ist zwischen der Bank und der Apotheke. 'Entre' bedeutet 'zwischen'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben"
+        ],
+        "estimatedTime": 80,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-16",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die Beispielsätze den richtigen Präpositionen zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "El perro está delante de la puerta",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/sentences/perro-delante-puerta.mp3",
+            "right": "vor",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "Los niños están dentro de la casa",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/sentences/ninos-dentro-casa.mp3",
+            "right": "innerhalb",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "La tienda está lejos de mi casa",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/sentences/tienda-lejos-casa.mp3",
+            "right": "weit von",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "El parque está a la derecha de la escuela",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/sentences/parque-derecha-escuela.mp3",
+            "right": "rechts von",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "Diese Sätze zeigen die praktische Anwendung der Ortsangaben in Kontexten."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "präpositionen",
+          "ortsangaben",
+          "satzbau"
+        ],
+        "estimatedTime": 90,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-17",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Die Kontraktion 'del' entsteht aus 'de + el' (z.B. 'cerca del parque').",
+        "statementLanguage": "de",
+        "correctAnswer": true,
+        "explanation": "Richtig! Im Spanischen wird 'de + el' immer zu 'del' kontrahiert. Beispiel: cerca de + el parque = cerca del parque. Bei weiblichen Artikeln gibt es keine Kontraktion: cerca de la casa."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "präpositionen",
+          "kontraktion"
+        ],
+        "estimatedTime": 70,
+        "points": 15
+      }
+    },
+    {
+      "id": "spanisch-prepos-18",
+      "learningPathId": "preposiciones-lugar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "'Entre' wird immer mit 'de' verwendet (entre de).",
+        "statementLanguage": "de",
+        "correctAnswer": false,
+        "explanation": "Falsch! 'Entre' steht alleine und wird nicht mit 'de' kombiniert. Richtig: 'El banco está entre la tienda y el café.' (Die Bank ist zwischen dem Geschäft und dem Café.)"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "präpositionen"
+        ],
+        "estimatedTime": 70,
+        "points": 15
+      }
+    }
+  ]
+}
