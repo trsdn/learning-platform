@@ -51,8 +51,6 @@ function AppContent() {
   const [inSession, setInSession] = useState(false);
   const [completedSession, setCompletedSession] = useState<IPracticeSession | null>(null);
   const [showDashboard, setShowDashboard] = useState(false);
-  const [showSessionConfig, setShowSessionConfig] = useState(false);
-  const [sessionConfig, setSessionConfig] = useState({ targetCount: 10, includeReview: true });
   const [showSettings, setShowSettings] = useState(false);
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('components');
@@ -230,19 +228,9 @@ function AppContent() {
     setLearningPaths(paths);
   }
 
-  function showConfigScreen(learningPath: LearningPath) {
+  function startSession(learningPath: LearningPath) {
     setSelectedLearningPath(learningPath);
-    setShowSessionConfig(true);
-  }
-
-  function startPracticeSession() {
-    setShowSessionConfig(false);
     setInSession(true);
-  }
-
-  function cancelSessionConfig() {
-    setShowSessionConfig(false);
-    setSelectedLearningPath(null);
   }
 
   async function handleSessionComplete() {
@@ -369,73 +357,16 @@ function AppContent() {
     );
   }
 
-  // Show session configuration
-  if (showSessionConfig && selectedLearningPath && selectedTopic) {
-    return (
-      <div className={styles.sessionConfigContainer}>
-        <button
-          onClick={cancelSessionConfig}
-          className={styles.backButton}
-        >
-          ← Zurück
-        </button>
-
-        <h1 className={styles.sessionConfigTitle}>Sitzung konfigurieren</h1>
-        <p className={styles.sessionConfigSubtitle}>
-          {selectedLearningPath.title}
-        </p>
-
-        <div className={styles.sessionConfigSection}>
-          <label className={styles.sessionConfigLabel}>
-            Anzahl der Fragen
-          </label>
-          <div className={styles.sessionConfigButtonGroup}>
-            {[5, 10, 15, 20].map((count) => (
-              <button
-                key={count}
-                onClick={() => setSessionConfig({ ...sessionConfig, targetCount: count })}
-                className={`${styles.sessionConfigCountButton} ${sessionConfig.targetCount === count ? styles.active : ''}`}
-              >
-                {count}
-              </button>
-            ))}
-          </div>
-        </div>
-
-        <div className={styles.sessionConfigSection}>
-          <label className={styles.sessionConfigCheckboxLabel}>
-            <input
-              type="checkbox"
-              checked={sessionConfig.includeReview}
-              onChange={(e) => setSessionConfig({ ...sessionConfig, includeReview: e.target.checked })}
-              className={styles.sessionConfigCheckbox}
-            />
-            <span>Wiederholungsfragen einbeziehen</span>
-          </label>
-          <p className={styles.sessionConfigCheckboxDescription}>
-            Fragen, die du bereits beantwortet hast und die zur Wiederholung fällig sind
-          </p>
-        </div>
-
-        <button
-          onClick={startPracticeSession}
-          className={styles.sessionStartButton}
-        >
-          Sitzung starten →
-        </button>
-      </div>
-    );
-  }
-
-  // Show practice session
+  // Show practice session (using settings from settingsService)
   if (inSession && selectedLearningPath && selectedTopic) {
+    const currentSettings = settingsService.getSettings();
     return (
       <div className={styles.pageWrapper}>
         <PracticeSessionWrapper
           topicId={selectedTopic.id}
           learningPathIds={[selectedLearningPath.id]}
-          targetCount={sessionConfig.targetCount}
-          includeReview={sessionConfig.includeReview}
+          targetCount={currentSettings.learning.sessionSize}
+          includeReview={currentSettings.learning.repeatDifficultTasks}
           onComplete={handleSessionComplete}
           onCancel={handleSessionCancel}
         />
@@ -462,7 +393,7 @@ function AppContent() {
               key={path.id}
               learningPath={path}
               taskCount={learningPathTaskCounts[path.id] || path.taskIds?.length || 0}
-              onSelect={() => showConfigScreen(path)}
+              onSelect={() => startSession(path)}
               animationIndex={index}
             />
           ))}

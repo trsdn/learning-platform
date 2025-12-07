@@ -166,6 +166,59 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
+    const sessionSection: SectionDefinition = {
+      id: 'session',
+      icon: '📝',
+      title: 'Sitzungs-Einstellungen',
+      keywords: ['session', 'sitzung', 'fragen', 'wiederholung'],
+      content: (
+        <div className={styles.settingGroup}>
+          <fieldset className={styles.settingItem}>
+            <legend className={styles.settingLabel}>Anzahl der Fragen pro Sitzung</legend>
+            <div className={styles.radioGroup} role="radiogroup" aria-label="Anzahl der Fragen auswählen">
+              {[5, 10, 15, 20, 25, 30].map((count) => (
+                <label
+                  key={count}
+                  className={clsx(styles.radioOption, settings.learning.sessionSize === count && styles['radioOption--active'])}
+                >
+                  <input
+                    type="radio"
+                    name="session-size"
+                    checked={settings.learning.sessionSize === count}
+                    onChange={() =>
+                      updateSettings((prev) => ({
+                        ...prev,
+                        learning: { ...prev.learning, sessionSize: count },
+                      }))
+                    }
+                  />
+                  {count}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+
+          <label className={styles.checkboxOption} htmlFor="repeat-difficult-tasks">
+            <input
+              id="repeat-difficult-tasks"
+              type="checkbox"
+              checked={settings.learning.repeatDifficultTasks}
+              onChange={(event) =>
+                updateSettings((prev) => ({
+                  ...prev,
+                  learning: { ...prev.learning, repeatDifficultTasks: event.target.checked },
+                }))
+              }
+            />
+            Wiederholungsfragen einbeziehen
+          </label>
+          <p className={styles.settingDescription} id="repeat-difficult-tasks-desc">
+            Fragen, die du bereits beantwortet hast und die zur Wiederholung fällig sind, werden in die Sitzung aufgenommen.
+          </p>
+        </div>
+      ),
+    };
+
     const audioSection: SectionDefinition = {
       id: 'audio',
       icon: '🔊',
@@ -423,7 +476,7 @@ export function SettingsPage({ onClose }: SettingsPageProps) {
       ),
     };
 
-    return [themeSection, audioSection, hapticSection, confettiSection, infoSection];
+    return [themeSection, sessionSection, audioSection, hapticSection, confettiSection, infoSection];
   })();
 
   const filteredSections = sections.filter((section) => {
