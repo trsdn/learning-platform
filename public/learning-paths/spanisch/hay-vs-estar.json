@@ -1,0 +1,672 @@
+{
+  "learningPath": {
+    "id": "hay-vs-estar",
+    "topicId": "spanisch",
+    "title": "Hay vs Estar - Wann benutze ich was?",
+    "description": "Lerne den Unterschied zwischen 'hay' (es gibt) und 'estar' (sich befinden) und wann du welches Wort verwendest",
+    "difficulty": "medium",
+    "estimatedTime": 30,
+    "isActive": true,
+    "createdAt": "2025-12-07T10:00:00.000Z",
+    "requirements": {
+      "minimumAccuracy": 70,
+      "requiredTasks": 16
+    }
+  },
+  "tasks": [
+    {
+      "id": "spanisch-hayestar-1",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "HAY - Grundregel",
+        "frontLanguage": "de",
+        "back": "HAY wird verwendet, um die EXISTENZ von etwas auszudrücken (es gibt). Es wird mit unbestimmten Artikeln (un, una, unos, unas), Zahlen oder Mengenangaben verwendet. HAY ist IMMER singular und unveränderlich.",
+        "backLanguage": "de",
+        "examples": [
+          {
+            "text": "Hay un supermercado en la esquina.",
+            "translation": "Es gibt einen Supermarkt an der Ecke.",
+            "language": "es",
+            "audio": "spanish/hay-estar/hay-supermercado.mp3"
+          },
+          {
+            "text": "Hay tres personas en la sala.",
+            "translation": "Es gibt drei Personen im Raum.",
+            "language": "es",
+            "audio": "spanish/hay-estar/hay-personas.mp3"
+          }
+        ]
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-2",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "flashcard-basic",
+      "type": "flashcard",
+      "content": {
+        "front": "ESTAR - Grundregel",
+        "frontLanguage": "de",
+        "back": "ESTAR wird verwendet, um den ORT von spezifischen, bekannten Dingen anzugeben (sich befinden). Es wird mit bestimmten Artikeln (el, la, los, las), Possessivpronomen (mi, tu, su) oder Demonstrativpronomen (este, ese, aquel) verwendet. ESTAR wird konjugiert: estoy, estás, está, estamos, estáis, están.",
+        "backLanguage": "de",
+        "examples": [
+          {
+            "text": "El libro está en la mesa.",
+            "translation": "Das Buch ist auf dem Tisch.",
+            "language": "es",
+            "audio": "spanish/hay-estar/esta-libro.mp3"
+          },
+          {
+            "text": "Mi casa está cerca del parque.",
+            "translation": "Mein Haus ist in der Nähe des Parks.",
+            "language": "es",
+            "audio": "spanish/hay-estar/esta-casa.mp3"
+          }
+        ]
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-3",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welches Wort passt? '___ un restaurante nuevo en mi calle.' (Es gibt ein neues Restaurant in meiner Straße)",
+        "questionLanguage": "de",
+        "options": [
+          "Hay",
+          "Está",
+          "Están",
+          "Estoy"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/hay.mp3",
+          "spanish/hay-estar/esta.mp3",
+          "spanish/hay-estar/estan.mp3",
+          "spanish/hay-estar/estoy.mp3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HAY ist korrekt, weil wir die Existenz eines unbestimmten Restaurants ausdrücken (un restaurante = ein Restaurant). Bei unbestimmten Artikeln verwenden wir immer HAY."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-4",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welches Wort passt? 'El restaurante ___ en mi calle.' (Das Restaurant ist in meiner Straße)",
+        "questionLanguage": "de",
+        "options": [
+          "Hay",
+          "Está",
+          "Están",
+          "Soy"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/hay.mp3",
+          "spanish/hay-estar/esta.mp3",
+          "spanish/hay-estar/estan.mp3",
+          "spanish/hay-estar/soy.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "ESTÁ ist korrekt, weil wir den Ort eines spezifischen Restaurants angeben (el restaurante = das Restaurant). Bei bestimmten Artikeln verwenden wir ESTAR."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-5",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welches Wort passt? '___ cinco libros en la estantería.' (Es gibt fünf Bücher im Regal)",
+        "questionLanguage": "de",
+        "options": [
+          "Están",
+          "Hay",
+          "Está",
+          "Son"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/estan.mp3",
+          "spanish/hay-estar/hay.mp3",
+          "spanish/hay-estar/esta.mp3",
+          "spanish/hay-estar/son.mp3"
+        ],
+        "correctAnswer": 1,
+        "explanation": "HAY ist korrekt, weil wir eine Zahl verwenden (cinco = fünf). Mit Zahlen wird immer HAY verwendet, um die Existenz anzugeben."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-6",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welches Wort passt? 'Los libros ___ en la estantería.' (Die Bücher sind im Regal)",
+        "questionLanguage": "de",
+        "options": [
+          "Hay",
+          "Está",
+          "Están",
+          "Son"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/hay.mp3",
+          "spanish/hay-estar/esta.mp3",
+          "spanish/hay-estar/estan.mp3",
+          "spanish/hay-estar/son.mp3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "ESTÁN ist korrekt, weil wir den Ort von spezifischen Büchern angeben (los libros = die Bücher). Bei bestimmten Artikeln im Plural verwenden wir ESTÁN."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-7",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "___ muchos estudiantes en la universidad.",
+        "textLanguage": "es",
+        "textAudio": "spanish/hay-estar/hay-estudiantes.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "Hay",
+            "alternatives": [
+              "hay"
+            ],
+            "explanation": "HAY ist korrekt, weil 'muchos' (viele) eine Mengenangabe ist. Mit Mengenangaben verwenden wir HAY."
+          }
+        ],
+        "translation": "Es gibt viele Studenten an der Universität.",
+        "translationLanguage": "de"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-8",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "Mi coche ___ en el garaje.",
+        "textLanguage": "es",
+        "textAudio": "spanish/hay-estar/esta-coche.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "está",
+            "alternatives": [
+              "Está"
+            ],
+            "explanation": "ESTÁ ist korrekt, weil 'mi coche' (mein Auto) ein Possessivpronomen verwendet. Mit Possessivpronomen verwenden wir ESTAR."
+          }
+        ],
+        "translation": "Mein Auto ist in der Garage.",
+        "translationLanguage": "de"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-9",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "___ una farmacia cerca de aquí?",
+        "textLanguage": "es",
+        "textAudio": "spanish/hay-estar/hay-farmacia.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "Hay",
+            "alternatives": [
+              "hay"
+            ],
+            "explanation": "HAY ist korrekt, weil wir nach der Existenz einer Apotheke fragen (una farmacia = eine Apotheke). Bei Fragen nach der Existenz verwenden wir HAY."
+          }
+        ],
+        "translation": "Gibt es eine Apotheke in der Nähe?",
+        "translationLanguage": "de"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-10",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "cloze-deletion-basic",
+      "type": "cloze-deletion",
+      "content": {
+        "text": "¿Dónde ___ la farmacia?",
+        "textLanguage": "es",
+        "textAudio": "spanish/hay-estar/donde-esta-farmacia.mp3",
+        "blanks": [
+          {
+            "correctAnswer": "está",
+            "alternatives": [
+              "Está"
+            ],
+            "explanation": "ESTÁ ist korrekt, weil wir nach dem Ort einer spezifischen Apotheke fragen (la farmacia = die Apotheke). Bei Fragen nach dem Ort verwenden wir ESTAR."
+          }
+        ],
+        "translation": "Wo ist die Apotheke?",
+        "translationLanguage": "de"
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-11",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "HAY wird nur mit Plural verwendet.",
+        "statementLanguage": "de",
+        "correctAnswer": false,
+        "explanation": "Falsch! HAY ist immer singular und unveränderlich. Man sagt sowohl 'Hay un libro' (Es gibt ein Buch) als auch 'Hay muchos libros' (Es gibt viele Bücher)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-12",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "ESTAR wird mit bestimmten Artikeln (el, la, los, las) verwendet.",
+        "statementLanguage": "de",
+        "correctAnswer": true,
+        "explanation": "Richtig! ESTAR wird verwendet, wenn wir über spezifische, bekannte Dinge sprechen, die mit bestimmten Artikeln oder Possessivpronomen eingeführt werden."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-13",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Man sagt 'Hay dos personas' aber 'Las personas están aquí'.",
+        "statementLanguage": "de",
+        "correctAnswer": true,
+        "explanation": "Richtig! 'Hay dos personas' verwendet eine Zahl (unbestimmt), während 'Las personas están aquí' den bestimmten Artikel 'las' verwendet und den Ort angibt."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-14",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "true-false-basic",
+      "type": "true-false",
+      "content": {
+        "statement": "Mit Mengenangaben wie 'mucho', 'poco', 'algo' verwendet man ESTAR.",
+        "statementLanguage": "de",
+        "correctAnswer": false,
+        "explanation": "Falsch! Mit Mengenangaben wie 'mucho' (viel), 'poco' (wenig), 'algo' (etwas) verwendet man HAY. Beispiel: 'Hay mucha gente' (Es gibt viele Leute)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-15",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die Sätze der richtigen Erklärung zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "Hay un parque",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/hay-estar/hay-parque.mp3",
+            "right": "Existenz - unbestimmter Artikel",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "El parque está cerca",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/hay-estar/esta-parque.mp3",
+            "right": "Ort - bestimmter Artikel",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "Hay tres cafés",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/hay-estar/hay-cafes.mp3",
+            "right": "Existenz - Zahl",
+            "rightLanguage": "de"
+          },
+          {
+            "left": "Los cafés están abiertos",
+            "leftLanguage": "es",
+            "leftAudio": "spanish/hay-estar/estan-cafes.mp3",
+            "right": "Ort/Zustand - bestimmter Artikel",
+            "rightLanguage": "de"
+          }
+        ],
+        "explanation": "HAY wird für Existenz mit unbestimmten Artikeln und Zahlen verwendet, ESTAR für den Ort oder Zustand spezifischer Dinge."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-16",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "matching-basic",
+      "type": "matching",
+      "content": {
+        "question": "Ordne die Indikatoren dem richtigen Verb zu:",
+        "questionLanguage": "de",
+        "pairs": [
+          {
+            "left": "un, una, unos, unas",
+            "leftLanguage": "es",
+            "right": "HAY",
+            "rightLanguage": "es"
+          },
+          {
+            "left": "el, la, los, las",
+            "leftLanguage": "es",
+            "right": "ESTAR",
+            "rightLanguage": "es"
+          },
+          {
+            "left": "números (uno, dos, tres...)",
+            "leftLanguage": "es",
+            "right": "HAY",
+            "rightLanguage": "es"
+          },
+          {
+            "left": "mi, tu, su, nuestro",
+            "leftLanguage": "es",
+            "right": "ESTAR",
+            "rightLanguage": "es"
+          }
+        ],
+        "explanation": "Unbestimmte Artikel und Zahlen signalisieren HAY, während bestimmte Artikel und Possessivpronomen ESTAR signalisieren."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-17",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Übersetze: 'Es gibt ein Museum in der Stadt.'",
+        "questionLanguage": "de",
+        "correctAnswer": "Hay un museo en la ciudad",
+        "correctAnswerLanguage": "es",
+        "correctAnswerAudio": "spanish/hay-estar/hay-museo.mp3",
+        "alternatives": [
+          "hay un museo en la ciudad",
+          "Hay un museo en la ciudad.",
+          "hay un museo en la ciudad."
+        ],
+        "explanation": "HAY ist korrekt, weil wir die Existenz eines Museums ausdrücken (un museo = ein Museum, unbestimmter Artikel)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-18",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "text-input-basic",
+      "type": "text-input",
+      "content": {
+        "question": "Übersetze: 'Das Museum ist im Zentrum.'",
+        "questionLanguage": "de",
+        "correctAnswer": "El museo está en el centro",
+        "correctAnswerLanguage": "es",
+        "correctAnswerAudio": "spanish/hay-estar/esta-museo.mp3",
+        "alternatives": [
+          "el museo está en el centro",
+          "El museo está en el centro.",
+          "el museo está en el centro."
+        ],
+        "explanation": "ESTÁ ist korrekt, weil wir den Ort eines spezifischen Museums angeben (el museo = das Museum, bestimmter Artikel)."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-19",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Welcher Satz ist NICHT korrekt?",
+        "questionLanguage": "de",
+        "options": [
+          "Hay una tienda aquí",
+          "La tienda está aquí",
+          "Hay la tienda aquí",
+          "Mi tienda está aquí"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/hay-tienda-correct.mp3",
+          "spanish/hay-estar/esta-tienda-correct.mp3",
+          "spanish/hay-estar/hay-la-tienda-incorrect.mp3",
+          "spanish/hay-estar/mi-tienda.mp3"
+        ],
+        "correctAnswer": 2,
+        "explanation": "'Hay la tienda aquí' ist FALSCH. HAY wird niemals mit bestimmten Artikeln (el, la, los, las) verwendet. Man sagt entweder 'Hay una tienda' oder 'La tienda está'."
+      },
+      "metadata": {
+        "difficulty": "medium",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 60,
+        "points": 10
+      }
+    },
+    {
+      "id": "spanisch-hayestar-20",
+      "learningPathId": "hay-vs-estar",
+      "templateId": "multiple-choice-basic",
+      "type": "multiple-choice",
+      "content": {
+        "question": "Vervollständige: 'En esta calle ___ muchas tiendas y todas ___ abiertas.'",
+        "questionLanguage": "de",
+        "options": [
+          "hay / están",
+          "están / hay",
+          "hay / hay",
+          "están / están"
+        ],
+        "optionsLanguage": "es",
+        "optionsAudio": [
+          "spanish/hay-estar/hay-estan.mp3",
+          "spanish/hay-estar/estan-hay.mp3",
+          "spanish/hay-estar/hay-hay.mp3",
+          "spanish/hay-estar/estan-estan.mp3"
+        ],
+        "correctAnswer": 0,
+        "explanation": "HAY / ESTÁN ist korrekt. 'Hay muchas tiendas' (es gibt viele Geschäfte - Existenz mit Mengenangabe). 'Todas están abiertas' (alle sind geöffnet - spezifische Geschäfte mit 'todas', Zustand)."
+      },
+      "metadata": {
+        "difficulty": "hard",
+        "tags": [
+          "spanisch",
+          "grammatik",
+          "hay-estar"
+        ],
+        "estimatedTime": 90,
+        "points": 10
+      }
+    }
+  ]
+}
