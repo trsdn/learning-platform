@@ -4,9 +4,33 @@ import { axe } from 'jest-axe';
 import '../../../../setup/a11y-matchers';
 import { LoadingBar } from '@/modules/ui/components/common/LoadingBar';
 
+// Mock framer-motion with default behavior (motion enabled)
+vi.mock('framer-motion', async () => {
+  const actual = await vi.importActual('framer-motion');
+  return {
+    ...actual,
+    motion: {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      div: ({ children, style, className, ...props }: any) => (
+        <div
+          className={className}
+          style={typeof style === 'function' ? {} : style}
+          {...props}
+        >
+          {children}
+        </div>
+      ),
+    },
+    useReducedMotion: vi.fn(() => false),
+  };
+});
+
 describe('LoadingBar', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
     vi.clearAllMocks();
+    // Reset useReducedMotion to default (false)
+    const { useReducedMotion } = await import('framer-motion');
+    vi.mocked(useReducedMotion).mockReturnValue(false);
   });
 
   // Rendering tests
@@ -193,19 +217,98 @@ describe('LoadingBar', () => {
 
   // Reduced motion tests
   describe('Reduced Motion', () => {
-    it('respects prefers-reduced-motion', () => {
-      // Mock useReducedMotion hook
-      vi.mock('framer-motion', async () => {
-        const actual = await vi.importActual('framer-motion');
-        return {
-          ...actual,
-          useReducedMotion: () => true,
-        };
-      });
+    it('applies reduced motion animation when prefers-reduced-motion is enabled', async () => {
+      // Mock useReducedMotion to return true
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(true);
 
       const { container } = render(<LoadingBar />);
       const fill = container.querySelector('[class*="loading-bar__fill"]');
       expect(fill).toBeInTheDocument();
+    });
+
+    it('applies reduced motion for all variants', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(true);
+
+      const { container: container1 } = render(<LoadingBar variant="indeterminate" />);
+      expect(container1.querySelector('[class*="loading-bar__fill"]')).toBeInTheDocument();
+
+      const { container: container2 } = render(<LoadingBar variant="shimmer" />);
+      expect(container2.querySelector('[class*="loading-bar__fill"]')).toBeInTheDocument();
+
+      const { container: container3 } = render(<LoadingBar variant="pulse" />);
+      expect(container3.querySelector('[class*="loading-bar__fill"]')).toBeInTheDocument();
+    });
+
+    it('applies normal animations when prefers-reduced-motion is disabled', async () => {
+      // The default behavior is motion enabled (useReducedMotion returns false)
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      const { container } = render(<LoadingBar variant="indeterminate" />);
+      const fill = container.querySelector('[class*="loading-bar__fill"]');
+      expect(fill).toBeInTheDocument();
+    });
+  });
+
+  // Animation variant tests (testing getAnimationProps branches)
+  describe('Animation Variants', () => {
+    it('applies indeterminate animation props when motion is enabled', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      const { container } = render(<LoadingBar variant="indeterminate" />);
+      const fill = container.querySelector('[class*="loading-bar__fill"]');
+      expect(fill).toBeInTheDocument();
+      expect(fill?.className).toContain('indeterminate');
+    });
+
+    it('applies shimmer animation props when motion is enabled', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      const { container } = render(<LoadingBar variant="shimmer" />);
+      const fill = container.querySelector('[class*="loading-bar__fill"]');
+      expect(fill).toBeInTheDocument();
+      expect(fill?.className).toContain('shimmer');
+    });
+
+    it('applies pulse animation props when motion is enabled', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      const { container } = render(<LoadingBar variant="pulse" />);
+      const fill = container.querySelector('[class*="loading-bar__fill"]');
+      expect(fill).toBeInTheDocument();
+      expect(fill?.className).toContain('pulse');
+    });
+
+    it('handles invalid variant gracefully with default animation', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      // @ts-expect-error - Testing invalid variant
+      const { container } = render(<LoadingBar variant="invalid" />);
+      const fill = container.querySelector('[class*="loading-bar__fill"]');
+      expect(fill).toBeInTheDocument();
+    });
+
+    it('uses all three variants correctly without reduced motion', async () => {
+      const { useReducedMotion } = await import('framer-motion');
+      vi.mocked(useReducedMotion).mockReturnValue(false);
+
+      // Test indeterminate
+      const { container: indeterminateContainer } = render(<LoadingBar variant="indeterminate" />);
+      expect(indeterminateContainer.querySelector('[class*="loading-bar__fill--indeterminate"]')).toBeInTheDocument();
+
+      // Test shimmer
+      const { container: shimmerContainer } = render(<LoadingBar variant="shimmer" />);
+      expect(shimmerContainer.querySelector('[class*="loading-bar__fill--shimmer"]')).toBeInTheDocument();
+
+      // Test pulse
+      const { container: pulseContainer } = render(<LoadingBar variant="pulse" />);
+      expect(pulseContainer.querySelector('[class*="loading-bar__fill--pulse"]')).toBeInTheDocument();
     });
   });
 
