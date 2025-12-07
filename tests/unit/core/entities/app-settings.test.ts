@@ -54,7 +54,7 @@ describe('AppSettings', () => {
     it('should have valid learning defaults', () => {
       expect(DEFAULT_APP_SETTINGS.learning.algorithm).toBe('fsrs');
       expect(DEFAULT_APP_SETTINGS.learning.dailyGoal).toBe(20);
-      expect(DEFAULT_APP_SETTINGS.learning.sessionSize).toBe(10);
+      expect(DEFAULT_APP_SETTINGS.learning.sessionSize).toBe(20);
       expect(DEFAULT_APP_SETTINGS.learning.repeatDifficultTasks).toBe(true);
       expect(DEFAULT_APP_SETTINGS.learning.randomizeOrder).toBe(true);
     });

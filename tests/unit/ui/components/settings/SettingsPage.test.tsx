@@ -123,7 +123,7 @@ describe('SettingsPage', () => {
     it('should render settings page with header', () => {
       render(<SettingsPage onClose={mockOnClose} />);
 
-      expect(screen.getByText(/Einstellungen/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Einstellungen/i, level: 1 })).toBeInTheDocument();
     });
 
     it('should show loading state when settings are loading', () => {

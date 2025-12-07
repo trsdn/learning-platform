@@ -135,7 +135,7 @@ export const DEFAULT_APP_SETTINGS: AppSettings = {
   learning: {
     algorithm: 'fsrs',
     dailyGoal: 20,
-    sessionSize: 10,
+    sessionSize: 20,
     repeatDifficultTasks: true,
     randomizeOrder: true,
   },
