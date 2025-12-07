@@ -37,3 +37,36 @@
 .card--padding-large {
   padding: var(--spacing-xl);
 }
+
+/* Responsive - Small tablets (iPad Mini) */
+@media (max-height: 800px) {
+  .card--padding-small {
+    padding: var(--spacing-sm);
+  }
+
+  .card--padding-medium {
+    padding: var(--spacing-md);
+  }
+
+  .card--padding-large {
+    padding: var(--spacing-lg);
+  }
+}
+
+@media (max-height: 650px) {
+  .card--padding-small {
+    padding: var(--spacing-xs);
+  }
+
+  .card--padding-medium {
+    padding: var(--spacing-sm);
+  }
+
+  .card--padding-large {
+    padding: var(--spacing-md);
+  }
+
+  .card {
+    border-radius: var(--border-radius-sm);
+  }
+}

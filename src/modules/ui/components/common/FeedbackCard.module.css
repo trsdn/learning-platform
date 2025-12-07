@@ -93,3 +93,52 @@
 .feedback--info .feedback-dismiss {
   color: var(--color-info);
 }
+
+/* Responsive - Small tablets (iPad Mini) */
+@media (max-height: 800px) {
+  .feedback-content {
+    gap: var(--spacing-sm);
+  }
+
+  .feedback-icon {
+    font-size: var(--font-size-lg);
+  }
+
+  .feedback-title {
+    font-size: var(--font-size-sm);
+    margin-bottom: var(--spacing-2xs);
+  }
+
+  .feedback-message {
+    font-size: var(--font-size-xs);
+  }
+
+  .feedback-children {
+    font-size: var(--font-size-xs);
+  }
+}
+
+@media (max-height: 650px) {
+  .feedback-content {
+    gap: var(--spacing-xs);
+  }
+
+  .feedback-icon {
+    font-size: var(--font-size-md);
+  }
+
+  .feedback-title {
+    font-size: var(--font-size-xs);
+    margin-bottom: 0;
+  }
+
+  .feedback-message {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+
+  .feedback-children {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+}
