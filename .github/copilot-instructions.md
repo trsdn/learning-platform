@@ -438,5 +438,5 @@ Before marking a task complete:
 ---
 
 **Maintained by**: @trsdn  
-**License**: MIT  
+**License**: Apache-2.0  
 **Last Review**: 2024-11-24

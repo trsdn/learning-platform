@@ -2,6 +2,7 @@
   "name": "german-learning-platform",
   "version": "1.3.0",
   "description": "German Learning Platform with Spaced Repetition",
+  "license": "Apache-2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
