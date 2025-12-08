@@ -465,7 +465,7 @@ To add a new agent:
 
 ## 📜 License
 
-Same as main project (MIT)
+Same as main project (Apache-2.0)
 
 ---
 

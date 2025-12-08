@@ -106,7 +106,7 @@ Contributions welcome! See [docs/guides/contributing.md](./docs/guides/contribut
 
 ## 📄 License
 
-MIT
+Apache License 2.0 - See [LICENSE](./LICENSE) for details
 
 ## 📚 Documentation
 
