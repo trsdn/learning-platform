@@ -13,23 +13,39 @@ import { expect } from '@playwright/test';
 When('I visit the application', async ({ page }) => {
   await page.goto('/');
   await page.waitForLoadState('networkidle');
+
+  // Click the login button to open auth modal
+  const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
+  await loginButton.click();
 });
 
 Then('I should see login options', async ({ page }) => {
-  // Look for login form or login buttons
-  const loginForm = page.locator('[data-testid="auth-modal"], [class*="auth"], form');
-  await expect(loginForm.first()).toBeVisible({ timeout: 10000 });
+  // Auth modal should be visible with tabs and email input
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible({ timeout: 10000 });
+
+  // Check for auth tabs (Anmelden tab should be visible)
+  const loginTab = page.locator('.auth-tab', { hasText: 'Anmelden' });
+  await expect(loginTab).toBeVisible();
 });
 
 Then('I should be able to choose my authentication method', async ({ page }) => {
-  // Check for email/password fields or social login buttons
-  const authOptions = page.locator('input[type="email"], button:has-text("Google"), button:has-text("GitHub")');
-  await expect(authOptions.first()).toBeVisible();
+  // Check for email input field in the auth modal
+  const emailInput = page.locator('#login-email');
+  await expect(emailInput).toBeVisible({ timeout: 5000 });
+
+  // Password field should also be visible
+  const passwordInput = page.locator('#login-password');
+  await expect(passwordInput).toBeVisible();
 });
 
 Given('I am on the login page', async ({ page }) => {
   await page.goto('/');
   await page.waitForLoadState('networkidle');
+
+  // Auth modal should be visible when not authenticated
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible({ timeout: 10000 });
 });
 
 // ============================================
@@ -37,17 +53,19 @@ Given('I am on the login page', async ({ page }) => {
 // ============================================
 
 When('I enter valid credentials', async ({ page, testData }) => {
-  await page.getByRole('textbox', { name: /email/i }).fill(testData.testEmail);
-  await page.getByRole('textbox', { name: /password/i }).fill(testData.testPassword);
+  // Use the specific input IDs from the auth modal
+  await page.locator('#login-email').fill(testData.testEmail);
+  await page.locator('#login-password').fill(testData.testPassword);
 });
 
 When('I enter invalid credentials', async ({ page }) => {
-  await page.getByRole('textbox', { name: /email/i }).fill('invalid@example.com');
-  await page.getByRole('textbox', { name: /password/i }).fill('wrongpassword');
+  await page.locator('#login-email').fill('invalid@example.com');
+  await page.locator('#login-password').fill('wrongpassword');
 });
 
 When('I click the login button', async ({ page }) => {
-  await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
+  // Click the submit button in the auth modal (with keyboard emoji)
+  await page.locator('button[type="submit"]:has-text("Anmelden")').click();
 });
 
 // ============================================
@@ -55,7 +73,8 @@ When('I click the login button', async ({ page }) => {
 // ============================================
 
 Then('I should be logged in', async ({ page }) => {
-  // Wait for redirect to dashboard
+  // Wait for redirect to dashboard (auth modal should close)
+  await expect(page.locator('.auth-modal')).not.toBeVisible();
   await page.waitForLoadState('networkidle');
 });
 
@@ -65,14 +84,18 @@ Then('I should see the dashboard', async ({ page, testData }) => {
 });
 
 Then('I should see an error message', async ({ page }) => {
-  const errorMessage = page.locator('[role="alert"], .error, [class*="error"]');
-  await expect(errorMessage.first()).toBeVisible({ timeout: 5000 });
+  // Error messages in the auth modal have class "auth-message error"
+  const errorMessage = page.locator('.auth-message.error');
+  await expect(errorMessage).toBeVisible({ timeout: 5000 });
 });
 
 Then('I should remain on the login page', async ({ page }) => {
-  // Login form should still be visible
-  const loginForm = page.locator('input[type="email"], input[type="password"]');
-  await expect(loginForm.first()).toBeVisible();
+  // Login form should still be visible in the auth modal
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible();
+
+  const emailInput = page.locator('#login-email');
+  await expect(emailInput).toBeVisible();
 });
 
 // ============================================
@@ -109,8 +132,11 @@ Then('I should be logged out', async ({ page }) => {
 });
 
 Then('I should see the login page', async ({ page }) => {
-  const loginForm = page.locator('[data-testid="auth-modal"], input[type="email"]');
-  await expect(loginForm.first()).toBeVisible({ timeout: 10000 });
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible({ timeout: 10000 });
+
+  const emailInput = page.locator('#login-email');
+  await expect(emailInput).toBeVisible();
 });
 
 // ============================================
@@ -120,14 +146,16 @@ Then('I should see the login page', async ({ page }) => {
 Then('I should still be logged in', async ({ page, testData }) => {
   await expect(page.getByText(testData.demoTopic)).toBeVisible({ timeout: 10000 });
 });
-
 When('I try to access a protected page directly', async ({ page }) => {
   await page.goto('/settings');
 });
 
 Then('I should be redirected to login', async ({ page }) => {
-  const loginForm = page.locator('[data-testid="auth-modal"], input[type="email"]');
-  await expect(loginForm.first()).toBeVisible({ timeout: 10000 });
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible({ timeout: 10000 });
+
+  const emailInput = page.locator('#login-email');
+  await expect(emailInput).toBeVisible();
 });
 
 Then('after login I should be redirected to the original page', async ({ page: _page }) => {
@@ -190,6 +218,9 @@ Then('my session should expire', async () => {
 });
 
 Then('I should be prompted to log in again', async ({ page }) => {
-  const loginPrompt = page.locator('[data-testid="auth-modal"], input[type="email"]');
-  await expect(loginPrompt.first()).toBeVisible();
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible();
+
+  const emailInput = page.locator('#login-email');
+  await expect(emailInput).toBeVisible();
 });

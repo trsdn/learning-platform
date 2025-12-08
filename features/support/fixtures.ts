@@ -29,24 +29,30 @@ export const test = base.extend<TestFixtures>({
     try {
       // Navigate to app
       await page.goto('/');
-
-      // Wait for auth modal or dashboard
       await page.waitForLoadState('networkidle');
 
       // Check if already logged in
       const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
 
       if (!isLoggedIn) {
-        // Find and fill login form
-        const emailInput = page.getByRole('textbox', { name: /email/i });
-        const passwordInput = page.getByRole('textbox', { name: /password/i });
+        // Click login button to open auth modal
+        const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
+        await loginButton.waitFor({ state: 'visible', timeout: 5000 });
+        await loginButton.click();
 
-        if (await emailInput.isVisible()) {
-          await emailInput.fill(testData.testEmail);
-          await passwordInput.fill(testData.testPassword);
-          await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
-          await page.waitForURL('**/', { timeout: 10000 });
-        }
+        // Wait for auth modal
+        const authModal = page.locator('.auth-modal');
+        await authModal.waitFor({ state: 'visible', timeout: 10000 });
+
+        // Fill in credentials using auth modal IDs
+        await page.locator('#login-email').fill(testData.testEmail);
+        await page.locator('#login-password').fill(testData.testPassword);
+
+        // Click submit button
+        await page.locator('button[type="submit"]:has-text("Anmelden")').click();
+
+        // Wait for dashboard to load (modal should close and demo topic should appear)
+        await page.getByText(testData.demoTopic).waitFor({ state: 'visible', timeout: 15000 });
       }
 
       await use(page);
