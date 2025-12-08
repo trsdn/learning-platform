@@ -38,14 +38,6 @@
   margin-bottom: var(--spacing-sm);
 }
 
-.learning-path-card__difficulty {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-semibold);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--difficulty-color);
-}
-
 .learning-path-card__completed-badge {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-semibold);
@@ -83,8 +75,7 @@
   margin-bottom: var(--spacing-md);
 }
 
-.learning-path-card__task-count,
-.learning-path-card__time {
+.learning-path-card__task-count {
   font-size: var(--font-size-xs);
   color: var(--color-text-secondary);
 }
