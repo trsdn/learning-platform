@@ -1,15 +1,12 @@
 # Claude Code Commands Reference
 
+<!-- markdownlint-disable MD022 MD031 MD032 -->
+
 Comprehensive guide to all available commands, their purposes, and which agents can use them.
 
 ## Table of Contents
 - [Command Overview](#command-overview)
-- [Agent-Specific Commands](#agent-specific-commands)
-- [Shared Commands](#shared-commands)
-- [Command Workflows](#command-workflows)
-- [Command Syntax](#command-syntax)
 
----
 
 ## Command Overview
 
@@ -24,7 +21,6 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 | `/deploy` | General | Deploy to production (Vercel/GitHub Pages) | `--force`, `--skip-test` |
 | `/deploy-test` | General | Deploy to test environment | None |
 
----
 
 ## Agent-Specific Commands
 
@@ -48,24 +44,11 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 6. Suggests label additions
 
 **Scoring Algorithm**:
-- Business value: 0-40 points
-- User impact: 0-30 points
-- Urgency: 0-20 points
-- Effort inverse: 0-10 points
 
 **Output**:
-- `BACKLOG-PRIORITY-[date].md` report
-- Ranked issue list with scores
-- Recommended workflows
-- Stale issue detection
 
 **When to use**:
-- Starting new sprint
-- Deciding what to work on next
-- After multiple new issues created
-- Monthly backlog grooming
 
----
 
 ### Implementation Tester Agent
 
@@ -90,19 +73,9 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 9. Accessibility check
 
 **Output**:
-- `TEST-REPORT-ISSUE-[number].md`
-- Overall status: PASS | CONDITIONAL PASS | FAIL
-- Severity-categorized issues (🔴🟡🔵⚪)
-- Specific fixes needed
-- Coverage metrics
 
 **When to use**:
-- After implementation complete
-- Before code review
-- After fixing issues (re-validation)
-- Before merge to main
 
----
 
 ### Content Designer Agent
 
@@ -129,19 +102,9 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 7. Provides research-backed recommendations
 
 **Output**:
-- Educational effectiveness rating (1-5 stars)
-- Task distribution analysis
-- Critical/High/Medium priority issues
-- Specific task feedback with fixes
-- Research citations
 
 **When to use**:
-- After creating new learning path
-- Before publishing content
-- When learning outcomes poor
-- Quarterly content audits
 
----
 
 ### Release Engineer Agent
 
@@ -170,23 +133,11 @@ Comprehensive guide to all available commands, their purposes, and which agents 
 9. Optionally deploys to production
 
 **Semantic Versioning**:
-- **Major** (2.0.0): Breaking changes
-- **Minor** (1.3.0): New features (backward compatible)
-- **Patch** (1.2.4): Bug fixes only
 
 **Output**:
-- Updated `CHANGELOG.md`
-- Git tag (e.g., `v1.3.0`)
-- GitHub release
-- Optional production deployment
 
 **When to use**:
-- Feature complete and tested
-- Ready for production release
-- On a release schedule (e.g., bi-weekly)
-- Critical bug fix needs deployment
 
----
 
 ## Shared Commands
 
@@ -215,11 +166,7 @@ These commands are available to all agents and general use.
 7. **Optional**: Consults content-designer for pedagogical review
 
 **When to use**:
-- Creating new educational content
-- Adding content to existing topic
-- Teacher/content creator workflow
 
----
 
 ### `/new-task-type [task-type-name]`
 
@@ -244,15 +191,11 @@ These commands are available to all agents and general use.
 7. Updates documentation
 
 **When to use**:
-- Need new interaction type
-- Expanding platform capabilities
-- User request for specific task format
 
----
 
 ### `/deploy [--force] [--skip-test]`
 
-**Purpose**: Deploy learning platform to production (GitHub Pages).
+**Purpose**: Deploy learning platform to production (Vercel) via `deploy-production` GitHub Actions workflow (release-triggered).
 
 **Usage**:
 ```bash
@@ -269,20 +212,16 @@ These commands are available to all agents and general use.
 **What it does**:
 1. Runs tests (unless `--force`)
 2. Runs build
-3. Deploys to GitHub Pages
-4. Verifies deployment
-5. Creates deployment tag
+3. Triggers `deploy-production` workflow → Vercel production deploy (uses Vercel CLI)
+4. Performs health check
+5. Uses release tag/version from context
 
 **When to use**:
-- After release created
-- Feature complete and tested
-- Scheduled production deployment
 
----
 
 ### `/deploy-test`
 
-**Purpose**: Deploy to isolated test environment.
+**Purpose**: Deploy to isolated test/preview environment (Vercel preview).
 
 **Usage**:
 ```bash
@@ -290,18 +229,14 @@ These commands are available to all agents and general use.
 ```
 
 **What it does**:
-1. Deploys to test environment
-2. Uses isolated test database
+
+1. Deploys to preview/test environment on Vercel
+2. Uses dev Supabase
 3. Runs via GitHub Actions
-4. Provides test URL
+4. Provides preview URL
 
 **When to use**:
-- Before production deployment
-- UAT (User Acceptance Testing)
-- Testing with real data
-- Stakeholder demos
 
----
 
 ### Other Shared Commands
 
@@ -320,7 +255,6 @@ Perform cross-artifact consistency analysis (spec.md, plan.md, tasks.md).
 #### `/constitution`
 Create or update project constitution with principles.
 
----
 
 ## Command Workflows
 
@@ -349,7 +283,6 @@ git merge feature-branch
 /deploy
 ```
 
----
 
 ### Learning Content Creation Workflow
 
@@ -373,7 +306,6 @@ git merge feature-branch
 /deploy
 ```
 
----
 
 ### Backlog Management Workflow
 
@@ -388,7 +320,6 @@ git merge feature-branch
 # (Use platform-orchestrator for complex features)
 ```
 
----
 
 ### New Task Type Development Workflow
 
@@ -413,7 +344,6 @@ npm run dev
 /review-learning-path test/new-task-demo
 ```
 
----
 
 ### Release Workflow
 
@@ -438,7 +368,6 @@ git pull
 # (check analytics, error logs)
 ```
 
----
 
 ## Command Syntax
 
@@ -489,7 +418,6 @@ git pull
 /new-task-type
 ```
 
----
 
 ## Agent-to-Command Matrix
 
@@ -509,48 +437,21 @@ git pull
 | | `/deploy` | ✅ Shared |
 | | `/deploy-test` | ✅ Shared |
 
----
 
 ## Command Best Practices
 
 ### When to use each command
 
 **Use `/prioritize-backlog`**:
-- ✅ Multiple issues open, unsure what's next
-- ✅ Starting new sprint
-- ✅ Quarterly planning
-- ❌ Only 1-2 issues open
-- ❌ Priority already obvious
 
 **Use `/validate-implementation`**:
-- ✅ Implementation complete
-- ✅ Before code review
-- ✅ After fixing test failures
-- ❌ Still actively coding
-- ❌ Tests not written
 
 **Use `/review-learning-path`**:
-- ✅ New content created
-- ✅ Before publishing
-- ✅ Low learning outcomes
-- ❌ Content already reviewed recently
-- ❌ Minor content tweaks
 
 **Use `/create-release`**:
-- ✅ Features complete and tested
-- ✅ Ready for production
-- ✅ On release schedule
-- ❌ Tests failing
-- ❌ Work still in progress
 
 **Use `/deploy`**:
-- ✅ Release created
-- ✅ Test environment validated
-- ✅ Stakeholder approval
-- ❌ No release tag
-- ❌ Failing tests
 
----
 
 ## Troubleshooting Commands
 
@@ -585,7 +486,6 @@ ls public/learning-paths/
 ls PLAN-ISSUE-*.md
 ```
 
----
 
 ## Creating New Commands
 
@@ -621,16 +521,10 @@ To create a new command:
    /my-command test-arg
    ```
 
----
 
 ## Related Documentation
 
-- [AGENTS.md](./AGENTS.md) - Agent system overview and capabilities
-- [CONTRIBUTION.md](../CONTRIBUTION.md) - Contributing to the project
-- [.claude/agents/](./agents/) - Individual agent definitions
-- [.claude/commands/](./commands/) - Individual command definitions
 
----
 
 **Last Updated**: 2025-11-24
 **Maintained By**: Product Owner Agent
@@ -638,7 +532,4 @@ To create a new command:
 ## Changelog
 
 **2025-11-24**:
-- Removed spec kit commands: `/analyze-requirements`, `/plan`, `/implement`, `/specify`, `/tasks`, `/clarify`, `/analyze`, `/constitution`
-- Updated agent references: `learning-design-expert` → `content-designer`
-- Simplified command matrix to reflect current learning platform commands
-- Updated deployment targets: Now using Vercel/GitHub Pages
+<!-- markdownlint-disable MD022 MD031 MD032 -->

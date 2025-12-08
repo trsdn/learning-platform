@@ -15,7 +15,7 @@ npm run dev        # Development server
 npm run build      # Production build (validates TypeScript)
 npm test           # Run tests
 npm run storybook  # Component library (http://localhost:6006)
-npm run deploy     # Deploy to GitHub Pages
+# Deploy: create a GitHub Release → deploy-production workflow → Vercel prod
 ```
 
 ---
@@ -208,7 +208,7 @@ For specialized work in specific areas, consult these domain-specific guides:
 **Target Audience**: Gymnasium students (grades 5-13, ages 10-19)
 **Language**: German interface required
 **Performance**: <3s initial load, <100ms interactions
-**Deployment**: GitHub Pages (zero-cost static hosting)
+**Deployment**: Vercel (production) via GitHub Release → `deploy-production` workflow
 **Storage**: IndexedDB for tasks/progress, LocalStorage for settings/audio prefs
 
 ---

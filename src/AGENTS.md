@@ -28,7 +28,7 @@
 - Organize code by **module** (`core`, `storage`, `ui`) and **concern** (entities, services, repositories, components, hooks, styles).
 - Every React component in `modules/ui/components/` must have a matching `.module.css` file and (ideally) a unit test.
 - Use CSS design tokens from `modules/ui/styles/variables.css`; avoid hard‑coded colors/sizes.
-- Prefer barrel files (`index.ts`) for module exports where it improves clarity.
+
 
 ## Agent & Command Usage
 
