@@ -18,8 +18,11 @@ Given('I have selected a learning path', async ({ authenticatedPage, testData })
   await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
 });
 
-Given('I am on the learning path page', async ({ authenticatedPage }) => {
-  // Wait for the page to load fully
+Given('I am on the learning path page', async ({ authenticatedPage, testData }) => {
+  // Get the testData to find the learning path name
+  // Click on the learning path to navigate to it
+  await authenticatedPage.getByText(testData.demoLearningPath).click();
+  // Wait for page to load after navigation
   await authenticatedPage.waitForLoadState('networkidle');
   // Wait for the Start button to be available
   const startButton = authenticatedPage.getByRole('button', { name: /start|starten/i });
@@ -63,6 +66,9 @@ Given('I am in an active practice session', async ({ authenticatedPage, testData
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
   await authenticatedPage.getByText(testData.demoLearningPath).click();
+  // Wait for page to load after clicking learning path
+  await authenticatedPage.waitForLoadState('networkidle');
+  // Now wait for the Start button
   await authenticatedPage.getByRole('button', { name: /start|starten/i }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: /start|starten/i }).click();
   await authenticatedPage.waitForLoadState('networkidle');
