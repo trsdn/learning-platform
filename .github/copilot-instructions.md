@@ -1,14 +1,28 @@
 # GitHub Copilot Instructions - MindForge Academy Learning Platform
 
-**Last Updated**: 2024-11-24 | **For**: GitHub Copilot Coding Agent
+**Last Updated**: 2025-02-18 | **For**: GitHub Copilot Coding Agent
+> **IMPORTANT:** For all agent architecture, workflows, and domain-specific rules, always consult [CLAUDE.md](../../CLAUDE.md) and [AGENTS.md](../../AGENTS.md) first. These files are the authoritative source for agent patterns, environment setup, and task conventions. For domain details, use the nested AGENTS.md files in each major folder (see below).
 
 ## 🎯 Repository Overview
 
 **Purpose**: Offline-first learning platform for German Gymnasium students (ages 10-19)  
-**Tech Stack**: TypeScript 5.x + React 18.3 + Vite + IndexedDB (Dexie.js) + CSS Modules  
+**Tech Stack**: TypeScript 5.x + React 18.3 + Vite + Supabase (primary DB) + IndexedDB/Dexie.js (offline cache) + CSS Modules  
 **Core Features**: 8 task types, spaced repetition (SM-2), offline PWA, German UI  
 **Target Scale**: <100 concurrent users  
-**Deployment**: GitHub Pages (static hosting)
+**Deployment**: Vercel (production) via GitHub Release → `deploy-production` workflow (Vercel CLI)
+
+## 🌍 Environment & Deployment Workflow
+
+- **Environments:**
+  - Local: Development DB, manual seeding
+  - CI/Preview: Development DB, auto-seeding, safe for incomplete work
+  - Production: Production DB, NEVER auto-seeded, only via GitHub Release
+- **Environment files:** `.env.local`, `.env.development`, `.env.production` (all encrypted with SOPS; decrypt with `npm run secrets:decrypt`)
+- **Deployment:**
+  - Feature branch → PR → Preview (dev DB) → Merge → Create Release → Production (prod DB)
+  - Production deployments require a GitHub Release
+- **Protected Areas:**
+  - Do NOT modify `.github/agents/`, service worker precache manifest, existing task type interfaces, or database schema unless essential (see AGENTS.md for details)
 
 ## 🏗️ Architecture
 
@@ -16,7 +30,7 @@
 ```
 src/modules/
 ├── core/        # Domain logic, entities, services, types
-├── storage/     # IndexedDB adapters, repositories, seed data
+├── storage/     # Offline caching (Dexie.js/IndexedDB), sync helpers
 └── ui/          # React components (*.tsx + *.module.css), hooks, styles
 
 tests/
@@ -39,44 +53,28 @@ docs/                   # Documentation
 
 ### Critical Files
 - `src/modules/core/types/services.ts` - Type definitions (authoritative source)
-- `src/modules/ui/components/practice-session.tsx` - Main UI (1000+ lines)
-- `src/modules/storage/database.ts` - Database schema
+- `src/modules/ui/components/practice-session.tsx` - Main UI (task rendering + SM-2 logic)
+- `src/modules/storage/database.ts` - Offline caching schema (Dexie.js/IndexedDB)
 - `src/modules/storage/json-loader.ts` - Content loader
 - `src/modules/ui/styles/variables.css` - Design tokens
+- `infrastructure/supabase/` - Supabase migrations, schema, RLS (see infrastructure/supabase/AGENTS.md)
 
-## 🔨 Development Workflow
+## 🤖 Agent & Command Orchestration (VS Code Custom Agents)
+- Custom agents live in `.github/agents/*.agent.md` (or legacy `.chatmode.md`). Use YAML frontmatter (`name`, `description`, `model`, `tools`, `target: github-copilot`, optional `handoffs`) plus body instructions. VS Code detects `.agent.md` automatically.
+- Use orchestrators for multi-stage workflows: `platform-orchestrator` (dev/test/review/deploy), `content-orchestrator` (learning paths/content). Specialists in `.claude/agents/AGENT_REGISTRY.md` cover focused tasks (e.g., `implementation-tester`, `deployment-validator`, `content-designer`).
+- Handoffs: define `handoffs` in frontmatter to guide Plan → Implement → Review, etc. Use `send` flag to auto-submit or keep manual.
+- Commands to trigger workflows: `/validate-implementation`, `/deploy`, `/deploy-test`, `/create-release`, `/prioritize-backlog`, `/new-learning-path`, `/new-task-type` (see `.claude/COMMANDS.md`).
+- Tools priority: prompt `tools` > referenced custom agent `tools` > default agent tools. Missing tools are ignored.
+- Always apply the “agent-of-agents” pattern: orchestrators coordinate specialists; Copilot coordinates orchestrators.
+- Library parity: `.github/agents` mirrors `.claude/agents/AGENT_REGISTRY.md` with orchestrators (`platform-orchestrator`, `content-orchestrator`, `platform-test-orchestrator`, `platform-review-orchestrator`, `platform-deploy-orchestrator`, `platform-planning-orchestrator`). `.github/prompts` mirrors `.claude/COMMANDS.md` (e.g., `validate-implementation`, `deploy`, `deploy-test`, `create-release`, `prioritize-backlog`, `review-learning-path`, `new-learning-path`, `new-task-type`). Prefer these first; fall back to `.claude` if missing.
 
-### Essential Commands
-```bash
-npm install           # Install dependencies
-npm run dev          # Development server (http://localhost:5173)
-npm run build        # Production build (validates TypeScript)
-npm test             # Run unit tests (Vitest)
-npm run test:e2e     # Run E2E tests (Playwright)
-npm run lint         # ESLint check
-npm run lint:fix     # Auto-fix linting issues
-npm run format       # Prettier formatting
-npm run type-check   # TypeScript type checking
-```
-
-### Before Making Changes
-1. **Always** run `npm install` first
-2. **Always** run `npm run build` to check current state
-3. **Always** run `npm test` to understand baseline test results
-4. **Never** assume the build is clean - verify first
-
-### Testing Requirements
-- **Unit tests**: Required for business logic, services, utilities
-- **E2E tests**: Required for critical user flows
-- **Coverage**: Minimum 80% for business logic
-- **Accessibility**: Use `jest-axe` for new components
-- **Test framework**: Vitest (unit), Playwright (E2E)
-
-### Build & Validation
-```bash
-# Full validation before committing
-npm run type-check && npm run lint && npm test && npm run build
-```
+## 🧭 Instructions & Prompt Files (VS Code)
+- Workspace-wide: `.github/copilot-instructions.md` (this file) auto-applies; keep concise, link to CLAUDE.md/AGENTS.md.
+- Scoped instructions: `*.instructions.md` with optional frontmatter (`description`, `name`, `applyTo` glob). Place in `.github/instructions` or profile; multiple files merge (order not guaranteed). Use `#tool:<tool-name>` to reference tools.
+- AGENTS.md: root (and experimental nested) agent instructions; enable `chat.useAgentsMdFile` / `chat.useNestedAgentsMdFiles` if needed. Keep folder-specific domain rules in nested AGENTS.md files.
+- Prompt files: `.prompt.md` in `.github/prompts` (or profile). Frontmatter: `description`, `name`, `argument-hint`, `agent` (can reference custom agent), `model`, `tools`. Body is the reusable prompt; supports `${selection}`, `${fileBasename}`, `${input:var}`. Run via `/name`, Command Palette, or editor play.
+- Agent/prompt source of truth: Use `.github/agents` + `.github/prompts` as the default library; they stay in lockstep with `.claude/agents/AGENT_REGISTRY.md` and `.claude/COMMANDS.md`. If a command/agent is missing locally, consult the `.claude` files.
+- Tool priority reminder: prompt `tools` > referenced custom agent `tools` > selected agent defaults.
 
 ## 📝 Code Style & Standards
 
@@ -416,26 +414,19 @@ The platform uses the SM-2 algorithm for optimal learning retention:
 - Vite - Build tool
 - Dexie.js - IndexedDB wrapper
 - Workbox - PWA/Service workers
-- react-i18next - Internationalization
-
-### Development Dependencies
-- Vitest - Unit testing
-- Playwright - E2E testing
 - ESLint - Linting
 - Prettier - Code formatting
 
 **When adding dependencies**:
 1. Check if existing library can be used
 2. Evaluate bundle size impact
+
 3. Verify TypeScript support
 4. Update package.json with specific version
-5. Run `npm install` and test
 
 ## ✅ Definition of Done
-
 Before marking a task complete:
 - [ ] Code follows style guidelines
-- [ ] TypeScript strict mode passes
 - [ ] All tests pass (`npm test`)
 - [ ] Build succeeds (`npm run build`)
 - [ ] No linting errors (`npm run lint`)
