@@ -12,8 +12,10 @@ import { expect } from '@playwright/test';
 
 Given('I have selected a learning path', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
-  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 10000 });
+  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
 });
 
 Given('I am on the learning path page', async ({ authenticatedPage, testData }) => {
@@ -52,8 +54,10 @@ Then('I should see my progress indicator showing {string}', async ({ authenticat
 Given('I am in an active practice session', async ({ authenticatedPage, testData }) => {
   // Navigate to demo learning path and start session
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
-  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 10000 });
+  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
   await authenticatedPage.getByText(testData.demoLearningPath).click();
   await authenticatedPage.getByRole('button', { name: /start|starten/i }).click();
   await authenticatedPage.waitForLoadState('networkidle');
@@ -343,6 +347,8 @@ When('I accidentally close the browser', async ({ authenticatedPage }) => {
 
 When('I return to the learning path', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });

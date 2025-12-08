@@ -31,13 +31,21 @@ export const test = base.extend<TestFixtures>({
       await page.goto('/');
       await page.waitForLoadState('networkidle');
 
-      // Check if already logged in
-      const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
+      // Wait for either topics grid OR login button - indicates page is loaded
+      const topicsGrid = page.locator('[class*="topicsGrid"], [class*="grid"]');
+      const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
+      
+      // Wait for either element to appear to know page is loaded
+      await Promise.race([
+        topicsGrid.first().waitFor({ state: 'visible', timeout: 5000 }).catch(() => null),
+        loginButton.waitFor({ state: 'visible', timeout: 5000 }).catch(() => null),
+      ]);
+
+      // Check if already logged in by looking for topic cards (not just text)
+      const isLoggedIn = await topicsGrid.first().isVisible().catch(() => false);
 
       if (!isLoggedIn) {
         // Click login button to open auth modal
-        const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
-        await loginButton.waitFor({ state: 'visible', timeout: 5000 });
         await loginButton.click();
 
         // Wait for auth modal
@@ -51,9 +59,12 @@ export const test = base.extend<TestFixtures>({
         // Click submit button
         await page.locator('button[type="submit"]:has-text("Anmelden")').click();
 
-        // Wait for dashboard to load (modal should close and demo topic should appear)
-        await page.getByText(testData.demoTopic).waitFor({ state: 'visible', timeout: 15000 });
+        // Wait for topics grid to appear after login
+        await topicsGrid.first().waitFor({ state: 'visible', timeout: 20000 });
       }
+
+      // Final verification - wait for the demo topic button to be clickable
+      await page.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
 
       await use(page);
     } catch (error) {

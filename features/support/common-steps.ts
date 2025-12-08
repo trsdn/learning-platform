@@ -48,6 +48,8 @@ When('I log out', async ({ page }) => {
 Given('I am on the dashboard', async ({ authenticatedPage }) => {
   await authenticatedPage.goto('/');
   await authenticatedPage.waitForLoadState('networkidle');
+  // Wait for topics grid to be fully loaded
+  await authenticatedPage.locator('[class*="topicsGrid"], [class*="grid"]').first().waitFor({ state: 'visible', timeout: 20000 });
 });
 
 Given('I am on the settings page', async ({ authenticatedPage }) => {
