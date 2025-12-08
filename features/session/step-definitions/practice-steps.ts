@@ -28,6 +28,7 @@ Given('I am on the learning path page', async ({ authenticatedPage, testData }) 
 // ============================================
 
 When('I click the {string} button', async ({ authenticatedPage }, buttonName: string) => {
+  await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).click();
 });
 
@@ -59,6 +60,7 @@ Given('I am in an active practice session', async ({ authenticatedPage, testData
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
   await authenticatedPage.getByText(testData.demoLearningPath).click();
+  await authenticatedPage.getByRole('button', { name: /start|starten/i }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: /start|starten/i }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });
