@@ -55,16 +55,10 @@ export interface LearningPathCardProps {
   className?: string;
 }
 
-const DIFFICULTY_CONFIG = {
-  easy: { label: 'Leicht', color: 'var(--color-success)', emoji: '🟢' },
-  medium: { label: 'Mittel', color: 'var(--color-warning)', emoji: '🟡' },
-  hard: { label: 'Schwer', color: 'var(--color-error)', emoji: '🔴' },
-};
-
 /**
  * Learning Path Card Component
  *
- * Displays a learning path with title, description, difficulty,
+ * Displays a learning path with title, description,
  * task count, and optional progress indicator.
  *
  * @example
@@ -89,7 +83,6 @@ export function LearningPathCard({
   const shouldReduceMotion = useReducedMotion();
   const skipAnimation = !animate || shouldReduceMotion;
 
-  const difficulty = DIFFICULTY_CONFIG[learningPath.difficulty];
   const hasProgress = progress && progress.completedTasks > 0;
   const completionPercentage = taskCount > 0 ? (progress?.completedTasks ?? 0) / taskCount * 100 : 0;
   const isCompleted = progress && progress.completedTasks >= taskCount;
@@ -120,7 +113,7 @@ export function LearningPathCard({
       onKeyDown={handleKeyDown}
       role="button"
       tabIndex={0}
-      aria-label={`${learningPath.title} - ${difficulty.label} - ${taskCount} Aufgaben`}
+      aria-label={`${learningPath.title} - ${taskCount} Aufgaben`}
       initial={skipAnimation ? {} : { opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={
@@ -131,20 +124,14 @@ export function LearningPathCard({
       whileHover={skipAnimation ? {} : { scale: 1.02 }}
       whileTap={skipAnimation ? {} : { scale: 0.98 }}
     >
-      {/* Header with difficulty badge */}
-      <div className={styles['learning-path-card__header']}>
-        <span
-          className={styles['learning-path-card__difficulty']}
-          style={{ '--difficulty-color': difficulty.color } as React.CSSProperties}
-        >
-          {difficulty.emoji} {difficulty.label}
-        </span>
-        {isCompleted && (
+      {/* Header with completion badge */}
+      {isCompleted && (
+        <div className={styles['learning-path-card__header']}>
           <span className={styles['learning-path-card__completed-badge']}>
             ✓ Abgeschlossen
           </span>
-        )}
-      </div>
+        </div>
+      )}
 
       {/* Title */}
       <h3 className={styles['learning-path-card__title']}>{learningPath.title}</h3>
@@ -157,11 +144,6 @@ export function LearningPathCard({
         <span className={styles['learning-path-card__task-count']}>
           📝 {taskCount} Aufgaben
         </span>
-        {learningPath.estimatedTime > 0 && (
-          <span className={styles['learning-path-card__time']}>
-            ⏱️ ~{learningPath.estimatedTime} Min.
-          </span>
-        )}
       </div>
 
       {/* Progress bar (only if user has started) */}

@@ -59,44 +59,6 @@ describe('LearningPathCard', () => {
       expect(screen.getByText('📝 15 Aufgaben')).toBeInTheDocument();
     });
 
-    it('displays estimated time when provided', () => {
-      render(
-        <LearningPathCard learningPath={mockLearningPath} taskCount={10} onSelect={mockOnSelect} />
-      );
-
-      expect(screen.getByText('⏱️ ~30 Min.')).toBeInTheDocument();
-    });
-
-    it('does not display estimated time when zero', () => {
-      const pathWithoutTime = { ...mockLearningPath, estimatedTime: 0 };
-      render(<LearningPathCard learningPath={pathWithoutTime} taskCount={10} onSelect={mockOnSelect} />);
-
-      expect(screen.queryByText(/Min\./)).not.toBeInTheDocument();
-    });
-  });
-
-  // Difficulty display tests
-  describe('Difficulty Display', () => {
-    it('displays easy difficulty', () => {
-      const easyPath = { ...mockLearningPath, difficulty: 'easy' as const };
-      render(<LearningPathCard learningPath={easyPath} taskCount={10} onSelect={mockOnSelect} />);
-
-      expect(screen.getByText(/🟢 Leicht/)).toBeInTheDocument();
-    });
-
-    it('displays medium difficulty', () => {
-      const mediumPath = { ...mockLearningPath, difficulty: 'medium' as const };
-      render(<LearningPathCard learningPath={mediumPath} taskCount={10} onSelect={mockOnSelect} />);
-
-      expect(screen.getByText(/🟡 Mittel/)).toBeInTheDocument();
-    });
-
-    it('displays hard difficulty', () => {
-      const hardPath = { ...mockLearningPath, difficulty: 'hard' as const };
-      render(<LearningPathCard learningPath={hardPath} taskCount={10} onSelect={mockOnSelect} />);
-
-      expect(screen.getByText(/🔴 Schwer/)).toBeInTheDocument();
-    });
   });
 
   // Progress display tests
@@ -325,15 +287,7 @@ describe('LearningPathCard', () => {
       );
 
       const card = screen.getByRole('button');
-      expect(card).toHaveAttribute('aria-label', 'Basic Algebra - Leicht - 10 Aufgaben');
-    });
-
-    it('has correct aria-label for different difficulties', () => {
-      const hardPath = { ...mockLearningPath, difficulty: 'hard' as const };
-      render(<LearningPathCard learningPath={hardPath} taskCount={15} onSelect={mockOnSelect} />);
-
-      const card = screen.getByRole('button');
-      expect(card).toHaveAttribute('aria-label', 'Basic Algebra - Schwer - 15 Aufgaben');
+      expect(card).toHaveAttribute('aria-label', 'Basic Algebra - 10 Aufgaben');
     });
 
     it('has no WCAG violations', async () => {
@@ -372,16 +326,16 @@ describe('LearningPathCard', () => {
       expect(results).toHaveNoViolations();
     });
 
-    it('has no WCAG violations with all difficulties', async () => {
-      const easyPath = { ...mockLearningPath, difficulty: 'easy' as const };
-      const mediumPath = { ...mockLearningPath, difficulty: 'medium' as const, id: 'path-2' };
-      const hardPath = { ...mockLearningPath, difficulty: 'hard' as const, id: 'path-3' };
+    it('has no WCAG violations with multiple cards', async () => {
+      const path1 = { ...mockLearningPath, id: 'path-1' };
+      const path2 = { ...mockLearningPath, id: 'path-2', title: 'Geometry Basics' };
+      const path3 = { ...mockLearningPath, id: 'path-3', title: 'Calculus Intro' };
 
       const { container } = render(
         <div>
-          <LearningPathCard learningPath={easyPath} taskCount={10} onSelect={mockOnSelect} />
-          <LearningPathCard learningPath={mediumPath} taskCount={15} onSelect={mockOnSelect} />
-          <LearningPathCard learningPath={hardPath} taskCount={20} onSelect={mockOnSelect} />
+          <LearningPathCard learningPath={path1} taskCount={10} onSelect={mockOnSelect} />
+          <LearningPathCard learningPath={path2} taskCount={15} onSelect={mockOnSelect} />
+          <LearningPathCard learningPath={path3} taskCount={20} onSelect={mockOnSelect} />
         </div>
       );
       const results = await axe(container);
