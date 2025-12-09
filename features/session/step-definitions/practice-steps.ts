@@ -48,10 +48,10 @@ When('I click the {string} button', async ({ authenticatedPage, testData }, butt
 
 Then('a practice session should begin', async ({ authenticatedPage }) => {
   // Wait for the practice session container to be visible
+  // The main practice session class is .practice-session
   await authenticatedPage.waitForLoadState('networkidle');
-  // Check for practice session indicators (task container, progress bar, etc.)
-  const taskContainer = authenticatedPage.locator('[data-testid="task-container"], .task, [class*="Task"], [class*="practice"]');
-  await expect(taskContainer.first()).toBeVisible({ timeout: 10000 });
+  const sessionContainer = authenticatedPage.locator('.practice-session');
+  await expect(sessionContainer).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see the first task', async ({ authenticatedPage }) => {
