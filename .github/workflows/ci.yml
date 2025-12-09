@@ -80,12 +80,29 @@ jobs:
       # - name: Run E2E tests
       #   run: npm run test:e2e -- --project=chromium
 
-      # Temporarily disabled - BDD tests have same Playwright browser issues (Issue #182)
-      # - name: Install Playwright browsers for BDD
-      #   run: npx playwright install --with-deps chromium
+      # BDD Smoke Tests - Issue #208
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(npm list @playwright/test --depth=0 --json | jq -r '.dependencies["@playwright/test"].version')" >> $GITHUB_OUTPUT
 
-      # - name: Run BDD tests
-      #   run: npm run test:bdd -- --project=chromium
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ steps.playwright-version.outputs.version }}
+
+      - name: Install Playwright browsers for BDD
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps chromium
+
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        run: npx playwright install-deps chromium
+
+      - name: Run BDD smoke tests
+        run: npm run test:bdd:smoke -- --project=chromium
+        timeout-minutes: 10
 
       - name: Upload test results
         if: always()

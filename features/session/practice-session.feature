@@ -6,12 +6,11 @@ Feature: Practice Session
 
   Background:
     Given I am logged in as a learner
-    And I have selected a learning path
+    And I have navigated to a topic
 
   @PS-001 @smoke
   Scenario: Start a practice session
-    Given I am on the learning path page
-    When I click the "Start" button
+    When I select a learning path
     Then a practice session should begin
     And I should see the first task
     And I should see my progress indicator showing "1/N"

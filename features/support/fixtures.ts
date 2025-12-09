@@ -29,25 +29,42 @@ export const test = base.extend<TestFixtures>({
     try {
       // Navigate to app
       await page.goto('/');
-
-      // Wait for auth modal or dashboard
       await page.waitForLoadState('networkidle');
 
-      // Check if already logged in
-      const isLoggedIn = await page.getByText(testData.demoTopic).isVisible().catch(() => false);
+      // Wait for either topics grid OR login button - indicates page is loaded
+      const topicsGrid = page.locator('[class*="topicsGrid"], [class*="grid"]');
+      const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
+      
+      // Wait for either element to appear to know page is loaded
+      await Promise.race([
+        topicsGrid.first().waitFor({ state: 'visible', timeout: 5000 }).catch(() => null),
+        loginButton.waitFor({ state: 'visible', timeout: 5000 }).catch(() => null),
+      ]);
+
+      // Check if already logged in by looking for topic cards (not just text)
+      const isLoggedIn = await topicsGrid.first().isVisible().catch(() => false);
 
       if (!isLoggedIn) {
-        // Find and fill login form
-        const emailInput = page.getByRole('textbox', { name: /email/i });
-        const passwordInput = page.getByRole('textbox', { name: /password/i });
+        // Click login button to open auth modal
+        await loginButton.click();
 
-        if (await emailInput.isVisible()) {
-          await emailInput.fill(testData.testEmail);
-          await passwordInput.fill(testData.testPassword);
-          await page.getByRole('button', { name: /sign in|log in|anmelden/i }).click();
-          await page.waitForURL('**/', { timeout: 10000 });
-        }
+        // Wait for auth modal
+        const authModal = page.locator('.auth-modal');
+        await authModal.waitFor({ state: 'visible', timeout: 10000 });
+
+        // Fill in credentials using auth modal IDs
+        await page.locator('#login-email').fill(testData.testEmail);
+        await page.locator('#login-password').fill(testData.testPassword);
+
+        // Click submit button
+        await page.locator('button[type="submit"]:has-text("Anmelden")').click();
+
+        // Wait for topics grid to appear after login
+        await topicsGrid.first().waitFor({ state: 'visible', timeout: 20000 });
       }
+
+      // Final verification - wait for the demo topic button to be clickable
+      await page.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
 
       await use(page);
     } catch (error) {

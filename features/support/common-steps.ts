@@ -14,15 +14,26 @@ Given('I am logged in as a learner', async ({ authenticatedPage }) => {
   await expect(authenticatedPage).toHaveURL('/');
 });
 
-Given('I am logged in', async ({ authenticatedPage }) => {
-  // Generic login step - authenticatedPage fixture handles login
-  await expect(authenticatedPage).toHaveURL('/');
+Given('I am logged in', async ({ authenticatedPage, testData }) => {
+  // authenticatedPage fixture handles login
+  // Verify we're on the dashboard by checking for demo topic
+  await expect(authenticatedPage.getByText(testData.demoTopic)).toBeVisible({ timeout: 15000 });
 });
 
 Given('I am not logged in', async ({ page }) => {
   // Clear any existing session
   await page.context().clearCookies();
   await page.goto('/');
+  await page.waitForLoadState('networkidle');
+
+  // Click the login button to open the auth modal
+  const loginButton = page.getByRole('button', { name: /Anmelden|Login|Sign in/i });
+  await expect(loginButton).toBeVisible({ timeout: 5000 });
+  await loginButton.click();
+
+  // Auth modal should now be visible
+  const authModal = page.locator('.auth-modal');
+  await expect(authModal).toBeVisible({ timeout: 10000 });
 });
 
 When('I log out', async ({ page }) => {
@@ -37,6 +48,8 @@ When('I log out', async ({ page }) => {
 Given('I am on the dashboard', async ({ authenticatedPage }) => {
   await authenticatedPage.goto('/');
   await authenticatedPage.waitForLoadState('networkidle');
+  // Wait for topics grid to be fully loaded
+  await authenticatedPage.locator('[class*="topicsGrid"], [class*="grid"]').first().waitFor({ state: 'visible', timeout: 20000 });
 });
 
 Given('I am on the settings page', async ({ authenticatedPage }) => {
