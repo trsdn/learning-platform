@@ -47,17 +47,16 @@ When('I click the {string} button', async ({ authenticatedPage, testData }, butt
 });
 
 Then('a practice session should begin', async ({ authenticatedPage }) => {
-  // Wait for the practice session container to be visible
-  // The main practice session class is .practice-session
+  // Wait for the practice session to load by checking for the session heading
   await authenticatedPage.waitForLoadState('networkidle');
-  const sessionContainer = authenticatedPage.locator('.practice-session');
-  await expect(sessionContainer).toBeVisible({ timeout: 10000 });
+  const sessionHeading = authenticatedPage.getByRole('heading', { name: /übungssitzung/i });
+  await expect(sessionHeading).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see the first task', async ({ authenticatedPage }) => {
-  // A task should be visible
-  const taskContainer = authenticatedPage.locator('[data-testid="task-container"], .task, [class*="Task"]');
-  await expect(taskContainer.first()).toBeVisible({ timeout: 10000 });
+  // The task question heading should be visible (level 3 heading with task type and question)
+  const taskHeading = authenticatedPage.locator('h3');
+  await expect(taskHeading.first()).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see my progress indicator showing {string}', async ({ authenticatedPage }, progressPattern: string) => {
@@ -256,32 +255,56 @@ When('I complete all tasks in the session', async ({ authenticatedPage }) => {
   const maxTasks = 20; // Safety limit
 
   while (tasksCompleted < maxTasks) {
-    // Check if session is complete
+    // Check if session is complete by looking for results heading
     const sessionComplete = await authenticatedPage
-      .locator('[data-testid="session-results"], [class*="Results"]')
+      .getByRole('heading', { name: /sitzung abgeschlossen/i })
       .isVisible()
       .catch(() => false);
 
     if (sessionComplete) break;
 
-    // Try to find and answer any visible task type
-    const options = authenticatedPage.locator('[data-testid="mc-option"], [role="radio"], [class*="option"] button');
+    // Try to answer the current question
+    // For multiple choice, click first visible option
+    const options = authenticatedPage.locator('button:has-text("Option 1"), button:has-text("Option 2")');
     if (await options.first().isVisible().catch(() => false)) {
       await options.first().click();
+      await authenticatedPage.waitForTimeout(200);
     }
 
-    // Submit if button is visible
-    const submitButton = authenticatedPage.getByRole('button', { name: /submit|check|prüfen|bestätigen/i });
-    if (await submitButton.isVisible().catch(() => false)) {
+    // For text input, fill with answer
+    const textInput = authenticatedPage.locator('input[type="text"]').first();
+    if (await textInput.isVisible().catch(() => false)) {
+      await textInput.fill('test');
+      await authenticatedPage.waitForTimeout(200);
+    }
+
+    // Submit if button is enabled
+    const submitButton = authenticatedPage.getByRole('button', { name: /antwort überprüfen|check|prüfen/i });
+    if (await submitButton.isEnabled().catch(() => false)) {
       await submitButton.click();
-      await authenticatedPage.waitForTimeout(300);
+      await authenticatedPage.waitForTimeout(500);
     }
 
     // Continue to next task if button is visible
-    const nextButton = authenticatedPage.getByRole('button', { name: /next|continue|weiter/i });
+    const nextButton = authenticatedPage.getByRole('button', { name: /weiter|nächste|next/i });
     if (await nextButton.isVisible().catch(() => false)) {
       await nextButton.click();
-      await authenticatedPage.waitForTimeout(300);
+      await authenticatedPage.waitForTimeout(500);
+    } else {
+      // Check for "End session" button on last task
+      const endSessionButton = authenticatedPage.getByRole('button', { name: /sitzung beenden/i });
+      if (await endSessionButton.isVisible().catch(() => false)) {
+        await endSessionButton.click();
+        await authenticatedPage.waitForTimeout(1000);
+        break; // Session is ending
+      }
+      
+      // If no next button, try skip
+      const skipButton = authenticatedPage.getByRole('button', { name: /überspringen|skip/i });
+      if (await skipButton.isVisible().catch(() => false)) {
+        await skipButton.click();
+        await authenticatedPage.waitForTimeout(500);
+      }
     }
 
     tasksCompleted++;
@@ -289,8 +312,9 @@ When('I complete all tasks in the session', async ({ authenticatedPage }) => {
 });
 
 Then('I should see the session results page', async ({ authenticatedPage }) => {
-  const resultsPage = authenticatedPage.locator('[data-testid="session-results"], [class*="Results"]');
-  await expect(resultsPage).toBeVisible({ timeout: 10000 });
+  // Look for the results heading "Sitzung abgeschlossen!"
+  const resultsHeading = authenticatedPage.getByRole('heading', { name: /sitzung abgeschlossen/i });
+  await expect(resultsHeading).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see my accuracy percentage', async ({ authenticatedPage }) => {
