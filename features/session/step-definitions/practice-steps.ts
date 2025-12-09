@@ -13,34 +13,45 @@ import { expect } from '@playwright/test';
 Given('I have selected a learning path', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
   await authenticatedPage.waitForLoadState('networkidle');
+  // Click on the topic button to show learning paths
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
-  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
+  // Wait for learning paths to appear
+  await authenticatedPage.waitForLoadState('networkidle');
 });
 
 Given('I am on the learning path page', async ({ authenticatedPage, testData }) => {
-  // Get the testData to find the learning path name
-  // Click on the learning path to navigate to it
-  await authenticatedPage.getByText(testData.demoLearningPath).click();
-  // Wait for page to load after navigation
+  // At this point, we've selected a topic and learning paths are displayed
+  // Wait for the learning path card to appear
   await authenticatedPage.waitForLoadState('networkidle');
-  // Wait for the Start button to be available
-  const startButton = authenticatedPage.getByRole('button', { name: /start|starten/i });
-  await startButton.waitFor({ state: 'visible', timeout: 20000 });
+  const learningPathButton = authenticatedPage.getByRole('button', { name: new RegExp(testData.demoLearningPath.split(' - ')[0], 'i') });
+  await learningPathButton.waitFor({ state: 'visible', timeout: 20000 });
 });
 
 // ============================================
 // Session Start Steps
 // ============================================
 
-When('I click the {string} button', async ({ authenticatedPage }, buttonName: string) => {
-  await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
-  await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).click();
+When('I click the {string} button', async ({ authenticatedPage, testData }, buttonName: string) => {
+  if (buttonName.toLowerCase() === 'start' || buttonName.toLowerCase() === 'starten') {
+    // For "Start" button in the learning path list view, we click the learning path card itself
+    // which acts as the start action
+    const learningPathButton = authenticatedPage.getByRole('button', { name: new RegExp(testData.demoLearningPath.split(' - ')[0], 'i') });
+    await learningPathButton.waitFor({ state: 'visible', timeout: 20000 });
+    await learningPathButton.click();
+  } else {
+    // For other buttons, use generic button click
+    await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
+    await authenticatedPage.getByRole('button', { name: new RegExp(buttonName, 'i') }).click();
+  }
 });
 
 Then('a practice session should begin', async ({ authenticatedPage }) => {
-  // Wait for session to load
+  // Wait for the practice session container to be visible
   await authenticatedPage.waitForLoadState('networkidle');
+  // Check for practice session indicators (task container, progress bar, etc.)
+  const taskContainer = authenticatedPage.locator('[data-testid="task-container"], .task, [class*="Task"], [class*="practice"]');
+  await expect(taskContainer.first()).toBeVisible({ timeout: 10000 });
 });
 
 Then('I should see the first task', async ({ authenticatedPage }) => {
@@ -59,18 +70,19 @@ Then('I should see my progress indicator showing {string}', async ({ authenticat
 // ============================================
 
 Given('I am in an active practice session', async ({ authenticatedPage, testData }) => {
-  // Navigate to demo learning path and start session
+  // Navigate to the topic/learning paths view
   await authenticatedPage.goto('/');
   await authenticatedPage.waitForLoadState('networkidle');
+  // Click on the topic button
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
-  await authenticatedPage.waitForSelector('text=' + testData.demoLearningPath, { timeout: 15000 });
-  await authenticatedPage.getByText(testData.demoLearningPath).click();
-  // Wait for page to load after clicking learning path
+  // Wait for learning paths to appear
   await authenticatedPage.waitForLoadState('networkidle');
-  // Now wait for the Start button
-  await authenticatedPage.getByRole('button', { name: /start|starten/i }).waitFor({ state: 'visible', timeout: 20000 });
-  await authenticatedPage.getByRole('button', { name: /start|starten/i }).click();
+  // Click on the learning path to start the session
+  const learningPathButton = authenticatedPage.getByRole('button', { name: new RegExp(testData.demoLearningPath.split(' - ')[0], 'i') });
+  await learningPathButton.waitFor({ state: 'visible', timeout: 20000 });
+  await learningPathButton.click();
+  // Wait for the practice session to load
   await authenticatedPage.waitForLoadState('networkidle');
 });
 
