@@ -10,7 +10,7 @@ import { expect } from '@playwright/test';
 // Session Setup Steps
 // ============================================
 
-Given('I have selected a learning path', async ({ authenticatedPage, testData }) => {
+Given('I have navigated to a topic', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
   await authenticatedPage.waitForLoadState('networkidle');
   // Click on the topic button to show learning paths
@@ -20,12 +20,12 @@ Given('I have selected a learning path', async ({ authenticatedPage, testData })
   await authenticatedPage.waitForLoadState('networkidle');
 });
 
-Given('I am on the learning path page', async ({ authenticatedPage, testData }) => {
-  // At this point, we've selected a topic and learning paths are displayed
-  // Wait for the learning path card to appear
-  await authenticatedPage.waitForLoadState('networkidle');
+When('I select a learning path', async ({ authenticatedPage, testData }) => {
+  // Click the learning path card to start the session (this is how the app works - no separate Start button)
   const learningPathButton = authenticatedPage.getByRole('button', { name: new RegExp(testData.demoLearningPath.split(' - ')[0], 'i') });
   await learningPathButton.waitFor({ state: 'visible', timeout: 20000 });
+  await learningPathButton.click();
+  await authenticatedPage.waitForLoadState('networkidle');
 });
 
 // ============================================
