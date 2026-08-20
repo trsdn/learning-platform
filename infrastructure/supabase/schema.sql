@@ -179,6 +179,7 @@ CREATE TABLE spaced_repetition (
   schedule JSONB DEFAULT '{"nextReview": null, "lastReviewDate": null}'::jsonb,
   algorithm JSONB DEFAULT '{"interval": 1, "easeFactor": 2.5, "repetitionCount": 0}'::jsonb,
   performance JSONB DEFAULT '{"reviewCount": 0, "correctCount": 0}'::jsonb,
+  metadata JSONB DEFAULT '{"introduced": null, "graduated": false, "lapseCount": 0}'::jsonb,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(user_id, task_id)

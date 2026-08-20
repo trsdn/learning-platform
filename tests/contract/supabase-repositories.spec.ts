@@ -646,7 +646,11 @@ describe('SpacedRepetitionRepository Implementation', () => {
   });
 
   describe('schedule date mapping', () => {
-    const buildRow = (schedule: unknown, createdAt = new Date('2025-01-01T10:00:00.000Z')) => ({
+    const buildRow = (
+      schedule: unknown,
+      createdAt = new Date('2025-01-01T10:00:00.000Z'),
+      metadata: unknown = undefined
+    ) => ({
       id: 'sr1',
       user_id: 'test-user-id',
       task_id: 'task1',
@@ -658,6 +662,7 @@ describe('SpacedRepetitionRepository Implementation', () => {
         difficultyRating: 1,
         lastGrade: 5,
       },
+      metadata,
       created_at: createdAt.toISOString(),
       updated_at: createdAt.toISOString(),
     });
@@ -733,6 +738,93 @@ describe('SpacedRepetitionRepository Implementation', () => {
       expect(mockChain.lt).toHaveBeenCalledWith(
         'schedule->>nextReview',
         '2025-06-02T00:00:00.000Z'
+      );
+    });
+  });
+
+  describe('metadata persistence', () => {
+    const introduced = new Date('2025-02-01T09:00:00.000Z');
+    const createdAt = new Date('2025-01-01T10:00:00.000Z');
+
+    const buildRow = (metadata: unknown) => ({
+      id: 'sr1',
+      user_id: 'test-user-id',
+      task_id: 'task1',
+      schedule: { nextReview: '2025-06-01T08:00:00.000Z', totalReviews: 4, consecutiveCorrect: 2 },
+      algorithm: { interval: 1, repetition: 1, efactor: 2.5 },
+      performance: {
+        averageAccuracy: 1,
+        averageTime: 1000,
+        difficultyRating: 1,
+        lastGrade: 5,
+      },
+      metadata,
+      created_at: createdAt.toISOString(),
+      updated_at: createdAt.toISOString(),
+    });
+
+    it('reads back stored graduation state and lapse count', async () => {
+      const row = buildRow({
+        introduced: introduced.toISOString(),
+        graduated: true,
+        lapseCount: 3,
+      });
+
+      const mockChain = createSupabaseMock({ data: row, error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      const item = await repository.getByTaskId('task1');
+
+      expect(item?.metadata.graduated).toBe(true);
+      expect(item?.metadata.lapseCount).toBe(3);
+      expect(item?.metadata.introduced).toBeInstanceOf(Date);
+      expect(item?.metadata.introduced.getTime()).toBe(introduced.getTime());
+    });
+
+    it('falls back to the creation date for rows without metadata', async () => {
+      const mockChain = createSupabaseMock({ data: buildRow(null), error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      const item = await repository.getByTaskId('task1');
+
+      expect(item?.metadata.introduced.getTime()).toBe(createdAt.getTime());
+      expect(item?.metadata.graduated).toBe(false);
+      expect(item?.metadata.lapseCount).toBe(0);
+    });
+
+    it('writes metadata when upserting an item', async () => {
+      const mockChain = createSupabaseMock({
+        data: buildRow({ introduced: introduced.toISOString(), graduated: true, lapseCount: 2 }),
+        error: null,
+      });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      await repository.upsert({
+        taskId: 'task1',
+        schedule: {
+          nextReview: new Date('2025-06-01T08:00:00.000Z'),
+          totalReviews: 4,
+          consecutiveCorrect: 2,
+        },
+        algorithm: { interval: 1, repetition: 1, efactor: 2.5 },
+        performance: {
+          averageAccuracy: 1,
+          averageTime: 1000,
+          difficultyRating: 1,
+          lastGrade: 5,
+        },
+        metadata: { introduced, graduated: true, lapseCount: 2 },
+      });
+
+      expect(mockChain.upsert).toHaveBeenCalledWith(
+        expect.objectContaining({
+          metadata: {
+            introduced: introduced.toISOString(),
+            graduated: true,
+            lapseCount: 2,
+          },
+        }),
+        expect.anything()
       );
     });
   });

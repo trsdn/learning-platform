@@ -45,6 +45,7 @@ type PracticeSessionConfiguration = PracticeSession['configuration'];
 type SpacedRepetitionSchedule = SpacedRepetitionItem['schedule'];
 type SpacedRepetitionAlgorithm = SpacedRepetitionItem['algorithm'];
 type SpacedRepetitionPerformance = SpacedRepetitionItem['performance'];
+type SpacedRepetitionMetadata = SpacedRepetitionItem['metadata'];
 
 /**
  * Revives a value read back from a JSONB column into a Date.
@@ -95,6 +96,42 @@ function mapScheduleFromDb(
     consecutiveCorrect: parseJsonNumber(schedule['consecutiveCorrect'], 0),
     ...(lastReviewed ? { lastReviewed } : {}),
   };
+}
+
+/**
+ * Maps the `metadata` JSONB column onto the domain metadata, reviving dates.
+ *
+ * `fallbackIntroduced` is used for rows written before the column existed.
+ */
+function mapMetadataFromDb(
+  value: DbSpacedRepetition['metadata'],
+  fallbackIntroduced: Date
+): SpacedRepetitionMetadata {
+  const metadata = (value ?? {}) as unknown as Record<string, unknown>;
+
+  return {
+    introduced: parseJsonDate(metadata['introduced']) ?? fallbackIntroduced,
+    graduated: metadata['graduated'] === true,
+    lapseCount: parseJsonNumber(metadata['lapseCount'], 0),
+  };
+}
+
+/** Serializes schedule dates to ISO strings for Json compatibility. */
+function serializeSchedule(schedule: SpacedRepetitionSchedule): Json {
+  return {
+    ...schedule,
+    nextReview: schedule.nextReview.toISOString(),
+    lastReviewed: schedule.lastReviewed?.toISOString(),
+  } as unknown as Json;
+}
+
+/** Serializes metadata dates to ISO strings for Json compatibility. */
+function serializeMetadata(metadata: SpacedRepetitionMetadata | undefined): Json {
+  return {
+    introduced: (parseJsonDate(metadata?.introduced) ?? new Date()).toISOString(),
+    graduated: metadata?.graduated ?? false,
+    lapseCount: metadata?.lapseCount ?? 0,
+  } as unknown as Json;
 }
 
 /**
@@ -1807,21 +1844,15 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...item.schedule,
-      nextReview: item.schedule.nextReview.toISOString(),
-      lastReviewed: item.schedule.lastReviewed?.toISOString(),
-    };
-
     const { data, error } = await supabase
       .from('spaced_repetition')
       .upsert({
         user_id: userId,
         task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
+        schedule: serializeSchedule(item.schedule),
         algorithm: item.algorithm as unknown as Json,
         performance: item.performance as unknown as Json,
+        metadata: serializeMetadata(item.metadata),
       }, {
         onConflict: 'user_id,task_id',
       })
@@ -1885,21 +1916,15 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...item.schedule,
-      nextReview: item.schedule.nextReview.toISOString(),
-      lastReviewed: item.schedule.lastReviewed?.toISOString(),
-    };
-
     const { data, error } = await supabase
       .from('spaced_repetition')
       .insert({
         user_id: userId,
         task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
+        schedule: serializeSchedule(item.schedule),
         algorithm: item.algorithm as unknown as Json,
         performance: item.performance as unknown as Json,
+        metadata: serializeMetadata(item.metadata),
       })
       .select()
       .single();
@@ -1923,22 +1948,20 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       schedule: Json;
       algorithm: Json;
       performance: Json;
+      metadata: Json;
     }> = {};
 
     if (updates.schedule !== undefined) {
-      // Serialize schedule dates to ISO strings for Json compatibility
-      const scheduleData = {
-        ...updates.schedule,
-        nextReview: updates.schedule.nextReview.toISOString(),
-        lastReviewed: updates.schedule.lastReviewed?.toISOString(),
-      };
-      dbUpdates.schedule = scheduleData as unknown as Json;
+      dbUpdates.schedule = serializeSchedule(updates.schedule);
     }
     if (updates.algorithm !== undefined) {
       dbUpdates.algorithm = updates.algorithm as unknown as Json;
     }
     if (updates.performance !== undefined) {
       dbUpdates.performance = updates.performance as unknown as Json;
+    }
+    if (updates.metadata !== undefined) {
+      dbUpdates.metadata = serializeMetadata(updates.metadata);
     }
 
     const { data, error } = await supabase
@@ -2013,16 +2036,9 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...schedule,
-      nextReview: schedule.nextReview.toISOString(),
-      lastReviewed: schedule.lastReviewed?.toISOString(),
-    };
-
     const { error } = await supabase
       .from('spaced_repetition')
-      .update({ schedule: scheduleData as unknown as Json })
+      .update({ schedule: serializeSchedule(schedule) })
       .eq('id', id)
       .eq('user_id', userId);
 
@@ -2103,22 +2119,14 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    const inserts = items.map(item => {
-      // Serialize schedule dates to ISO strings for Json compatibility
-      const scheduleData = {
-        ...item.schedule,
-        nextReview: item.schedule.nextReview.toISOString(),
-        lastReviewed: item.schedule.lastReviewed?.toISOString(),
-      };
-
-      return {
-        user_id: userId,
-        task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
-        algorithm: item.algorithm as unknown as Json,
-        performance: item.performance as unknown as Json,
-      };
-    });
+    const inserts = items.map(item => ({
+      user_id: userId,
+      task_id: item.taskId,
+      schedule: serializeSchedule(item.schedule),
+      algorithm: item.algorithm as unknown as Json,
+      performance: item.performance as unknown as Json,
+      metadata: serializeMetadata(item.metadata),
+    }));
 
     const { data, error } = await supabase
       .from('spaced_repetition')
@@ -2130,7 +2138,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -2205,11 +2213,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       schedule: mapScheduleFromDb(row.schedule, createdAt),
       algorithm: row.algorithm as unknown as SpacedRepetitionAlgorithm,
       performance: row.performance as unknown as SpacedRepetitionPerformance,
-      metadata: {
-        introduced: new Date(),
-        graduated: false,
-        lapseCount: 0,
-      },
+      metadata: mapMetadataFromDb(row.metadata, createdAt),
       createdAt,
       updatedAt: new Date(row.updated_at),
     };
