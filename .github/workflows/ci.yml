@@ -49,7 +49,19 @@ jobs:
             sops -d .env.local.enc > .env.local
             echo "✅ Decrypted .env.local.enc (fallback)"
           else
-            echo "⏭️ Skipping decryption (no SOPS_AGE_KEY or encrypted env files)"
+            # Pull requests from forks and Dependabot do not receive repository
+            # secrets, so there is nothing to decrypt. The build reads
+            # VITE_SUPABASE_URL from the environment and fails hard when it is
+            # missing, so write placeholders instead of failing the whole run.
+            # They only need to be syntactically valid: nothing in CI talks to
+            # Supabase.
+            echo "::warning::No SOPS_AGE_KEY available (fork or Dependabot pull request). Building against placeholder Supabase configuration."
+            cat > .env.local <<'PLACEHOLDER_ENV'
+          VITE_ENV=development
+          VITE_BASE_PATH=/
+          VITE_SUPABASE_URL=https://placeholder.supabase.co
+          VITE_SUPABASE_ANON_KEY=placeholder-anon-key
+          PLACEHOLDER_ENV
           fi
 
       - name: Setup Node.js
