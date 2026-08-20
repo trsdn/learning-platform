@@ -64,6 +64,7 @@ function createSupabaseMock(resolveWith: unknown): Record<string, any> {
     not: vi.fn(),
     gte: vi.fn(),
     lte: vi.fn(),
+    lt: vi.fn(),
     contains: vi.fn(),
     order: vi.fn(),
     limit: vi.fn(),
@@ -2244,8 +2245,8 @@ describe('SpacedRepetitionRepository', () => {
   });
 
   describe('getByNextReviewDate', () => {
-    it('should fetch items by exact next review date', async () => {
-      const reviewDate = new Date('2024-01-10T00:00:00Z');
+    it('should fetch items scheduled anywhere within the given day', async () => {
+      const reviewDate = new Date('2024-01-10T13:45:00Z');
       const mockItems = [
         {
           id: 'sr-1',
@@ -2264,7 +2265,14 @@ describe('SpacedRepetitionRepository', () => {
 
       const items = await repository.getByNextReviewDate(reviewDate);
 
-      expect(mockChain.eq).toHaveBeenCalledWith('schedule->>nextReview', '2024-01-10');
+      expect(mockChain.gte).toHaveBeenCalledWith(
+        'schedule->>nextReview',
+        '2024-01-10T00:00:00.000Z'
+      );
+      expect(mockChain.lt).toHaveBeenCalledWith(
+        'schedule->>nextReview',
+        '2024-01-11T00:00:00.000Z'
+      );
       expect(items).toHaveLength(1);
     });
   });

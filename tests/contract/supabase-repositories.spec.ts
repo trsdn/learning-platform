@@ -45,6 +45,7 @@ function createSupabaseMock(resolveWith: unknown) {
     in: vi.fn().mockReturnThis(),
     gte: vi.fn().mockReturnThis(),
     lte: vi.fn().mockReturnThis(),
+    lt: vi.fn().mockReturnThis(),
     order: vi.fn().mockReturnThis(),
     limit: vi.fn().mockReturnThis(),
     single: vi.fn().mockResolvedValue(resolveWith),
@@ -61,6 +62,7 @@ function createSupabaseMock(resolveWith: unknown) {
   chain.in.mockReturnValue(chain);
   chain.gte.mockReturnValue(chain);
   chain.lte.mockReturnValue(chain);
+  chain.lt.mockReturnValue(chain);
   chain.order.mockResolvedValue(resolveWith);
   chain.limit.mockReturnValue(chain);
 
@@ -641,5 +643,97 @@ describe('SpacedRepetitionRepository Implementation', () => {
     expect(new Date(dueItems[0].schedule.nextReview).getTime()).toBeLessThanOrEqual(
       now.getTime()
     );
+  });
+
+  describe('schedule date mapping', () => {
+    const buildRow = (schedule: unknown, createdAt = new Date('2025-01-01T10:00:00.000Z')) => ({
+      id: 'sr1',
+      user_id: 'test-user-id',
+      task_id: 'task1',
+      schedule,
+      algorithm: { interval: 1, repetition: 1, efactor: 2.5 },
+      performance: {
+        averageAccuracy: 1,
+        averageTime: 1000,
+        difficultyRating: 1,
+        lastGrade: 5,
+      },
+      created_at: createdAt.toISOString(),
+      updated_at: createdAt.toISOString(),
+    });
+
+    it('revives JSON dates into Date instances', async () => {
+      const nextReview = new Date('2025-06-01T08:00:00.000Z');
+      const lastReviewed = new Date('2025-05-25T08:00:00.000Z');
+      const row = buildRow({
+        nextReview: nextReview.toISOString(),
+        lastReviewed: lastReviewed.toISOString(),
+        totalReviews: 3,
+        consecutiveCorrect: 2,
+      });
+
+      const mockChain = createSupabaseMock({ data: row, error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      const item = await repository.getByTaskId('task1');
+
+      expect(item?.schedule.nextReview).toBeInstanceOf(Date);
+      expect(item?.schedule.nextReview.getTime()).toBe(nextReview.getTime());
+      expect(item?.schedule.lastReviewed).toBeInstanceOf(Date);
+      expect(item?.schedule.lastReviewed?.getTime()).toBe(lastReviewed.getTime());
+      expect(item?.schedule.totalReviews).toBe(3);
+      expect(item?.schedule.consecutiveCorrect).toBe(2);
+    });
+
+    it('treats a row without a review date as due since creation', async () => {
+      const createdAt = new Date('2025-01-01T10:00:00.000Z');
+      const row = buildRow({ nextReview: null, lastReviewDate: null }, createdAt);
+
+      const mockChain = createSupabaseMock({ data: row, error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      const item = await repository.getByTaskId('task1');
+
+      expect(item?.schedule.nextReview).toBeInstanceOf(Date);
+      expect(item?.schedule.nextReview.getTime()).toBe(createdAt.getTime());
+      expect(item?.schedule.lastReviewed).toBeUndefined();
+      expect(item?.schedule.totalReviews).toBe(0);
+    });
+
+    it('builds a review calendar without throwing on serialized dates', async () => {
+      const rows = [
+        buildRow({ nextReview: '2025-06-01T08:00:00.000Z', totalReviews: 1 }),
+        buildRow({ nextReview: '2025-06-01T20:00:00.000Z', totalReviews: 1 }),
+        buildRow({ nextReview: '2025-06-02T08:00:00.000Z', totalReviews: 1 }),
+      ];
+
+      const mockChain = createSupabaseMock({ data: rows, error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      const calendar = await repository.getReviewCalendar(
+        new Date('2025-06-01T00:00:00.000Z'),
+        new Date('2025-06-03T00:00:00.000Z')
+      );
+
+      expect(calendar).toHaveLength(2);
+      expect(calendar[0]?.taskCount).toBe(2);
+      expect(calendar[1]?.taskCount).toBe(1);
+    });
+
+    it('queries a whole day range for getByNextReviewDate', async () => {
+      const mockChain = createSupabaseMock({ data: [], error: null });
+      (supabase.from as ReturnType<typeof vi.fn>).mockReturnValue(mockChain);
+
+      await repository.getByNextReviewDate(new Date('2025-06-01T13:45:00.000Z'));
+
+      expect(mockChain.gte).toHaveBeenCalledWith(
+        'schedule->>nextReview',
+        '2025-06-01T00:00:00.000Z'
+      );
+      expect(mockChain.lt).toHaveBeenCalledWith(
+        'schedule->>nextReview',
+        '2025-06-02T00:00:00.000Z'
+      );
+    });
   });
 });

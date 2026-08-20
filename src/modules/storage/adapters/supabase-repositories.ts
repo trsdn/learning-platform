@@ -47,6 +47,57 @@ type SpacedRepetitionAlgorithm = SpacedRepetitionItem['algorithm'];
 type SpacedRepetitionPerformance = SpacedRepetitionItem['performance'];
 
 /**
+ * Revives a value read back from a JSONB column into a Date.
+ *
+ * Dates written into JSONB are stored as ISO strings, and PostgREST returns
+ * them as strings. Without reviving them the domain model claims to hold a
+ * Date while actually holding a string, and any Date method call throws.
+ */
+function parseJsonDate(value: unknown): Date | undefined {
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? undefined : value;
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+  }
+
+  return undefined;
+}
+
+/** Reads a numeric field from a JSONB column, falling back when absent. */
+function parseJsonNumber(value: unknown, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
+/**
+ * Maps the `schedule` JSONB column onto the domain schedule, reviving dates.
+ *
+ * `fallbackNextReview` is used when a row carries no usable review date (the
+ * column default stores `nextReview: null`); such an item is treated as due.
+ */
+function mapScheduleFromDb(
+  value: DbSpacedRepetition['schedule'],
+  fallbackNextReview: Date
+): SpacedRepetitionSchedule {
+  const schedule = (value ?? {}) as unknown as Record<string, unknown>;
+  const nextReview = parseJsonDate(schedule['nextReview']);
+  const lastReviewed = parseJsonDate(schedule['lastReviewed']);
+
+  if (!nextReview) {
+    logger.warn('Spaced repetition item has no valid nextReview date; treating it as due');
+  }
+
+  return {
+    nextReview: nextReview ?? fallbackNextReview,
+    totalReviews: parseJsonNumber(schedule['totalReviews'], 0),
+    consecutiveCorrect: parseJsonNumber(schedule['consecutiveCorrect'], 0),
+    ...(lastReviewed ? { lastReviewed } : {}),
+  };
+}
+
+/**
  * Topic Repository - Manages learning topics
  */
 export class TopicRepository {
@@ -1913,14 +1964,19 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    const dateString = date.toISOString().split('T')[0];
-    if (!dateString) throw new Error('Invalid date format');
+    // nextReview is stored as a full ISO timestamp, so an equality check
+    // against a YYYY-MM-DD string never matches. Compare against the day range.
+    const dayStart = new Date(date);
+    dayStart.setUTCHours(0, 0, 0, 0);
+    const nextDayStart = new Date(dayStart);
+    nextDayStart.setUTCDate(nextDayStart.getUTCDate() + 1);
 
     const { data, error } = await supabase
       .from('spaced_repetition')
       .select('*')
       .eq('user_id', userId)
-      .eq('schedule->>nextReview', dateString)
+      .gte('schedule->>nextReview', dayStart.toISOString())
+      .lt('schedule->>nextReview', nextDayStart.toISOString())
       .order('schedule->>nextReview');
 
     if (error) {
@@ -1928,7 +1984,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -2141,10 +2197,12 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
    * Map database row to domain model
    */
   private mapFromDb(row: DbSpacedRepetition): SpacedRepetitionItem {
+    const createdAt = new Date(row.created_at);
+
     return {
       id: row.id,
       taskId: row.task_id,
-      schedule: row.schedule as unknown as SpacedRepetitionSchedule,
+      schedule: mapScheduleFromDb(row.schedule, createdAt),
       algorithm: row.algorithm as unknown as SpacedRepetitionAlgorithm,
       performance: row.performance as unknown as SpacedRepetitionPerformance,
       metadata: {
@@ -2152,7 +2210,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
         graduated: false,
         lapseCount: 0,
       },
-      createdAt: new Date(row.created_at),
+      createdAt,
       updatedAt: new Date(row.updated_at),
     };
   }
