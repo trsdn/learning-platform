@@ -1,0 +1,37 @@
+# Supabase CLI configuration
+#
+# Reference: https://supabase.com/docs/guides/local-development/cli/config
+#
+# The CLI resolves this file at <workdir>/supabase/config.toml. Because Supabase
+# lives under infrastructure/ in this repository, CLI commands must be run as:
+#
+#   supabase --workdir infrastructure <command>
+#
+# The helper script scripts/apply-schema.sh (npm run supabase:schema) does this.
+#
+# This config is intentionally minimal: the project uses hosted Supabase
+# projects, so only the settings needed for linking and applying the migration
+# history in ./migrations are configured here.
+
+# Distinguishes this project from others on the same host.
+project_id = "mindforge-academy"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "graphql_public"]
+extra_search_path = ["public", "extensions"]
+max_rows = 1000
+
+[db]
+port = 54322
+shadow_port = 54320
+# Must match the remote database. Run `SHOW server_version;` on the remote to verify.
+major_version = 17
+
+[db.migrations]
+enabled = true
+
+[studio]
+enabled = true
+port = 54323
