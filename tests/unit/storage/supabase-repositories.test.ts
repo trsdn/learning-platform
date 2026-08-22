@@ -125,14 +125,15 @@ function createSupabaseMock(resolveWith: unknown): Record<string, any> {
   chain.upsert = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
   chain.order = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
   chain.limit = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
-  chain.eq = vi.fn(() => chain);
-  chain.neq = vi.fn(() => chain);
-  chain.in = vi.fn(() => chain);
-  chain.not = vi.fn(() => chain);
-  chain.gte = vi.fn(() => chain);
-  chain.lte = vi.fn(() => chain);
-  chain.contains = vi.fn(() => chain);
-  chain.range = vi.fn(() => chain);
+  chain.eq = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.neq = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.in = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.not = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.gte = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.lte = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.lt = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.contains = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
+  chain.range = vi.fn(() => makeChainablePromise(Promise.resolve(resolveWith)));
   chain.single = vi.fn(() => Promise.resolve(resolveWith));
   chain.maybeSingle = vi.fn(() => Promise.resolve(resolveWith));
 
@@ -891,11 +892,7 @@ describe('TaskRepository', () => {
         },
       ];
 
-      const mockChain = {
-        select: vi.fn().mockReturnThis(),
-        in: vi.fn().mockReturnThis(),
-        eq: vi.fn().mockResolvedValue({ data: mockTasks, error: null }),
-      };
+      const mockChain = createSupabaseMock({ data: mockTasks, error: null });
       vi.mocked(supabase.from).mockReturnValue(mockChain);
 
       const tasks = await repository.getRandomTasks(2, {
@@ -905,6 +902,7 @@ describe('TaskRepository', () => {
       });
 
       expect(mockChain.in).toHaveBeenCalledWith('learning_path_id', ['path-1']);
+      expect(mockChain.eq).toHaveBeenCalledWith('is_active', true);
       expect(tasks).toHaveLength(2);
     });
 

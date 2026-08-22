@@ -447,12 +447,17 @@ export class LearningPathRepository {
  */
 export class TaskRepository implements ITaskRepository {
   /**
-   * Get all tasks
+   * Get all tasks that are part of the current content set.
+   *
+   * Tasks removed from the canonical sources are deactivated rather than
+   * deleted, so they must be excluded here while remaining resolvable by ID
+   * for learner history.
    */
   async getAll(): Promise<Task[]> {
     const { data, error } = await supabase
       .from('tasks')
       .select('*')
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -490,6 +495,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('learning_path_id', learningPathId)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -642,7 +648,7 @@ export class TaskRepository implements ITaskRepository {
   ): Promise<Task[]> {
     logger.debug(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
 
-    let query = supabase.from('tasks').select('*');
+    let query = supabase.from('tasks').select('*').eq('is_active', true);
 
     // Apply learning path filter
     if (filters?.learningPathIds && filters.learningPathIds.length > 0) {
@@ -698,7 +704,8 @@ export class TaskRepository implements ITaskRepository {
   async count(): Promise<number> {
     const { count, error } = await supabase
       .from('tasks')
-      .select('*', { count: 'exact', head: true });
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
 
     if (error) {
       console.error('Error counting tasks:', error);
@@ -718,6 +725,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .in('learning_path_id', learningPathIds)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -736,6 +744,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('type', type)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -754,6 +763,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('metadata->>difficulty', difficulty)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -775,6 +785,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .contains('metadata->tags', tags)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -789,7 +800,7 @@ export class TaskRepository implements ITaskRepository {
    * Search tasks
    */
   async search(query: TaskSearchQuery): Promise<Task[]> {
-    let supabaseQuery = supabase.from('tasks').select('*');
+    let supabaseQuery = supabase.from('tasks').select('*').eq('is_active', true);
 
     if (query.learningPathId) {
       supabaseQuery = supabaseQuery.eq('learning_path_id', query.learningPathId);

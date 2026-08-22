@@ -103,6 +103,10 @@ CREATE TABLE tasks (
   audio_url TEXT,
   language TEXT,
   ipa TEXT,
+  -- False when the task no longer exists in the canonical content sources.
+  -- Inactive tasks are never selected for practice but stay readable so
+  -- learner history remains resolvable.
+  is_active BOOLEAN NOT NULL DEFAULT true,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -111,6 +115,8 @@ CREATE INDEX idx_tasks_learning_path_id ON tasks(learning_path_id);
 CREATE INDEX idx_tasks_type ON tasks(type);
 CREATE INDEX idx_tasks_has_audio ON tasks(has_audio);
 CREATE INDEX idx_tasks_metadata_difficulty ON tasks((metadata->>'difficulty'));
+CREATE INDEX idx_tasks_is_active ON tasks(is_active);
+CREATE INDEX idx_tasks_learning_path_active ON tasks(learning_path_id, is_active);
 
 -- =====================================================
 -- USER PROGRESS & SESSIONS

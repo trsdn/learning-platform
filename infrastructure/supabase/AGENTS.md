@@ -319,12 +319,17 @@ main().catch(console.error)
 - Handle errors gracefully
 - Log progress
 - Use service role key for seeding
+- Exit non-zero when any record fails, so callers can detect a broken run
+- Reconcile after seeding: deactivate rows the JSON sources no longer produce
 
 **❌ DON'T**:
 - Commit service role key to git
 - Seed production without backup
 - Use random IDs (makes testing hard)
 - Seed without cleaning first
+- Hard-delete content: `user_progress`, `answer_history` and `spaced_repetition`
+  reference topics, learning paths and tasks. Set `is_active = false` instead so
+  learner history stays resolvable while the content stops being served.
 
 ---
 

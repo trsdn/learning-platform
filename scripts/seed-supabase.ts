@@ -272,13 +272,15 @@ function loadLearningPathsFromFiles(): {
 
 /**
  * Outcome of seeding one entity kind. `skipped` covers records that were
- * filtered out before reaching the database.
+ * filtered out before reaching the database. `seededIds` lists the records
+ * that are confirmed present, which is what reconciliation compares against.
  */
 interface SeedResult {
   total: number;
   succeeded: number;
   failed: number;
   skipped: number;
+  seededIds: string[];
 }
 
 /**
@@ -291,6 +293,7 @@ async function seedTopics(
 
   let succeeded = 0;
   let failed = 0;
+  const seededIds: string[] = [];
 
   for (const topic of data.topics) {
     const { error } = await supabase.from('topics').upsert(
@@ -313,12 +316,13 @@ async function seedTopics(
     } else {
       console.log(`  ✓ ${topic.title}`);
       succeeded++;
+      seededIds.push(topic.id);
     }
   }
 
   console.log(`✅ Topics seeded: ${succeeded}/${data.topics.length}`);
 
-  return { total: data.topics.length, succeeded, failed, skipped: 0 };
+  return { total: data.topics.length, succeeded, failed, skipped: 0, seededIds };
 }
 
 /**
@@ -331,6 +335,7 @@ async function seedLearningPaths(
 
   let succeeded = 0;
   let failed = 0;
+  const seededIds: string[] = [];
 
   for (const learningPath of data.learningPaths) {
     // Extract fields from metadata that should be top-level in DB
@@ -381,12 +386,13 @@ async function seedLearningPaths(
         `  ✓ ${learningPath.title} (${learningPath.taskIds.length} tasks)`
       );
       succeeded++;
+      seededIds.push(learningPath.id);
     }
   }
 
   console.log(`✅ Learning paths seeded: ${succeeded}/${data.learningPaths.length}`);
 
-  return { total: data.learningPaths.length, succeeded, failed, skipped: 0 };
+  return { total: data.learningPaths.length, succeeded, failed, skipped: 0, seededIds };
 }
 
 /**
@@ -402,6 +408,7 @@ async function seedTasks(
   let seeded = 0;
   let failed = 0;
   let skipped = 0;
+  const seededIds: string[] = [];
 
   for (let i = 0; i < data.tasks.length; i += BATCH_SIZE) {
     const batch = data.tasks.slice(i, i + BATCH_SIZE);
@@ -450,6 +457,9 @@ async function seedTasks(
           audio_url: audioUrl,
           language: language,
           ipa: ipa,
+          // Re-adding content to the JSON sources reactivates a task that a
+          // previous reconciliation pass retired.
+          is_active: true,
           created_at: task.createdAt.toISOString(),
           updated_at: task.updatedAt.toISOString(),
         };
@@ -465,6 +475,7 @@ async function seedTasks(
       failed += validTasks.length;
     } else {
       seeded += validTasks.length;
+      seededIds.push(...validTasks.map((task) => task.id));
       console.log(
         `  ✓ Batch ${Math.floor(i / BATCH_SIZE) + 1}: ${validTasks.length} tasks`
       );
@@ -473,7 +484,113 @@ async function seedTasks(
 
   console.log(`✅ Tasks seeded: ${seeded}/${data.tasks.length}`);
 
-  return { total: data.tasks.length, succeeded: seeded, failed, skipped };
+  return { total: data.tasks.length, succeeded: seeded, failed, skipped, seededIds };
+}
+
+/** Content tables whose rows are owned by the JSON sources. */
+type ReconcilableTable = 'topics' | 'learning_paths' | 'tasks';
+
+/** Outcome of reconciling one content table against the JSON sources. */
+interface ReconcileResult {
+  deactivated: number;
+  failed: number;
+  skipped: boolean;
+}
+
+const RECONCILE_BATCH_SIZE = 100;
+
+/**
+ * Deactivate rows that the JSON sources no longer produce.
+ *
+ * Upserting alone leaves deleted and renamed content active forever, so a
+ * withdrawn task keeps being served to learners. Rows are deactivated rather
+ * than deleted because user progress, answer history and spaced repetition all
+ * reference them; a delete would take learner history with it.
+ *
+ * Reconciliation is skipped whenever the seeding pass reported failures: a
+ * failed upsert means the true content set is unknown, and deactivating on that
+ * basis would silently retire content that is still current.
+ */
+async function deactivateRemoved(
+  table: ReconcilableTable,
+  label: string,
+  seedResult: SeedResult
+): Promise<ReconcileResult> {
+  if (seedResult.failed > 0) {
+    console.warn(
+      `  ⚠️  ${label}: reconciliation skipped, ${seedResult.failed} record(s) failed to seed`
+    );
+    return { deactivated: 0, failed: 0, skipped: true };
+  }
+
+  const { data, error } = await supabase
+    .from(table)
+    .select('id')
+    .eq('is_active', true);
+
+  if (error) {
+    console.error(`  ❌ ${label}: could not read active rows: ${error.message}`);
+    return { deactivated: 0, failed: 1, skipped: false };
+  }
+
+  const current = new Set(seedResult.seededIds);
+  const stale = (data ?? [])
+    .map((row: { id: string }) => row.id)
+    .filter((id) => !current.has(id));
+
+  if (stale.length === 0) {
+    console.log(`  ✓ ${label}: nothing to deactivate`);
+    return { deactivated: 0, failed: 0, skipped: false };
+  }
+
+  let deactivated = 0;
+  let failed = 0;
+  const deactivatedAt = new Date().toISOString();
+
+  for (let i = 0; i < stale.length; i += RECONCILE_BATCH_SIZE) {
+    const batch = stale.slice(i, i + RECONCILE_BATCH_SIZE);
+
+    const { error: updateError } = await supabase
+      .from(table)
+      .update({ is_active: false, updated_at: deactivatedAt } as any)
+      .in('id', batch);
+
+    if (updateError) {
+      console.error(`  ❌ ${label}: failed to deactivate batch: ${updateError.message}`);
+      failed += batch.length;
+    } else {
+      deactivated += batch.length;
+    }
+  }
+
+  console.log(
+    `  ✓ ${label}: ${deactivated} deactivated (${stale.slice(0, 5).join(', ')}${stale.length > 5 ? ', …' : ''})`
+  );
+
+  return { deactivated, failed, skipped: false };
+}
+
+/**
+ * Reconcile every content table against the JSON sources.
+ *
+ * Runs children before parents so a learning path is never deactivated while
+ * its tasks are still active.
+ */
+async function reconcileRemovedContent(
+  results: Record<'topics' | 'learningPaths' | 'tasks', SeedResult>
+): Promise<{ deactivated: number; failed: number }> {
+  console.log('\n🧹 Reconciling database with JSON sources...');
+
+  const passes = [
+    await deactivateRemoved('tasks', 'Tasks', results.tasks),
+    await deactivateRemoved('learning_paths', 'Learning paths', results.learningPaths),
+    await deactivateRemoved('topics', 'Topics', results.topics),
+  ];
+
+  return {
+    deactivated: passes.reduce((sum, pass) => sum + pass.deactivated, 0),
+    failed: passes.reduce((sum, pass) => sum + pass.failed, 0),
+  };
 }
 
 // Explicit allowlist of ALLOWED development project references
@@ -623,13 +740,22 @@ async function main() {
     console.log(`   Tasks: ${data.tasks.length}`);
 
     // Seed in order: topics → learning paths → tasks
+    const topics = await seedTopics(data);
+    const learningPaths = await seedLearningPaths(data);
+    const tasks = await seedTasks(data);
+
     const results: Array<[string, SeedResult]> = [
-      ['Topics', await seedTopics(data)],
-      ['Learning paths', await seedLearningPaths(data)],
-      ['Tasks', await seedTasks(data)],
+      ['Topics', topics],
+      ['Learning paths', learningPaths],
+      ['Tasks', tasks],
     ];
 
-    const totalFailed = results.reduce((sum, [, result]) => sum + result.failed, 0);
+    // Retire content that the JSON sources no longer contain, so deleted and
+    // renamed material stops being served.
+    const reconciled = await reconcileRemovedContent({ topics, learningPaths, tasks });
+
+    const totalFailed =
+      results.reduce((sum, [, result]) => sum + result.failed, 0) + reconciled.failed;
     const totalSkipped = results.reduce((sum, [, result]) => sum + result.skipped, 0);
 
     if (totalSkipped > 0) {
@@ -643,11 +769,17 @@ async function main() {
           `   ${label}: ${result.succeeded}/${result.total} seeded, ${result.failed} failed`
         );
       }
+      if (reconciled.failed > 0) {
+        console.error(`   Reconciliation: ${reconciled.failed} record(s) could not be deactivated`);
+      }
       console.error('\nThe database is in a partially seeded state. Fix the errors above and re-run.');
       process.exit(1);
     }
 
     console.log('\n✅ Seeding complete!');
+    if (reconciled.deactivated > 0) {
+      console.log(`   ${reconciled.deactivated} removed record(s) deactivated.`);
+    }
     console.log('\n💡 Next steps:');
     console.log('   1. Verify data in Supabase dashboard');
     console.log('   2. Test authentication flow');

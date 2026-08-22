@@ -265,6 +265,7 @@ export type Database = {
           has_audio: boolean | null
           id: string
           ipa: string | null
+          is_active: boolean
           language: string | null
           learning_path_id: string
           metadata: Json | null
@@ -279,6 +280,7 @@ export type Database = {
           has_audio?: boolean | null
           id: string
           ipa?: string | null
+          is_active?: boolean
           language?: string | null
           learning_path_id: string
           metadata?: Json | null
@@ -293,6 +295,7 @@ export type Database = {
           has_audio?: boolean | null
           id?: string
           ipa?: string | null
+          is_active?: boolean
           language?: string | null
           learning_path_id?: string
           metadata?: Json | null
