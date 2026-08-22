@@ -271,12 +271,26 @@ function loadLearningPathsFromFiles(): {
 }
 
 /**
+ * Outcome of seeding one entity kind. `skipped` covers records that were
+ * filtered out before reaching the database.
+ */
+interface SeedResult {
+  total: number;
+  succeeded: number;
+  failed: number;
+  skipped: number;
+}
+
+/**
  * Seed topics into Supabase
  */
 async function seedTopics(
   data: ReturnType<typeof loadLearningPathsFromFiles>
-) {
+): Promise<SeedResult> {
   console.log(`\n📚 Seeding ${data.topics.length} topics...`);
+
+  let succeeded = 0;
+  let failed = 0;
 
   for (const topic of data.topics) {
     const { error } = await supabase.from('topics').upsert(
@@ -295,12 +309,16 @@ async function seedTopics(
 
     if (error) {
       console.error(`  ❌ Failed to seed topic ${topic.id}:`, error.message);
+      failed++;
     } else {
       console.log(`  ✓ ${topic.title}`);
+      succeeded++;
     }
   }
 
-  console.log(`✅ Topics seeded: ${data.topics.length}`);
+  console.log(`✅ Topics seeded: ${succeeded}/${data.topics.length}`);
+
+  return { total: data.topics.length, succeeded, failed, skipped: 0 };
 }
 
 /**
@@ -308,8 +326,11 @@ async function seedTopics(
  */
 async function seedLearningPaths(
   data: ReturnType<typeof loadLearningPathsFromFiles>
-) {
+): Promise<SeedResult> {
   console.log(`\n📖 Seeding ${data.learningPaths.length} learning paths...`);
+
+  let succeeded = 0;
+  let failed = 0;
 
   for (const learningPath of data.learningPaths) {
     // Extract fields from metadata that should be top-level in DB
@@ -354,14 +375,18 @@ async function seedLearningPaths(
         `  ❌ Failed to seed learning path ${learningPath.id}:`,
         error.message
       );
+      failed++;
     } else {
       console.log(
         `  ✓ ${learningPath.title} (${learningPath.taskIds.length} tasks)`
       );
+      succeeded++;
     }
   }
 
-  console.log(`✅ Learning paths seeded: ${data.learningPaths.length}`);
+  console.log(`✅ Learning paths seeded: ${succeeded}/${data.learningPaths.length}`);
+
+  return { total: data.learningPaths.length, succeeded, failed, skipped: 0 };
 }
 
 /**
@@ -369,12 +394,14 @@ async function seedLearningPaths(
  */
 async function seedTasks(
   data: ReturnType<typeof loadLearningPathsFromFiles>
-) {
+): Promise<SeedResult> {
   console.log(`\n📝 Seeding ${data.tasks.length} tasks...`);
 
   // Batch insert tasks (Supabase has a limit, so we'll do it in chunks)
   const BATCH_SIZE = 100;
   let seeded = 0;
+  let failed = 0;
+  let skipped = 0;
 
   for (let i = 0; i < data.tasks.length; i += BATCH_SIZE) {
     const batch = data.tasks.slice(i, i + BATCH_SIZE);
@@ -386,6 +413,8 @@ async function seedTasks(
     if (invalidTasks.length > 0) {
       const nullPathTasks = invalidTasks.filter(t => !t.learningPathId);
       const nullContentTasks = invalidTasks.filter(t => !t.content);
+
+      skipped += invalidTasks.length;
 
       if (nullPathTasks.length > 0) {
         console.warn(`  ⚠️  Skipping ${nullPathTasks.length} tasks with null learningPathId:`,
@@ -433,6 +462,7 @@ async function seedTasks(
         `  ❌ Failed to seed task batch ${i}-${i + validTasks.length}:`,
         error.message
       );
+      failed += validTasks.length;
     } else {
       seeded += validTasks.length;
       console.log(
@@ -442,6 +472,8 @@ async function seedTasks(
   }
 
   console.log(`✅ Tasks seeded: ${seeded}/${data.tasks.length}`);
+
+  return { total: data.tasks.length, succeeded: seeded, failed, skipped };
 }
 
 // Explicit allowlist of ALLOWED development project references
@@ -591,9 +623,29 @@ async function main() {
     console.log(`   Tasks: ${data.tasks.length}`);
 
     // Seed in order: topics → learning paths → tasks
-    await seedTopics(data);
-    await seedLearningPaths(data);
-    await seedTasks(data);
+    const results: Array<[string, SeedResult]> = [
+      ['Topics', await seedTopics(data)],
+      ['Learning paths', await seedLearningPaths(data)],
+      ['Tasks', await seedTasks(data)],
+    ];
+
+    const totalFailed = results.reduce((sum, [, result]) => sum + result.failed, 0);
+    const totalSkipped = results.reduce((sum, [, result]) => sum + result.skipped, 0);
+
+    if (totalSkipped > 0) {
+      console.warn(`\n⚠️  ${totalSkipped} record(s) were skipped before reaching the database.`);
+    }
+
+    if (totalFailed > 0) {
+      console.error('\n❌ Seeding finished with errors:');
+      for (const [label, result] of results) {
+        console.error(
+          `   ${label}: ${result.succeeded}/${result.total} seeded, ${result.failed} failed`
+        );
+      }
+      console.error('\nThe database is in a partially seeded state. Fix the errors above and re-run.');
+      process.exit(1);
+    }
 
     console.log('\n✅ Seeding complete!');
     console.log('\n💡 Next steps:');
