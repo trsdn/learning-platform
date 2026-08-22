@@ -5,6 +5,7 @@
  * - Login tab: Email/password, magic link, OAuth
  * - Sign up tab: Email/password registration
  * - Password reset: Email-based password recovery
+ * - Recovery: Setting a new password after following a reset link
  */
 
 import React, { useState } from 'react';
@@ -12,7 +13,10 @@ import { useAuth } from '@/modules/ui/contexts/auth-context';
 import { getAuthErrorMessage } from '@/modules/core/services/supabase-auth-service';
 import type { AuthError } from '@supabase/supabase-js';
 
-type AuthTab = 'login' | 'signup' | 'reset';
+type AuthTab = 'login' | 'signup' | 'reset' | 'recovery';
+
+/** Matches the minimum length enforced on the sign up form. */
+const MIN_PASSWORD_LENGTH = 6;
 
 interface AuthModalProps {
   onClose?: () => void;
@@ -20,11 +24,12 @@ interface AuthModalProps {
 }
 
 export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
-  const { signIn, signUp, resetPassword } = useAuth();
+  const { signIn, signUp, resetPassword, updatePassword } = useAuth();
 
   const [activeTab, setActiveTab] = useState<AuthTab>(defaultTab);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,6 +38,7 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
   const resetForm = () => {
     setEmail('');
     setPassword('');
+    setConfirmPassword('');
     setDisplayName('');
     setError(null);
     setSuccess(null);
@@ -97,6 +103,38 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
     }
   };
 
+  const handleNewPassword = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    setSuccess(null);
+
+    if (password.length < MIN_PASSWORD_LENGTH) {
+      setError(`Das Passwort muss mindestens ${MIN_PASSWORD_LENGTH} Zeichen lang sein.`);
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      setError('Die Passwörter stimmen nicht überein.');
+      return;
+    }
+
+    setLoading(true);
+
+    const { error } = await updatePassword(password);
+
+    setLoading(false);
+
+    if (error) {
+      setError(getAuthErrorMessage(error as AuthError | null));
+      return;
+    }
+
+    setPassword('');
+    setConfirmPassword('');
+    setSuccess('Passwort erfolgreich geändert. Du bist jetzt angemeldet.');
+    onClose?.();
+  };
+
   return (
     <div className="auth-modal-overlay" onClick={onClose}>
       <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
@@ -110,23 +148,25 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
         </div>
 
         {/* Tabs - Registration disabled, login only */}
-        <div className="auth-tabs">
-          <button
-            className={`auth-tab ${activeTab === 'login' ? 'active' : ''}`}
-            onClick={() => handleTabChange('login')}
-          >
-            Anmelden
-          </button>
-        </div>
+        {activeTab !== 'recovery' && (
+          <div className="auth-tabs">
+            <button
+              className={`auth-tab ${activeTab === 'login' ? 'active' : ''}`}
+              onClick={() => handleTabChange('login')}
+            >
+              Anmelden
+            </button>
+          </div>
+        )}
 
         {/* Error/Success Messages */}
         {error && (
-          <div className="auth-message error">
+          <div className="auth-message error" role="alert">
             <span>⚠️</span> {error}
           </div>
         )}
         {success && (
-          <div className="auth-message success">
+          <div className="auth-message success" role="status">
             <span>✅</span> {success}
           </div>
         )}
@@ -263,6 +303,55 @@ export function AuthModal({ onClose, defaultTab = 'login' }: AuthModalProps) {
             >
               ← Zurück zur Anmeldung
             </button>
+          </div>
+        )}
+
+        {/* New Password (opened from a recovery link) */}
+        {activeTab === 'recovery' && (
+          <div className="auth-content">
+            <p className="auth-description">
+              Wähle ein neues Passwort für dein Konto.
+            </p>
+
+            <form onSubmit={handleNewPassword}>
+              <div className="form-group">
+                <label htmlFor="recovery-password">Neues Passwort</label>
+                <input
+                  id="recovery-password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder={`Mindestens ${MIN_PASSWORD_LENGTH} Zeichen`}
+                  autoComplete="new-password"
+                  aria-describedby="recovery-password-hint"
+                  required
+                  minLength={MIN_PASSWORD_LENGTH}
+                  disabled={loading}
+                />
+                <p id="recovery-password-hint" className="auth-note">
+                  Mindestens {MIN_PASSWORD_LENGTH} Zeichen.
+                </p>
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="recovery-password-confirm">Passwort bestätigen</label>
+                <input
+                  id="recovery-password-confirm"
+                  type="password"
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  placeholder="Passwort wiederholen"
+                  autoComplete="new-password"
+                  required
+                  minLength={MIN_PASSWORD_LENGTH}
+                  disabled={loading}
+                />
+              </div>
+
+              <button type="submit" className="btn-primary" disabled={loading}>
+                {loading ? '⏳ Speichern...' : '🔒 Passwort speichern'}
+              </button>
+            </form>
           </div>
         )}
       </div>

@@ -39,7 +39,7 @@ if (typeof window !== 'undefined') {
 // eslint-disable-next-line react-refresh/only-export-components
 function AppContent() {
   // Supabase authentication
-  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const { user, isAuthenticated, loading: authLoading, signOut, isPasswordRecovery, exitPasswordRecovery } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -419,6 +419,16 @@ function AppContent() {
   }
 
   const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content') || 'unknown';
+
+  // A recovery link opens a session that exists only to choose a new password,
+  // so the recovery form takes over the whole screen until it is resolved.
+  if (isPasswordRecovery) {
+    return (
+      <div>
+        <AuthModal defaultTab="recovery" onClose={exitPasswordRecovery} />
+      </div>
+    );
+  }
 
   // Show auth modal if not authenticated (and not in loading state)
   if (!authLoading && !isAuthenticated && showAuthModal) {
