@@ -14,6 +14,7 @@ import { describe, it, expect, vi, beforeEach, afterEach, type Mock } from 'vite
 import {
   ConnectionStatus,
   checkSupabaseConnection,
+  isBrowserOffline,
   waitForConnection,
   ConnectionMonitor,
   getConnectionMonitor,
@@ -827,6 +828,80 @@ describe('Connection Health Utilities', () => {
       expect(mockFrom.mock.calls.length - initialCallCount).toBeGreaterThanOrEqual(1);
 
       monitor.stop();
+    });
+  });
+
+  // Regression cover for #227: startup must not stall on a network round trip
+  // that cannot succeed, and callers need to recognise a real offline state.
+  describe('offline browser', () => {
+    function setOnLine(value: boolean): void {
+      Object.defineProperty(window.navigator, 'onLine', {
+        configurable: true,
+        get: () => value,
+      });
+    }
+
+    afterEach(() => {
+      setOnLine(true);
+    });
+
+    it('reports DISCONNECTED without querying the database', async () => {
+      setOnLine(false);
+
+      const result = await checkSupabaseConnection();
+
+      expect(result.status).toBe(ConnectionStatus.DISCONNECTED);
+      expect(supabase.from).not.toHaveBeenCalled();
+    });
+
+    it('flags the result as offline so cached content can be used', async () => {
+      setOnLine(false);
+
+      const result = await checkSupabaseConnection();
+
+      expect(result.isOffline).toBe(true);
+      expect(result.error?.category).toBe(ErrorCategory.NETWORK);
+      expect(result.error?.isRetryable).toBe(true);
+    });
+
+    it('does not flag a server-side failure as offline', async () => {
+      setOnLine(true);
+      const mockFrom = supabase.from as Mock;
+      mockFrom.mockReturnValue({
+        select: vi.fn().mockReturnValue({
+          limit: vi.fn().mockResolvedValue({ error: { message: 'boom' } }),
+        }),
+      });
+
+      const result = await checkSupabaseConnection();
+
+      expect(result.status).toBe(ConnectionStatus.DISCONNECTED);
+      expect(result.isOffline).toBeUndefined();
+    });
+  });
+
+  describe('isBrowserOffline', () => {
+    it('is false while the browser reports a connection', () => {
+      Object.defineProperty(window.navigator, 'onLine', {
+        configurable: true,
+        get: () => true,
+      });
+
+      expect(isBrowserOffline()).toBe(false);
+    });
+
+    it('is true while the browser reports no connection', () => {
+      Object.defineProperty(window.navigator, 'onLine', {
+        configurable: true,
+        get: () => false,
+      });
+
+      expect(isBrowserOffline()).toBe(true);
+
+      Object.defineProperty(window.navigator, 'onLine', {
+        configurable: true,
+        get: () => true,
+      });
     });
   });
 });

@@ -122,6 +122,26 @@ export default defineConfig(({ mode }) => {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff2,mp3}'],
         // Implement different caching strategies for different resource types
         runtimeCaching: [
+          // Learning content from Supabase: served from the network when it is
+          // reachable and from the cache when it is not, so the installed PWA
+          // still starts and shows topics, paths and tasks while offline.
+          // Deliberately limited to the shared content tables - per-user rows
+          // must never be left in a cache on a shared device.
+          {
+            urlPattern: /^https:\/\/[a-z0-9-]+\.supabase\.co\/rest\/v1\/(topics|learning_paths|tasks)(\?|$)/i,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'supabase-content-v1',
+              networkTimeoutSeconds: 5,
+              expiration: {
+                maxEntries: 200,
+                maxAgeSeconds: 60 * 60 * 24 * 30, // 30 days
+              },
+              cacheableResponse: {
+                statuses: [200],
+              },
+            },
+          },
           // Network-first for API calls with 3s timeout
           {
             urlPattern: /\/api\/.*/i,

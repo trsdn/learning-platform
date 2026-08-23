@@ -20,6 +20,9 @@ import { settingsService } from '@core/services/settings-service';
 import { ErrorBoundary, ConnectionStatusIndicator, ErrorMessage } from './modules/ui/components/error';
 import { handleComponentError, type StructuredError } from './modules/core/utils/error-handler';
 import { checkSupabaseConnection, ConnectionStatus } from './modules/core/utils/connection-health';
+import { loadTopicsOrEmptyWhenOffline } from './modules/core/utils/offline-boot';
+import { OfflineNotice } from './modules/ui/components/offline-notice';
+import { useOnlineStatus } from './modules/ui/hooks/use-online-status';
 import { logger } from '@/utils/logger';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
@@ -55,7 +58,12 @@ function AppContent() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('components');
   const [initError, setInitError] = useState<StructuredError | null>(null);
+  const [isOffline, setIsOffline] = useState(false);
   const initStarted = useRef(false);
+  // Set whenever startup ended without a usable connection, so reconnecting can
+  // retry on its own without re-running for every unrelated render.
+  const needsReload = useRef(false);
+  const isOnline = useOnlineStatus();
 
   useEffect(() => {
     if (!initStarted.current) {
@@ -63,6 +71,18 @@ function AppContent() {
       initializeApp();
     }
   }, []);
+
+  // Recover on our own once the browser reports a connection again, so the
+  // learner does not have to reload the app manually.
+  useEffect(() => {
+    if (!isOnline || !needsReload.current) {
+      return;
+    }
+
+    needsReload.current = false;
+    setIsLoading(true);
+    initializeApp();
+  }, [isOnline]);
 
   useEffect(() => {
     // Event listeners for reseed/reset are attached after the handlers are
@@ -177,27 +197,36 @@ function AppContent() {
       // Check connection before loading data
       logger.debug('Checking Supabase connection...');
       const healthCheck = await checkSupabaseConnection();
-
-      if (healthCheck.status === ConnectionStatus.DISCONNECTED) {
-        throw healthCheck.error || new Error('Unable to connect to database');
-      }
+      const isDisconnected = healthCheck.status === ConnectionStatus.DISCONNECTED;
 
       if (healthCheck.status === ConnectionStatus.DEGRADED) {
         logger.warn('Slow connection detected. Latency:', healthCheck.latency, 'ms');
+      } else if (isDisconnected) {
+        logger.warn('No connection. Falling back to cached content.');
       } else {
         logger.debug('Connection healthy. Latency:', healthCheck.latency, 'ms');
       }
 
-      // Load topics from Supabase (with automatic retry via wrapper)
+      // A failed health check is not fatal: the service worker may still be
+      // able to serve previously cached content, which is what keeps the
+      // installed PWA usable offline.
       const topicRepo = getTopicRepository();
-      const loadedTopics = await topicRepo.getAll();
-      logger.debug(`Loaded ${loadedTopics.length} topics from Supabase`);
+      const loadedTopics = await loadTopicsOrEmptyWhenOffline(topicRepo, isDisconnected);
+
+      if (isDisconnected && loadedTopics.length === 0) {
+        throw healthCheck.error || new Error('Unable to connect to database');
+      }
+
+      logger.debug(`Loaded ${loadedTopics.length} topics`);
 
       setTopics(loadedTopics);
+      setIsOffline(isDisconnected);
+      needsReload.current = isDisconnected;
       setIsLoading(false);
     } catch (error: unknown) {
       const structuredError = handleComponentError(error, 'initializeApp');
       setInitError(structuredError);
+      needsReload.current = true;
       setIsLoading(false);
     }
   }
@@ -496,6 +525,7 @@ function AppContent() {
       </div>
 
       <h2 className={styles.topicsHeading}>Themen auswählen</h2>
+      {isOffline && <OfflineNotice />}
       <div className={styles.topicsGrid}>
         {topics.map((topic) => (
           <TopicCard

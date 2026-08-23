@@ -23,6 +23,21 @@ export interface HealthCheckResult {
   latency?: number;
   error?: StructuredError;
   timestamp: string;
+  /**
+   * True when the browser itself reports that it has no network connection.
+   * Callers use this to fall back to cached content instead of treating the
+   * failure as a fatal startup error.
+   */
+  isOffline?: boolean;
+}
+
+/**
+ * Whether the browser currently reports a network connection.
+ * `navigator.onLine` is only trustworthy when it is false, which is exactly
+ * the case we care about here.
+ */
+export function isBrowserOffline(): boolean {
+  return typeof navigator !== 'undefined' && navigator.onLine === false;
 }
 
 /**
@@ -31,6 +46,23 @@ export interface HealthCheckResult {
  */
 export async function checkSupabaseConnection(): Promise<HealthCheckResult> {
   const startTime = Date.now();
+
+  // Skip the round trip when the browser already knows there is no network,
+  // otherwise startup stalls on retries that cannot succeed.
+  if (isBrowserOffline()) {
+    return {
+      status: ConnectionStatus.DISCONNECTED,
+      latency: 0,
+      isOffline: true,
+      error: {
+        category: ErrorCategory.NETWORK,
+        message: 'Browser reports no network connection',
+        userMessage: 'You are offline. Cached content is used where available.',
+        isRetryable: true,
+      },
+      timestamp: new Date().toISOString(),
+    };
+  }
 
   try {
     // Perform a lightweight query to check connection

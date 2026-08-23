@@ -61,6 +61,23 @@
 - Don’t place new React components in the legacy `components/` root folder; prefer `modules/ui/components/`.
 - Don’t change the database schema (`database.ts`) without coordinating with `infrastructure/supabase/AGENTS.md`.
 
+## Offline Behaviour
+
+The installed PWA must start without a connection.
+
+- A failed connection check is **not** fatal. `initializeApp` in `main.tsx` still asks the
+  repository for topics, because the service worker can answer from cache
+  (`loadTopicsOrEmptyWhenOffline` in `modules/core/utils/offline-boot.ts`). Only when nothing is
+  cached does the error screen appear.
+- Shared learning content (`topics`, `learning_paths`, `tasks`) is cached by the service worker
+  through the `supabase-content-v1` NetworkFirst rule in `vite.config.ts`. **Never widen that rule
+  to per-user tables** – cached rows would leak between accounts on a shared device.
+  `tests/contract/offline-caching.spec.ts` guards this.
+- Writes stay online-only. Show the learner what is going on with `OfflineNotice` rather than
+  failing silently, and use `useOnlineStatus()` instead of reading `navigator.onLine` directly.
+- `checkSupabaseConnection()` short-circuits when the browser reports no network, so never rely on
+  the health check as proof that a request would succeed.
+
 ## Testing
 
 - Unit tests for source code live in `tests/unit/` (mirroring `src/modules/**` structure).
