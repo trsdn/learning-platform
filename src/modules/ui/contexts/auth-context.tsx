@@ -29,7 +29,8 @@ interface AuthContextValue {
 
   // Password recovery
   isPasswordRecovery: boolean;
-  exitPasswordRecovery: () => void;
+  /** Leaves recovery mode and ends the recovery session. */
+  exitPasswordRecovery: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined);
@@ -228,10 +229,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   // Leave recovery mode without changing the password
-  const exitPasswordRecovery = useCallback(() => {
+  const exitPasswordRecovery = useCallback(async () => {
+    // A recovery link is a single-purpose credential delivered by email, and
+    // Supabase exchanges it for a full session before the new password is
+    // ever set. Dismissing the form must therefore end that session: keeping
+    // it would let anyone who opens the link -- a forwarded mail, a shared
+    // device, a replay from history -- close the dialog and land in the
+    // authenticated app without knowing the password.
+    await signOut();
     setIsPasswordRecovery(false);
     clearRecoveryUrl();
-  }, []);
+  }, [signOut]);
 
   // Resend confirmation email
   const resendConfirmationEmail = useCallback(async (email: string) => {

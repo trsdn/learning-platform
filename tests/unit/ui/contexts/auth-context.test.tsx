@@ -1437,17 +1437,24 @@ describe('AuthContext', () => {
       expect(result.current.isPasswordRecovery).toBe(true);
     });
 
-    it('leaves recovery mode when the user cancels', async () => {
+    it('ends the recovery session when the user cancels', async () => {
+      // Dismissing the form must sign out, not just hide it. Supabase turns a
+      // recovery link into a full session before any new password is set, so
+      // leaving that session alive would let whoever opened the link close the
+      // dialog and use the account without knowing the password.
       window.history.replaceState(null, '', '/auth/reset-password');
+
+      vi.mocked(SupabaseAuthService.signOut).mockResolvedValue({ error: null });
 
       const { result } = renderAuth();
 
       await waitFor(() => expect(result.current.isPasswordRecovery).toBe(true));
 
-      act(() => {
-        result.current.exitPasswordRecovery();
+      await act(async () => {
+        await result.current.exitPasswordRecovery();
       });
 
+      expect(SupabaseAuthService.signOut).toHaveBeenCalledTimes(1);
       expect(result.current.isPasswordRecovery).toBe(false);
       expect(window.location.pathname).toBe('/');
     });
