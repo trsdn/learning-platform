@@ -6,9 +6,11 @@
  * than the deactivation itself: a pass that runs on an unknown content set
  * takes the entire catalogue offline for learners.
  *
- * Covers the review finding on #237 that a seeding run producing zero records
- * -- wrong working directory, content directory not checked out, loader
- * refactor -- reported zero failures and therefore passed the old guard.
+ * Covers two review findings on #237, both of which let a run with zero
+ * reported failures deactivate content that is still current: a seeding run
+ * producing zero records (wrong working directory, content directory not
+ * checked out, loader refactor), and records that were skipped rather than
+ * failed.
  */
 
 import { describe, it, expect } from 'vitest';
@@ -23,26 +25,40 @@ import {
 
 describe('reconciliationSkipReason', () => {
   it('allows reconciliation when seeding wrote records and nothing failed', () => {
-    expect(reconciliationSkipReason({ failed: 0, seededIds: ['a', 'b'] })).toBeNull();
+    expect(reconciliationSkipReason({ failed: 0, skipped: 0, seededIds: ['a', 'b'] })).toBeNull();
   });
 
   it('blocks reconciliation when any record failed to seed', () => {
-    const reason = reconciliationSkipReason({ failed: 2, seededIds: ['a'] });
+    const reason = reconciliationSkipReason({ failed: 2, skipped: 0, seededIds: ['a'] });
 
     expect(reason).toContain('2 record(s) failed to seed');
+  });
+
+  it('blocks reconciliation when a record was skipped before reaching the database', () => {
+    // `seedTasks` skips tasks whose learningPathId or content is null. Those
+    // tasks are still in the JSON sources, so they are not withdrawn content --
+    // but they never reach `seededIds`. Without this guard the next step reads
+    // their absence as removal and deactivates still-current tasks, while the
+    // run reports zero failures.
+    const reason = reconciliationSkipReason({ failed: 0, skipped: 3, seededIds: ['a', 'b'] });
+
+    expect(reason).not.toBeNull();
+    expect(reason).toContain('3 record(s) were skipped');
   });
 
   it('blocks reconciliation when the sources produced no records at all', () => {
     // Without this guard the empty set below is treated as "the catalogue is
     // now empty", and every active row is deactivated.
-    const reason = reconciliationSkipReason({ failed: 0, seededIds: [] });
+    const reason = reconciliationSkipReason({ failed: 0, skipped: 0, seededIds: [] });
 
     expect(reason).not.toBeNull();
     expect(reason).toContain('no records');
   });
 
   it('reports the failure first when a run both failed and produced nothing', () => {
-    expect(reconciliationSkipReason({ failed: 1, seededIds: [] })).toContain('failed to seed');
+    expect(reconciliationSkipReason({ failed: 1, skipped: 0, seededIds: [] })).toContain(
+      'failed to seed'
+    );
   });
 });
 

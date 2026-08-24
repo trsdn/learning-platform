@@ -513,9 +513,10 @@ const RECONCILE_BATCH_SIZE = 100;
  * reference them; a delete would take learner history with it.
  *
  * Reconciliation is skipped whenever the true content set is unknown -- a
- * failed upsert, or a source read that produced nothing at all -- because
- * deactivating on that basis would silently retire content that is still
- * current. See `reconciliationSkipReason`.
+ * failed upsert, a record that never reached the database, or a source read
+ * that produced nothing at all -- because deactivating on that basis would
+ * silently retire content that is still current. See
+ * `reconciliationSkipReason`.
  */
 async function deactivateRemoved(
   table: ReconcilableTable,

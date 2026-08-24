@@ -17,6 +17,8 @@
 export interface ReconciliationInput {
   /** Records the seeding pass failed to write. */
   failed: number;
+  /** Records that were filtered out before reaching the database. */
+  skipped: number;
   /** IDs the seeding pass actually wrote. */
   seededIds: readonly string[];
 }
@@ -24,11 +26,18 @@ export interface ReconciliationInput {
 /**
  * Explain why reconciliation must not run, or return `null` when it is safe.
  *
- * Two situations make the true content set unknown, and deactivating on an
- * unknown set silently retires content that is still current:
+ * Reconciliation deactivates every active row that is absent from
+ * `seededIds`, which is only sound when `seededIds` is the *complete* content
+ * set. Three situations break that assumption, and deactivating under any of
+ * them silently retires content that is still current:
  *
  *  - a failed upsert, where some rows are missing from `seededIds` even though
  *    they are still part of the catalogue;
+ *  - a skipped record. Skipping is not removal: `seedTasks` drops tasks whose
+ *    `learningPathId` or `content` is null, so a transient content-pipeline
+ *    glitch that nulls a field makes a still-current task look withdrawn.
+ *    Those records never reach `seededIds` yet report zero failures, so
+ *    without this guard the very next step would deactivate them;
  *  - a source read that produced nothing at all. An empty `seededIds` makes
  *    *every* active row look stale, so an unguarded pass would take the whole
  *    catalogue offline. This is not hypothetical: a wrong working directory,
@@ -38,6 +47,10 @@ export interface ReconciliationInput {
 export function reconciliationSkipReason(seedResult: ReconciliationInput): string | null {
   if (seedResult.failed > 0) {
     return `${seedResult.failed} record(s) failed to seed`;
+  }
+
+  if (seedResult.skipped > 0) {
+    return `${seedResult.skipped} record(s) were skipped before reaching the database`;
   }
 
   if (seedResult.seededIds.length === 0) {
