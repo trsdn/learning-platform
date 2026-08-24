@@ -1,0 +1,82 @@
+name: Keep Supabase Awake
+
+# Supabase free tier projects pause after 7 consecutive days without a
+# database request, and resuming them requires a manual click in the
+# dashboard. This workflow issues one cheap read per project so that the
+# 7 day counter never runs out.
+#
+# Why daily instead of every few days: a single missed or delayed run must
+# not be enough to reach the threshold. Daily leaves six spare days.
+#
+# Known limitation: GitHub disables scheduled workflows in repositories
+# that have seen no activity for 60 days. Repository inactivity and
+# database inactivity tend to happen at the same time, so this guard is
+# weakest exactly when it is needed most. Long idle periods still need a
+# look at the dashboard.
+
+on:
+  schedule:
+    - cron: '17 5 * * *'
+  workflow_dispatch:
+
+concurrency:
+  group: keep-supabase-awake
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    name: Ping ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    strategy:
+      # Never let one paused project hide the state of the other.
+      fail-fast: false
+      matrix:
+        include:
+          # These are the names of repository secrets, not values.
+          - name: development
+            url_secret: SUPABASE_DEV_URL # pragma: allowlist secret
+            key_secret: SUPABASE_DEV_ANON_KEY # pragma: allowlist secret
+          - name: production
+            url_secret: SUPABASE_PROD_URL # pragma: allowlist secret
+            key_secret: SUPABASE_PROD_ANON_KEY # pragma: allowlist secret
+    steps:
+      - name: Read one row from a public table
+        env:
+          # The anon key is safe here: it ships in the browser bundle anyway
+          # and only grants what the RLS policies allow. A service role key
+          # would be needless privilege for a liveness ping.
+          SUPABASE_URL: ${{ secrets[matrix.url_secret] }}
+          SUPABASE_ANON_KEY: ${{ secrets[matrix.key_secret] }}
+        run: |
+          set -uo pipefail
+
+          if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_ANON_KEY}" ]; then
+            echo "::error::Missing ${{ matrix.url_secret }} or ${{ matrix.key_secret }}."
+            exit 1
+          fi
+
+          # `topics` is world readable by policy, so the anon key suffices.
+          status=$(curl -sS -o /dev/null -w '%{http_code}' --max-time 30 \
+            --retry 2 --retry-delay 5 --retry-connrefused \
+            -H "apikey: ${SUPABASE_ANON_KEY}" \
+            -H "Authorization: Bearer ${SUPABASE_ANON_KEY}" \
+            "${SUPABASE_URL}/rest/v1/topics?select=id&limit=1" 2>/dev/null) || status="000"
+
+          if [ "${status}" = "200" ]; then
+            echo "${{ matrix.name }}: awake (HTTP 200)"
+            exit 0
+          fi
+
+          # A paused project loses its DNS record, so the request never
+          # reaches a server and curl reports no status at all.
+          if [ "${status}" = "000" ]; then
+            echo "::error::${{ matrix.name }} is unreachable (no HTTP response)."
+            echo "::error::A paused Supabase project stops resolving in DNS."
+            echo "::error::Pinging cannot wake it: resume it in the dashboard, then re-run."
+          else
+            echo "::error::${{ matrix.name }} answered HTTP ${status}, expected 200."
+          fi
+          exit 1
