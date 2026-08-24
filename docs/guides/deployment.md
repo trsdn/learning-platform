@@ -209,11 +209,31 @@ gh run list --workflow=deploy-production.yml --limit 1 --json databaseId -q '.[0
 After deployment completes:
 
 ```bash
-# Check production site is healthy
-curl -s -o /dev/null -w "%{http_code}" https://learning-platform.vercel.app
+# Take the production URL from Vercel, which owns it. Do not hardcode a
+# domain in this document: a domain that is dropped or renamed can be
+# claimed by an unrelated Vercel project, and the health check below would
+# then return 200 for someone else's site while production is broken.
+# (This already happened once: the URL previously documented here now
+# serves a completely different product.)
+PROD_URL=$(vercel ls --prod --token "$VERCEL_TOKEN" | grep -oE 'https://[^ ]+' | head -1)
+echo "$PROD_URL"
+
+# Check the production site responds
+curl -s -o /dev/null -w "%{http_code}\n" "$PROD_URL"
+
+# Confirm it is actually this app. Never skip this: a 200 alone proves
+# only that *something* answers, not that it is MindForge Academy.
+curl -s "$PROD_URL" | grep -q "MindForge Academy" \
+  && echo "identity ok" \
+  || echo "WRONG SITE - the domain may have been reassigned"
 
 # Verify version in app (Settings → Info & Support)
 ```
+
+> **Note:** GitHub's deployment records are not a reliable source for this
+> URL. The most recent production deployment carries an empty
+> `environment_url`, and older records hold immutable per-deployment URLs
+> rather than the stable production domain.
 
 ### Hotfix Releases
 
