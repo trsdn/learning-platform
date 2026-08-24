@@ -44,6 +44,16 @@ if (typeof window !== 'undefined') {
 // that a learner who leaves the app open notices it recovering on its own.
 const STARTUP_RETRY_INTERVAL_MS = 30_000;
 
+// How many times a *hard* startup failure is retried automatically. Startup
+// can fail for reasons that will never resolve on their own -- a schema
+// mismatch, a broken RLS policy, a bad configuration -- and those fail
+// identically on every attempt, so retrying them forever would hide a
+// permanent fault behind an endless loading flicker. Reaching this cap leaves
+// the error screen and its manual retry in place. A start that merely could
+// not reach the backend is not counted here: that case is known to be
+// transient and keeps retrying indefinitely.
+const MAX_STARTUP_ERROR_RETRIES = 5;
+
 // eslint-disable-next-line react-refresh/only-export-components
 function AppContent() {
   // Supabase authentication
@@ -68,6 +78,9 @@ function AppContent() {
   // Set whenever startup ended without a usable connection, so reconnecting can
   // retry on its own without re-running for every unrelated render.
   const needsReload = useRef(false);
+  // Consecutive hard startup failures, reset by any successful start. Bounds
+  // the automatic retries so a permanent fault surfaces instead of looping.
+  const startupErrorRetries = useRef(0);
   const isOnline = useOnlineStatus();
 
   useEffect(() => {
@@ -253,11 +266,15 @@ function AppContent() {
       setTopics(loadedTopics);
       setIsOffline(isDisconnected);
       needsReload.current = isDisconnected;
+      startupErrorRetries.current = 0;
       setIsLoading(false);
     } catch (error: unknown) {
       const structuredError = handleComponentError(error, 'initializeApp');
       setInitError(structuredError);
-      needsReload.current = true;
+      // Only keep auto-retrying while there is budget left; past that the
+      // error screen stands and the learner can retry deliberately.
+      startupErrorRetries.current += 1;
+      needsReload.current = startupErrorRetries.current < MAX_STARTUP_ERROR_RETRIES;
       setIsLoading(false);
     }
   }
@@ -322,6 +339,22 @@ function AppContent() {
     }
   }
 
+  // A recovery link opens a session that exists only to choose a new password,
+  // so the recovery form takes over the whole screen until it is resolved.
+  //
+  // This runs before the auth, loading and error gates on purpose. The link is
+  // time-limited, and initializeApp() failing -- an unreachable backend, no
+  // cached content offline -- would otherwise strand the user on the generic
+  // connection-error screen with no way to reach the form at all. Setting a
+  // password only needs Supabase Auth, not the content that failed to load.
+  if (isPasswordRecovery) {
+    return (
+      <div>
+        <AuthModal defaultTab="recovery" onClose={exitPasswordRecovery} />
+      </div>
+    );
+  }
+
   // Show Supabase login if not authenticated (required for all users)
   if (!authLoading && !isAuthenticated) {
     return (
@@ -361,6 +394,9 @@ function AppContent() {
         <ErrorMessage
           error={initError}
           onRetry={() => {
+            // A deliberate retry means the learner believes something changed,
+            // so give the automatic retries a fresh budget too.
+            startupErrorRetries.current = 0;
             setInitError(null);
             setIsLoading(true);
             initializeApp();
@@ -452,7 +488,13 @@ function AppContent() {
             <LearningPathCard
               key={path.id}
               learningPath={path}
-              taskCount={learningPathTaskCounts[path.id] || path.taskIds?.length || 0}
+              taskCount={
+                // `??`, not `||`: a learning path whose tasks were all retired
+                // by content reconciliation has a real count of 0, and `||`
+                // would treat that as "not loaded yet" and fall back to the
+                // stale taskIds array, advertising tasks that no longer exist.
+                learningPathTaskCounts[path.id] ?? path.taskIds?.length ?? 0
+              }
               onSelect={() => startSession(path)}
               animationIndex={index}
             />
@@ -479,16 +521,6 @@ function AppContent() {
   }
 
   const deploymentVersion = document.querySelector('meta[name="deployment-version"]')?.getAttribute('content') || 'unknown';
-
-  // A recovery link opens a session that exists only to choose a new password,
-  // so the recovery form takes over the whole screen until it is resolved.
-  if (isPasswordRecovery) {
-    return (
-      <div>
-        <AuthModal defaultTab="recovery" onClose={exitPasswordRecovery} />
-      </div>
-    );
-  }
 
   // Show auth modal if not authenticated (and not in loading state)
   if (!authLoading && !isAuthenticated && showAuthModal) {
