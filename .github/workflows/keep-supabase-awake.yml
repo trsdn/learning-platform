@@ -34,27 +34,46 @@ jobs:
       # Never let one paused project hide the state of the other.
       fail-fast: false
       matrix:
-        include:
-          # These are the names of repository secrets, not values.
-          - name: development
-            url_secret: SUPABASE_DEV_URL # pragma: allowlist secret
-            key_secret: SUPABASE_DEV_ANON_KEY # pragma: allowlist secret
-          - name: production
-            url_secret: SUPABASE_PROD_URL # pragma: allowlist secret
-            key_secret: SUPABASE_PROD_ANON_KEY # pragma: allowlist secret
+        name: [development, production]
     steps:
       - name: Read one row from a public table
         env:
-          # The anon key is safe here: it ships in the browser bundle anyway
-          # and only grants what the RLS policies allow. A service role key
-          # would be needless privilege for a liveness ping.
-          SUPABASE_URL: ${{ secrets[matrix.url_secret] }}
-          SUPABASE_ANON_KEY: ${{ secrets[matrix.key_secret] }}
+          # Listed one by one on purpose. A dynamic lookup such as
+          # secrets[<matrix value>] makes GitHub hand the runner *every*
+          # organisation and repository secret, including the SOPS age key and
+          # the Vercel token (CodeQL: Excessive Secrets Exposure).
+          #
+          # These four are safe to expose to both jobs: the URL and the anon
+          # key ship in the browser bundle anyway, and the anon key grants
+          # only what the RLS policies allow. A service role key would be
+          # needless privilege for a liveness ping.
+          DEV_URL: ${{ secrets.SUPABASE_DEV_URL }} # pragma: allowlist secret
+          DEV_ANON_KEY: ${{ secrets.SUPABASE_DEV_ANON_KEY }} # pragma: allowlist secret
+          PROD_URL: ${{ secrets.SUPABASE_PROD_URL }} # pragma: allowlist secret
+          PROD_ANON_KEY: ${{ secrets.SUPABASE_PROD_ANON_KEY }} # pragma: allowlist secret
+          TARGET: ${{ matrix.name }}
         run: |
           set -uo pipefail
 
+          case "${TARGET}" in
+            development)
+              SUPABASE_URL="${DEV_URL}"
+              SUPABASE_ANON_KEY="${DEV_ANON_KEY}"
+              expected="SUPABASE_DEV_URL and SUPABASE_DEV_ANON_KEY" # pragma: allowlist secret
+              ;;
+            production)
+              SUPABASE_URL="${PROD_URL}"
+              SUPABASE_ANON_KEY="${PROD_ANON_KEY}"
+              expected="SUPABASE_PROD_URL and SUPABASE_PROD_ANON_KEY" # pragma: allowlist secret
+              ;;
+            *)
+              echo "::error::Unknown target '${TARGET}'."
+              exit 1
+              ;;
+          esac
+
           if [ -z "${SUPABASE_URL}" ] || [ -z "${SUPABASE_ANON_KEY}" ]; then
-            echo "::error::Missing ${{ matrix.url_secret }} or ${{ matrix.key_secret }}."
+            echo "::error::Missing ${expected}."
             exit 1
           fi
 
@@ -66,17 +85,17 @@ jobs:
             "${SUPABASE_URL}/rest/v1/topics?select=id&limit=1" 2>/dev/null) || status="000"
 
           if [ "${status}" = "200" ]; then
-            echo "${{ matrix.name }}: awake (HTTP 200)"
+            echo "${TARGET}: awake (HTTP 200)"
             exit 0
           fi
 
           # A paused project loses its DNS record, so the request never
           # reaches a server and curl reports no status at all.
           if [ "${status}" = "000" ]; then
-            echo "::error::${{ matrix.name }} is unreachable (no HTTP response)."
+            echo "::error::${TARGET} is unreachable (no HTTP response)."
             echo "::error::A paused Supabase project stops resolving in DNS."
             echo "::error::Pinging cannot wake it: resume it in the dashboard, then re-run."
           else
-            echo "::error::${{ matrix.name }} answered HTTP ${status}, expected 200."
+            echo "::error::${TARGET} answered HTTP ${status}, expected 200."
           fi
           exit 1
