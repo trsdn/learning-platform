@@ -22,6 +22,11 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import type { Database } from '../src/modules/storage/database.types';
 import type { Topic, LearningPath, Task } from '../src/modules/core/types/services';
+import {
+  RECONCILE_PAGE_SIZE,
+  reconciliationSkipReason,
+  selectStaleIds,
+} from './lib/reconciliation';
 
 // Get __dirname equivalent in ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -507,36 +512,48 @@ const RECONCILE_BATCH_SIZE = 100;
  * than deleted because user progress, answer history and spaced repetition all
  * reference them; a delete would take learner history with it.
  *
- * Reconciliation is skipped whenever the seeding pass reported failures: a
- * failed upsert means the true content set is unknown, and deactivating on that
- * basis would silently retire content that is still current.
+ * Reconciliation is skipped whenever the true content set is unknown -- a
+ * failed upsert, or a source read that produced nothing at all -- because
+ * deactivating on that basis would silently retire content that is still
+ * current. See `reconciliationSkipReason`.
  */
 async function deactivateRemoved(
   table: ReconcilableTable,
   label: string,
   seedResult: SeedResult
 ): Promise<ReconcileResult> {
-  if (seedResult.failed > 0) {
-    console.warn(
-      `  ⚠️  ${label}: reconciliation skipped, ${seedResult.failed} record(s) failed to seed`
-    );
+  const skipReason = reconciliationSkipReason(seedResult);
+  if (skipReason) {
+    console.warn(`  ⚠️  ${label}: reconciliation skipped, ${skipReason}`);
     return { deactivated: 0, failed: 0, skipped: true };
   }
 
-  const { data, error } = await supabase
-    .from(table)
-    .select('id')
-    .eq('is_active', true);
+  // Read every page. PostgREST caps a single response at `max_rows`, so an
+  // unpaginated read would silently consider only the first page and leave
+  // the rest unreconciled once the catalogue outgrows that cap.
+  const activeIds: string[] = [];
 
-  if (error) {
-    console.error(`  ❌ ${label}: could not read active rows: ${error.message}`);
-    return { deactivated: 0, failed: 1, skipped: false };
+  for (let offset = 0; ; offset += RECONCILE_PAGE_SIZE) {
+    const { data, error } = await supabase
+      .from(table)
+      .select('id')
+      .eq('is_active', true)
+      .range(offset, offset + RECONCILE_PAGE_SIZE - 1);
+
+    if (error) {
+      console.error(`  ❌ ${label}: could not read active rows: ${error.message}`);
+      return { deactivated: 0, failed: 1, skipped: false };
+    }
+
+    const page = data ?? [];
+    activeIds.push(...page.map((row: { id: string }) => row.id));
+
+    if (page.length < RECONCILE_PAGE_SIZE) {
+      break;
+    }
   }
 
-  const current = new Set(seedResult.seededIds);
-  const stale = (data ?? [])
-    .map((row: { id: string }) => row.id)
-    .filter((id) => !current.has(id));
+  const stale = selectStaleIds(activeIds, seedResult.seededIds);
 
   if (stale.length === 0) {
     console.log(`  ✓ ${label}: nothing to deactivate`);
