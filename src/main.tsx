@@ -39,6 +39,11 @@ if (typeof window !== 'undefined') {
   settingsService.load();
 }
 
+// How often a failed startup is retried while the tab is in the foreground.
+// Long enough not to hammer a backend that is genuinely down, short enough
+// that a learner who leaves the app open notices it recovering on its own.
+const STARTUP_RETRY_INTERVAL_MS = 30_000;
+
 // eslint-disable-next-line react-refresh/only-export-components
 function AppContent() {
   // Supabase authentication
@@ -83,6 +88,32 @@ function AppContent() {
     setIsLoading(true);
     initializeApp();
   }, [isOnline]);
+
+  // The effect above only fires when the browser's own connectivity flips.
+  // A backend that is unreachable while the device stays online -- a paused
+  // project, a DNS failure, a backend outage -- never changes
+  // `navigator.onLine`, so without this the learner sits on cached content
+  // until they reload by hand. Retry when the tab regains focus, and on a
+  // slow timer for someone who simply leaves the page open.
+  useEffect(() => {
+    const retryIfStale = () => {
+      if (!needsReload.current || document.visibilityState !== 'visible') {
+        return;
+      }
+
+      needsReload.current = false;
+      setIsLoading(true);
+      initializeApp();
+    };
+
+    const timer = window.setInterval(retryIfStale, STARTUP_RETRY_INTERVAL_MS);
+    document.addEventListener('visibilitychange', retryIfStale);
+
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', retryIfStale);
+    };
+  }, []);
 
   useEffect(() => {
     // Event listeners for reseed/reset are attached after the handlers are
