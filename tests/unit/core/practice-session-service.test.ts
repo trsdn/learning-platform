@@ -342,6 +342,71 @@ describe('PracticeSessionService', () => {
       expect(session.execution.taskIds).toContain('spanish-task-2');
     });
 
+    it('should not serve tasks that content reconciliation retired', async () => {
+      // Reconciliation deactivates withdrawn content instead of deleting it,
+      // because spaced-repetition rows reference it. Those rows keep coming
+      // due, and the review path resolves them with `getById`, which does not
+      // filter on is_active (by design, so history stays readable). Without an
+      // explicit check the session would hand a learner content that was
+      // deliberately taken out of the catalogue.
+      const dueItems: SpacedRepetitionItem[] = [
+        {
+          id: 'sr-retired',
+          taskId: 'retired-task',
+          userId: 'user-1',
+          easeFactor: 2.5,
+          interval: 1,
+          repetitions: 0,
+          nextReviewDate: new Date(),
+          lastReviewDate: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          id: 'sr-live',
+          taskId: 'live-task',
+          userId: 'user-1',
+          easeFactor: 2.5,
+          interval: 1,
+          repetitions: 0,
+          nextReviewDate: new Date(),
+          lastReviewDate: new Date(),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      ];
+
+      const retiredTask = createMockTask({
+        id: 'retired-task',
+        learningPathId: 'spanish-path',
+        isActive: false,
+      });
+      const liveTask = createMockTask({
+        id: 'live-task',
+        learningPathId: 'spanish-path',
+        isActive: true,
+      });
+
+      vi.mocked(spacedRepRepo.getDue).mockResolvedValue(dueItems);
+      vi.mocked(taskRepo.getById).mockImplementation(async (id) => {
+        if (id === 'retired-task') return retiredTask;
+        if (id === 'live-task') return liveTask;
+        return null;
+      });
+      vi.mocked(taskRepo.getRandomTasks).mockResolvedValue([]);
+      vi.mocked(sessionRepo.create).mockImplementation(async (session) => session);
+
+      const session = await service.createSession({
+        topicId: 'spanish-topic',
+        learningPathIds: ['spanish-path'],
+        targetCount: 5,
+        includeReview: true,
+      });
+
+      expect(session.execution.taskIds).not.toContain('retired-task');
+      expect(session.execution.taskIds).toContain('live-task');
+    });
+
     it('should not include review tasks when includeReview is false', async () => {
       vi.mocked(taskRepo.getRandomTasks).mockResolvedValue([
         createMockTask({ id: 'new-task-1' }),

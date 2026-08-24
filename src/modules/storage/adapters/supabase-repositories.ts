@@ -892,6 +892,10 @@ export class TaskRepository implements ITaskRepository {
     if (row.audio_url !== null) result.audioUrl = row.audio_url;
     if (row.language !== null) result.language = row.language;
     if (row.ipa !== null) result.ipa = row.ipa;
+    // `getById`/`getByIds` deliberately do not filter on is_active so that
+    // answer history stays resolvable. Carrying the flag lets callers that
+    // are *not* resolving history reject retired content.
+    if (row.is_active !== null) result.isActive = row.is_active;
 
     return result;
   }
