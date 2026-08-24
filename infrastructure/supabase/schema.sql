@@ -30,7 +30,7 @@ BEGIN
   VALUES (NEW.id, NEW.email, NEW.raw_user_meta_data->>'display_name');
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
 
 CREATE TRIGGER on_auth_user_created
   AFTER INSERT ON auth.users
@@ -103,6 +103,10 @@ CREATE TABLE tasks (
   audio_url TEXT,
   language TEXT,
   ipa TEXT,
+  -- False when the task no longer exists in the canonical content sources.
+  -- Inactive tasks are never selected for practice but stay readable so
+  -- learner history remains resolvable.
+  is_active BOOLEAN NOT NULL DEFAULT true,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
@@ -111,6 +115,8 @@ CREATE INDEX idx_tasks_learning_path_id ON tasks(learning_path_id);
 CREATE INDEX idx_tasks_type ON tasks(type);
 CREATE INDEX idx_tasks_has_audio ON tasks(has_audio);
 CREATE INDEX idx_tasks_metadata_difficulty ON tasks((metadata->>'difficulty'));
+CREATE INDEX idx_tasks_is_active ON tasks(is_active);
+CREATE INDEX idx_tasks_learning_path_active ON tasks(learning_path_id, is_active);
 
 -- =====================================================
 -- USER PROGRESS & SESSIONS
@@ -179,6 +185,7 @@ CREATE TABLE spaced_repetition (
   schedule JSONB DEFAULT '{"nextReview": null, "lastReviewDate": null}'::jsonb,
   algorithm JSONB DEFAULT '{"interval": 1, "easeFactor": 2.5, "repetitionCount": 0}'::jsonb,
   performance JSONB DEFAULT '{"reviewCount": 0, "correctCount": 0}'::jsonb,
+  metadata JSONB DEFAULT '{"introduced": null, "graduated": false, "lapseCount": 0}'::jsonb,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   UNIQUE(user_id, task_id)
@@ -240,9 +247,11 @@ ALTER TABLE answer_history ENABLE ROW LEVEL SECURITY;
 ALTER TABLE spaced_repetition ENABLE ROW LEVEL SECURITY;
 
 -- Profiles policies
-CREATE POLICY "Public profiles are viewable by everyone"
+-- Profiles are private: a public SELECT policy would expose every user's
+-- email address (see migration 20251209000001).
+CREATE POLICY "Users can view their own profile"
   ON profiles FOR SELECT
-  USING (true);
+  USING (auth.uid() = id);
 
 CREATE POLICY "Users can insert their own profile"
   ON profiles FOR INSERT
@@ -358,6 +367,13 @@ RETURNS TABLE (
   overall_accuracy NUMERIC
 ) AS $$
 BEGIN
+  -- The function is SECURITY DEFINER and therefore bypasses RLS on
+  -- user_progress. Callers may only ask for their own summary.
+  IF auth.uid() IS NULL OR p_user_id IS DISTINCT FROM auth.uid() THEN
+    RAISE EXCEPTION 'permission denied for function get_user_progress_summary'
+      USING ERRCODE = '42501';
+  END IF;
+
   RETURN QUERY
   SELECT
     COUNT(DISTINCT learning_path_id)::INTEGER AS total_paths,
@@ -381,4 +397,9 @@ BEGIN
   FROM user_progress
   WHERE user_id = p_user_id;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY DEFINER SET search_path = public, pg_temp;
+
+-- Only signed-in users may call it; anonymous API keys must not.
+REVOKE ALL ON FUNCTION get_user_progress_summary(UUID) FROM PUBLIC;
+REVOKE ALL ON FUNCTION get_user_progress_summary(UUID) FROM anon;
+GRANT EXECUTE ON FUNCTION get_user_progress_summary(UUID) TO authenticated;

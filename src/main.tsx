@@ -20,6 +20,9 @@ import { settingsService } from '@core/services/settings-service';
 import { ErrorBoundary, ConnectionStatusIndicator, ErrorMessage } from './modules/ui/components/error';
 import { handleComponentError, type StructuredError } from './modules/core/utils/error-handler';
 import { checkSupabaseConnection, ConnectionStatus } from './modules/core/utils/connection-health';
+import { loadTopicsOrEmptyWhenOffline } from './modules/core/utils/offline-boot';
+import { OfflineNotice } from './modules/ui/components/offline-notice';
+import { useOnlineStatus } from './modules/ui/hooks/use-online-status';
 import { logger } from '@/utils/logger';
 import './modules/ui/styles/variables.css';
 import './modules/ui/styles/global.css';
@@ -36,10 +39,25 @@ if (typeof window !== 'undefined') {
   settingsService.load();
 }
 
+// How often a failed startup is retried while the tab is in the foreground.
+// Long enough not to hammer a backend that is genuinely down, short enough
+// that a learner who leaves the app open notices it recovering on its own.
+const STARTUP_RETRY_INTERVAL_MS = 30_000;
+
+// How many times a *hard* startup failure is retried automatically. Startup
+// can fail for reasons that will never resolve on their own -- a schema
+// mismatch, a broken RLS policy, a bad configuration -- and those fail
+// identically on every attempt, so retrying them forever would hide a
+// permanent fault behind an endless loading flicker. Reaching this cap leaves
+// the error screen and its manual retry in place. A start that merely could
+// not reach the backend is not counted here: that case is known to be
+// transient and keeps retrying indefinitely.
+const MAX_STARTUP_ERROR_RETRIES = 5;
+
 // eslint-disable-next-line react-refresh/only-export-components
 function AppContent() {
   // Supabase authentication
-  const { user, isAuthenticated, loading: authLoading, signOut } = useAuth();
+  const { user, isAuthenticated, loading: authLoading, signOut, isPasswordRecovery, exitPasswordRecovery } = useAuth();
   const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [topics, setTopics] = useState<Topic[]>([]);
@@ -55,13 +73,59 @@ function AppContent() {
   const [showAdmin, setShowAdmin] = useState(false);
   const [adminTab, setAdminTab] = useState<AdminTab>('components');
   const [initError, setInitError] = useState<StructuredError | null>(null);
+  const [isOffline, setIsOffline] = useState(false);
   const initStarted = useRef(false);
+  // Set whenever startup ended without a usable connection, so reconnecting can
+  // retry on its own without re-running for every unrelated render.
+  const needsReload = useRef(false);
+  // Consecutive hard startup failures, reset by any successful start. Bounds
+  // the automatic retries so a permanent fault surfaces instead of looping.
+  const startupErrorRetries = useRef(0);
+  const isOnline = useOnlineStatus();
 
   useEffect(() => {
     if (!initStarted.current) {
       initStarted.current = true;
       initializeApp();
     }
+  }, []);
+
+  // Recover on our own once the browser reports a connection again, so the
+  // learner does not have to reload the app manually.
+  useEffect(() => {
+    if (!isOnline || !needsReload.current) {
+      return;
+    }
+
+    needsReload.current = false;
+    setIsLoading(true);
+    initializeApp();
+  }, [isOnline]);
+
+  // The effect above only fires when the browser's own connectivity flips.
+  // A backend that is unreachable while the device stays online -- a paused
+  // project, a DNS failure, a backend outage -- never changes
+  // `navigator.onLine`, so without this the learner sits on cached content
+  // until they reload by hand. Retry when the tab regains focus, and on a
+  // slow timer for someone who simply leaves the page open.
+  useEffect(() => {
+    const retryIfStale = () => {
+      if (!needsReload.current || document.visibilityState !== 'visible') {
+        return;
+      }
+
+      needsReload.current = false;
+      setIsLoading(true);
+      initializeApp();
+    };
+
+    const timer = window.setInterval(retryIfStale, STARTUP_RETRY_INTERVAL_MS);
+    document.addEventListener('visibilitychange', retryIfStale);
+
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener('visibilitychange', retryIfStale);
+    };
   }, []);
 
   useEffect(() => {
@@ -177,27 +241,40 @@ function AppContent() {
       // Check connection before loading data
       logger.debug('Checking Supabase connection...');
       const healthCheck = await checkSupabaseConnection();
-
-      if (healthCheck.status === ConnectionStatus.DISCONNECTED) {
-        throw healthCheck.error || new Error('Unable to connect to database');
-      }
+      const isDisconnected = healthCheck.status === ConnectionStatus.DISCONNECTED;
 
       if (healthCheck.status === ConnectionStatus.DEGRADED) {
         logger.warn('Slow connection detected. Latency:', healthCheck.latency, 'ms');
+      } else if (isDisconnected) {
+        logger.warn('No connection. Falling back to cached content.');
       } else {
         logger.debug('Connection healthy. Latency:', healthCheck.latency, 'ms');
       }
 
-      // Load topics from Supabase (with automatic retry via wrapper)
+      // A failed health check is not fatal: the service worker may still be
+      // able to serve previously cached content, which is what keeps the
+      // installed PWA usable offline.
       const topicRepo = getTopicRepository();
-      const loadedTopics = await topicRepo.getAll();
-      logger.debug(`Loaded ${loadedTopics.length} topics from Supabase`);
+      const loadedTopics = await loadTopicsOrEmptyWhenOffline(topicRepo, isDisconnected);
+
+      if (isDisconnected && loadedTopics.length === 0) {
+        throw healthCheck.error || new Error('Unable to connect to database');
+      }
+
+      logger.debug(`Loaded ${loadedTopics.length} topics`);
 
       setTopics(loadedTopics);
+      setIsOffline(isDisconnected);
+      needsReload.current = isDisconnected;
+      startupErrorRetries.current = 0;
       setIsLoading(false);
     } catch (error: unknown) {
       const structuredError = handleComponentError(error, 'initializeApp');
       setInitError(structuredError);
+      // Only keep auto-retrying while there is budget left; past that the
+      // error screen stands and the learner can retry deliberately.
+      startupErrorRetries.current += 1;
+      needsReload.current = startupErrorRetries.current < MAX_STARTUP_ERROR_RETRIES;
       setIsLoading(false);
     }
   }
@@ -262,6 +339,22 @@ function AppContent() {
     }
   }
 
+  // A recovery link opens a session that exists only to choose a new password,
+  // so the recovery form takes over the whole screen until it is resolved.
+  //
+  // This runs before the auth, loading and error gates on purpose. The link is
+  // time-limited, and initializeApp() failing -- an unreachable backend, no
+  // cached content offline -- would otherwise strand the user on the generic
+  // connection-error screen with no way to reach the form at all. Setting a
+  // password only needs Supabase Auth, not the content that failed to load.
+  if (isPasswordRecovery) {
+    return (
+      <div>
+        <AuthModal defaultTab="recovery" onClose={exitPasswordRecovery} />
+      </div>
+    );
+  }
+
   // Show Supabase login if not authenticated (required for all users)
   if (!authLoading && !isAuthenticated) {
     return (
@@ -301,6 +394,9 @@ function AppContent() {
         <ErrorMessage
           error={initError}
           onRetry={() => {
+            // A deliberate retry means the learner believes something changed,
+            // so give the automatic retries a fresh budget too.
+            startupErrorRetries.current = 0;
             setInitError(null);
             setIsLoading(true);
             initializeApp();
@@ -392,7 +488,13 @@ function AppContent() {
             <LearningPathCard
               key={path.id}
               learningPath={path}
-              taskCount={learningPathTaskCounts[path.id] || path.taskIds?.length || 0}
+              taskCount={
+                // `??`, not `||`: a learning path whose tasks were all retired
+                // by content reconciliation has a real count of 0, and `||`
+                // would treat that as "not loaded yet" and fall back to the
+                // stale taskIds array, advertising tasks that no longer exist.
+                learningPathTaskCounts[path.id] ?? path.taskIds?.length ?? 0
+              }
               onSelect={() => startSession(path)}
               animationIndex={index}
             />
@@ -486,6 +588,7 @@ function AppContent() {
       </div>
 
       <h2 className={styles.topicsHeading}>Themen auswählen</h2>
+      {isOffline && <OfflineNotice />}
       <div className={styles.topicsGrid}>
         {topics.map((topic) => (
           <TopicCard

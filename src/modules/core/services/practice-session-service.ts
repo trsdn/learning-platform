@@ -196,9 +196,19 @@ export class PracticeSessionService implements IPracticeSessionService {
 
         // Look up the task to check its learning path
         const task = await this.taskRepository.getById(item.taskId);
-        if (task && config.learningPathIds.includes(task.learningPathId)) {
-          reviewTaskIds.push(item.taskId);
+        if (!task || !config.learningPathIds.includes(task.learningPathId)) {
+          continue;
         }
+
+        // `getById` resolves retired tasks on purpose, so that answer history
+        // stays readable. A practice session is the opposite case: content
+        // withdrawn by reconciliation must not be put back in front of a
+        // learner just because an old spaced-repetition row is still due.
+        if (task.isActive === false) {
+          continue;
+        }
+
+        reviewTaskIds.push(item.taskId);
       }
 
       logger.debug(`Review tasks found: ${reviewTaskIds.length} (filtered from ${dueItems.length} due items)`);

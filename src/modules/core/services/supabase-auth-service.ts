@@ -152,8 +152,10 @@ export class SupabaseAuthService {
    * Send password reset email
    */
   static async resetPassword(email: string): Promise<{ data: Record<string, never> | null; error: AuthError | null }> {
+    // BASE_URL keeps the link inside the deployed app when it is served from a
+    // sub-path; Vite always terminates it with a slash.
     const response = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/auth/reset-password`,
+      redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}auth/reset-password`,
     });
 
     if (response.error) {

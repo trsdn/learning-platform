@@ -62,6 +62,18 @@ export interface Task {
   language?: string;
   /** IPA pronunciation guide (for accessibility) */
   ipa?: string | null;
+
+  /**
+   * Whether the task is still part of the published catalogue.
+   *
+   * Content reconciliation retires withdrawn tasks by setting this to false
+   * rather than deleting the row, because answer history and spaced
+   * repetition reference it. Most queries filter on it in SQL, so it is
+   * absent from those results; it is mapped here for the paths that
+   * deliberately fetch by ID (which must stay able to resolve history) and
+   * therefore have to check it themselves.
+   */
+  isActive?: boolean;
 }
 
 export interface MultipleChoiceContent {

@@ -45,6 +45,94 @@ type PracticeSessionConfiguration = PracticeSession['configuration'];
 type SpacedRepetitionSchedule = SpacedRepetitionItem['schedule'];
 type SpacedRepetitionAlgorithm = SpacedRepetitionItem['algorithm'];
 type SpacedRepetitionPerformance = SpacedRepetitionItem['performance'];
+type SpacedRepetitionMetadata = SpacedRepetitionItem['metadata'];
+
+/**
+ * Revives a value read back from a JSONB column into a Date.
+ *
+ * Dates written into JSONB are stored as ISO strings, and PostgREST returns
+ * them as strings. Without reviving them the domain model claims to hold a
+ * Date while actually holding a string, and any Date method call throws.
+ */
+function parseJsonDate(value: unknown): Date | undefined {
+  if (value instanceof Date) {
+    return Number.isNaN(value.getTime()) ? undefined : value;
+  }
+
+  if (typeof value === 'string' || typeof value === 'number') {
+    const parsed = new Date(value);
+    return Number.isNaN(parsed.getTime()) ? undefined : parsed;
+  }
+
+  return undefined;
+}
+
+/** Reads a numeric field from a JSONB column, falling back when absent. */
+function parseJsonNumber(value: unknown, fallback: number): number {
+  return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
+}
+
+/**
+ * Maps the `schedule` JSONB column onto the domain schedule, reviving dates.
+ *
+ * `fallbackNextReview` is used when a row carries no usable review date (the
+ * column default stores `nextReview: null`); such an item is treated as due.
+ */
+function mapScheduleFromDb(
+  value: DbSpacedRepetition['schedule'],
+  fallbackNextReview: Date
+): SpacedRepetitionSchedule {
+  const schedule = (value ?? {}) as unknown as Record<string, unknown>;
+  const nextReview = parseJsonDate(schedule['nextReview']);
+  const lastReviewed = parseJsonDate(schedule['lastReviewed']);
+
+  if (!nextReview) {
+    logger.warn('Spaced repetition item has no valid nextReview date; treating it as due');
+  }
+
+  return {
+    nextReview: nextReview ?? fallbackNextReview,
+    totalReviews: parseJsonNumber(schedule['totalReviews'], 0),
+    consecutiveCorrect: parseJsonNumber(schedule['consecutiveCorrect'], 0),
+    ...(lastReviewed ? { lastReviewed } : {}),
+  };
+}
+
+/**
+ * Maps the `metadata` JSONB column onto the domain metadata, reviving dates.
+ *
+ * `fallbackIntroduced` is used for rows written before the column existed.
+ */
+function mapMetadataFromDb(
+  value: DbSpacedRepetition['metadata'],
+  fallbackIntroduced: Date
+): SpacedRepetitionMetadata {
+  const metadata = (value ?? {}) as unknown as Record<string, unknown>;
+
+  return {
+    introduced: parseJsonDate(metadata['introduced']) ?? fallbackIntroduced,
+    graduated: metadata['graduated'] === true,
+    lapseCount: parseJsonNumber(metadata['lapseCount'], 0),
+  };
+}
+
+/** Serializes schedule dates to ISO strings for Json compatibility. */
+function serializeSchedule(schedule: SpacedRepetitionSchedule): Json {
+  return {
+    ...schedule,
+    nextReview: schedule.nextReview.toISOString(),
+    lastReviewed: schedule.lastReviewed?.toISOString(),
+  } as unknown as Json;
+}
+
+/** Serializes metadata dates to ISO strings for Json compatibility. */
+function serializeMetadata(metadata: SpacedRepetitionMetadata | undefined): Json {
+  return {
+    introduced: (parseJsonDate(metadata?.introduced) ?? new Date()).toISOString(),
+    graduated: metadata?.graduated ?? false,
+    lapseCount: metadata?.lapseCount ?? 0,
+  } as unknown as Json;
+}
 
 /**
  * Topic Repository - Manages learning topics
@@ -359,12 +447,17 @@ export class LearningPathRepository {
  */
 export class TaskRepository implements ITaskRepository {
   /**
-   * Get all tasks
+   * Get all tasks that are part of the current content set.
+   *
+   * Tasks removed from the canonical sources are deactivated rather than
+   * deleted, so they must be excluded here while remaining resolvable by ID
+   * for learner history.
    */
   async getAll(): Promise<Task[]> {
     const { data, error } = await supabase
       .from('tasks')
       .select('*')
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -402,6 +495,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('learning_path_id', learningPathId)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -554,7 +648,7 @@ export class TaskRepository implements ITaskRepository {
   ): Promise<Task[]> {
     logger.debug(`[TaskRepository] getRandomTasks called: count=${count}, filters=`, filters);
 
-    let query = supabase.from('tasks').select('*');
+    let query = supabase.from('tasks').select('*').eq('is_active', true);
 
     // Apply learning path filter
     if (filters?.learningPathIds && filters.learningPathIds.length > 0) {
@@ -610,7 +704,8 @@ export class TaskRepository implements ITaskRepository {
   async count(): Promise<number> {
     const { count, error } = await supabase
       .from('tasks')
-      .select('*', { count: 'exact', head: true });
+      .select('*', { count: 'exact', head: true })
+      .eq('is_active', true);
 
     if (error) {
       console.error('Error counting tasks:', error);
@@ -630,6 +725,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .in('learning_path_id', learningPathIds)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -648,6 +744,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('type', type)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -666,6 +763,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .eq('metadata->>difficulty', difficulty)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -687,6 +785,7 @@ export class TaskRepository implements ITaskRepository {
       .from('tasks')
       .select('*')
       .contains('metadata->tags', tags)
+      .eq('is_active', true)
       .order('created_at');
 
     if (error) {
@@ -701,7 +800,7 @@ export class TaskRepository implements ITaskRepository {
    * Search tasks
    */
   async search(query: TaskSearchQuery): Promise<Task[]> {
-    let supabaseQuery = supabase.from('tasks').select('*');
+    let supabaseQuery = supabase.from('tasks').select('*').eq('is_active', true);
 
     if (query.learningPathId) {
       supabaseQuery = supabaseQuery.eq('learning_path_id', query.learningPathId);
@@ -793,6 +892,10 @@ export class TaskRepository implements ITaskRepository {
     if (row.audio_url !== null) result.audioUrl = row.audio_url;
     if (row.language !== null) result.language = row.language;
     if (row.ipa !== null) result.ipa = row.ipa;
+    // `getById`/`getByIds` deliberately do not filter on is_active so that
+    // answer history stays resolvable. Carrying the flag lets callers that
+    // are *not* resolving history reject retired content.
+    if (row.is_active !== null) result.isActive = row.is_active;
 
     return result;
   }
@@ -1756,21 +1859,15 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...item.schedule,
-      nextReview: item.schedule.nextReview.toISOString(),
-      lastReviewed: item.schedule.lastReviewed?.toISOString(),
-    };
-
     const { data, error } = await supabase
       .from('spaced_repetition')
       .upsert({
         user_id: userId,
         task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
+        schedule: serializeSchedule(item.schedule),
         algorithm: item.algorithm as unknown as Json,
         performance: item.performance as unknown as Json,
+        metadata: serializeMetadata(item.metadata),
       }, {
         onConflict: 'user_id,task_id',
       })
@@ -1834,21 +1931,15 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...item.schedule,
-      nextReview: item.schedule.nextReview.toISOString(),
-      lastReviewed: item.schedule.lastReviewed?.toISOString(),
-    };
-
     const { data, error } = await supabase
       .from('spaced_repetition')
       .insert({
         user_id: userId,
         task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
+        schedule: serializeSchedule(item.schedule),
         algorithm: item.algorithm as unknown as Json,
         performance: item.performance as unknown as Json,
+        metadata: serializeMetadata(item.metadata),
       })
       .select()
       .single();
@@ -1872,22 +1963,20 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       schedule: Json;
       algorithm: Json;
       performance: Json;
+      metadata: Json;
     }> = {};
 
     if (updates.schedule !== undefined) {
-      // Serialize schedule dates to ISO strings for Json compatibility
-      const scheduleData = {
-        ...updates.schedule,
-        nextReview: updates.schedule.nextReview.toISOString(),
-        lastReviewed: updates.schedule.lastReviewed?.toISOString(),
-      };
-      dbUpdates.schedule = scheduleData as unknown as Json;
+      dbUpdates.schedule = serializeSchedule(updates.schedule);
     }
     if (updates.algorithm !== undefined) {
       dbUpdates.algorithm = updates.algorithm as unknown as Json;
     }
     if (updates.performance !== undefined) {
       dbUpdates.performance = updates.performance as unknown as Json;
+    }
+    if (updates.metadata !== undefined) {
+      dbUpdates.metadata = serializeMetadata(updates.metadata);
     }
 
     const { data, error } = await supabase
@@ -1913,14 +2002,19 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    const dateString = date.toISOString().split('T')[0];
-    if (!dateString) throw new Error('Invalid date format');
+    // nextReview is stored as a full ISO timestamp, so an equality check
+    // against a YYYY-MM-DD string never matches. Compare against the day range.
+    const dayStart = new Date(date);
+    dayStart.setUTCHours(0, 0, 0, 0);
+    const nextDayStart = new Date(dayStart);
+    nextDayStart.setUTCDate(nextDayStart.getUTCDate() + 1);
 
     const { data, error } = await supabase
       .from('spaced_repetition')
       .select('*')
       .eq('user_id', userId)
-      .eq('schedule->>nextReview', dateString)
+      .gte('schedule->>nextReview', dayStart.toISOString())
+      .lt('schedule->>nextReview', nextDayStart.toISOString())
       .order('schedule->>nextReview');
 
     if (error) {
@@ -1928,7 +2022,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -1957,16 +2051,9 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    // Serialize schedule dates to ISO strings for Json compatibility
-    const scheduleData = {
-      ...schedule,
-      nextReview: schedule.nextReview.toISOString(),
-      lastReviewed: schedule.lastReviewed?.toISOString(),
-    };
-
     const { error } = await supabase
       .from('spaced_repetition')
-      .update({ schedule: scheduleData as unknown as Json })
+      .update({ schedule: serializeSchedule(schedule) })
       .eq('id', id)
       .eq('user_id', userId);
 
@@ -2047,22 +2134,14 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
     const userId = await getCurrentUserId();
     if (!userId) throw new Error('User not authenticated');
 
-    const inserts = items.map(item => {
-      // Serialize schedule dates to ISO strings for Json compatibility
-      const scheduleData = {
-        ...item.schedule,
-        nextReview: item.schedule.nextReview.toISOString(),
-        lastReviewed: item.schedule.lastReviewed?.toISOString(),
-      };
-
-      return {
-        user_id: userId,
-        task_id: item.taskId,
-        schedule: scheduleData as unknown as Json,
-        algorithm: item.algorithm as unknown as Json,
-        performance: item.performance as unknown as Json,
-      };
-    });
+    const inserts = items.map(item => ({
+      user_id: userId,
+      task_id: item.taskId,
+      schedule: serializeSchedule(item.schedule),
+      algorithm: item.algorithm as unknown as Json,
+      performance: item.performance as unknown as Json,
+      metadata: serializeMetadata(item.metadata),
+    }));
 
     const { data, error } = await supabase
       .from('spaced_repetition')
@@ -2074,7 +2153,7 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
       throw error;
     }
 
-    return (data || []).map(this.mapFromDb);
+    return (data || []).map(row => this.mapFromDb(row));
   }
 
   /**
@@ -2141,18 +2220,16 @@ export class SpacedRepetitionRepository implements ISpacedRepetitionRepository {
    * Map database row to domain model
    */
   private mapFromDb(row: DbSpacedRepetition): SpacedRepetitionItem {
+    const createdAt = new Date(row.created_at);
+
     return {
       id: row.id,
       taskId: row.task_id,
-      schedule: row.schedule as unknown as SpacedRepetitionSchedule,
+      schedule: mapScheduleFromDb(row.schedule, createdAt),
       algorithm: row.algorithm as unknown as SpacedRepetitionAlgorithm,
       performance: row.performance as unknown as SpacedRepetitionPerformance,
-      metadata: {
-        introduced: new Date(),
-        graduated: false,
-        lapseCount: 0,
-      },
-      createdAt: new Date(row.created_at),
+      metadata: mapMetadataFromDb(row.metadata, createdAt),
+      createdAt,
       updatedAt: new Date(row.updated_at),
     };
   }

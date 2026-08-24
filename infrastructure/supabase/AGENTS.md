@@ -51,7 +51,7 @@
 
 ## Testing
 
-- Use Supabase CLI (`supabase db reset`, `supabase db push`) to test migrations.
+- Use Supabase CLI (`supabase --workdir infrastructure db reset`, `supabase --workdir infrastructure db push`) to test migrations.
 - Integration tests that rely on Supabase should live under `tests/integration/` or dedicated setup files.
 
 ## Related Guides
@@ -115,6 +115,10 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 
 ### Supabase CLI Setup
 
+The Supabase CLI resolves its config at `<workdir>/supabase/config.toml`. Because this
+project keeps Supabase under `infrastructure/`, **every CLI call must pass
+`--workdir infrastructure`** (or be run from inside `infrastructure/`).
+
 ```bash
 # Install Supabase CLI
 npm install -g supabase
@@ -123,10 +127,10 @@ npm install -g supabase
 supabase login
 
 # Link to project
-supabase link --project-ref your-project-id
+supabase --workdir infrastructure link --project-ref your-project-id
 
 # Check status
-supabase status
+supabase --workdir infrastructure status
 ```
 
 ---
@@ -137,16 +141,16 @@ supabase status
 
 ```bash
 # Create new migration
-supabase migration new descriptive_migration_name
+supabase --workdir infrastructure migration new descriptive_migration_name
 
 # This creates:
-# supabase/migrations/YYYYMMDDHHMMSS_descriptive_migration_name.sql
+# infrastructure/supabase/migrations/YYYYMMDDHHMMSS_descriptive_migration_name.sql
 ```
 
 ### Migration File Structure
 
 ```sql
--- supabase/migrations/20250124000000_add_topics_table.sql
+-- infrastructure/supabase/migrations/20250124000000_add_topics_table.sql
 
 -- Create table
 CREATE TABLE IF NOT EXISTS public.topics (
@@ -179,13 +183,16 @@ COMMENT ON COLUMN public.topics.icon IS 'Emoji or icon identifier';
 
 ```bash
 # Apply locally
-supabase db reset
+supabase --workdir infrastructure db reset
 
 # Apply to remote
-supabase db push
+supabase --workdir infrastructure db push
 
 # Check migration status
-supabase migration list
+supabase --workdir infrastructure migration list
+
+# Or use the helper script (wraps the commands above)
+npm run supabase:schema
 ```
 
 ### Migration Best Practices
@@ -312,12 +319,17 @@ main().catch(console.error)
 - Handle errors gracefully
 - Log progress
 - Use service role key for seeding
+- Exit non-zero when any record fails, so callers can detect a broken run
+- Reconcile after seeding: deactivate rows the JSON sources no longer produce
 
 **❌ DON'T**:
 - Commit service role key to git
 - Seed production without backup
 - Use random IDs (makes testing hard)
 - Seed without cleaning first
+- Hard-delete content: `user_progress`, `answer_history` and `spaced_repetition`
+  reference topics, learning paths and tasks. Set `is_active = false` instead so
+  learner history stays resolvable while the content stops being served.
 
 ---
 

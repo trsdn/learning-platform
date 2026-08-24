@@ -1,38 +1,65 @@
 #!/bin/bash
 
 # ==============================================
-# Apply Supabase Schema Migration
+# Apply Supabase Schema Migrations
 # ==============================================
 #
-# This script helps apply the database schema to your Supabase project.
+# Applies the authoritative migration history from
+# infrastructure/supabase/migrations via the Supabase CLI.
+#
+# The Supabase CLI resolves its config at <workdir>/supabase/config.toml,
+# so every CLI call below passes `--workdir infrastructure`.
 #
 # Usage:
-#   1. Option A (Manual - Recommended):
-#      - Open Supabase Dashboard: https://supabase.com/dashboard/project/knzjdckrtewoigosaxoh/sql
-#      - Copy the contents of: supabase/migrations/20250123000001_initial_schema.sql
-#      - Paste into the SQL Editor
-#      - Click "Run"
-#
-#   2. Option B (CLI - requires Supabase access token):
+#   1. Option A (CLI - recommended):
 #      - Get access token from: https://supabase.com/dashboard/account/tokens
 #      - Run: SUPABASE_ACCESS_TOKEN=<token> ./scripts/apply-schema.sh
+#      - Target a different project with:
+#        SUPABASE_PROJECT_REF=<ref> SUPABASE_ACCESS_TOKEN=<token> ./scripts/apply-schema.sh
 #
+#   2. Option B (Manual):
+#      - Open the SQL editor for your project
+#      - Run each file in infrastructure/supabase/migrations in filename order
+#
+
+set -euo pipefail
+
+# Resolve repository root so the script works from any directory
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+REPO_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$REPO_ROOT"
+
+MIGRATIONS_DIR="infrastructure/supabase/migrations"
+SUPABASE_WORKDIR="infrastructure"
+PROJECT_REF="${SUPABASE_PROJECT_REF:-knzjdckrtewoigosaxoh}"
 
 echo "🔧 Supabase Schema Migration Helper"
 echo "===================================="
 echo ""
 
+if [ ! -d "$MIGRATIONS_DIR" ]; then
+    echo "❌ Migrations directory not found: $MIGRATIONS_DIR"
+    exit 1
+fi
+
+echo "📂 Migrations directory: $MIGRATIONS_DIR"
+echo "🎯 Target project ref:   $PROJECT_REF"
+echo ""
+echo "📋 Migration history:"
+for migration in "$MIGRATIONS_DIR"/*.sql; do
+    echo "   - $(basename "$migration")"
+done
+echo ""
+
 # Check if we have an access token
-if [ -z "$SUPABASE_ACCESS_TOKEN" ]; then
+if [ -z "${SUPABASE_ACCESS_TOKEN:-}" ]; then
     echo "❌ No SUPABASE_ACCESS_TOKEN found"
     echo ""
     echo "📋 Manual Application Steps:"
-    echo "  1. Open: https://supabase.com/dashboard/project/knzjdckrtewoigosaxoh/sql"
-    echo "  2. Copy contents from: supabase/migrations/20250123000001_initial_schema.sql"
-    echo "  3. Paste into SQL Editor"
-    echo "  4. Click 'Run'"
+    echo "  1. Open: https://supabase.com/dashboard/project/$PROJECT_REF/sql"
+    echo "  2. Run each migration above from $MIGRATIONS_DIR in filename order"
     echo ""
-    echo "🔑 Or set SUPABASE_ACCESS_TOKEN to use CLI:"
+    echo "🔑 Or set SUPABASE_ACCESS_TOKEN to use the CLI:"
     echo "  Get token from: https://supabase.com/dashboard/account/tokens"
     echo "  Then run: SUPABASE_ACCESS_TOKEN=<token> ./scripts/apply-schema.sh"
     exit 1
@@ -40,26 +67,22 @@ fi
 
 # CLI approach (if access token is provided)
 echo "🔗 Linking to Supabase project..."
-supabase link --project-ref knzjdckrtewoigosaxoh
-
-if [ $? -eq 0 ]; then
-    echo "✅ Successfully linked to project"
-    echo ""
-    echo "📊 Applying database migration..."
-    supabase db push
-
-    if [ $? -eq 0 ]; then
-        echo "✅ Migration applied successfully!"
-        echo ""
-        echo "📝 Next steps:"
-        echo "  1. Generate TypeScript types: npm run types:generate"
-        echo "  2. Configure auth providers in Supabase Dashboard"
-        echo "  3. Continue with implementation"
-    else
-        echo "❌ Migration failed. Check the error above."
-        exit 1
-    fi
-else
+if ! supabase --workdir "$SUPABASE_WORKDIR" link --project-ref "$PROJECT_REF"; then
     echo "❌ Failed to link to project"
     exit 1
 fi
+
+echo "✅ Successfully linked to project"
+echo ""
+echo "📊 Applying database migrations..."
+if ! supabase --workdir "$SUPABASE_WORKDIR" db push; then
+    echo "❌ Migration failed. Check the error above."
+    exit 1
+fi
+
+echo "✅ Migrations applied successfully!"
+echo ""
+echo "📝 Next steps:"
+echo "  1. Generate TypeScript types: npm run supabase:types"
+echo "  2. Configure auth providers in Supabase Dashboard"
+echo "  3. Continue with implementation"

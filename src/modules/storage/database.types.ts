@@ -211,6 +211,7 @@ export type Database = {
           algorithm: Json | null
           created_at: string
           id: string
+          metadata: Json | null
           performance: Json | null
           schedule: Json | null
           task_id: string
@@ -221,6 +222,7 @@ export type Database = {
           algorithm?: Json | null
           created_at?: string
           id?: string
+          metadata?: Json | null
           performance?: Json | null
           schedule?: Json | null
           task_id: string
@@ -231,6 +233,7 @@ export type Database = {
           algorithm?: Json | null
           created_at?: string
           id?: string
+          metadata?: Json | null
           performance?: Json | null
           schedule?: Json | null
           task_id?: string
@@ -262,6 +265,7 @@ export type Database = {
           has_audio: boolean | null
           id: string
           ipa: string | null
+          is_active: boolean
           language: string | null
           learning_path_id: string
           metadata: Json | null
@@ -276,6 +280,7 @@ export type Database = {
           has_audio?: boolean | null
           id: string
           ipa?: string | null
+          is_active?: boolean
           language?: string | null
           learning_path_id: string
           metadata?: Json | null
@@ -290,6 +295,7 @@ export type Database = {
           has_audio?: boolean | null
           id?: string
           ipa?: string | null
+          is_active?: boolean
           language?: string | null
           learning_path_id?: string
           metadata?: Json | null

@@ -1331,4 +1331,147 @@ describe('AuthContext', () => {
       expect(logger.error).toHaveBeenCalledWith('Sign out error:', mockError);
     });
   });
+  describe('Password Recovery', () => {
+    /** Captures the listener the provider registers so events can be replayed. */
+    function captureAuthListener() {
+      let listener: ((event: string, session: Session | null) => void) | undefined;
+
+      vi.mocked(SupabaseAuthService.onAuthStateChange).mockImplementation((callback) => {
+        listener = callback;
+        return { unsubscribe: mockUnsubscribe };
+      });
+
+      return () => {
+        if (!listener) throw new Error('Auth listener was never registered');
+        return listener;
+      };
+    }
+
+    const renderAuth = () =>
+      renderHook(() => useAuth(), {
+        wrapper: ({ children }: { children: ReactNode }) => <AuthProvider>{children}</AuthProvider>,
+      });
+
+    afterEach(() => {
+      window.history.replaceState(null, '', '/');
+    });
+
+    it('is not in recovery mode for an ordinary page load', async () => {
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.loading).toBe(false));
+
+      expect(result.current.isPasswordRecovery).toBe(false);
+    });
+
+    it('enters recovery mode when Supabase reports PASSWORD_RECOVERY', async () => {
+      const getListener = captureAuthListener();
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.loading).toBe(false));
+
+      act(() => {
+        getListener()('PASSWORD_RECOVERY', createMockSession());
+      });
+
+      expect(result.current.isPasswordRecovery).toBe(true);
+    });
+
+    it('enters recovery mode when the link is opened with a recovery hash', async () => {
+      window.history.replaceState(null, '', '/#type=recovery&access_token=token');
+
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.loading).toBe(false));
+
+      expect(result.current.isPasswordRecovery).toBe(true);
+    });
+
+    it('enters recovery mode on the reset-password path', async () => {
+      window.history.replaceState(null, '', '/auth/reset-password');
+
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.loading).toBe(false));
+
+      expect(result.current.isPasswordRecovery).toBe(true);
+    });
+
+    it('leaves recovery mode and cleans the URL once the password changed', async () => {
+      window.history.replaceState(null, '', '/auth/reset-password#type=recovery');
+
+      vi.mocked(SupabaseAuthService.updatePassword).mockResolvedValue({
+        data: createMockUser(),
+        error: null,
+      });
+
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.isPasswordRecovery).toBe(true));
+
+      await act(async () => {
+        await result.current.updatePassword('newPassword123');
+      });
+
+      expect(result.current.isPasswordRecovery).toBe(false);
+      expect(window.location.pathname).toBe('/');
+      expect(window.location.hash).toBe('');
+    });
+
+    it('stays in recovery mode when the password change fails', async () => {
+      window.history.replaceState(null, '', '/auth/reset-password');
+
+      vi.mocked(SupabaseAuthService.updatePassword).mockResolvedValue({
+        data: null,
+        error: { message: 'Password too short' } as never,
+      });
+
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.isPasswordRecovery).toBe(true));
+
+      await act(async () => {
+        await result.current.updatePassword('short');
+      });
+
+      expect(result.current.isPasswordRecovery).toBe(true);
+    });
+
+    it('ends the recovery session when the user cancels', async () => {
+      // Dismissing the form must sign out, not just hide it. Supabase turns a
+      // recovery link into a full session before any new password is set, so
+      // leaving that session alive would let whoever opened the link close the
+      // dialog and use the account without knowing the password.
+      window.history.replaceState(null, '', '/auth/reset-password');
+
+      vi.mocked(SupabaseAuthService.signOut).mockResolvedValue({ error: null });
+
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.isPasswordRecovery).toBe(true));
+
+      await act(async () => {
+        await result.current.exitPasswordRecovery();
+      });
+
+      expect(SupabaseAuthService.signOut).toHaveBeenCalledTimes(1);
+      expect(result.current.isPasswordRecovery).toBe(false);
+      expect(window.location.pathname).toBe('/');
+    });
+
+    it('leaves recovery mode when the recovery session ends', async () => {
+      window.history.replaceState(null, '', '/auth/reset-password');
+
+      const getListener = captureAuthListener();
+      const { result } = renderAuth();
+
+      await waitFor(() => expect(result.current.isPasswordRecovery).toBe(true));
+
+      act(() => {
+        getListener()('SIGNED_OUT', null);
+      });
+
+      expect(result.current.isPasswordRecovery).toBe(false);
+    });
+  });
 });
