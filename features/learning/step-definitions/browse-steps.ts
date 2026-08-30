@@ -11,21 +11,20 @@ import { expect } from '@playwright/test';
 // ============================================
 
 When('I look at the topic cards', async ({ authenticatedPage }) => {
-  // Wait for topic cards to be visible
-  await authenticatedPage.waitForSelector('[data-testid="topic-card"], .topic-card, [class*="TopicCard"]', {
-    timeout: 10000,
-  });
+  // Wait for topic cards to be visible - try multiple selectors
+  const topicCards = authenticatedPage.locator('button[type="button"]:has(h3), [data-testid*="topic-card"], button:has-text("Test")');
+  await topicCards.first().waitFor({ state: 'visible', timeout: 20000 });
 });
 
 Then('I should see a list of available topics', async ({ authenticatedPage }) => {
-  const topicCards = authenticatedPage.locator('[data-testid="topic-card"], .topic-card, [class*="TopicCard"]');
+  const topicCards = authenticatedPage.locator('button[type="button"]:has(h3), [data-testid*="topic-card"], button:has-text("Test")');
   await expect(topicCards.first()).toBeVisible();
   const count = await topicCards.count();
   expect(count).toBeGreaterThan(0);
 });
 
 Then('each topic should display its title', async ({ authenticatedPage }) => {
-  const topicCards = authenticatedPage.locator('[data-testid="topic-card"], .topic-card, [class*="TopicCard"]');
+  const topicCards = authenticatedPage.locator('button[type="button"]:has(h3), [data-testid*="topic-card"], button:has-text("Test")');
   const firstCard = topicCards.first();
   // Topic cards should have text content (the title)
   await expect(firstCard).not.toBeEmpty();

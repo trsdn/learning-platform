@@ -14,6 +14,9 @@ import { expect } from '@playwright/test';
 Given('I have never practiced a learning path', async ({ authenticatedPage, testData }) => {
   // Navigate to a fresh learning path that hasn't been practiced
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  // Wait for topic button to be clickable
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });
@@ -44,6 +47,8 @@ Then('the initial interval should be appropriate for new learning', async () => 
 // SR-002: Correct answers increase intervals
 Given('I have practiced an item multiple times correctly', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });
@@ -70,6 +75,8 @@ Then('the new interval should be longer than the previous one', async () => {
 // SR-003: Incorrect answers reset intervals
 Given('I have a long review interval for an item', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });
@@ -97,6 +104,8 @@ Then('the item should appear more frequently', async () => {
 // SR-004: Easy items have longer intervals
 Given('I am reviewing an item', async ({ authenticatedPage, testData }) => {
   await authenticatedPage.goto('/');
+  await authenticatedPage.waitForLoadState('networkidle');
+  await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).waitFor({ state: 'visible', timeout: 20000 });
   await authenticatedPage.getByRole('button', { name: new RegExp(testData.demoTopic, 'i') }).click();
   await authenticatedPage.waitForLoadState('networkidle');
 });
